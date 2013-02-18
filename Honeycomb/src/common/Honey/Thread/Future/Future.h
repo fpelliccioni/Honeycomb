@@ -33,18 +33,10 @@ public:
     bool isValid() const                                        { return stateBase(); }
 
     /// Wait until result is ready. \throws promise::NoState
-    void wait() const
-    {
-        auto state = stateBase();
-        if (!state) throw_ promise::NoState();
-        ConditionLock::Scoped lock(state->waiters);
-        wait(*state, MonoClock::TimePoint::max);
-    }
-
+    void wait() const                                           { wait(MonoClock::TimePoint::max); }
     /// Wait for an amount of time before giving up. \throws promise::NoState
     template<class Rep, class Period>
     future::Status wait(Duration<Rep,Period> time) const        { return wait(MonoClock::now() + time); }
-
     /// Wait until a certain time before giving up. \throws promise::NoState
     template<class Clock, class Dur>
     future::Status wait(TimePoint<Clock,Dur> time) const
