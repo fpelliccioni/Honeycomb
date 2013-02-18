@@ -136,7 +136,7 @@ public:
     Component& create(const Id& type) const
     {
         auto it = _types.find(type);
-        assert(it != _types.end(), StringStream() << "Component type not registered: " << type);
+        assert(it != _types.end(), sout() << "Component type not registered: " << type);
         return it->second->_create();
     }
 
@@ -144,7 +144,7 @@ public:
     Type& type(const Id& id) const
     {
         auto it = _types.find(id);
-        assert(it != _types.end(), StringStream() << "Component type not registered: " << id);
+        assert(it != _types.end(), sout() << "Component type not registered: " << id);
         return *it->second;
     }
 

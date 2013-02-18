@@ -117,7 +117,7 @@ protected:
     /// Create what message.  Called only on demand and result is cached.
     virtual String createWhat()
     {
-        return StringStream()
+        return sout()
             << "Exception:  "   << typeName()       << endl
             << "Message:    "   << getError()       << endl
             << source();
@@ -154,7 +154,7 @@ namespace exception { namespace priv
 
         virtual String createWhat()
         {
-            return StringStream()
+            return sout()
                 << "Exception:  "   << typeid(_e).name()        << endl
                 << "Message:    "   << getError() << _e.what()  << endl
                 << source();

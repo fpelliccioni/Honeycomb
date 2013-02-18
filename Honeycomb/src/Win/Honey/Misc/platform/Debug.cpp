@@ -20,7 +20,7 @@ namespace honey { namespace platform
             String assert = expr + "\nMessage: " + msg;
             _wassert(assert.toStdWString().c_str(), file.toStdWString().c_str(), line);
         #else
-            String assert = honey::StringStream()
+            String assert = sout()
                 << "Assertion failed!" << endl
                 << "File: " << file << endl
                 << "Line: " << line << endl

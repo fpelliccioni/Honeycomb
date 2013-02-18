@@ -25,7 +25,7 @@ void ComObject::insertCom_priv(Component& com, int index, bool createDeps)
     {
         //Add missing component deps
         auto vertex = ComRegistry::inst().depGraph().vertex(com.comType());
-        assert(vertex, StringStream() << "Component not registered: " << com.comType());
+        assert(vertex, sout() << "Component not registered: " << com.comType());
         for (auto& e : vertex->links())
         {
             auto& key = *e->keys().begin();
@@ -33,8 +33,8 @@ void ComObject::insertCom_priv(Component& com, int index, bool createDeps)
             if (createDeps)
                 addCom(ComRegistry::inst().create(key), true);
             else
-                error(StringStream()    << "Component dependency missing: " << key
-                                        << ".  Add the missing component first, or add with createDeps = true.");
+                error(sout()    << "Component dependency missing: " << key
+                                << ".  Add the missing component first, or add with createDeps = true.");
         } 
     }
 
@@ -81,7 +81,7 @@ void ComObject::removeComInSlot(SlotMap::iterator& slotIt, Slot::List::iterator 
             assert(slot);
             if (slot->list.size() > 1) break; //checking supertypes would be redundant
             auto vertex = ComRegistry::inst().depGraph().vertex(*type);
-            assert(vertex, StringStream() << "Component not registered: " << *type);
+            assert(vertex, sout() << "Component not registered: " << *type);
             for (auto& e : vertex->links(ComRegistry::DepNode::DepType::in))
             {
                 auto& key = *e->keys().begin();
@@ -89,8 +89,8 @@ void ComObject::removeComInSlot(SlotMap::iterator& slotIt, Slot::List::iterator 
                     removeComsInSlot(key, removeDeps);
                 else
                     assert(!hasComInSlot(key),
-                        StringStream()  << "Dependent component still in object: " << key
-                                        << ".  Remove the dependent component first, or remove with removeDeps = true.");   
+                        sout()  << "Dependent component still in object: " << key
+                                << ".  Remove the dependent component first, or remove with removeDeps = true.");   
             }
         }
     }

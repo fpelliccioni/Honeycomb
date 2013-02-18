@@ -93,7 +93,7 @@ public:
         {
             //Erase key in parent
             ChildMapIter itMap = _parent->childMapIter(*this);
-            assert(itMap != _parent->_childMap.end(), StringStream() << "Child not found in parent's children map. Parent Id: " << _parent->_key << " ; Child Id: " << _key);
+            assert(itMap != _parent->_childMap.end(), sout() << "Child not found in parent's children map. Parent Id: " << _parent->_key << " ; Child Id: " << _key);
             _parent->_childMap.erase(itMap);
         }
         
@@ -172,7 +172,7 @@ public:
         if (child._key != _keyNull)
         {
             ChildMapIter itMap = childMapIter(child);
-            assert(itMap != _childMap.end(), StringStream() << "Child not found in parent's children map. Parent Id: " << _key << " ; Child Id: " << child._key);
+            assert(itMap != _childMap.end(), sout() << "Child not found in parent's children map. Parent Id: " << _key << " ; Child Id: " << child._key);
             _childMap.erase(itMap);
         }
         return itRet;

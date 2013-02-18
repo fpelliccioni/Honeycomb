@@ -17,7 +17,7 @@ public:
     ~Builder()
     {
         if (height == 0) return; //Do nothing if no elements are set
-        assert(row + height == m.rows() && col == m.cols(), StringStream()
+        assert(row + height == m.rows() && col == m.cols(), sout()
                     << "Assigned too few matrix elements in comma initializer.\n"
                     << "Matrix size: (" << m.rows() << ", " << m.cols() << ")\n"
                     << "Cursor index: (" << row << ", " << col << ")\n"
@@ -66,7 +66,7 @@ private:
             height = 0;
             col = 0;
         }
-        assert(row + rows <= m.rows() && col + cols <= m.cols(), StringStream()
+        assert(row + rows <= m.rows() && col + cols <= m.cols(), sout()
                     << "Block assignment in comma initializer out of matrix bounds.\n"
                     << "Matrix size: (" << m.rows() << ", " << m.cols() << ")\n"
                     << "Cursor index: (" << row << ", " << col << ")\n"

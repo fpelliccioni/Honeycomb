@@ -162,7 +162,7 @@ namespace priv
         IdSwitchMapFactory& operator<<(const Id& id)
         {
             auto res = map.insert(make_pair(id,count++));
-            if (!res.second) error(StringStream() << "IdSwitchMap hash collision found: Id 1: " << id << " ; Id 2: " << res.first->first);
+            if (!res.second) error(sout() << "IdSwitchMap hash collision found: Id 1: " << id << " ; Id 2: " << res.first->first);
             return *this;
         }
 

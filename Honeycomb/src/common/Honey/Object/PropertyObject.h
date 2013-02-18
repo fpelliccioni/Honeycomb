@@ -69,9 +69,9 @@ public:
             addProp(*prop);
         }
         assert(prop->type() == Property<T>::s_type(),
-                    StringStream()  << "Component type mismatch: "
-                                    << "Request: " << Property<T>::s_type() << " ; Id: " << id
-                                    << " ; Found: " << prop->type());
+                    sout()  << "Component type mismatch: "
+                            << "Request: " << Property<T>::s_type() << " ; Id: " << id
+                            << " ; Found: " << prop->type());
         return static_cast<Property<T>&>(*prop);
     }
 
@@ -79,7 +79,7 @@ public:
     PropertyBase& getProp(const Id& id) const
     {
         auto it = _propMap.find(id);
-        assert(it != _propMap.end(), StringStream() << "Property not found. Id: " << id);
+        assert(it != _propMap.end(), sout() << "Property not found. Id: " << id);
         return *it->second;
     }
 
@@ -88,12 +88,12 @@ public:
     Property<T>& getProp(const Id& id) const
     {
         auto it = _propMap.find(id);
-        assert(it != _propMap.end(), StringStream() << "Property not found. Id: " << id);
+        assert(it != _propMap.end(), sout() << "Property not found. Id: " << id);
         PropertyBase* prop = it->second;
         assert(prop->type() == Property<T>::s_type(),
-                    StringStream()  << "Component type mismatch: "
-                                    << "Request: " << Property<T>::s_type() << " ; Id: " << id
-                                    << " ; Found: " << prop->type());
+                    sout()  << "Component type mismatch: "
+                            << "Request: " << Property<T>::s_type() << " ; Id: " << id
+                            << " ; Found: " << prop->type());
         return static_cast<Property<T>&>(*prop);
     }
 

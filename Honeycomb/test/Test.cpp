@@ -60,8 +60,8 @@ void test()
         for (auto& e : threads) e.join();
 
         int count = 0;
-        Debug::print(StringStream() << "List Size: " << list.size() << endl);
-        for (auto& e : list) Debug::print(StringStream() << "List " << count++ << " : " << e << endl);
+        Debug::print(sout() << "List Size: " << list.size() << endl);
+        for (auto& e : list) Debug::print(sout() << "List " << count++ << " : " << e << endl);
     }
     //=============================
 
@@ -107,10 +107,10 @@ void test()
 
         int data;
         int count = 0;
-        Debug::print(StringStream() << "Deque Size: " << list.size() << endl);
+        Debug::print(sout() << "Deque Size: " << list.size() << endl);
         while (list.popFront(data))
         {
-            Debug::print(StringStream() << "Deque " << count << " : " << data << endl);
+            Debug::print(sout() << "Deque " << count << " : " << data << endl);
             ++count;
         }          
     }
@@ -207,10 +207,10 @@ void test()
             Real sinTab = Trig::atan2(Trig::cos(angle)*2, Trig::sin(angle)*2);
             Trig::enableSinTable(false);
             sinDif = Alge::max(sinDif, Alge::abs(sinTab - sin));
-            //Debug::print(StringStream() << "Sin: " << sin << endl << "Tab: " << sinTab << endl << endl);
+            //Debug::print(sout() << "Sin: " << sin << endl << "Tab: " << sinTab << endl << endl);
         }
 
-        Debug::print(StringStream() << "Sin Table Dif: " << sinDif << endl);
+        Debug::print(sout() << "Sin Table Dif: " << sinDif << endl);
     }
 
     {
@@ -254,9 +254,9 @@ void test()
         auto mat3 = Vec3(1,2,3) * VecRow3(10,100,1000);
         auto mat8 = (Matrix<8,8>().fromIdentity().block<4,4>(3,2).block<2,2>(1,2) = (Matrix<2,2>() << 2,3,4,5).eval()).parent().parent();
 
-        Debug::print(StringStream()   << "Mat3: " << endl << mat3 << endl
-                                        << "Mat8: " << endl << mat8 << endl
-                                        << "Sum8, Min8: " << mat8.sum() << ", " << mat8.min() << endl);
+        Debug::print(sout() << "Mat3: " << endl << mat3 << endl
+                            << "Mat8: " << endl << mat8 << endl
+                            << "Sum8, Min8: " << mat8.sum() << ", " << mat8.min() << endl);
     }
 
     {
@@ -268,9 +268,9 @@ void test()
             6, 167, -68,
             -4, 24, -41).eval();
         Qrd<Real> qrd(A);
-        Debug::print(StringStream()   << "Q: " << endl << qrd.q() << endl
-                                        << "R: " << endl << qrd.r() << endl
-                                        << "A = Q*R: " << endl << qrd.q()*qrd.r() << endl);
+        Debug::print(sout() << "Q: " << endl << qrd.q() << endl
+                            << "R: " << endl << qrd.r() << endl
+                            << "A = Q*R: " << endl << qrd.q()*qrd.r() << endl);
     }
 
     {
@@ -284,9 +284,9 @@ void test()
         MatrixN inv;
         auto eigen = Eigen<Real>(A);
         eigen.inverse(inv);
-        Debug::print(StringStream()   << "Eigen Val: " << eigen.w() << endl
-                                        << "Eigen Vec: " << endl << eigen.v() << endl
-                                        << "I = A*EigenInv(A): " << endl << A*inv << endl);
+        Debug::print(sout() << "Eigen Val: " << eigen.w() << endl
+                            << "Eigen Vec: " << endl << eigen.v() << endl
+                            << "I = A*EigenInv(A): " << endl << A*inv << endl);
     }
 
     {
@@ -301,12 +301,12 @@ void test()
         auto w = (Vec<5>() << 2, 3, 1, 4, 5).eval();
         VecN b;
         LinearLeastSqr<Real>().calc(X, y, w, b);
-        Debug::print(StringStream() << "Linear LeastSqr b: " << b << " ; cond: " << X.cond() << endl);
+        Debug::print(sout() << "Linear LeastSqr b: " << b << " ; cond: " << X.cond() << endl);
 
         Svd<Real> svd(X, Svd<Real>::Mode::full);
         MatrixN inv;
         svd.inverse(inv);
-        Debug::print(StringStream() << "X*FullSvdInv(X)*X: " << endl << X*inv*X << endl);
+        Debug::print(sout() << "X*FullSvdInv(X)*X: " << endl << X*inv*X << endl);
     }
 
     {
@@ -325,7 +325,7 @@ void test()
         auto d = (Vec<2>() << 7, 4).eval();
         VecN b;
         LinearLeastSqr<Real>().calc(X, y, w, C, d, b);
-        Debug::print(StringStream() << "Constrained LeastSqr b: " << b << " ; cond: " << X.cond() << endl);        
+        Debug::print(sout() << "Constrained LeastSqr b: " << b << " ; cond: " << X.cond() << endl);        
     }
 
     {
@@ -338,7 +338,7 @@ void test()
             [](const Vec3& v) { return v.z - v.x + RealT::piHalf; },
         };
         auto res = BisectN().root(funcs, Vec3(-10), Vec3(10));
-        Debug::print(StringStream() << "BisectN: " << std::boolalpha << get<0>(res) << "; " << get<1>(res) << endl);
+        Debug::print(sout() << "BisectN: " << std::boolalpha << get<0>(res) << "; " << get<1>(res) << endl);
     }
 
     {
@@ -349,24 +349,24 @@ void test()
         auto vm = (Vec<7>() << 82, 80, 85, 85, 78, 87, 82).eval();
         StudentT::PooledStats stats;
         bool t_test = StudentT::test(vf, vm, stats, 0, 0.05, 0);
-        Debug::print(StringStream() << "T-test: " << std::boolalpha << t_test << endl << stats << endl);
+        Debug::print(sout() << "T-test: " << std::boolalpha << t_test << endl << stats << endl);
     }
 
     //Minimize: (2.23277, -1.99996)
-    Debug::print(StringStream() << "Minimize: " <<
+    Debug::print(sout() << "Minimize: " <<
                     Minimize<Real>().calc([](Real x) { return 0.2f*Alge::pow(x,4) - 2*Alge::pow(x,2) + 3; }, 0, 5, 0.1) << endl);
 
     //MinimizeN: ((1, 2), 0)
-    Debug::print(StringStream() << "MinimizeN: " <<
+    Debug::print(sout() << "MinimizeN: " <<
                     MinimizeN<Real,2>().calc([](const Vec2& v) { return Alge::pow(v[0]-1, 2) + Alge::pow(v[1]-2, 2); }, Vec2(-10), Vec2(10), Vec2(7, -5)) << endl);
 
     //Poly roots 3: ((-0.60583, 0, 0), 1) Bounds: (0.2, 1.75)
     //Poly roots 4: ((5, 3, -4, -6), 4)
-    Debug::print(StringStream() << "Poly roots 1: " << Polynomial<Real>::roots(Vec2(1,2)) << endl);
-    Debug::print(StringStream() << "Poly roots 2: " << Polynomial<Real>::roots(Vec3(1,2,3)) << endl);
-    Debug::print(StringStream() << "Poly roots 3: " << Polynomial<Real>::roots(Vec4(1,2,3,4)) << " Bounds: " << Polynomial<Real>::rootBounds(Vec4(1,2,3,4)) << endl);
-    Debug::print(StringStream() << "Poly roots 4: " << Polynomial<Real>::roots((Vec<5>() << 1080,-126,-123,6,3).eval()) << endl);
-    Debug::print(StringStream() << "Poly roots 4 (generic): " << Polynomial<Real>::roots((VecN().resize(5) << 1080,-126,-123,6,3).eval(), 1e-04f) << endl);
+    Debug::print(sout() << "Poly roots 1: " << Polynomial<Real>::roots(Vec2(1,2)) << endl);
+    Debug::print(sout() << "Poly roots 2: " << Polynomial<Real>::roots(Vec3(1,2,3)) << endl);
+    Debug::print(sout() << "Poly roots 3: " << Polynomial<Real>::roots(Vec4(1,2,3,4)) << " Bounds: " << Polynomial<Real>::rootBounds(Vec4(1,2,3,4)) << endl);
+    Debug::print(sout() << "Poly roots 4: " << Polynomial<Real>::roots((Vec<5>() << 1080,-126,-123,6,3).eval()) << endl);
+    Debug::print(sout() << "Poly roots 4 (generic): " << Polynomial<Real>::roots((VecN().resize(5) << 1080,-126,-123,6,3).eval(), 1e-04f) << endl);
 
     assert(String::join(String("foo bar blah").split()) == "foo bar blah");
     assert(String::join(String::List() << "foo" << "bar" << "blah") == "foo bar blah");
@@ -539,7 +539,7 @@ void test()
     pdf.push_back(15);
     DiscreteGen disc(gen, pdf);
     //HyperGeo disc(gen, 200, 50, 90);
-    Debug::print(StringStream() << "Disc Mean: " <<  disc.mean() << " ; Disc Var: " << disc.variance() << endl);
+    Debug::print(sout() << "Disc Mean: " <<  disc.mean() << " ; Disc Var: " << disc.variance() << endl);
 
     vector<Vec1> samples;
     for (auto i : range(100))
@@ -552,18 +552,18 @@ void test()
 
     Bootstrap bootMean(Bootstrap::meanFunc(), gen, samples);
     bootMean.calc();
-    Debug::print(StringStream() << "Boot Mean: " << bootMean.lower() << " ; " << bootMean.upper() << endl);
+    Debug::print(sout() << "Boot Mean: " << bootMean.lower() << " ; " << bootMean.upper() << endl);
 
     Bootstrap bootVar(Bootstrap::varianceFunc(), gen, samples);
     bootVar.calc();
-    Debug::print(StringStream() << "Boot Var: " << bootVar.lower() << " ; " << bootVar.upper() << endl);
+    Debug::print(sout() << "Boot Var: " << bootVar.lower() << " ; " << bootVar.upper() << endl);
 
     for (auto i : range(-1, 50))
     {
         mt_unused(i);
         f = disc.next();
         f2 = disc.cdfInv(disc.cdf(f));
-        Debug::print(StringStream() << "Dif: " << std::setw(4) << f << " ; " << std::setw(4) << f2 << " ; " << Alge_d::abs(f-f2) << endl);
+        Debug::print(sout() << "Dif: " << std::setw(4) << f << " ; " << std::setw(4) << f2 << " ; " << Alge_d::abs(f-f2) << endl);
     }
 
     vector<Real> list;
@@ -596,8 +596,8 @@ void test()
     for (auto it = begin(permute); it != end(permute); ++it)
     {
         Debug::print("Perm: ");
-        for (auto i : range(utos(it->size()))) { Debug::print(StringStream() << *it->at(i) << " "); }
-        Debug::print(StringStream() << " ; Cnt: " << it.count() << "\n");
+        for (auto i : range(utos(it->size()))) { Debug::print(sout() << *it->at(i) << " "); }
+        Debug::print(sout() << " ; Cnt: " << it.count() << "\n");
     }
 
     gen.setState(state);
@@ -611,7 +611,7 @@ void test()
     for (auto i : range(iv.size)) { iv2.a[i] = Discrete_<uint32>::nextStd(gen); }
     
     String msg = "Test msg la la la la ";
-    for (auto i : range(50)) { msg += StringStream() << i << " "; }
+    for (auto i : range(50)) { msg += sout() << i << " "; }
         
     String msg2 = "Test2 msg2 la la la la";
     uint8 cipher[1000];
@@ -630,10 +630,10 @@ void test()
     crypt.decrypt(reinterpret_cast<uint8*>(cipher+msg.length()), reinterpret_cast<uint8*>(decipher+msg.length()), msg2.length());
     decipher[msg.length()+msg2.length()] = 0;
 
-    Debug::print(StringStream() << "Hash  : " << Hash::toString(Hash::fast("Hash of some string")) << endl);
-    Debug::print(StringStream() << "Hash 2: " << Hash::toString(Hash::fast("Hash of some string2")) << endl);
-    Debug::print(StringStream() << "Secure Hash  : " << Hash::secure("Secure hash of some string") << endl);
-    Debug::print(StringStream() << "Secure Hash 2: " << Hash::secure("Secure hash of some string2") << endl);
+    Debug::print(sout() << "Hash  : " << Hash::toString(Hash::fast("Hash of some string")) << endl);
+    Debug::print(sout() << "Hash 2: " << Hash::toString(Hash::fast("Hash of some string2")) << endl);
+    Debug::print(sout() << "Secure Hash  : " << Hash::secure("Secure hash of some string") << endl);
+    Debug::print(sout() << "Secure Hash 2: " << Hash::secure("Secure hash of some string2") << endl);
 
     typedef Vegas<5, 4, Double> Vegas;
     struct VegasFunc
@@ -673,7 +673,7 @@ void test()
     };
 
     Vegas vegas(VegasFunc(), gen, Vegas::Vec(0.), Vegas::Vec(1.), 10000);
-    Debug::print(StringStream() << "Vegas: " << vegas.integrate() << endl);
+    Debug::print(sout() << "Vegas: " << vegas.integrate() << endl);
 
     Id id = ID"foo_bar";
     Id id2 = ID"foo_bar";
@@ -703,7 +703,7 @@ void test()
 
     typedef DepNode<int> DepNode;
     DepNode depnode[10];
-    for (auto i : range(10)) { depnode[i].setKey(StringStream() << "Node " << i); }
+    for (auto i : range(10)) { depnode[i].setKey(sout() << "Node " << i); }
         
     depnode[0].add("Node 1");
     depnode[0].add("Node 3");
@@ -731,8 +731,8 @@ void test()
     int depvertex = 0;
     for (auto& e : depgraph.range(depnode[0].getKey()))
     {
-        Debug::print(StringStream() << "DepVertex " << depvertex++ << endl);
-        for (auto& e : e.nodes()) { Debug::print(StringStream() << "    " << e->getKey() << endl); }
+        Debug::print(sout() << "DepVertex " << depvertex++ << endl);
+        for (auto& e : e.nodes()) { Debug::print(sout() << "    " << e->getKey() << endl); }
     }
 
     SceneObject tree1, tree2;
@@ -765,7 +765,7 @@ void test()
     tree2.com<SceneSpace>().add(obj2);
     {
         auto range = tree1.com<Tree>().children("obj1");
-        for (auto& e : stdutil::values(range)) { Debug::print(StringStream() << "Match: " << e->getKey() << endl); }
+        for (auto& e : stdutil::values(range)) { Debug::print(sout() << "Match: " << e->getKey() << endl); }
     }
 
     struct EnumVisitor : public SceneSpace::EnumVisitor
@@ -773,7 +773,7 @@ void test()
         virtual void operator()(const SceneSpace& space, SceneObject& obj)
         {
             mt_unused(space);
-            Debug::print(StringStream() << "Visit: " << obj.getInstId() << endl);
+            Debug::print(sout() << "Visit: " << obj.getInstId() << endl);
             if (obj.getInstId() == "tree2")
                 setState(State::skipChildren);
         }
@@ -841,32 +841,32 @@ void test()
     }
 
     void* blah = SmallMemPool::inst().pool().alloc(10000);
-    Debug::print(StringStream() << SmallMemPool::inst().pool().printStats());
+    Debug::print(sout() << SmallMemPool::inst().pool().printStats());
     SmallMemPool::inst().pool().free(blah);
     SmallMemPool::inst().pool().validate();
 
-    Debug::print(StringStream()   << "Vec1:   "   << v1 << endl
-                                    << "Vec2:   "   << v2 << endl
-                                    << "Vec3:   "   << v3 << endl
-                                    << "Vec6:   "   << v6 << endl
-                                    << "Real:   "   << f << endl
-                                    << "Quat0:  "   << q0 << endl
-                                    << "Quat3:  "   << q3 << endl
-                                    << "Quat4:  "   << q4 << endl
-                                    << "Tm:     "   << tm << endl
-                                    << "Line:   "   << line << endl
-                                    << "Ray:    "   << ray << endl
-                                    << "Plane:  "   << plane << endl
-                                    << "Tri:    "   << tri << endl
-                                    << "Sphere: "   << sphere << endl
-                                    << "Box:    "   << box << endl
-                                    << "OBox:   "   << obox << endl
-                                    << "Cone:   "   << cone << endl
-                                    << "Cyl:    "   << cyl << endl
-                                    << "Cap:    "   << cap << endl
-                                    << "Persp:  "   << persp << endl
-                                    << "Ortho:  "   << ortho << endl
-                                    );
+    Debug::print(sout() << "Vec1:   "   << v1 << endl
+                        << "Vec2:   "   << v2 << endl
+                        << "Vec3:   "   << v3 << endl
+                        << "Vec6:   "   << v6 << endl
+                        << "Real:   "   << f << endl
+                        << "Quat0:  "   << q0 << endl
+                        << "Quat3:  "   << q3 << endl
+                        << "Quat4:  "   << q4 << endl
+                        << "Tm:     "   << tm << endl
+                        << "Line:   "   << line << endl
+                        << "Ray:    "   << ray << endl
+                        << "Plane:  "   << plane << endl
+                        << "Tri:    "   << tri << endl
+                        << "Sphere: "   << sphere << endl
+                        << "Box:    "   << box << endl
+                        << "OBox:   "   << obox << endl
+                        << "Cone:   "   << cone << endl
+                        << "Cyl:    "   << cyl << endl
+                        << "Cap:    "   << cap << endl
+                        << "Persp:  "   << persp << endl
+                        << "Ortho:  "   << ortho << endl
+                        );
 
     /*
     int count = 10000;
@@ -888,7 +888,7 @@ void test()
         if (bloom.contains(keys[i%count])) ++dummy;
     }
     QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&timeEnd));
-    Debug::print(StringStream() << "Time 0: " << Real(timeEnd-timeBegin)/Real(timeFreq) << endl);
+    Debug::print(sout() << "Time 0: " << Real(timeEnd-timeBegin)/Real(timeFreq) << endl);
 
     QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&timeBegin));
     for (int i = 0; i < 10000000; ++i)
@@ -896,6 +896,6 @@ void test()
         if (set.count(keys[i%count])) ++dummy;
     }
     QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&timeEnd));
-    Debug::print(StringStream() << "Time 1: " << dummy << " " << Real(timeEnd-timeBegin)/Real(timeFreq) << endl);
+    Debug::print(sout() << "Time 1: " << dummy << " " << Real(timeEnd-timeBegin)/Real(timeFreq) << endl);
     */
 }

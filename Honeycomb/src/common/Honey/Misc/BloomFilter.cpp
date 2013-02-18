@@ -9,7 +9,7 @@ namespace honey
 namespace bloom_filter { namespace priv
 {
     //Salsa rand;
-    //for (auto i : range(40)) { Debug::print(StringStream() << "0x" << Hash::toString(rand.next()) << ", "); }
+    //for (auto i : range(40)) { Debug::print(sout() << "0x" << Hash::toString(rand.next()) << ", "); }
     const int seeds[] =
     {
         0x3c4c9a94, 0x90613611, 0xa7a1cc07, 0x6f30f04d, 0x8a661bf9, 0xd75db7b2, 0x69604c69, 0xb253c947, 0xd2e373b2, 0xe7c98da4,

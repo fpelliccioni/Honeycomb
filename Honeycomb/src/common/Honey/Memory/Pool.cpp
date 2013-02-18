@@ -114,7 +114,7 @@ void MemPool::Bucket::expand()
     int expandCount = (_freeCount + _usedCount) / 2 + 1; //Expand 50%
     int allocSize = blockOffsetMax() + blockStride() * expandCount;
     uint8* chunk = honey::alloc<uint8>(allocSize);
-    assert(chunk, StringStream() << "Allocation failed: " << allocSize << " bytes");
+    assert(chunk, sout() << "Allocation failed: " << allocSize << " bytes");
     initChunk(chunk, allocSize, expandCount);
 }
 
@@ -233,7 +233,7 @@ MemPool::MemPool(const Factory& factory) :
     if (chunkSize > 0)
     {
         _bucketChunk = honey::alloc<uint8>(chunkSize);
-        assert(_bucketChunk, StringStream() << "Allocation failed: " << chunkSize << " bytes");
+        assert(_bucketChunk, sout() << "Allocation failed: " << chunkSize << " bytes");
     }
     //Set up the buckets
     uint8* chunk = _bucketChunk;

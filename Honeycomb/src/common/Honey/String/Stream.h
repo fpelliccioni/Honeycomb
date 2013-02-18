@@ -108,6 +108,9 @@ private:
 };
 #pragma warning(pop)
 
+/// Shorthand to create string stream
+inline StringStream sout()                                                      { return StringStream(); }
+
 /** \cond */
 namespace priv
 {

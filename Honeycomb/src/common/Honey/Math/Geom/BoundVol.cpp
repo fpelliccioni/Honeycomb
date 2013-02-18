@@ -28,7 +28,7 @@ bool BoundVol<Sphere>::test(const BoundVolBase& bv) const
     case Type::FrustumPersp:
         return Intersect::test(bv.subc<FrustumPersp>().getShape(), getShape());
     default:
-        error(StringStream() << "Unsupported intersection test. Bv 1: " << this->type() << " ; Bv 2: " << bv.type());
+        error(sout() << "Unsupported intersection test. Bv 1: " << this->type() << " ; Bv 2: " << bv.type());
         return false;
     }
 }
@@ -55,7 +55,7 @@ bool BoundVol<Box>::test(const BoundVolBase& bv) const
     case Type::FrustumPersp:
         return Intersect::test(bv.subc<FrustumPersp>().getShape(), getShape());
     default:
-        error(StringStream() << "Unsupported intersection test. Bv 1: " << this->type() << " ; Bv 2: " << bv.type());
+        error(sout() << "Unsupported intersection test. Bv 1: " << this->type() << " ; Bv 2: " << bv.type());
         return false;
     }
 }
@@ -74,7 +74,7 @@ bool BoundVol<Cylinder>::test(const BoundVolBase& bv) const
     case Type::FrustumPersp:
         return Intersect::test(bv.subc<FrustumPersp>().getShape(), getShape());
     default:
-        error(StringStream() << "Unsupported intersection test. Bv 1: " << this->type() << " ; Bv 2: " << bv.type());
+        error(sout() << "Unsupported intersection test. Bv 1: " << this->type() << " ; Bv 2: " << bv.type());
         return false;
     }
 }
@@ -93,7 +93,7 @@ bool BoundVol<Cone>::test(const BoundVolBase& bv) const
     case Type::FrustumPersp:
         return Intersect::test(bv.subc<FrustumPersp>().getShape(), getShape());
     default:
-        error(StringStream() << "Unsupported intersection test. Bv 1: " << this->type() << " ; Bv 2: " << bv.type());
+        error(sout() << "Unsupported intersection test. Bv 1: " << this->type() << " ; Bv 2: " << bv.type());
         return false;
     }
 }
@@ -116,7 +116,7 @@ bool BoundVol<Capsule>::test(const BoundVolBase& bv) const
     case Type::FrustumPersp:
         return Intersect::test(bv.subc<FrustumPersp>().getShape(), getShape());
     default:
-        error(StringStream() << "Unsupported intersection test. Bv 1: " << this->type() << " ; Bv 2: " << bv.type());
+        error(sout() << "Unsupported intersection test. Bv 1: " << this->type() << " ; Bv 2: " << bv.type());
         return false;
     }
 }
@@ -139,7 +139,7 @@ bool BoundVol<OrientBox>::test(const BoundVolBase& bv) const
     case Type::FrustumPersp:
         return Intersect::test(bv.subc<FrustumPersp>().getShape(), getShape());
     default:
-        error(StringStream() << "Unsupported intersection test. Bv 1: " << this->type() << " ; Bv 2: " << bv.type());
+        error(sout() << "Unsupported intersection test. Bv 1: " << this->type() << " ; Bv 2: " << bv.type());
         return false;
     }
 }
@@ -166,7 +166,7 @@ bool BoundVol<FrustumOrtho>::test(const BoundVolBase& bv) const
     case Type::FrustumPersp:
         return Intersect::test(getShape(), bv.subc<FrustumPersp>().getShape());
     default:
-        error(StringStream() << "Unsupported intersection test. Bv 1: " << this->type() << " ; Bv 2: " << bv.type());
+        error(sout() << "Unsupported intersection test. Bv 1: " << this->type() << " ; Bv 2: " << bv.type());
         return false;
     }
 }
@@ -192,7 +192,7 @@ bool BoundVol<FrustumPersp>::test(const BoundVolBase& bv) const
     case Type::FrustumPersp:
         return Intersect::test(getShape(), bv.subc<FrustumPersp>().getShape());
     default:
-        error(StringStream() << "Unsupported intersection test. Bv 1: " << this->type() << " ; Bv 2: " << bv.type());
+        error(sout() << "Unsupported intersection test. Bv 1: " << this->type() << " ; Bv 2: " << bv.type());
         return false;
     }
 }

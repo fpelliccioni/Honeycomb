@@ -100,13 +100,13 @@ namespace honey
         void operator()(Key key, const Val& val)
         {
             mt_unused(key);
-            Debug::print(StringStream() << "Key: " << key.id() << " ; Value: " << val << endl);
+            Debug::print(sout() << "Key: " << key.id() << " ; Value: " << val << endl);
         }
                                                             //Overload for specific key/value pair
         void operator()(key_int key, int& val)
         {
             mt_unused(key);
-            Debug::print(StringStream() << "key: " << key.id() << " ; value: " << val << endl);
+            Debug::print(sout() << "key: " << key.id() << " ; value: " << val << endl);
 
             val = -1;                                       //Modify value in map
         }
@@ -116,11 +116,11 @@ namespace honey
     void iterTest(T& fooInsert)
     {
                                                             //Use Begin/End and functor to print contents of map
-        Debug::print(StringStream() << "--fooInsert--" << endl);
+        Debug::print(sout() << "--fooInsert--" << endl);
         for_each_mtmap(fooInsert.begin(), fooInsert.end(), Functor());
 
                                                             //Use iter() to get an iterator by key
-        Debug::print(StringStream() << "--fooInsert[key_int, end]--" << endl);
+        Debug::print(sout() << "--fooInsert[key_int, end]--" << endl);
         for_each_mtmap(fooInsert.iter(key_int()), fooInsert.end(), Functor());
     }
 
@@ -129,7 +129,7 @@ namespace honey
     void keywordFunc(MtMap<int8, key_char, int, key_int, option<Id>, key_id>::Type _)
     {
         _.setDefaults(mtmap(key_id() = "default"));
-        Debug::print(StringStream() << "Keyword Args: " << _ << endl);
+        Debug::print(sout() << "Keyword Args: " << _ << endl);
     }
 
     void keywordTest()
@@ -283,7 +283,7 @@ ITERATE(1, MTMAP_KEY_MAX, MTMAP_TYPE)
 #define mtkeygen(Name)                                                          \
     template<int Index> struct Name                                             \
     {                                                                           \
-        IdStatic(id, StringStream() << #Name << "<" << Index << ">");           \
+        IdStatic(id, sout() << #Name << "<" << Index << ">");                   \
         template<class Val> MtPair<Name, Val> operator=(Val&& val)              \
         { return MtPair<Name, Val>(val); }                                      \
     };                                                                          \

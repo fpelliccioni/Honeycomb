@@ -32,7 +32,7 @@ public:
     {
         friend class NspTreeSpace;
     public:
-        COMPONENT(Data, StringStream() << "NspTreeSpace<" << NspTree::dim << ">::Data")
+        COMPONENT(Data, sout() << "NspTreeSpace<" << NspTree::dim << ">::Data")
 
     private:
         typedef vector<Data*> List;

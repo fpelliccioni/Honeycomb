@@ -105,7 +105,7 @@ public:
     Com& com() const
     {
         auto slot = this->slot(Com::s_comType());
-        assert(slot && slot->list.size(), StringStream() << "Component type not found: Request type: " << Com::s_comType());
+        assert(slot && slot->list.size(), sout() << "Component type not found: Request type: " << Com::s_comType());
         return static_cast<Com&>(*slot->list[0]);
     }
 
@@ -128,7 +128,7 @@ public:
             else
                 com = slot->list[0];
         }
-        assert(com, StringStream() << "Component type not found: Request type: " << type << " ; Id : " << id);
+        assert(com, sout() << "Component type not found: Request type: " << type << " ; Id : " << id);
         return *com;
     }
 

@@ -62,7 +62,7 @@ Real BetaInc<Real>::calc(Real x, Real a, Real b)
     Real fx2;
 
     /*
-    Debug::print(StringStream()
+    Debug::print(sout()
         << "  BetaIn computes the incomplete Beta function.\n"
         << "  Compare to tabulated values.\n"
         << "\n"
@@ -82,7 +82,7 @@ Real BetaInc<Real>::calc(Real x, Real a, Real b)
         int fault;
         fx2 = betaIn(x, a, b, GammaFunc::gammaLn(a) + GammaFunc::gammaLn(b) - GammaFunc::gammaLn(a + b), fault);
     /*
-        Debug::print(StringStream()
+        Debug::print(sout()
             << "  " << setprecision(4) << std::setw(10) << a
             << "  " << setprecision(4) << std::setw(10) << b
             << "  " << setprecision(4) << std::setw(10) << x

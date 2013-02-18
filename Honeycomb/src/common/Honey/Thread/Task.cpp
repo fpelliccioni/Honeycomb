@@ -50,8 +50,8 @@ void Task::bindDirty()
     {
         int pos = file.find_last_of(String("\\/"));
         String filename = pos != String::npos ? file.substr(pos+1) : file;
-        Debug::print(StringStream() << "[Task: " << getId() << ":" << Thread::current().threadId() << ", "
-                                    << filename << ":" << line << "] " << msg << endl);
+        Debug::print(sout() << "[Task: " << getId() << ":" << Thread::current().threadId() << ", "
+                            << filename << ":" << line << "] " << msg << endl);
     }
 #endif
 
@@ -148,18 +148,16 @@ void TaskSched::bind(Task& root)
             Task& e = ****vertex->nodes().begin();
             if (e.active())
             {
-                error(StringStream()
-                    << "Bind failed: Upstream task already active. "
-                    << "Task: " << e.getId() << "; Task's root: " << (e._root.lock() ? e._root.lock()->getId() : idnull) << endl
-                    << "Task stack:" << endl << stackTrace());
+                error(sout()    << "Bind failed: Upstream task already active. "
+                                << "Task: " << e.getId() << "; Task's root: " << (e._root.lock() ? e._root.lock()->getId() : idnull) << endl
+                                << "Task stack:" << endl << stackTrace());
             }
             
             if (e._onStack)
             {
-                error(StringStream()
-                    << "Bind failed: Upstream cyclic dependency detected. "
-                    << "From task: " << task.getId() << "; To task: " << e.getId() << endl
-                    << "Task stack:" << endl << stackTrace());
+                error(sout()    << "Bind failed: Upstream cyclic dependency detected. "
+                                << "From task: " << task.getId() << "; To task: " << e.getId() << endl
+                                << "Task stack:" << endl << stackTrace());
             }
         }
         #endif
@@ -240,8 +238,8 @@ bool TaskSched::enqueue_priv(Task& task)
             
             added = true;
             worker._tasks.push_back(&task);
-            Task_log_(task, StringStream()  << "Pushed to worker queue: " << worker._thread.threadId()
-                                            << "; Queue size: " << worker._tasks.size());
+            Task_log_(task, sout()  << "Pushed to worker queue: " << worker._thread.threadId()
+                                    << "; Queue size: " << worker._tasks.size());
         } while(false);
     }
     
@@ -250,7 +248,7 @@ bool TaskSched::enqueue_priv(Task& task)
         //All worker queues full, push to scheduler queue
         Mutex::Scoped _(_lock);
         _tasks.push_back(&task);
-        Task_log_(task, StringStream() << "Pushed to scheduler queue. Queue size: " << _tasks.size());
+        Task_log_(task, sout() << "Pushed to scheduler queue. Queue size: " << _tasks.size());
     }
     
     //Find a waiting worker and signal it, start search at min index
@@ -324,7 +322,7 @@ void TaskSched::Worker::run()
                 if (_task->_depUpWait > 0)
                 {
                     _task->_state = Task::State::depUpWait;
-                    Task_log_(*_task, StringStream() << "Waiting for upstream. Wait task count: " << _task->_depUpWait);
+                    Task_log_(*_task, sout() << "Waiting for upstream. Wait task count: " << _task->_depUpWait);
                     continue;
                 }
                 assert(!_task->_depUpWait, "Task state corrupt");
@@ -371,7 +369,7 @@ void TaskSched::Worker::run()
                 if (_task->_state != Task::State::idle)
                 {
                     _task->_state = Task::State::depDownWait;
-                    Task_log_(*_task, StringStream() << "Waiting for downstream. Wait task count: " << _task->_depDownWait);
+                    Task_log_(*_task, sout() << "Waiting for downstream. Wait task count: " << _task->_depDownWait);
                     continue;
                 }
             }
@@ -393,7 +391,7 @@ Task::Ptr TaskSched::Worker::next()
         {
             Task::Ptr task = move(_tasks.front());
             _tasks.pop_front();
-            Task_log_(*task, StringStream() << "Popped from worker queue. Queue size: " << _tasks.size());
+            Task_log_(*task, sout() << "Popped from worker queue. Queue size: " << _tasks.size());
             return task;
         }
     }
@@ -420,8 +418,8 @@ Task::Ptr TaskSched::Worker::next()
             
             Task::Ptr task = move(worker._tasks.front());
             worker._tasks.pop_front();
-            Task_log_(*task, StringStream() << "Stolen from worker queue: " << worker._thread.threadId()
-                                            << "; Queue size: " << worker._tasks.size());
+            Task_log_(*task, sout() << "Stolen from worker queue: " << worker._thread.threadId()
+                                    << "; Queue size: " << worker._tasks.size());
             return task;
         } while(false);
     }
@@ -436,7 +434,7 @@ Task::Ptr TaskSched::Worker::next()
         
             Task::Ptr task = move(_sched._tasks.front());
             _sched._tasks.pop_front();
-            Task_log_(*task, StringStream() << "Popped from scheduler queue. Queue size: " << _sched._tasks.size());
+            Task_log_(*task, sout() << "Popped from scheduler queue. Queue size: " << _sched._tasks.size());
             return task;
         } while (false);
     }
@@ -464,7 +462,7 @@ namespace task { namespace priv
         std::map<Char, Task_<void>::Ptr> tasks;
         for (auto i: range(10))
         {
-            Id id = StringStream() << Char('a'+i);
+            Id id = sout() << Char('a'+i);
             tasks[id.name()[0]] = new Task_<void>([=]{ Task_log(id); }, id);
         }
         

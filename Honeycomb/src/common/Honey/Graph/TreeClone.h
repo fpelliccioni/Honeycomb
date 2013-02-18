@@ -295,8 +295,8 @@ private:
 
         //Clone's parent must not be registered
         assert(!clone->getParent() || !isRegClone(*clone->getParent()),
-                    StringStream()  << "Node can't be unregistered because its parent is registered. Parent Id: "
-                                    << clone->getParent()->getKey() << " ; Child Id: " << clone->getKey());
+                    sout()  << "Node can't be unregistered because its parent is registered. Parent Id: "
+                            << clone->getParent()->getKey() << " ; Child Id: " << clone->getKey());
 
         const_cast<TreeNode&>(node).listeners().remove(*_queue);
 

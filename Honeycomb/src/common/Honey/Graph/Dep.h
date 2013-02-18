@@ -150,7 +150,7 @@ public:
         {
             auto& linkMap = this->linkMap(type);
             auto itMap = linkMap.find(vertex);
-            assert(itMap != linkMap.end(), StringStream() << "Unable to remove dependency link. Vertex: " << *keyList.begin() << " ; Link Type: " << type << " ; Link Key: " << *vertex->keyList.begin());
+            assert(itMap != linkMap.end(), sout() << "Unable to remove dependency link. Vertex: " << *keyList.begin() << " ; Link Type: " << type << " ; Link Key: " << *vertex->keyList.begin());
             auto& refCount = itMap->second;
             refCount -= count;
             if (refCount <= 0) linkMap.erase(itMap);
@@ -265,7 +265,7 @@ public:
 
             //Find dependency vertex in map
             auto itMap = _vertexMap.find(key);
-            assert(itMap != _vertexMap.end(), StringStream() << "Unable to remove dependency. Node: " << node.getKey() << " ; DepType: " << type << " ; DepKey: " << key);
+            assert(itMap != _vertexMap.end(), sout() << "Unable to remove dependency. Node: " << node.getKey() << " ; DepType: " << type << " ; DepKey: " << key);
             auto& depVertex = *itMap->second;
             //Vertex can't depend on itself
             if (&depVertex == &vertex) continue;
@@ -697,7 +697,7 @@ private:
                     for (auto& e : assignVertex->nodeList)
                     {
                         //Ensure that merged references are unique.  If this assert fails then there is a problem with the class' algorithms.
-                        assert(!mergeVertex.nodeList.count(e), StringStream() << "Duplicate reference during condense merge. Node: " << e->getKey());
+                        assert(!mergeVertex.nodeList.count(e), sout() << "Duplicate reference during condense merge. Node: " << e->getKey());
                         mergeVertex.nodeList.insert(e);
                     }
 
@@ -705,7 +705,7 @@ private:
                     for (auto& e : assignVertex->keyList)
                     {
                         //Ensure that merged keys are unique.  If this assert fails then there is a problem with the class' algorithms.
-                        assert(!mergeVertex.keyList.count(e), StringStream() << "Duplicate key during condense merge. Node: " << e);
+                        assert(!mergeVertex.keyList.count(e), sout() << "Duplicate key during condense merge. Node: " << e);
                         mergeVertex.keyList.insert(e);
                     }
 

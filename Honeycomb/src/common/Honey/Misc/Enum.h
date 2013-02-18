@@ -65,7 +65,7 @@ namespace honey
 
                                                 //Print all vehicle types
         const Vehicle::Type::EnumInfo::ElemList& list = Vehicle::Type::enumInfo().elemList();
-        for (int i = 0; i < size(list); ++i) { Debug::print(StringStream() << list[i].id << endl); }
+        for (int i = 0; i < size(list); ++i) { Debug::print(sout() << list[i].id << endl); }
     }
 
     \endcode

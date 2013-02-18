@@ -45,7 +45,7 @@ class CullVol : public CullVolBase
 public:
     typedef BoundVol<Shape> Bv;
 
-    COMPONENT_SUB(CullVolBase, CullVol, StringStream() << "CullVol" << "<" << Bv::s_type() << ">")
+    COMPONENT_SUB(CullVolBase, CullVol, sout() << "CullVol" << "<" << Bv::s_type() << ">")
 
     CullVol() :
         _bv(_shape),

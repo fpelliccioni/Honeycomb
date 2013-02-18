@@ -27,8 +27,8 @@ struct StorageDense
     void resize(int rows, int cols)
     {
         mt_unused(rows); mt_unused(cols);
-        assert(rows == -1 || s_rows == dynamic || rows == s_rows, StringStream() << "Can't change fixed row count from " << s_rows << " to " << rows);
-        assert(cols == -1 || s_cols == dynamic || cols == s_cols, StringStream() << "Can't change fixed col count from " << s_cols << " to " << cols);
+        assert(rows == -1 || s_rows == dynamic || rows == s_rows, sout() << "Can't change fixed row count from " << s_rows << " to " << rows);
+        assert(cols == -1 || s_cols == dynamic || cols == s_cols, sout() << "Can't change fixed col count from " << s_cols << " to " << cols);
     }
 
     int rows() const                                    { return subc().rows(); }
@@ -151,8 +151,8 @@ public:
 
     StorageDynamic& operator=(StorageDynamic&& rhs)
     {
-        assert(s_rows == dynamic || rhs._rows == s_rows, StringStream() << "Can't change fixed row count from " << s_rows << " to " << rhs._rows);
-        assert(s_cols == dynamic || rhs._cols == s_cols, StringStream() << "Can't change fixed col count from " << s_cols << " to " << rhs._cols);
+        assert(s_rows == dynamic || rhs._rows == s_rows, sout() << "Can't change fixed row count from " << s_rows << " to " << rhs._rows);
+        assert(s_cols == dynamic || rhs._cols == s_cols, sout() << "Can't change fixed col count from " << s_cols << " to " << rhs._cols);
         freeAligned(_a, _alloc);
         _a = rhs._a;
         _rows = rhs._rows;
@@ -178,8 +178,8 @@ public:
         if (rows == -1) rows = _rows;
         if (cols == -1) cols = _cols;
         assert(rows >= 0 && cols >= 0, "Matrix size must be zero or greater");
-        assert(s_rows == dynamic || rows == s_rows, StringStream() << "Can't change fixed row count from " << s_rows << " to " << rows);
-        assert(s_cols == dynamic || cols == s_cols, StringStream() << "Can't change fixed col count from " << s_cols << " to " << cols);
+        assert(s_rows == dynamic || rows == s_rows, sout() << "Can't change fixed row count from " << s_rows << " to " << rows);
+        assert(s_cols == dynamic || cols == s_cols, sout() << "Can't change fixed col count from " << s_cols << " to " << cols);
         int size = rows*cols;
         _rows = rows;
         _cols = cols;

@@ -22,7 +22,7 @@ namespace honey
 
 /// Call inside a class to declare a signal
 #define SIGNAL(Name, Param) \
-    struct Name                                 : Signal<void Param> { IdStatic(id, StringStream() << _signalBase() << "::"#Name) };
+    struct Name                                 : Signal<void Param> { IdStatic(id, sout() << _signalBase() << "::"#Name) };
 
 /// Multicast sender
 template<class Sig> struct Signal               : mt::funcTraits<Sig> { typedef Sig Sig; };

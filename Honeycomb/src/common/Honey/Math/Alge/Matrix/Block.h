@@ -49,10 +49,10 @@ namespace priv
             _size = _rows*_cols;
 
             assert(_rows >= 0 && _cols >= 0, "Block size must be zero or greater");
-            assert(_row >= 0 && _row + _rows <= _m->rows(), StringStream()
+            assert(_row >= 0 && _row + _rows <= _m->rows(), sout()
                         << "Block row bounds out of matrix range. Matrix rows: " << _m->rows()
                         << " ; Block range: [" << _row << ", " << _row + _rows << ")");
-            assert(_col >= 0 && _col + _cols <= _m->cols(), StringStream()
+            assert(_col >= 0 && _col + _cols <= _m->cols(), sout()
                         << "Block column bounds out of matrix range. Matrix columns: " << _m->cols()
                         << " ; Block range: [" << _col << ", " << _col + _cols << ")");
         }

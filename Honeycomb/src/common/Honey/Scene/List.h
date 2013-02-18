@@ -47,7 +47,7 @@ public:
     Scene& get(const Id& id)
     {
         Map::iterator it = _map.find(id);
-        assert(it != _map.end(), StringStream() << "Scene not found: " << id);
+        assert(it != _map.end(), sout() << "Scene not found: " << id);
         return *it->second;
     }
 

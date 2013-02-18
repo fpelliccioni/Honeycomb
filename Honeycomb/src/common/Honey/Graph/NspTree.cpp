@@ -153,7 +153,7 @@ void NspTree<Dim>::enume(EnumVisitor& visitor, const Box& box)
     visitor.setState(EnumVisitor::State::cont);
         
     //Pop concurrent id from list (used to keep track of visited)
-    assert(_concurCount < size(_concurIds), StringStream() << "Max number of concurrent enumerations reached: " << size(_concurIds));
+    assert(_concurCount < size(_concurIds), sout() << "Max number of concurrent enumerations reached: " << size(_concurIds));
     _concurLock.lock();
     visitor._concurId = _concurIds[_concurCount++];
     _concurLock.unlock();
