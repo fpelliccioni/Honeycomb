@@ -1,0 +1,11 @@
+/**
+    \mainpage Manual
+
+    [Project Homepage](http://kometes.github.com/Honeycomb)
+*/
+
+/// Global Honeycomb namespace
+/**
+    \namespace honey
+*/
+

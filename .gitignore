@@ -1,0 +1,10 @@
+*.suo
+*.sdf
+*.opensdf
+*.ilk
+*.pdb
+*.user
+*.exe
+*.lib
+Build
+ipch

@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{e1bac12e-9dec-42f3-ae16-cd6e2e7a3075}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res">
+      <UniqueIdentifier>{f7361c1e-5886-436c-813c-e98b97fed64e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Editor\Core\Main.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\res\targetver.h">
+      <Filter>res</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\res\resource.h">
+      <Filter>res</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\res\stdafx.h">
+      <Filter>res</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Editor\Core\Main.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\res\Win\App\small.ico">
+      <Filter>res</Filter>
+    </None>
+    <None Include="..\..\res\Win\App\Editor.ico">
+      <Filter>res</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\res\Win\App\Editor.rc">
+      <Filter>res</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
