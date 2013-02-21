@@ -12,7 +12,7 @@ namespace honey
 template<int EndianId>
 struct Murmur
 {
-    static FORCE_INLINE uint32 fMix(uint32 h)
+    static uint32 fMix(uint32 h)
     {
         h ^= h >> 16;
         h *= 0x85ebca6b;
@@ -104,7 +104,7 @@ String Hash::toString(int hash)
     BitOp::toPartsBig(static_cast<uint32>(hash), a);
     StringStream os;
     for (int i = 0; i < 4; ++i)
-        os << std::setw(2) << std::setfill(Char('0')) << std::hex << static_cast<uint32>(a[i]);
+        os << std::setw(2) << std::setfill(L'0') << std::hex << static_cast<uint32>(a[i]);
     return os;
 }
 
@@ -220,7 +220,7 @@ struct CubeHash
 StringStream& operator<<(StringStream& os, const Hash::SecureData& val)
 {
     for (int i = 0; i < val.size; ++i)
-        os << std::setw(2) << std::setfill(Char('0')) << std::hex << static_cast<uint32>(val.a[i]);
+        os << std::setw(2) << std::setfill(L'0') << std::hex << static_cast<uint32>(val.a[i]);
     return os;
 }
 /** \endcond */

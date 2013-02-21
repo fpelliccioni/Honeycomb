@@ -49,11 +49,11 @@ public:
 
     private:
         mtkey(align);
-        MtMap<int, align>::Type param;
+        MtMap<int, align>::type param;
 
         mtkey(blockSize);
         mtkey(blockCount);
-        typedef vector< MtMap<int, blockSize, int, blockCount>::Type > BucketList;
+        typedef vector< MtMap<int, blockSize, int, blockCount>::type > BucketList;
         BucketList bucketList;
     };
     friend class Factory;
@@ -275,10 +275,14 @@ private:
 template<template<class> class Subclass, class T>
 class MemPoolAllocator : public Allocator<Subclass, T>
 {
+    typedef Allocator<Subclass, T> Super;
 public:
-    pointer alloc(size_type n)                                          { return static_cast<pointer>(subc().pool().alloc(sizeof(T)*n)); }
-    pointer alloc(size_type n, const char* srcFile, int srcLine)        { return static_cast<pointer>(subc().pool().alloc(sizeof(T)*n, 1, srcFile, srcLine)); }
-    void free(pointer p)                                                { subc().pool().free(p); }
+    typedef typename Super::pointer pointer;
+    typedef typename Super::size_type size_type;
+    
+    pointer alloc(size_type n)                                      { return static_cast<pointer>(this->subc().pool().alloc(sizeof(T)*n)); }
+    pointer alloc(size_type n, const char* srcFile, int srcLine)    { return static_cast<pointer>(this->subc().pool().alloc(sizeof(T)*n, 1, srcFile, srcLine)); }
+    void free(pointer p)                                            { this->subc().pool().free(p); }
 };
 
 }

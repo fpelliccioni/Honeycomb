@@ -7,7 +7,7 @@ namespace honey
 {
 
 template<class NspTree>
-void NspTreeSpace<NspTree>::enume(EnumVisitor& visitor, option<const BoundVolBase&> bv = optnull) const
+void NspTreeSpace<NspTree>::enume(EnumVisitor& visitor, option<const BoundVolBase&> bv) const
 {
     //Init visitor
     visitor.setBv(bv.ptr());
@@ -26,7 +26,7 @@ void NspTreeSpace<NspTree>::enume(EnumVisitor& visitor, option<const BoundVolBas
         //Transform world bv into tree local space
         BoundVolAny bvTm;
         visitor.getBv()->clone(bvTm);
-        bvTm.mul(obj().com<Tm>().world(true).inverse());
+        bvTm.mul(obj().template com<Tm>().world(true).inverse());
         box = bvTm.toBox();
     }
     else

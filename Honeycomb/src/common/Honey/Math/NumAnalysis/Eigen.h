@@ -20,8 +20,8 @@ namespace honey
 template<class Real>
 class Eigen
 {
-    typedef typename Numeral<Real>::RealT   RealT;
-    typedef typename RealT::DoubleType      Double_;
+    typedef typename Numeral<Real>::Real_   Real_;
+    typedef typename Real_::DoubleType      Double_;
     typedef typename Double_::Real          Double;
     typedef Alge_<Real>                     Alge;
     typedef Alge_<Double>                   Alge_d;

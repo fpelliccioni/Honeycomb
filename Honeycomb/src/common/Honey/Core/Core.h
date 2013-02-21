@@ -59,6 +59,7 @@ using std::max;
 using std::min;
 using std::move;
 using std::next;
+using std::nullptr_t;
 using std::pair;
 using namespace std::placeholders;
 using std::prev;

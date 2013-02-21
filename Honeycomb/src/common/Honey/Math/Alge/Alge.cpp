@@ -7,22 +7,22 @@
 namespace honey
 {
 
-template<class Real> const Real Alge_<Real>::logMin = log(RealT::smallest);
-template<class Real> const Real Alge_<Real>::logMax = log(RealT::max);
+template<class Real> const Real Alge_<Real>::logMin = log(Real_::smallest);
+template<class Real> const Real Alge_<Real>::logMax = log(Real_::max);
 
 template<class Real>
 Real Alge_<Real>::log1p(const Real x)
 {
     if(x < -1)
-        return RealT::nan;
+        return Real_::nan;
 
     if(x == -1)
-        return -RealT::inf;
+        return -Real_::inf;
 
     Real a = abs(x);
     if(a > 0.5)
         return log(1 + x);
-    if(a < RealT::epsilon)
+    if(a < Real_::epsilon)
       return x;
 
     static const Real P[] = {
@@ -63,12 +63,12 @@ Real Alge_<Real>::expm1(const Real x)
         if(a >= logMax)
         {
             if(x > 0)
-                return RealT::inf;
+                return Real_::inf;
             return -1;
         }
         return exp(x) - 1;
     }
-    if(a < RealT::epsilon)
+    if(a < Real_::epsilon)
         return x;
 
     static const Real Y = 0.10281276702880859e1L;

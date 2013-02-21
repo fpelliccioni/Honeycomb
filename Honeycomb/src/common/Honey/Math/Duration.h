@@ -8,13 +8,13 @@ namespace honey
 {
 
 /// Duration represented by repetitions of a period.  The period must be a ratio.
-template<class Rep, class Period = Ratio<1>>
+template<class Rep_, class Period_ = Ratio<1>>
 class Duration
 {
-    friend class Duration;
+    template<class Rep, class Period> friend class Duration;
 public:
-    typedef Rep Rep;
-    typedef Period Period;
+    typedef Rep_ Rep;
+    typedef Period_ Period;
 
     static_assert(Period::num > 0, "Period can't be negative or 0");
 
@@ -33,7 +33,7 @@ public:
     template<class Rep2, class Period2>
     Duration& operator=(const Duration<Rep2,Period2>& rhs)
     {
-        typedef Period2::div<Period>::Type Ratio;
+        typedef typename Period2::template div<Period>::type Ratio;
         _rep = rhs._rep * Ratio::num / Ratio::den;
         return *this;
     }
@@ -55,7 +55,7 @@ public:
     template<class Rep2, class Period2>
     bool operator==(const Duration<Rep2,Period2>& rhs) const
     {
-        typedef typename common<Duration<Rep2,Period2>>::Type DurCommon;
+        typedef typename common<Duration<Rep2,Period2>>::type DurCommon;
         return DurCommon(*this)._rep == DurCommon(rhs)._rep;
     }
 
@@ -65,7 +65,7 @@ public:
     template<class Rep2, class Period2>
     bool operator<(const Duration<Rep2,Period2>& rhs) const
     {
-        typedef typename common<Duration<Rep2,Period2>>::Type DurCommon;
+        typedef typename common<Duration<Rep2,Period2>>::type DurCommon;
         return DurCommon(*this)._rep < DurCommon(rhs)._rep;
     }
 
@@ -88,8 +88,8 @@ public:
     struct common
     {
         typedef Duration<   typename std::common_type<Rep,typename rhs::Rep>::type,
-                            typename Period::template common<typename rhs::Period>::Type
-                        > Type;
+                            typename Period::template common<typename rhs::Period>::type
+                        > type;
     };
 
 private:
@@ -107,50 +107,50 @@ public:
 /// operator+(Duration, Duration).  Returns a duration with a best-fit period and repetition type.
 /** \relates Duration */
 template<class Rep, class Period, class Rep2, class Period2>
-typename Duration<Rep,Period>::common<Duration<Rep2,Period2>>::Type
+typename Duration<Rep,Period>::template common<Duration<Rep2,Period2>>::type
 operator+(const Duration<Rep,Period>& lhs, const Duration<Rep2,Period2>& rhs)
 {
-    typedef typename Duration<Rep,Period>::common<Duration<Rep2,Period2>>::Type DurCommon;
+    typedef typename Duration<Rep,Period>::template common<Duration<Rep2,Period2>>::type DurCommon;
     return DurCommon(lhs) += rhs;
 }
 
 /// operator-(Duration, Duration).  Returns a duration with a best-fit period and repetition type.
 /** \relates Duration */
 template<class Rep, class Period, class Rep2, class Period2>
-typename Duration<Rep,Period>::common<Duration<Rep2,Period2>>::Type
+typename Duration<Rep,Period>::template common<Duration<Rep2,Period2>>::type
 operator-(const Duration<Rep,Period>& lhs, const Duration<Rep2,Period2>& rhs)
 {
-    typedef typename Duration<Rep,Period>::common<Duration<Rep2,Period2>>::Type DurCommon;
+    typedef typename Duration<Rep,Period>::template common<Duration<Rep2,Period2>>::type DurCommon;
     return DurCommon(lhs) -= rhs;
 }
 
 /// operator*(Duration, Duration).  Returns a duration with a best-fit period and repetition type.
 /** \relates Duration */
 template<class Rep, class Period, class Rep2, class Period2>
-typename Duration<Rep,Period>::common<Duration<Rep2,Period2>>::Type
+typename Duration<Rep,Period>::template common<Duration<Rep2,Period2>>::type
 operator*(const Duration<Rep,Period>& lhs, const Duration<Rep2,Period2>& rhs)
 {
-    typedef typename Duration<Rep,Period>::common<Duration<Rep2,Period2>>::Type DurCommon;
+    typedef typename Duration<Rep,Period>::template common<Duration<Rep2,Period2>>::type DurCommon;
     return DurCommon(lhs) *= rhs;
 }
 
 /// operator/(Duration, Duration).  Returns a duration with a best-fit period and repetition type.
 /** \relates Duration */
 template<class Rep, class Period, class Rep2, class Period2>
-typename Duration<Rep,Period>::common<Duration<Rep2,Period2>>::Type
+typename Duration<Rep,Period>::template common<Duration<Rep2,Period2>>::type
 operator/(const Duration<Rep,Period>& lhs, const Duration<Rep2,Period2>& rhs)
 {
-    typedef typename Duration<Rep,Period>::common<Duration<Rep2,Period2>>::Type DurCommon;
+    typedef typename Duration<Rep,Period>::template common<Duration<Rep2,Period2>>::type DurCommon;
     return DurCommon(lhs) /= rhs;
 }
 
 /// operator%(Duration, Duration).  Returns a duration with a best-fit period and repetition type.
 /** \relates Duration */
 template<class Rep, class Period, class Rep2, class Period2>
-typename Duration<Rep,Period>::common<Duration<Rep2,Period2>>::Type
+typename Duration<Rep,Period>::template common<Duration<Rep2,Period2>>::type
 operator%(const Duration<Rep,Period>& lhs, const Duration<Rep2,Period2>& rhs)
 {
-    typedef typename Duration<Rep,Period>::common<Duration<Rep2,Period2>>::Type DurCommon;
+    typedef typename Duration<Rep,Period>::template common<Duration<Rep2,Period2>>::type DurCommon;
     return DurCommon(lhs) %= rhs;
 }
 
@@ -169,9 +169,9 @@ typedef Duration<int64, ratio::Nano>                            Nanosec;
 typedef Duration<int64, ratio::Micro>                           Microsec;
 typedef Duration<int64, ratio::Milli>                           Millisec;
 typedef Duration<int64, ratio::Unit>                            Seconds;
-typedef Duration<int,   Seconds::Period::mul<Ratio<60>>::Type>  Minutes;
-typedef Duration<int,   Minutes::Period::mul<Ratio<60>>::Type>  Hours;
-typedef Duration<int,   Hours::Period::mul<Ratio<24>>::Type>    Days;
+typedef Duration<int,   Seconds::Period::mul<Ratio<60>>::type>  Minutes;
+typedef Duration<int,   Minutes::Period::mul<Ratio<60>>::type>  Hours;
+typedef Duration<int,   Hours::Period::mul<Ratio<24>>::type>    Days;
 /// @}
 
 }

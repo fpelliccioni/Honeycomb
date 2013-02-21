@@ -59,18 +59,18 @@ public:
 
     virtual const Bv& bv() const                        { return _bv; }
     virtual const Bv& bvWorld(bool ancestorsUpdated = false) const
-                                                        { obj().com<Tm>().updateWorld(ancestorsUpdated); return _bvWorld; }
+                                                        { obj().template com<Tm>().updateWorld(ancestorsUpdated); return _bvWorld; }
 
 protected:
     virtual void onShapeChange()                        { _bvWorld.setDirty(true); CullVolBase::onShapeChange(); }
 
-    bool bvWorldDirty()                                 { return _worldState != obj().com<Tm>().worldState(); }
+    bool bvWorldDirty()                                 { return _worldState != obj().template com<Tm>().worldState(); }
 
     void bvWorldEval(Bv&)
     {
-        const Transform& world = obj().com<Tm>().world(true);
+        const Transform& world = obj().template com<Tm>().world(true);
         _shapeWorld = world * _shape;
-        _worldState = obj().com<Tm>().worldState();
+        _worldState = obj().template com<Tm>().worldState();
     }
 
     Shape               _shape;
@@ -79,14 +79,14 @@ protected:
     lazy<Bv>            _bvWorld;
     atomic::Var<int>    _worldState;
 };
-COMPONENT_REG(CullVol<Sphere>)
-COMPONENT_REG(CullVol<Box>)
-COMPONENT_REG(CullVol<Cylinder>)
-COMPONENT_REG(CullVol<Cone>)
-COMPONENT_REG(CullVol<Capsule>)
-COMPONENT_REG(CullVol<OrientBox>)
-COMPONENT_REG(CullVol<FrustumOrtho>)
-COMPONENT_REG(CullVol<FrustumPersp>)
+COMPONENT_REG((CullVol<Sphere>))
+COMPONENT_REG((CullVol<Box>))
+COMPONENT_REG((CullVol<Cylinder>))
+COMPONENT_REG((CullVol<Cone>))
+COMPONENT_REG((CullVol<Capsule>))
+COMPONENT_REG((CullVol<OrientBox>))
+COMPONENT_REG((CullVol<FrustumOrtho>))
+COMPONENT_REG((CullVol<FrustumPersp>))
 
 
 /// Generated box for culling

@@ -3,6 +3,7 @@
 
 #include "Honey/Misc/Enum.h"
 #include "Honey/Misc/ScopeGuard.h"
+#include "Honey/Misc/Clock.h"
 #include "Honey/Thread/Lock/Mutex.h"
 
 namespace honey
@@ -43,11 +44,11 @@ namespace lock
   * Instances are non-recursive (can't lock an instance twice), and can only be manipulated by one thread. \n
   * Note that if recursion is required, multiple instances can reference the same recursive lockable.
   */
-template<class Lockable>
+template<class Lockable_>
 class UniqueLock : mt::NoCopy
 {
 public:
-    typedef Lockable Lockable;
+    typedef Lockable_ Lockable;
 
     UniqueLock()                                                : _lock(nullptr), _owns(false) {}
 

@@ -53,6 +53,7 @@ namespace matrix { namespace priv
 template<class Real, int Options>
 class Vec<4,Real,Options> : public VecBase<Vec<4,Real,Options>>
 {
+    typedef VecBase<Vec<4,Real,Options>> Super;
 protected:
     typedef Vec<2,Real>                 Vec2;
     typedef Vec<3,Real>                 Vec3;
@@ -64,12 +65,17 @@ protected:
     typedef VecSwizRef<3,Real,Options>  VecSwizRef3;
     typedef VecSwizRef<4,Real,Options>  VecSwizRef4;
 public:
-
+    using Super::dot;
+    using Super::x;
+    using Super::y;
+    using Super::z;
+    using Super::w;
+    
     /// No init
     Vec()                                                           {}
     Vec(Real x, Real y, Real z, Real w)                             { this->x = x; this->y = y; this->z = z; this->w = w; }
     /// Construct uniform vector
-    explicit Vec(Real scalar)                                       { fromScalar(scalar); }
+    explicit Vec(Real scalar)                                       { this->fromScalar(scalar); }
     /// Construct from 2D vector
     explicit Vec(const Vec2& v, Real z = 0, Real w = 0)             { x = v.x; y = v.y; this->z = z; this->w = w; }
     /// Construct from 3D vector
@@ -78,10 +84,8 @@ public:
     template<class T>
     Vec(const MatrixBase<T>& rhs)                                   { operator=(rhs); }
 
-    using VecBase::dot;
-
     template<class T>
-    Vec& operator=(const MatrixBase<T>& rhs)                        { VecBase::operator=(rhs); return *this; }
+    Vec& operator=(const MatrixBase<T>& rhs)                        { Super::operator=(rhs); return *this; }
 
     /// \name Specialized for optimization
     /// @{
@@ -122,19 +126,19 @@ public:
         {
             for (int j = 0; j < dim; ++j)
             {
-                Debug::print(sout() << "VecSwizCon2 " << axes[i] << axes[j] 
+                debug::print(sout() << "VecSwizCon2 " << axes[i] << axes[j] 
                                             << "() const                                              { return VecSwizCon2("
                                             << axes[i] << "," << axes[j] << "); }" << endl);
 
                 for (int k = 0; k < dim; ++k)
                 {
-                    Debug::print(sout() << "VecSwizCon3 " << axes[i] << axes[j] << axes[k] 
+                    debug::print(sout() << "VecSwizCon3 " << axes[i] << axes[j] << axes[k] 
                                                 << "() const                                             { return VecSwizCon3("
                                                 << axes[i] << "," << axes[j] << "," << axes[k] << "); }" << endl);
 
                     for (int l = 0; l < dim; ++l)
                     {
-                        Debug::print(sout() << "VecSwizCon4 " << axes[i] << axes[j] << axes[k] << axes[l]
+                        debug::print(sout() << "VecSwizCon4 " << axes[i] << axes[j] << axes[k] << axes[l]
                                                     << "() const                                            { return VecSwizCon4("
                                                     << axes[i] << "," << axes[j] << "," << axes[k] << "," << axes[l] << "); }" << endl);
                     }
@@ -499,7 +503,7 @@ public:
                 if (used[j]) continue;
                 used[j] = true;
 
-                Debug::print(sout() << "VecSwizRef2 " << axes[i] << axes[j] 
+                debug::print(sout() << "VecSwizRef2 " << axes[i] << axes[j] 
                                             << "()                                                    { return VecSwizRef2("
                                             << axes[i] << "," << axes[j] << "); }" << endl);
 
@@ -508,14 +512,14 @@ public:
                     if (used[k]) continue;
                     used[k] = true;
 
-                    Debug::print(sout() << "VecSwizRef3 " << axes[i] << axes[j] << axes[k] 
+                    debug::print(sout() << "VecSwizRef3 " << axes[i] << axes[j] << axes[k] 
                                                 << "()                                                   { return VecSwizRef3("
                                                 << axes[i] << "," << axes[j] << "," << axes[k] << "); }" << endl);
 
                     for (int l = 0; l < dim; ++l)
                     {
                         if (used[l]) continue;
-                        Debug::print(sout() << "VecSwizRef4 " << axes[i] << axes[j] << axes[k] << axes[l]
+                        debug::print(sout() << "VecSwizRef4 " << axes[i] << axes[j] << axes[k] << axes[l]
                                                     << "()                                                  { return VecSwizRef4("
                                                     << axes[i] << "," << axes[j] << "," << axes[k] << "," << axes[l] << "); }" << endl);
                     }
@@ -602,15 +606,15 @@ template<class R, int O> const Vec<4,R,O> Vec<4,R,O>::axis[4]       = { axisX, a
 /** \cond */
 /// \name Specialized for optimization
 /// @{
-template<class R, int O>
-struct priv::map_impl0<Vec<4,R,O>, Vec<4,R,O>>
+template<class R, int Opt>
+struct priv::map_impl0<Vec<4,R,Opt>, Vec<4,R,Opt>>
 {
     template<class T, class O, class Func>
     static O&& func(T&& v, O&& o, Func&& f)                         { o.x = f(v.x); o.y = f(v.y); o.z = f(v.z); o.w = f(v.w); return forward<O>(o); }
 };
 
-template<class R, int O>
-struct priv::map_impl1<Vec<4,R,O>, Vec<4,R,O>, Vec<4,R,O>>
+template<class R, int Opt>
+struct priv::map_impl1<Vec<4,R,Opt>, Vec<4,R,Opt>, Vec<4,R,Opt>>
 {
     template<class T, class T2, class O, class Func>
     static O&& func(T&& v, T2&& rhs, O&& o, Func&& f)               { o.x = f(v.x,rhs.x); o.y = f(v.y,rhs.y); o.z = f(v.z,rhs.z); o.w = f(v.w,rhs.w); return forward<O>(o); }
@@ -646,8 +650,14 @@ class VecSwizRef<4,Real,Options> : public VecSwizRefBase<VecSwizRef<4,Real,Optio
 {
     template<class> friend class VecSwizRefBase;
 public:
+    typedef VecSwizRefBase<VecSwizRef<4,Real,Options>> Super;
+    using Super::operator=;
+    using Super::x;
+    using Super::y;
+    using Super::z;
+    using Super::w;
+    
     VecSwizRef(Real& x, Real& y, Real& z, Real& w)                  : rx(x), ry(y), rz(z), rw(w) { this->x = x; this->y = y; this->z = z; this->w = w; }
-    using VecSwizRefBase::operator=;
 
     VecSwizRef& commit()                                            { rx = x; ry = y; rz = z; rw = w; return *this; }
 

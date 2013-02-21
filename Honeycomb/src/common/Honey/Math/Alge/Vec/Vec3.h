@@ -43,6 +43,8 @@ namespace matrix { namespace priv
 template<class Real, int Options>
 class Vec<3,Real,Options> : public VecBase<Vec<3,Real,Options>>
 {
+    typedef VecBase<Vec<3,Real,Options>> Super;
+    typedef typename Super::Alge Alge;
 protected:
     typedef Vec<2,Real>                 Vec2;
     typedef Vec                         Vec3;
@@ -53,12 +55,16 @@ protected:
     typedef VecSwizRef<2,Real,Options>  VecSwizRef2;
     typedef VecSwizRef<3,Real,Options>  VecSwizRef3;
 public:
-
+    using Super::dot;
+    using Super::x;
+    using Super::y;
+    using Super::z;
+    
     /// No init
     Vec()                                                           {}
     Vec(Real x, Real y, Real z)                                     { this->x = x; this->y = y; this->z = z; }
     /// Construct uniform vector
-    explicit Vec(Real scalar)                                       { fromScalar(scalar); }
+    explicit Vec(Real scalar)                                       { this->fromScalar(scalar); }
     /// Construct from 2D vector
     explicit Vec(const Vec2& v, Real z = 0)                         { x = v.x; y = v.y; this->z = z; }
     /// Construct from vector ignoring the extra components
@@ -67,10 +73,8 @@ public:
     template<class T>
     Vec(const MatrixBase<T>& rhs)                                   { operator=(rhs); }
 
-    using VecBase::dot;
-
     template<class T>
-    Vec& operator=(const MatrixBase<T>& rhs)                        { VecBase::operator=(rhs); return *this; }
+    Vec& operator=(const MatrixBase<T>& rhs)                        { Super::operator=(rhs); return *this; }
     
     /// \name Specialized for optimization
     /// @{
@@ -286,15 +290,15 @@ template<class R, int O> const Vec<3,R,O> Vec<3,R,O>::axis[3]       = { axisX, a
 /** \cond */
 /// \name Specialized for optimization
 /// @{
-template<class R, int O>
-struct priv::map_impl0<Vec<3,R,O>, Vec<3,R,O>>
+template<class R, int Opt>
+struct priv::map_impl0<Vec<3,R,Opt>, Vec<3,R,Opt>>
 {
     template<class T, class O, class Func>
     static O&& func(T&& v, O&& o, Func&& f)                         { o.x = f(v.x); o.y = f(v.y); o.z = f(v.z); return forward<O>(o); }
 };
 
-template<class R, int O>
-struct priv::map_impl1<Vec<3,R,O>, Vec<3,R,O>, Vec<3,R,O>>
+template<class R, int Opt>
+struct priv::map_impl1<Vec<3,R,Opt>, Vec<3,R,Opt>, Vec<3,R,Opt>>
 {
     template<class T, class T2, class O, class Func>
     static O&& func(T&& v, T2&& rhs, O&& o, Func&& f)               { o.x = f(v.x,rhs.x); o.y = f(v.y,rhs.y); o.z = f(v.z,rhs.z); return forward<O>(o); }
@@ -330,8 +334,13 @@ class VecSwizRef<3,Real,Options> : public VecSwizRefBase<VecSwizRef<3,Real,Optio
 {
     template<class> friend class VecSwizRefBase;
 public:
+    typedef VecSwizRefBase<VecSwizRef<3,Real,Options>> Super;
+    using Super::operator=;
+    using Super::x;
+    using Super::y;
+    using Super::z;
+    
     VecSwizRef(Real& x, Real& y, Real& z)                           : rx(x), ry(y), rz(z) { this->x = x; this->y = y; this->z = z; }
-    using VecSwizRefBase::operator=;
 
     VecSwizRef& commit()                                            { rx = x; ry = y; rz = z; return *this; }
 

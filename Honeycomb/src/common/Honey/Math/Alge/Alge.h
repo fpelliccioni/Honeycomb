@@ -16,7 +16,7 @@ namespace honey
 template<class Real>
 class Alge_ : mt::NoCopy
 {
-    typedef typename Numeral<Real>::RealT       RealT;
+    typedef typename Numeral<Real>::Real_       Real_;
     typedef typename Numeral<Real>::Int         Int;
     typedef typename Numeral<Int>::Unsigned     UInt;
 public:
@@ -25,26 +25,27 @@ public:
     /// Get absolute value of unsigned integer
     static UInt abs(UInt x)                                                 { return x;  }
     /// Get absolute value of real number
-    static Real abs(Real x)                                                 { return RealT::abs(x); }
+    static Real abs(Real x)                                                 { return Real_::abs(x); }
 
     /// Get sign of number {-1,0,1}
-    template<class Num> static Num sign(Num x)                              { return x > 0 ? 1 : x < 0 ? -1 : 0; }
+    static Int sign(Int x)                                                  { return x > 0 ? 1 : x < 0 ? -1 : 0; }
     static UInt sign(UInt x)                                                { return x > 0 ? 1 : 0; }
-
+    static Real sign(Real x)                                                { return x > 0 ? 1 : x < 0 ? -1 : 0; }
+    
     /// Round up to the nearest whole number towards +inf
-    static Real ceil(Real x)                                                { return RealT::ceil(x); }
+    static Real ceil(Real x)                                                { return Real_::ceil(x); }
     /// Round down to the nearest whole number towards -inf
-    static Real floor(Real x)                                               { return RealT::floor(x); }
+    static Real floor(Real x)                                               { return Real_::floor(x); }
     /// Round to the nearest whole number
-    static Real round(Real x)                                               { return RealT::round(x); }
+    static Real round(Real x)                                               { return Real_::round(x); }
 
     /// Remove fractional part, leaving just the whole number
-    static Real trunc(Real x)                                               { return RealT::trunc(x); }
+    static Real trunc(Real x)                                               { return Real_::trunc(x); }
     /// Remove the whole part, leaving just the fraction
-    static Real frac(Real x)                                                { return RealT::frac(x); }
+    static Real frac(Real x)                                                { return Real_::frac(x); }
 
     /// Modulo, same as x % y.  Returns remainder of division: x/y
-    static Real mod(Real x, Real y)                                         { return RealT::mod(x, y); }
+    static Real mod(Real x, Real y)                                         { return Real_::mod(x, y); }
     /// Get an equivalent value in the normalized modular interval [-mod, mod]
     static Real modNormalize(Real mod, Real val)
     {
@@ -62,59 +63,56 @@ public:
     template<class Num> static Num sqr(Num x)                               { return x*x; }
 
     /// Square Root
-    static Real sqrt(Real x)                                                { return RealT::sqrt(x); }
+    static Real sqrt(Real x)                                                { return Real_::sqrt(x); }
     /// Inverse Square Root
-    static Real sqrtInv(Real x)                                             { return 1 / RealT::sqrt(x); }
+    static Real sqrtInv(Real x)                                             { return 1 / Real_::sqrt(x); }
 
     /// Euler's number _e_ raised to exponent x (_e_^x)
-    static Real exp(Real x)                                                 { return RealT::exp(x); }
+    static Real exp(Real x)                                                 { return Real_::exp(x); }
     /// exp(x) - 1, more accurate than exp() for small values of x.
     static Real expm1(Real x);
 
     /// x raised to exponent y
-    static Real pow(Real x, Real y)                                         { return RealT::pow(x, y); }
+    static Real pow(Real x, Real y)                                         { return Real_::pow(x, y); }
 
     /// The lowest negative value x for which exp(x) can be calucated without underflow
     static const Real logMin;
     /// The highest value x for which exp(x) can be calucated without overflow
     static const Real logMax;
     /// Natural logarithm. ie. ln(x)
-    static Real log(Real x)                                                 { return RealT::log(x); }
+    static Real log(Real x)                                                 { return Real_::log(x); }
     /// Logarithm with base number
-    static Real log(Real x, Real base)                                      { return RealT::log(x) / RealT::log(base); }
+    static Real log(Real x, Real base)                                      { return Real_::log(x) / Real_::log(base); }
     /// log(1 + x), more accurate than log() for small values of x.
     static Real log1p(Real x);
 
     /// Get the minimum of two numbers
-    template<class Num> static Num min(Num a, Num b)                        { return (a <= b) ? a : b; }
-    /// Template default
-    static Real min(Real a, Real b)                                         { return min<Real>(a, b); }
+    template<class Num, class Num2>
+    static typename std::common_type<Num, Num2>::type
+        min(Num a, Num2 b)                                                  { return a <= b ? a : b; }
 
     /// Get the maximum of two numbers
-    template<class Num> static Num max(Num a, Num b)                        { return (a >= b) ? a : b; }
-    /// Template default
-    static Real max(Real a, Real b)                                         { return max<Real>(a, b); }
+    template<class Num, class Num2>
+    static typename std::common_type<Num, Num2>::type
+        max(Num a, Num2 b)                                                  { return a >= b ? a : b; }
     
     /// Ensure that a number is within a range
-    template<class Num>
-    static Num clamp(Num val, Num min, Num max)                             { return val < min ? min : val > max ? max : val; }
-    /// Template default
-    static Real clamp(Real val, Real min, Real max)                         { return clamp<Real>(val, min, max); }
+    template<class Num, class Num2, class Num3>
+    static typename std::common_type<Num, Num2, Num3>::type
+        clamp(Num val, Num2 min, Num3 max)                                  { return val < min ? min : val > max ? max : val; }
 
     /// Returns true if real is not a number
     static bool isNan(Real x)                                               { return x != x; }
 
     /// Check whether two numbers are near each other, given a tolerance
-    template<class Num> static bool isNear(Num a, Num b, Num tol)           { return abs(a - b) <= tol; }
-    /// Template default
-    static bool isNear(Real a, Real b, Real tol = RealT::zeroTol)           { return isNear<Real>(a, b, tol); }
+    static bool isNear(Int a, Int b, Int tol)                               { return abs(a - b) <= tol; }
+    static bool isNear(Real a, Real b, Real tol = Real_::zeroTol)           { return abs(a - b) <= tol; }
     /// Check whether a number is close to zero
-    static bool isNearZero(Real val, Real tol = RealT::zeroTol)             { return abs(val) <= tol; }
+    static bool isNearZero(Real val, Real tol = Real_::zeroTol)             { return abs(val) <= tol; }
 
     /// Check if value is within min/max inclusive range
-    template<class Num> static bool isInRange(Num val, Num min, Num max)    { return val >= min && val <= max; }
-    /// Template default
-    static bool isInRange(Real val, Real min, Real max)                     { return isInRange<Real>(val, min, max); }
+    template<class Num, class Num2, class Num3>
+    static bool isInRange(Num val, Num2 min, Num3 max)                      { return val >= min && val <= max; }
 
     /// Check if x is a power of two
     static bool isPow2(UInt x)                                              { return !((x-1) & x); }

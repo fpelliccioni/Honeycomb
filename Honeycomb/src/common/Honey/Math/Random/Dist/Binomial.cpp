@@ -73,7 +73,7 @@ Real Binomial_<Real>::cdfInv(Real y) const
         return 0;
     if (y >= 1)
         return n;
-    return cdfInvFind(y, 0, n, true);
+    return this->cdfInvFind(y, 0, n, true);
 }
 
 template<class Real>

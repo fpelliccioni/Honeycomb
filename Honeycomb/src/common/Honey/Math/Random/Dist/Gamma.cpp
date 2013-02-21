@@ -46,7 +46,7 @@ Real Gamma_<Real>::next() const
 }
 
 template<class Real>
-typename Real Gamma_<Real>::pdf(Real x) const
+Real Gamma_<Real>::pdf(Real x) const
 {
     Double xd = x, ad = a, bd = b;
 
@@ -64,29 +64,6 @@ typename Real Gamma_<Real>::pdf(Real x) const
     else 
         return Alge_d::exp((ad - 1) * Alge_d::log(xd/bd) - xd/bd - GammaFunc::gammaLn(ad)) / bd;
 }
-
-template<class Real>
-typename Real Gamma_<Real>::cdf(Real x) const
-{
-    return GammaInc::calc(Double(a), Double(x)/Double(b));
-}
-
-template<class Real>
-typename Real Gamma_<Real>::cdfComp(Real x) const
-{
-    return GammaInc::calcComp(Double(a), Double(x)/Double(b));
-}
-
-template<class Real>
-typename Real Gamma_<Real>::cdfInv(Real P) const
-{
-    return Double(b)*GammaInc::calcCompInv(Double(a), Double(1-P));
-}
-
-
-template class Gamma_<Float>;
-template class Gamma_<Double>;
-
 
 
 //==============================================================================================================
@@ -447,7 +424,7 @@ template<class Real>
 Real GammaFunc_<Real>::chooseLn(Real n, Real m)
 {
     if (n < 0 || m < 0 || m > n)
-        return RealT::nan;
+        return Real_::nan;
     if (m == 0 || m == n)
         return 0;
     return factorialLn(n) - factorialLn(m) - factorialLn(n-m);
@@ -465,7 +442,7 @@ template class GammaFunc_<Double>;
 template<class Real>
 class GammaInc
 {
-    typedef typename Numeral<Real>::RealT RealT;
+    typedef typename Numeral<Real>::Real_ Real_;
     typedef Alge_<Real>         Alge;
     typedef GammaFunc_<Real>    GammaFunc;
     typedef Gaussian_<Real>     Gaussian;
@@ -557,7 +534,7 @@ Real GammaInc<Real>::calcComp(Real a, Real x)
             qkm1 *= bigInv;
         }
 
-    } while(t > RealT::epsilon);
+    } while(t > Real_::epsilon);
 
     return ans * ax;
 }
@@ -617,7 +594,7 @@ Real GammaInc<Real>::calc(Real a, Real x)
         r += 1;
         c *= x/r;
         ans += c;
-    } while(c/ans > RealT::epsilon);
+    } while(c/ans > Real_::epsilon);
 
     return ans * ax/a;
 }
@@ -649,14 +626,14 @@ Real GammaInc<Real>::calcCompInv(Real a, Real y0)
     if (y0 >= 1)
         return 0;
     else if (y0 <= 0)
-        return RealT::inf;
+        return Real_::inf;
 
     /* bound the solution */
-    Real x0 = RealT::max;
+    Real x0 = Real_::max;
     Real yl = 0;
     Real x1 = 0;
     Real yh = 1;
-    Real dithresh = 5 * RealT::epsilon;
+    Real dithresh = 5 * Real_::epsilon;
 
     /* approximation to inverse function */
     Real d = 1/(9*a);
@@ -689,8 +666,8 @@ Real GammaInc<Real>::calcCompInv(Real a, Real y0)
         d = -Alge::exp(d);
         /* compute the step to the next approximation of x */
         d = (y - y0)/d;
-        if (Alge::abs(d/x) < RealT::epsilon )
-            goto done;
+        if (Alge::abs(d/x) < Real_::epsilon )
+            return x;
         x = x - d;
     }
 
@@ -698,11 +675,11 @@ Real GammaInc<Real>::calcCompInv(Real a, Real y0)
     ihalve:
 
     d = 0.0625;
-    if( x0 == RealT::max )
+    if( x0 == Real_::max )
     {
         if( x <= 0 )
             x = 1;
-        while (x0 == RealT::max)
+        while (x0 == Real_::max)
         {
             x = (1 + d) * x;
             y = calcComp( a, x );
@@ -762,10 +739,31 @@ Real GammaInc<Real>::calcCompInv(Real a, Real y0)
         }
     }
 
-    done:
     return x;
 }
 
+//==============================================================================================================
 
+template<class Real>
+Real Gamma_<Real>::cdf(Real x) const
+{
+    return GammaInc::calc(Double(a), Double(x)/Double(b));
+}
+
+template<class Real>
+Real Gamma_<Real>::cdfComp(Real x) const
+{
+    return GammaInc::calcComp(Double(a), Double(x)/Double(b));
+}
+
+template<class Real>
+Real Gamma_<Real>::cdfInv(Real P) const
+{
+    return Double(b)*GammaInc::calcCompInv(Double(a), Double(1-P));
+}
+
+
+template class Gamma_<Float>;
+template class Gamma_<Double>;
 
 }

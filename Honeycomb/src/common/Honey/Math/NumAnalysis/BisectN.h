@@ -14,7 +14,7 @@ namespace honey
 template<class Real, int Dim>
 class BisectN
 {
-    typedef typename Numeral<Real>::RealT   RealT;
+    typedef typename Numeral<Real>::Real_   Real_;
     typedef Alge_<Real>                     Alge;
 
 public:
@@ -28,7 +28,7 @@ public:
       * \param tol      Find root to within tolerance of zero
       * \param depthMax Tree is explored one path at a time using a stack, requires depthMax nodes.
       */
-    BisectN(Real tol = RealT::zeroTol, int depthMax = 30)       : _tol(tol), _depthMax(depthMax) { _nodes.reserve(_depthMax); } 
+    BisectN(Real tol = Real_::zeroTol, int depthMax = 30)       : _tol(tol), _depthMax(depthMax) { _nodes.reserve(_depthMax); } 
 
     /// Find the root of a set of functions within bounds [min,max]
     /**

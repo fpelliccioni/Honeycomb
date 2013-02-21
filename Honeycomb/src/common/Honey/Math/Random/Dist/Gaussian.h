@@ -25,9 +25,13 @@ namespace honey
 template<class Real>
 class Gaussian_ : public RandomDist<Real>
 {
+    typedef RandomDist<Real>    Super;
+    RandomDist_imports();
+    typedef Trig_<Double>       Trig_d;
+    
 public:
-    Gaussian_(Real mu = 0, Real sigma = 1)                  :                   mu(mu), sigma(sigma) { assert(sigma > 0); }
-    Gaussian_(RandomGen& gen, Real mu = 0, Real sigma = 1)  : RandomDist(gen),  mu(mu), sigma(sigma) { assert(sigma > 0); }
+    Gaussian_(option<RandomGen&> gen, Real mu = 0, Real sigma = 1)  : Super(gen), mu(mu), sigma(sigma) { assert(sigma > 0); }
+    Gaussian_(Real mu = 0, Real sigma = 1)                          : Gaussian_(optnull, mu, sigma) {}
 
     virtual Real next() const;
     virtual Real pdf(Real x) const;
@@ -37,13 +41,13 @@ public:
     virtual Real variance() const           { return Alge::sqr(sigma); }
     
     /// Gauss Error Function, related to Cdf.  Input: [-inf, inf] -> Output: [-1, 1]
-    static Real erf(Real x)                 { return 2*Gaussian().cdf(Double(x)*Double_::sqrtTwo) - 1; }
+    static Real erf(Real x)                 { return 2*Gaussian_().cdf(Double(x)*Double_::sqrtTwo) - 1; }
     /// Complement of Error Function.
-    static Real erfComp(Real x)             { return 2*Gaussian().cdf(-Double(x)*Double_::sqrtTwo); }
+    static Real erfComp(Real x)             { return 2*Gaussian_().cdf(-Double(x)*Double_::sqrtTwo); }
     /// Inverse of Error Function, related to CdfInv.  Input: [-1, 1] -> Output: [-inf, inf]
-    static Real erfInv(Real y)              { return Gaussian().cdfInv(Double(y+1)/2) / Double_::sqrtTwo; }
+    static Real erfInv(Real y)              { return Gaussian_().cdfInv(Double(y+1)/2) / Double_::sqrtTwo; }
     /// Inverse of complement Error Function.
-    static Real erfCompInv(Real y)          { return -Gaussian().cdfInv(Double(y)/2) / Double_::sqrtTwo; }
+    static Real erfCompInv(Real y)          { return -Gaussian_().cdfInv(Double(y)/2) / Double_::sqrtTwo; }
 
     Real mu;
     Real sigma;

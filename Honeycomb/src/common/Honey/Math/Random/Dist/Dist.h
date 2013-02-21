@@ -8,36 +8,32 @@
 namespace honey
 {
 
-template<class Real> class Random_;
 template<class Real> class Uniform_;
-template<class Real> class Gaussian_;
-template<class Real> class Gamma_;
-template<class Real> class GammaFunc_;
-template<class Real> class Beta_;
-
+    
 /// Base class for all random distributions
 template<class Real>
 class RandomDist
 {
 protected:
-    typedef typename Numeral<Real>::RealT   RealT;
-    typedef typename RealT::DoubleType      Double_;
+    typedef typename Numeral<Real>::Real_   Real_;
+    typedef typename Real_::DoubleType      Double_;
     typedef typename Double_::Real          Double;
     typedef Alge_<Real>                     Alge;
     typedef Alge_<Double>                   Alge_d;
-    typedef Trig_<Real>                     Trig;
-    typedef Trig_<Double>                   Trig_d;
-    typedef Random_<Real>                   Random;
     typedef Uniform_<Double>                Uniform;
-    typedef Gaussian_<Double>               Gaussian;
-    typedef Gamma_<Double>                  Gamma;
-    typedef GammaFunc_<Double>              GammaFunc;
-    typedef Beta_<Double>                   Beta;
 
+    #define RandomDist_imports()                        \
+        typedef typename Super::Real_       Real_;      \
+        typedef typename Super::Double_     Double_;    \
+        typedef typename Super::Double      Double;     \
+        typedef typename Super::Alge        Alge;       \
+        typedef typename Super::Alge_d      Alge_d;     \
+        typedef typename Super::Uniform     Uniform;    \
+        using Super::getGen;                            \
+    
 public:
-    RandomDist()                                        : _gen(nullptr) {}
     /// Construct with a random generator to use for next()
-    RandomDist(RandomGen& gen)                          : _gen(&gen) {}
+    RandomDist(option<RandomGen&> gen = optnull)        : _gen(gen.ptr()) {}
 
     virtual ~RandomDist()                               {}
 

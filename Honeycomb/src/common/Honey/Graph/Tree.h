@@ -13,34 +13,38 @@ namespace honey
   * Every tree node has one parent node, multiple children, and a generic data value.
   * Nodes may contain a key for identification and fast retrieval. The key doesn't have to be unique.
   */ 
-template<class Data, class Key = Id>
+template<class Data_, class Key_ = Id>
 class TreeNode
 {
+public:
+    typedef Data_ Data;
+    typedef Key_ Key;
+    
+private:
     template<class Data, class Key>
     friend class TreeNode;
 
     /// Child linked list
-    typedef list<TreeNode*, SmallAllocator<TreeNode*>> ChildList;
-    typedef list<const TreeNode*, SmallAllocator<const TreeNode*>> ChildListConst;
-
+    typedef list<TreeNode*, SmallAllocator<TreeNode*>>              ChildList;
+    typedef typename ChildList::const_iterator                      ChildListIter;
+    typedef typename ChildList::const_reverse_iterator              ChildListIterR;
+    typedef list<const TreeNode*, SmallAllocator<const TreeNode*>>  ChildListConst;
+    
     /// Map holding children at keys
-    typedef typename UnorderedMultiMap<Key, TreeNode*, SmallAllocator>::Type ChildMap;
-    typedef typename UnorderedMultiMap<Key, const TreeNode*, SmallAllocator>::Type ChildMapConst;
+    typedef typename UnorderedMultiMap<Key, TreeNode*, SmallAllocator>::type        ChildMap;
+    typedef typename UnorderedMultiMap<Key, const TreeNode*, SmallAllocator>::type  ChildMapConst;
 
 public:
-    typedef Data Data;
-    typedef Key Key;
-
     /// Iterators for child list
-    typedef DerefIter<typename ChildList::const_iterator> ChildIter;
-    typedef std::reverse_iterator<ChildIter> ChildIterR;
+    typedef DerefIter<ChildListIter>    ChildIter;
+    typedef DerefIter<ChildListIterR>   ChildIterR;
 
-    typedef DerefIter<typename ChildListConst::const_iterator> ChildConstIter;
-    typedef std::reverse_iterator<ChildConstIter> ChildConstIterR;
+    typedef DerefIter<typename ChildListConst::const_iterator>          ChildConstIter;
+    typedef DerefIter<typename ChildListConst::const_reverse_iterator>  ChildConstIterR;
 
     /// Iterator and ranged iterator for children map
-    typedef typename ChildMap::const_iterator ChildMapIter;
-    typedef typename ChildMapConst::const_iterator ChildMapConstIter;
+    typedef typename ChildMap::const_iterator       ChildMapIter;
+    typedef typename ChildMapConst::const_iterator  ChildMapConstIter;
 
     SIGNAL_DECL(TreeNode)
     /// Called before class is destroyed
@@ -64,7 +68,7 @@ public:
     {
         setParent(nullptr);
         clearChildren();
-        if (hasListenerList()) _listenerList().dispatch<sigDestroy>(*this);
+        if (hasListenerList()) _listenerList().template dispatch<sigDestroy>(*this);
         delete_(_listenerList_p);
     }
 
@@ -72,7 +76,7 @@ public:
     void setData(const Data& data)
     {
         _data = data;
-        if (hasListenerList()) _listenerList().dispatch<sigSetData>(*this, _data);
+        if (hasListenerList()) _listenerList().template dispatch<sigSetData>(*this, _data);
     }
 
     const Data& getData() const                                 { return _data; }
@@ -101,7 +105,7 @@ public:
 
         //Insert the child at new key
         if (hasParent()) _parent->_childMap.insert(make_pair(_key, this));
-        if (hasListenerList()) _listenerList().dispatch<sigSetKey>(*this, _key);
+        if (hasListenerList()) _listenerList().template dispatch<sigSetKey>(*this, _key);
     }
 
     /// Get key used to identify this node
@@ -113,7 +117,7 @@ public:
     {
         if (hasParent()) _parent->removeChild(*this);
         if (parent) return parent->addChild(*this);
-        return _childList.end();
+        return ChildListIter(_childList.end());
     }
 
     /// Get parent node
@@ -127,7 +131,7 @@ public:
     {
         assert(&child != this);
         if (child.hasParent()) child._parent->removeChild(child);
-        return insertChild(_childList.end(), child);
+        return insertChild(ChildListIter(_childList.end()), child);
     }
 
     ///Set child into list at position.  Returns position of child in list.
@@ -139,13 +143,13 @@ public:
         assert(&child != this);
         //Remove child from parent
         if (child.hasParent()) child._parent->removeChild(child);
-        if (child.hasListenerList()) child._listenerList().dispatch<sigSetParent>(child, this);
+        if (child.hasListenerList()) child._listenerList().template dispatch<sigSetParent>(child, this);
         child._parent = this;
         //Insert child into list
-        child._itSib = _childList.insert(pos, &child);
+        child._itSib = ChildListIter(_childList.insert(pos, &child));
         //Insert child key into map
         if (child._key != _keyNull) _childMap.insert(make_pair(child._key, &child));
-        if (hasListenerList()) _listenerList().dispatch<sigInsertChild>(*this, pos != _childList.end() ? &*pos : nullptr, child);
+        if (hasListenerList()) _listenerList().template dispatch<sigInsertChild>(*this, pos != _childList.end() ? &*pos : nullptr, child);
         return child._itSib;
     }
     
@@ -154,7 +158,7 @@ public:
     {
         ChildIter itChild = childPos(child);
         if (itChild != _childList.end()) return removeChild(itChild);
-        return _childList.end(); //Child not in parent
+        return ChildListIter(_childList.end()); //Child not in parent
     }
 
     /// Remove child at position in list. Returns position of next child. Will fail if pos is invalid.
@@ -162,12 +166,12 @@ public:
     {
         auto& child = *pos;
         assert(child._parent == this);
-        if (hasListenerList()) _listenerList().dispatch<sigRemoveChild>(*this, child);
-        if (child.hasListenerList()) child._listenerList().dispatch<sigSetParent>(child, nullptr);
+        if (hasListenerList()) _listenerList().template dispatch<sigRemoveChild>(*this, child);
+        if (child.hasListenerList()) child._listenerList().template dispatch<sigSetParent>(child, nullptr);
         child._parent = nullptr;
-        child._itSib = child._childList.end();
+        child._itSib = ChildListIter(child._childList.end());
         //Erase from child list
-        auto itRet = _childList.erase(pos);
+        auto itRet = ChildListIter(_childList.erase(pos));
         //Erase from map
         if (child._key != _keyNull)
         {
@@ -179,15 +183,15 @@ public:
     }
 
     /// Clear all children
-    void clearChildren()                                        { while (hasChildren()) removeChild(--_childList.end()); }
+    void clearChildren()                                        { while (hasChildren()) removeChild(--ChildListIter(_childList.end())); }
 
     /// Get all children
-    Range_<ChildIter, ChildIter> children()                     { return range(_childList.begin(), _childList.end()); }
-    Range_<ChildConstIter, ChildConstIter> children() const     { auto ret = const_cast<TreeNode*>(this)->children(); return reinterpret_cast<Range_<ChildConstIter, ChildConstIter>&>(ret); }
+    Range_<ChildConstIter, ChildConstIter> children() const     { Range_<ChildIter, ChildIter> ret = range(_childList.begin(), _childList.end()); return reinterpret_cast<Range_<ChildConstIter, ChildConstIter>&>(ret); }
+    Range_<ChildIter, ChildIter> children()                     { return range(ChildListIter(_childList.begin()), ChildListIter(_childList.end())); }
 
     /// Get all children in reverse order
-    Range_<ChildIterR, ChildIterR> childrenR()                  { return range(_childList.rbegin(), _childList.rend()); }
-    Range_<ChildConstIterR, ChildConstIterR> childrenR() const  { auto ret = const_cast<TreeNode*>(this)->childrenR(); return reinterpret_cast<Range_<ChildConstIterR, ChildConstIterR>&>(ret);}
+    Range_<ChildConstIterR, ChildConstIterR> childrenR() const  { Range_<ChildIterR, ChildIterR> ret = range(_childList.rbegin(), _childList.rend()); return reinterpret_cast<Range_<ChildConstIterR, ChildConstIterR>&>(ret); }
+    Range_<ChildIterR, ChildIterR> childrenR()                  { return range(ChildListIterR(_childList.rbegin()), ChildListIterR(_childList.rend())); }
 
     /// Get number of children
     int childCount() const                                      { return _childList.size(); }
@@ -196,22 +200,20 @@ public:
     bool hasChildren() const                                    { return childCount() > 0; }
 
     /// Get child position in list.  Returns first child found at key, or children().end() if not found.
-    ChildIter childPos(const Key& key)
+    ChildConstIter childPos(const Key& key) const
     {
         auto it = _childMap.find(key);
         return it != _childMap.end() ? it->second->_itSib : _childList.end();
     }
-
-    ChildConstIter childPos(const Key& key) const               { auto ret = const_cast<TreeNode*>(this)->childPos(key); return reinterpret_cast<ChildConstIter&>(ret); }
-
+    ChildIter childPos(const Key& key)                          { auto ret = const_cast<const TreeNode*>(this)->childPos(key); return reinterpret_cast<ChildIter&>(ret); }
+    
     /// Get child position in list.  Returns children().end() if not in parent.
-    ChildIter childPos(const TreeNode& child)
+    ChildConstIter childPos(const TreeNode& child) const
     {
-        if (child._parent == this) return child._itSib;
-        return _childList.end();
+        auto ret = child._parent == this ? child._itSib : ChildIter(_childList.end());
+        return reinterpret_cast<ChildConstIter&>(ret);
     }
-
-    ChildConstIter childPos(const TreeNode& child) const        { auto ret = const_cast<TreeNode*>(this)->childPos(child); return reinterpret_cast<ChildConstIter&>(ret); }
+    ChildIter childPos(const TreeNode& child)                   { auto ret = const_cast<const TreeNode*>(this)->childPos(child); return reinterpret_cast<ChildIter&>(ret); }
 
     /// Get child at offset from another child.  Large offsets will be slow to process.
     ChildConstIter childPos(ChildConstIter itBase, int offset) const
@@ -220,7 +222,6 @@ public:
         else                for (; offset < 0 && itBase != _childList.begin(); ++offset, --itBase);
         return itBase;
     }
-
     ChildIter childPos(ChildIter itBase, int offset)            { auto ret = const_cast<const TreeNode*>(this)->childPos(reinterpret_cast<ChildConstIter&>(itBase), offset); return reinterpret_cast<ChildIter&>(ret); }
 
     /// Get offset of child `itPos` relative to another child `itBase`. Returns childCount() if not found.
@@ -243,18 +244,13 @@ public:
     int childOffset(ChildIter itBase, ChildIter itPos)          { return const_cast<const TreeNode*>(this)->childOffset(reinterpret_cast<ChildConstIter&>(itBase), reinterpret_cast<ChildConstIter&>(itPos)); }
 
     /// Get child in list. Returns first child found at key, or null if not found.
-    TreeNode* child(const Key& key)
+    const TreeNode* child(const Key& key) const
     {
-        if (hasChildMap())
-        {
-            auto it = _childMap.find(key);
-            if (it != _childMap.end()) return it->second;
-        }
-        return nullptr;
+        auto it = _childMap.find(key);
+        return it != _childMap.end() ? it->second : nullptr;
     }
-
-    const TreeNode* child(const Key& key) const                 { return const_cast<TreeNode*>(this)->child(key); }
-
+    TreeNode* child(const Key& key)                             { return const_cast<TreeNode*>(const_cast<const TreeNode*>(this)->child(key)); }
+    
     /// Check if this node has a child in its list
     bool hasChild(const TreeNode& child) const                  { return childPos(child) != _childList.end(); }
 
@@ -263,26 +259,34 @@ public:
       * The child node `TreeNode*` is stored in the map pair `ChildMapIter->second`
       */
     Range_<ChildMapIter, ChildMapIter> children(const Key& key) { return range(_childMap.equal_range(key)); }
-
-    Range_<ChildMapConstIter, ChildMapConstIter> children(const Key& key) const   { auto ret = const_cast<TreeNode*>(this)->children(key); return reinterpret_cast<Range_<ChildMapConstIter, ChildMapConstIter>&>(ret); }
+    Range_<ChildMapConstIter, ChildMapConstIter> children(const Key& key) const
+                                                                { auto ret = const_cast<TreeNode*>(this)->children(key); return reinterpret_cast<Range_<ChildMapConstIter, ChildMapConstIter>&>(ret); }
 
     /// Returns forward iterator range starting at next sibling
-    Range_<ChildIter, ChildIter> sibNext()                      { return hasParent() ?  range(next(_itSib), _parent->_childList.end()) :
-                                                                                        range(_childList.end(), _childList.end()); }
-    Range_<ChildConstIter, ChildConstIter> sibNext() const      { auto ret = const_cast<TreeNode*>(this)->sibNext(); return reinterpret_cast<Range_<ChildConstIter, ChildConstIter>&>(ret); }
+    Range_<ChildConstIter, ChildConstIter> sibNext() const
+    {
+        auto ret = hasParent() ?    range(next(_itSib), ChildIter(_parent->_childList.end())) :
+                                    range(ChildIter(_childList.end()), ChildIter(_childList.end()));
+        return reinterpret_cast<Range_<ChildConstIter, ChildConstIter>&>(ret);
+    }
+    Range_<ChildIter, ChildIter> sibNext()                      { auto ret = const_cast<const TreeNode*>(this)->sibNext(); return reinterpret_cast<Range_<ChildIter, ChildIter>&>(ret); }
 
     /// Returns reverse iterator range starting at previous sibling
-    Range_<ChildIterR, ChildIterR> sibPrev()                    { return hasParent() ?  range(ChildIterR(_itSib), _parent->_childList.rend()) :
-                                                                                        range(_childList.rend(), _childList.rend()); }
-    Range_<ChildConstIterR, ChildConstIterR> sibPrev() const    { auto ret = const_cast<TreeNode*>(this)->sibPrev(); return reinterpret_cast<Range_<ChildConstIterR, ChildConstIterR>&>(ret); }
-
+    Range_<ChildConstIterR, ChildConstIterR> sibPrev() const
+    {
+        auto ret = hasParent() ?    range(ChildIterR(ChildListIterR(_itSib)), ChildIterR(_parent->_childList.rend())) :
+                                    range(ChildIterR(_childList.rend()), ChildIterR(_childList.rend()));
+        return reinterpret_cast<Range_<ChildConstIterR, ChildConstIterR>&>(ret);
+    }
+    Range_<ChildIterR, ChildIterR> sibPrev()                    { auto ret = const_cast<const TreeNode*>(this)->sibPrev(); return reinterpret_cast<Range_<ChildIterR, ChildIterR>&>(ret); }
+    
     /// Get number of siblings (count doesn't include this node)
     int sibCount() const                                        { return hasParent() ? _parent->childCount() - 1 : 0; }
 
     /// Check if node has a next sibling
     bool sibHasNext() const                                     { return hasParent() ? next(_itSib) != _parent->_childList.end() : false; }
     /// Check if node has a previous sibling
-    bool sibHasPrev() const                                     { return hasParent() ? ChildIterR(_itSib) != _parent->_childList.rend() : false; }
+    bool sibHasPrev() const                                     { return hasParent() ? ChildListIterR(_itSib) != _parent->_childList.rend() : false; }
 
     /// Get sibling at offset from another sibling.  Large offsets will be slow to process.
     ChildConstIter sibPos(ChildConstIter itBase, int offset) const      { return hasParent() ? _parent->childPos(itBase, offset) : _childList.end(); }
@@ -293,14 +297,13 @@ public:
     int sibOffset(ChildIter itBase, ChildIter itPos)                    { return hasParent() ? _parent->childOffset(itBase, itPos) : 0; }
 
     /// Get the root (top-most) node of the tree that contains this node
-    TreeNode& root()
+    const TreeNode& root() const
     {
         TreeNode* parent = this;
         while (parent->hasParent()) parent = parent->_parent;
         return *parent;
     }
-
-    const TreeNode& root() const                                { return const_cast<TreeNode*>(this)->root(); }
+    TreeNode& root()                                            { return const_cast<TreeNode&>(const_cast<const TreeNode*>(this)->root()); }
 
     /// Check if this is a root node at the top of a tree
     bool isRoot() const                                         { return !hasParent(); }
@@ -319,7 +322,7 @@ public:
     bool isAncestorOf(const TreeNode& node) const               { return node.isAncestor(*this); }
 
     /// Returns first node found with key in tree of descendants (depth-first pre-order traversal)
-    TreeNode* findNode(const Key& key)
+    const TreeNode* findNode(const Key& key) const
     {
         if (_key == key) return this;
         for (auto& e : preOrd())
@@ -329,8 +332,7 @@ public:
         }
         return nullptr;
     }
-
-    const TreeNode* findNode(const Key& key) const              { return const_cast<TreeNode*>(this)->findNode(key); }
+    TreeNode* findNode(const Key& key)                          { return const_cast<TreeNode*>(const_cast<const TreeNode*>(this)->findNode(key)); }
 
     /// Depth-first pre-order traversal.
     /** 
@@ -457,16 +459,13 @@ private:
     void init()
     {
         _parent = nullptr;
-        _itSib = _childList.end();
+        _itSib = ChildListIter(_childList.end());
         _listenerList_p = nullptr;
     }
-
+    
     ///There are potentially multiple children with same key, find the specific child pointer in map
-    ChildMapIter childMapIter(TreeNode& child)
-    {
-        return stdutil::find(_childMap, child._key, &child);
-    }
-
+    ChildMapIter childMapIter(TreeNode& child)                  { return stdutil::find(_childMap, child._key, &child); }
+    
     /// \name Optional addons for the tree node, created automatically when requested
     /// @{
     ListenerList& _listenerList()                               { if (_listenerList_p) return *_listenerList_p; return *(_listenerList_p = new ListenerList()); }
@@ -486,6 +485,6 @@ private:
 };
 
 template<class Data, class Key>
-typename Key TreeNode<Data, Key>::_keyNull;
+Key TreeNode<Data, Key>::_keyNull;
 
 }

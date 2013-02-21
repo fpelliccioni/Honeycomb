@@ -19,6 +19,8 @@ namespace honey
 template<class Real>
 class DiscreteGen_ : public RandomDist<Real>
 {
+    typedef RandomDist<Real> Super;
+    RandomDist_imports();
     template<class> friend class DiscreteGen_;
     typedef vector<Double> Listd;
 

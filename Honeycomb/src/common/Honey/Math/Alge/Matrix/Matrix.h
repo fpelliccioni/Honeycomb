@@ -7,40 +7,41 @@ namespace honey
 {
 
 /// (m x n)-dimensional matrix traits
-template<int Rows, int Cols, class Real, int Options, class Alloc>
-struct matrix::priv::Traits<Matrix<Rows,Cols,Real,Options,Alloc>>
+template<int Rows, int Cols, class Real_, int Options, class Alloc_>
+struct matrix::priv::Traits<Matrix<Rows,Cols,Real_,Options,Alloc_>>
 {
-    typedef Storage<Matrix<Rows,Cols,Real,Options,Alloc>> Storage;
-    typedef Real                Real;
+    typedef Storage<Matrix<Rows,Cols,Real_,Options,Alloc_>> Storage;
+    typedef Real_               Real;
     typedef Real                ElemT;
     static const int rows       = Rows;
     static const int cols       = Cols;
     static const int options    = Options;
-    typedef Alloc               Alloc;
+    typedef Alloc_              Alloc;
 };
 
 /// (m x n)-dimensional matrix
 template<int Rows, int Cols, class Real, int Options, class Alloc>
 class Matrix : public MatrixBase<Matrix<Rows,Cols,Real,Options,Alloc>>
 {
+    typedef MatrixBase<Matrix<Rows,Cols,Real,Options,Alloc>> Super;
 public:
     /// No init
     Matrix()                                                            {}
     /// Allocate elements for dimension sizes. Asserts that any fixed dimensions match rows / cols.
-    Matrix(int rows, int cols)                                          { resize(rows, cols); }
+    Matrix(int rows, int cols)                                          { this->resize(rows, cols); }
     /// Initialize with scalar in every element
-    explicit Matrix(Real scalar)                                        { fromScalar(scalar); }
+    explicit Matrix(Real scalar)                                        { this->fromScalar(scalar); }
     /// Initialize from array with dimensions (rows x cols). If the array is in row-major format set rowMajor to true, otherwise set to false for column-major.
-    Matrix(const Real* a, int rows, int cols, bool rowMajor = true)     { resize(rows, cols); fromArray(a, rowMajor); }
+    Matrix(const Real* a, int rows, int cols, bool rowMajor = true)     { this->resize(rows, cols); this->fromArray(a, rowMajor); }
     /// Construct with allocator, for a dynamic matrix. Allocator element type must be int8.
-    Matrix(const Alloc& alloc)                                          { setAllocator(alloc); }
+    Matrix(const Alloc& alloc)                                          { this->setAllocator(alloc); }
     /// Construct from matrix of any size. Asserts that any fixed dimensions in this matrix match those in rhs.
     template<class T>
     Matrix(const MatrixBase<T>& rhs)                                    { operator=(rhs); }
 
     /// Assign to matrix of any size. Asserts that any fixed dimensions in this matrix match those in rhs.
     template<class T>
-    Matrix& operator=(const MatrixBase<T>& rhs)                         { MatrixBase::operator=(rhs.subc()); return *this; }
+    Matrix& operator=(const MatrixBase<T>& rhs)                         { Super::operator=(rhs.subc()); return *this; }
 };
 
 /// (m x n)-dimensional matrix types

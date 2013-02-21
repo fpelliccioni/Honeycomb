@@ -56,7 +56,7 @@ auto Polynomial<Real>::roots(const Vec4& c_, Real epsilon) -> tuple<Vec3, int>
     if (Alge::isNearZero(c[3], epsilon))
     {
         // Polynomial is quadratic
-        auto seg = root.segment<2>(0);
+        auto seg = root.template segment<2>(0);
         int count;
         tie(seg, count) = roots(Vec3(c), epsilon);
         return make_tuple(root, count);
@@ -130,9 +130,9 @@ auto Polynomial<Real>::roots(const Vec5& c_, Real epsilon) -> tuple<Vec4, int>
     if (Alge::isNearZero(c[4], epsilon))
     {
         // Polynomial is cubic
-        auto seg = root.segment<3>(0);
+        auto seg = root.template segment<3>(0);
         int count;
-        tie(seg, count) = roots(Vec4(c.segment<4>(0)), epsilon);
+        tie(seg, count) = roots(Vec4(c.template segment<4>(0)), epsilon);
         return make_tuple(root, count);
     }
 

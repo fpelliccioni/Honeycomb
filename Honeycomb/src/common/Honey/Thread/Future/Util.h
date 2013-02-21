@@ -96,7 +96,7 @@ namespace priv
             ConditionLock cond;
         };
 
-        mt_staticObj(thread::Local<ThreadData>, threadData,);
+        mt_staticObj((thread::Local<ThreadData>), threadData,);
     };
 }
 /** \endcond */
@@ -104,7 +104,7 @@ namespace priv
 /// Wait for any futures in a range to be ready, returns iterator to ready future
 template<class Range>
 auto waitAny(Range&& range) ->
-    typename std::enable_if<mt::isRange<Range>::value, typename itertype(range)>::type
+    typename std::enable_if<mt::isRange<Range>::value, itertype(range)>::type
 {
     priv::AnyWaiter waiter;
     for (auto& e : range) { waiter.add(e); }

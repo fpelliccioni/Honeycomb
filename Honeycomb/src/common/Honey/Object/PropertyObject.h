@@ -20,7 +20,7 @@ namespace property { namespace priv
 class PropertyObject : public Object
 {
 public:
-    typedef UnorderedMap<Id, PropertyBase::Ptr, SmallAllocator>::Type PropertyMap;
+    typedef UnorderedMap<Id, PropertyBase::Ptr, SmallAllocator>::type PropertyMap;
 
     PropertyObject() {}
 

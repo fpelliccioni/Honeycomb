@@ -72,15 +72,15 @@ public:
     }
 
     /// Convert an array of smaller integer parts into a full integer.  First index holds the least significant part.
-    template<class T> static T fromPartsLittle(const uint8* p);
-
-    template<> static uint16 fromPartsLittle<uint16>(const uint8* p)
+    template<class T, typename std::enable_if<std::is_same<T, uint16>::value, int>::type=0>
+    static T fromPartsLittle(const uint8* p)
     {
         return  ((uint16)p[0]      )|
                 ((uint16)p[1] <<  8);
     }
 
-    template<> static uint32 fromPartsLittle<uint32>(const uint8* p)
+    template<class T, typename std::enable_if<std::is_same<T, uint32>::value, int>::type=0>
+    static T fromPartsLittle(const uint8* p)
     {
         return  ((uint32)p[0]      )|
                 ((uint32)p[1] <<  8)|
@@ -88,7 +88,8 @@ public:
                 ((uint32)p[3] << 24);
     }
 
-    template<> static uint64 fromPartsLittle<uint64>(const uint8* p)
+    template<class T, typename std::enable_if<std::is_same<T, uint64>::value, int>::type=0>
+    static T fromPartsLittle(const uint8* p)
     {
         return  ((uint64)p[0]      )|
                 ((uint64)p[1] <<  8)|
@@ -107,15 +108,15 @@ public:
     }
 
     /// Convert an array of smaller integer parts into a full integer.  First index holds the most significant part.
-    template<class T> static T fromPartsBig(const uint8* p);
-
-    template<> static uint16 fromPartsBig<uint16>(const uint8* p)
+    template<class T, typename std::enable_if<std::is_same<T, uint16>::value, int>::type=0>
+    static T fromPartsBig(const uint8* p)
     {
         return  ((uint16)p[0] <<  8)|
                 ((uint16)p[1]      );
     }
 
-    template<> static uint32 fromPartsBig<uint32>(const uint8* p)
+    template<class T, typename std::enable_if<std::is_same<T, uint32>::value, int>::type=0>
+    static T fromPartsBig(const uint8* p)
     {
         return  ((uint32)p[0] << 24)|
                 ((uint32)p[1] << 16)|
@@ -123,7 +124,8 @@ public:
                 ((uint32)p[3]      );
     }
 
-    template<> static uint64 fromPartsBig<uint64>(const uint8* p)
+    template<class T, typename std::enable_if<std::is_same<T, uint64>::value, int>::type=0>
+    static T fromPartsBig(const uint8* p)
     {
         return  ((uint64)p[0] << 56)|
                 ((uint64)p[1] << 48)|

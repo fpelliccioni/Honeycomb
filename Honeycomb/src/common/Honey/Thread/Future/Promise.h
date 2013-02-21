@@ -19,38 +19,6 @@ namespace promise
     /** \cond */
     namespace priv
     {
-        template<class R> struct State;   
-
-        /// Invoke function with args and set result into state
-        template<class R>
-        struct invoke
-        {
-            typedef State<R> State;
-
-            template<class F, class... Args>
-            void operator()(State& state, bool setReady, F&& f, Args&&... args)
-            {
-                try { state.setValue(f(forward<Args>(args)...), setReady); }
-                //TODO: msvc bug, replace with ellipsis
-                catch (std::exception&) { state.setException(Exception::current(), setReady); }
-            }
-        };
-
-        /// Void result
-        template<>
-        struct invoke<void>
-        {
-            typedef State<void> State;
-
-            template<class F, class... Args>
-            void operator()(State& state, bool setReady, F&& f, Args&&... args)
-            {
-                try { f(forward<Args>(args)...); state.setValue(setReady); }
-                //TODO: msvc bug, replace with ellipsis
-                catch (std::exception&) { state.setException(Exception::current(), setReady); }
-            }
-        };
-
         struct StateBase : SharedObj
         {
             StateBase()                                             : e(nullptr), ready(false), futureRetrieved(false) {}
@@ -129,6 +97,36 @@ namespace promise
                 if (setReady) setReady_();
             }
         };
+        
+        /// Invoke function with args and set result into state
+        template<class R>
+        struct invoke
+        {
+            typedef State<R> State;
+
+            template<class F, class... Args>
+            void operator()(State& state, bool setReady, F&& f, Args&&... args)
+            {
+                try { state.setValue(f(forward<Args>(args)...), setReady); }
+                //TODO: msvc bug, replace with ellipsis
+                catch (std::exception&) { state.setException(Exception::current(), setReady); }
+            }
+        };
+
+        /// Void result
+        template<>
+        struct invoke<void>
+        {
+            typedef State<void> State;
+
+            template<class F, class... Args>
+            void operator()(State& state, bool setReady, F&& f, Args&&... args)
+            {
+                try { f(forward<Args>(args)...); state.setValue(setReady); }
+                //TODO: msvc bug, replace with ellipsis
+                catch (std::exception&) { state.setException(Exception::current(), setReady); }
+            }
+        };
     }
     /** \endcond */
 }
@@ -142,7 +140,7 @@ template<class R> class Future;
 template<class R>
 class Promise : mt::NoCopy
 {
-    template<class R> friend class Future;
+    template<class R_> friend class Future;
     template<class Sig> friend class PackagedTask;
 public:
     typedef promise::priv::State<R> State;
@@ -153,7 +151,7 @@ public:
     template<class Alloc_>
     Promise(Alloc_&& a_)
     {
-        typedef mt::removeRef<Alloc_>::Type::rebind<State>::other Alloc;
+        typedef typename mt::removeRef<Alloc_>::type::template rebind<State>::other Alloc;
         Alloc a(a_);
         _state.set(new (a.allocate(1)) State, honey::finalize<State, Alloc>(a), a);
     }
@@ -190,7 +188,7 @@ public:
     typename std::enable_if<mt::True<T>::value && mt::isRef<R>::value>::type
         setValue(T& result)                                     { if (!isValid()) throw_ promise::NoState(); _state->setValue(result, true); }
     /// Set stored result for void result type
-    void setValue()                                             { static_assert(false, "Only for use with void type"); }
+    void setValue()                                             { static_assert(!mt::True<R>::value, "Only for use with void type"); }
 
     /// Set stored exception. Exception must be heap allocated.
     /**
@@ -208,6 +206,6 @@ private:
     SharedPtr<State> _state;
 };
 
-template<> void Promise<void>::setValue()                       { if (!isValid()) throw_ promise::NoState(); _state->setValue(true); }
+template<> inline void Promise<void>::setValue()                { if (!isValid()) throw_ promise::NoState(); _state->setValue(true); }
 
 }

@@ -20,7 +20,7 @@ public:
       * \param levelMax     max number of bisection steps when looking for a bracketed minimum
       * \param bracketMax   max number of bisection steps when looking for the minimum within a bracket
       */
-    Minimize(Real tol = RealT::zeroTol, int levelMax = 30, int bracketMax = 30)
+    Minimize(Real tol = Real_::zeroTol, int levelMax = 30, int bracketMax = 30)
         : _tol(tol), _levelMax(levelMax), _bracketMax(bracketMax) {}
 
     /// Find the minimum of a function within bounds [min,max] using `init` as an initial guess

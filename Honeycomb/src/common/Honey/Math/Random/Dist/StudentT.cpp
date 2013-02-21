@@ -60,8 +60,8 @@ Real StudentT_<Real>::cdfComp(Real x) const
 template<class Real>
 Real StudentT_<Real>::cdfInv(Real P) const
 {
-    if (P <= 0) return -RealT::inf;
-    if (P >= 1) return RealT::inf;
+    if (P <= 0) return -Real_::inf;
+    if (P >= 1) return Real_::inf;
     if (P == 0.5) return 0;
     Double p = P > 0.5 ? 1 - P : P;
     Double t, x, y;

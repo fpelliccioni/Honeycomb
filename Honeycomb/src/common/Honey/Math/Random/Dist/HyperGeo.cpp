@@ -105,7 +105,7 @@ Real HyperGeo_<Real>::cdfInv(Real P) const
         return 0;
     if (P >= 1)
         return m;
-    return cdfInvFind(P, 0, n, true);
+    return this->cdfInvFind(P, 0, n, true);
 }
 
 template class HyperGeo_<Float>;

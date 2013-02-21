@@ -30,10 +30,15 @@ namespace honey
 template<class Real>
 class HyperGeo_ : public RandomDist<Real>
 {
+    typedef RandomDist<Real>    Super;
+    RandomDist_imports();
     template<class> friend class HyperGeo_;
     typedef typename Numeral<Real>::Int Int;
+    typedef GammaFunc_<Double>  GammaFunc;
+    
 public:
-    HyperGeo_(RandomGen& gen, Int N, Int m, Int n)      : RandomDist(gen), N(N), m(m), n(n) { assert(N > 0 && m >= 0 && m <= N && n > 0 && n <= N); }
+    HyperGeo_(RandomGen& gen, Int N, Int m, Int n) :
+        Super(gen), N(N), m(m), n(n) { assert(N > 0 && m >= 0 && m <= N && n > 0 && n <= N); }
 
     virtual Real next() const;
     virtual Real pdf(Real x) const;

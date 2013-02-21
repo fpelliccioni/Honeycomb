@@ -3,7 +3,6 @@
 
 #include "Honey/Math/Alge/Vec/Base.h"
 #include "Honey/Math/Alge/Vec/priv/Storage.h"
-#include "Honey/Math/Alge/Matrix/Block.h"
 
 namespace honey
 {
@@ -11,17 +10,17 @@ namespace honey
 namespace vec { namespace priv
 {
     /// N-dimensional vector traits
-    template<int Dim, class Real, int Options, class Alloc>
+    template<int Dim, class Real_, int Options, class Alloc_>
     struct Traits
     {
-        typedef priv::Storage<Vec<Dim,Real,Options,Alloc>> Storage;
-        typedef Real                Real;
+        typedef priv::Storage<Vec<Dim,Real_,Options,Alloc_>> Storage;
+        typedef Real_               Real;
         typedef Real                ElemT;
         static const int dim        = Dim;
         static const int rows       = Options & matrix::Option::vecRow ? 1 : dim;
         static const int cols       = Options & matrix::Option::vecRow ? dim : 1;
         static const int options    = Options;
-        typedef Alloc               Alloc;
+        typedef Alloc_              Alloc;
     };
 } }
 
@@ -32,26 +31,29 @@ struct matrix::priv::Traits<Vec<Dim,Real,Options,Alloc>> : vec::priv::Traits<Dim
 template<int Dim, class Real, int Options, class Alloc>
 class Vec : public VecBase<Vec<Dim,Real,Options,Alloc>>
 {
+    typedef VecBase<Vec<Dim,Real,Options,Alloc>> Super;
 public:
+    using Super::s_size;
+    
     /// No init
-    Vec()                                                           {}
+    Vec() {}
     /// Allocate elements for dimension size, only available if vector is dynamic.
     template<class Int>
     explicit Vec(Int dim, typename std::enable_if<std::is_integral<Int>::value && s_size == matrix::dynamic>::type*_=0)
-                                                                    { mt_unused(_); resize(dim); }
+                                                                    { mt_unused(_); this->resize(dim); }
     /// Construct uniform vector
-    explicit Vec(Real scalar)                                       { fromScalar(scalar); }
+    explicit Vec(Real scalar)                                       { this->fromScalar(scalar); }
     /// Initialize from array with dimension `dim`
-    Vec(const Real* a, int dim)                                     { resize(dim); fromArray(a); }
+    Vec(const Real* a, int dim)                                     { this->resize(dim); this->fromArray(a); }
     /// Construct with allocator, for a dynamic vector. Allocator element type must be int8.
-    Vec(const Alloc& alloc)                                         { setAllocator(alloc); }
+    Vec(const Alloc& alloc)                                         { this->setAllocator(alloc); }
     /// Construct from row or column vector of any dimension. Asserts that if this vector has a fixed dimension then it matches rhs.
     template<class T>
     Vec(const MatrixBase<T>& rhs)                                   { operator=(rhs); }
 
     /// Assign to row or column vector of any dimension. Asserts that if this vector has a fixed dimension then it matches rhs.
     template<class T>
-    Vec& operator=(const MatrixBase<T>& rhs)                        { VecBase::operator=(rhs); return *this; }
+    Vec& operator=(const MatrixBase<T>& rhs)                        { Super::operator=(rhs); return *this; }
 };
 
 /// N-dimensional column vector types
@@ -68,26 +70,35 @@ typedef Vec<matrix::dynamic, Double, matrix::Option::vecRow>    VecRowN_d;
 /// It's not possible to inherit ctors, so this macro is required
 #define MATRIX_VEC_ADAPTER                                                                                              \
 public:                                                                                                                 \
-    Matrix()                                                        {}                                                  \
+    using Super::s_size;                                                                                                \
+    typedef typename Super::Alloc Alloc;                                                                                \
+                                                                                                                        \
+    Matrix() {}                                                                                                         \
     template<class Int>                                                                                                 \
-    explicit Matrix(Int dim, typename std::enable_if<std::is_integral<Int>::value && s_size == matrix::dynamic>::type*_=0)    \
-                                                                    : Vec(dim) {}                                       \
-    explicit Matrix(Real scalar)                                    : Vec(scalar) {}                                    \
-    Matrix(const Real* a, int dim)                                  : Vec(a,dim) {}                                     \
-    Matrix(const Alloc& alloc)                                      : Vec(alloc) {}                                     \
+    explicit Matrix(Int dim, typename std::enable_if<std::is_integral<Int>::value && s_size == matrix::dynamic>::type*_=0)  \
+                                                                    : Super(dim) {}                                     \
+    explicit Matrix(Real scalar)                                    : Super(scalar) {}                                  \
+    Matrix(const Real* a, int dim)                                  : Super(a,dim) {}                                   \
+    Matrix(const Alloc& alloc)                                      : Super(alloc) {}                                   \
     template<class T>                                                                                                   \
-    Matrix(const MatrixBase<T>& rhs)                                : Vec(rhs) {}                                       \
+    Matrix(const MatrixBase<T>& rhs)                                : Super(rhs) {}                                     \
     template<class T>                                                                                                   \
-    Matrix& operator=(const MatrixBase<T>& rhs)                     { Vec::operator=(rhs); return *this; }              \
+    Matrix& operator=(const MatrixBase<T>& rhs)                     { Super::operator=(rhs); return *this; }            \
 
 /// Matrix column vector 
-template<int Dim, class Real, int Options, class Alloc>
-class Matrix<Dim,1,Real,Options,Alloc> : public Vec<Dim,Real,Options,Alloc>
-{ MATRIX_VEC_ADAPTER };
+template<int Dim, class Real, int Options, class Alloc_>
+class Matrix<Dim,1,Real,Options,Alloc_> : public Vec<Dim,Real,Options,Alloc_>
+{
+    typedef Vec<Dim,Real,Options,Alloc_> Super;
+    MATRIX_VEC_ADAPTER
+};
 
 /// Matrix row vector
-template<int Dim, class Real, int Options, class Alloc>
-class Matrix<1,Dim,Real,Options,Alloc> : public Vec<Dim,Real, Options | matrix::Option::vecRow, Alloc>
-{ MATRIX_VEC_ADAPTER };
+template<int Dim, class Real, int Options, class Alloc_>
+class Matrix<1,Dim,Real,Options,Alloc_> : public Vec<Dim,Real, Options | matrix::Option::vecRow, Alloc_>
+{
+    typedef Vec<Dim,Real, Options | matrix::Option::vecRow, Alloc_> Super;
+    MATRIX_VEC_ADAPTER
+};
 
 }

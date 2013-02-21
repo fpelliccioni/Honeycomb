@@ -15,7 +15,7 @@ namespace honey
 template<class Real>
 class Polynomial
 {
-    typedef typename Numeral<Real>::RealT   RealT;
+    typedef typename Numeral<Real>::Real_   Real_;
     typedef Alge_<Real>                     Alge;
     typedef Trig_<Real>                     Trig;
 
@@ -48,7 +48,7 @@ public:
       * \retval degree  Degree of the polynomial in range [-1, c.size()-1] (at degree 0 there is 1 coeff).
       */
     template<class T>
-    static tuple<T, int> compress(const VecBase<T>& c, Real epsilon = RealT::epsilon)
+    static tuple<T, int> compress(const VecBase<T>& c, Real epsilon = Real_::epsilon)
     {
         T poly = c;
         int degree = poly.size()-1;
@@ -94,26 +94,26 @@ public:
       * \retval roots
       * \retval rootCount
       */
-    static tuple<Real, int> roots(const Vec2& c, Real epsilon = RealT::epsilon);
+    static tuple<Real, int> roots(const Vec2& c, Real epsilon = Real_::epsilon);
     /// Solves the quadratic equation: \f$ c_2 x^2 + c_1 x + c_0 = 0 \f$
-    static tuple<Vec2, int> roots(const Vec3& c, Real epsilon = RealT::epsilon);
+    static tuple<Vec2, int> roots(const Vec3& c, Real epsilon = Real_::epsilon);
     /// Solves the cubic equation: \f$ c_3 x^3 + c_2 x^2 + c_1 x + c_0 = 0 \f$
-    static tuple<Vec3, int> roots(const Vec4& c, Real epsilon = RealT::epsilon);
+    static tuple<Vec3, int> roots(const Vec4& c, Real epsilon = Real_::epsilon);
     /// Solves the quartic equation: \f$ c_4 x^4 + c_3 x^3 + c_2 x^2 + c_1 x + c_0 = 0 \f$
-    static tuple<Vec4, int> roots(const Vec5& c, Real epsilon = RealT::epsilon);
+    static tuple<Vec4, int> roots(const Vec5& c, Real epsilon = Real_::epsilon);
 
     /// Find roots of generic polynomial using bisection
     /**
       * This algorithm works by first recursively finding the roots of the polynomial's derivative.
       * The roots of the derivative are monotonic ranges over the polynomial, thus these ranges can be searched using bisection.
       */
-    static tuple<Vec, int> roots(const Vec& c, Real epsilon = RealT::epsilon, int iterMax = 30);
+    static tuple<Vec, int> roots(const Vec& c, Real epsilon = Real_::epsilon, int iterMax = 30);
     /// Find roots of generic polynomial within range using bisection
-    static tuple<Vec, int> rootsInRange(const Vec& c, Real min, Real max, Real epsilon = RealT::epsilon, int iterMax = 30);
+    static tuple<Vec, int> rootsInRange(const Vec& c, Real min, Real max, Real epsilon = Real_::epsilon, int iterMax = 30);
 
     /// Get lower and upper bounds of root magnitudes. Returns positive range or 0 if polynomial is constant (degree 0).
     template<class T>
-    static tuple<Real,Real> rootBounds(const VecBase<T>& c, Real epsilon = RealT::epsilon)
+    static tuple<Real,Real> rootBounds(const VecBase<T>& c, Real epsilon = Real_::epsilon)
     {
         T poly;
         int degree;

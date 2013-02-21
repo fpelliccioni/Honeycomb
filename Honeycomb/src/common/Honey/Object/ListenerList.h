@@ -24,7 +24,7 @@ public:
     };
 
     typedef list<SlotBase*, SmallAllocator<SlotBase*>> SlotList;
-    typedef UnorderedMultiMap<const void*, Listener::ConstPtr, SmallAllocator>::Type BaseMap;
+    typedef UnorderedMultiMap<const void*, Listener::ConstPtr, SmallAllocator>::type BaseMap;
 
     ListenerList()                                      : _cb(nullptr) {}
     virtual ~ListenerList()                             { clear(); }
@@ -47,41 +47,28 @@ public:
     template<class Signal>
     const SlotList* slotList() const                    { return slotList(Signal::id()); }
 
-    //===========================================
-    #define dispatch(...) __dispatch()
     /// Send a signal to all listeners
-    template<class Signal> void dispatch(Args...);
-    #undef dispatch
-
-    #define FUNC(It)                                                                    \
-        template<class Signal>                                                          \
-        void dispatch(ITERATE_(1,It,SLOT_SIGNAL_PARAM)) const                           \
-        {                                                                               \
-            SpinLock::Scoped _(const_cast<ListenerList*>(this)->_lock);                 \
-            auto slots = slotList(Signal::id());                                        \
-            if (!slots) return;                                                         \
-            for (auto& e : *slots)                                                      \
-            {                                                                           \
-                (static_cast<priv::SlotSignal<Signal,Signal::arity>&>(*e))              \
-                    (ITERATE_(1,It,SLOT_ARG));                                          \
-            }                                                                           \
-        }                                                                               \
-
-    ITERATE(0, SLOT_ARG_MAX, FUNC)
-    #undef FUNC
-    //===========================================
+    template<class Signal, class... Args>
+    void dispatch(Args&&... args) const
+    {
+        SpinLock::Scoped _(const_cast<ListenerList*>(this)->_lock);
+        auto slots = slotList(Signal::id());
+        if (!slots) return;
+        for (auto& e : *slots)
+            (static_cast<priv::SlotSignal<Signal,Signal::arity>&>(*e))(forward<Args>(args)...);
+    }
 
     /// Set callback to handle events from this class
     void setCallback(Callback* cb)                      { _cb = cb; }
 
 private:
-    typedef UnorderedMultiMap<SlotBase*, SlotList::iterator, SmallAllocator>::Type SlotMap;
+    typedef UnorderedMultiMap<SlotBase*, SlotList::iterator, SmallAllocator>::type SlotMap;
     struct SlotIndex
     {
         SlotList list;
         SlotMap map;
     };
-    typedef UnorderedMap<Id, SlotIndex, SmallAllocator>::Type SignalMap;
+    typedef UnorderedMap<Id, SlotIndex, SmallAllocator>::type SignalMap;
 
     const SlotList* slotList(const Id& signalId) const;
 

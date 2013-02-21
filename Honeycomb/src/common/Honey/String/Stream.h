@@ -6,6 +6,9 @@
 
 namespace honey
 {
+    
+class StringStream;
+    
 /** \cond */
 namespace stringstream { namespace priv
 {
@@ -17,6 +20,9 @@ namespace stringstream { namespace priv
 #pragma warning(push)
 #pragma warning(disable:4250)
 /// Class to format a string for output or use as input
+/**
+  * Internally converts to/from wide char, there is no support for char16_t streams.
+  */
 class StringStream : public platform::StringStream<StringStream>
 {
     typedef platform::StringStream<StringStream> Super;
@@ -39,44 +45,24 @@ public:
 
     StringStream()                                                              : _indent(0), _indentSize(4) {}
     explicit StringStream(const String& str)                                    : _indent(0), _indentSize(4) { operator<<(str); }
-
+    StringStream(StringStream&& rhs)                                            : _indent(0), _indentSize(4) { operator<<(rhs.str()); }
+    
     /// Forward member operators to global
     template<class T>
     StringStream& operator<<(T&& val)                                           { return stringstream::priv::globalIn(*this, forward<T>(val)); }
 
-    #ifdef WIN32
-        //TODO: MSVC crash fix, remove block
-        template<class T>
-        StringStream& operator<<(const std::_Smanip<T>& manip)                  { std::operator<<(*this, manip); return *this; }
-        template<class T>
-        StringStream& operator<<(std::_Smanip<T>&& manip)                       { std::operator<<(*this, manip); return *this; }
-        template<class T>
-        StringStream& operator<<(const std::_Fillobj<T>& manip)                 { std::operator<<(*this, manip); return *this; }
-        template<class T>
-        StringStream& operator<<(std::_Fillobj<T>&& manip)                      { std::operator<<(*this, manip); return *this; }
-    #endif
-
     /// \name Input operators
     /// @{
-    friend StringStream& operator<<(StringStream& os, const String& str)        { std::operator<<(os, str); return os; }
-    /// Does nothing if `str` is null
-    friend StringStream& operator<<(StringStream& os, const Char* str)          { if (!str) return os; std::operator<<(os, str); return os; }
+    friend StringStream& operator<<(StringStream& os, const String& str)        { return os << str.c_str(); }
     // MSVC treats Char as integral. Portable method is to append as string.
     friend StringStream& operator<<(StringStream& os, Char val)                 { Char str[] = { val, 0 }; return os << str; }
-    /// Converts wide string to String and writes. Does nothing if `str` is null.
-    //friend StringStream& operator<<(StringStream& os, const wchar_t* str)       { if (!str) return os; return honey::operator<<(os, String(str)); }
-    /// Converts wchar_t to String and writes
-    //friend StringStream& operator<<(StringStream& os, wchar_t val)              { wchar_t str[] = { val, 0 }; return honey::operator<<(os, str); }
-    /// Converts C-string to String and writes. Does nothing if `str` is null.
-    friend StringStream& operator<<(StringStream& os, const char* str)          { if (!str) return os; return os << String(str); }
     /// Converts char to Char and writes
     friend StringStream& operator<<(StringStream& os, char val)                 { return os << static_cast<Char>(val); }
     /// Writes integral value
     friend StringStream& operator<<(StringStream& os, uint8 val)                { os.Super::operator<<(static_cast<int16>(val)); return os; }
     friend StringStream& operator<<(StringStream& os, bool val)                 { os.Super::operator<<(val); return os; }
     friend StringStream& operator<<(StringStream& os, int16 val)                { os.Super::operator<<(val); return os; }
-    // MSVC treats Char as non-built-in. Overrides conflict.
-    //friend StringStream& operator<<(StringStream& os, uint16 val)               { os.Super::operator<<(val); return os; }
+    friend StringStream& operator<<(StringStream& os, uint16 val)               { os.Super::operator<<(val); return os; }
     friend StringStream& operator<<(StringStream& os, int32 val)                { os.Super::operator<<(val); return os; }
     friend StringStream& operator<<(StringStream& os, uint32 val)               { os.Super::operator<<(val); return os; }
     friend StringStream& operator<<(StringStream& os, int64 val)                { os.Super::operator<<(val); return os; }
@@ -99,7 +85,7 @@ public:
     int getindentSize() const                                                   { return _indentSize; }
     
     /// Get copy of buffer as string
-    String str() const                                                          { return Super::str(); } 
+    String str() const                                                          { return Super::str(); }
     operator String() const                                                     { return str(); }
 
 private:

@@ -2,6 +2,7 @@
 #pragma once
 
 #include "Honey/String/Id.h"
+#include "Honey/Math/Numeral.h"
 
 namespace honey
 {
@@ -65,7 +66,7 @@ namespace honey
 
                                                 //Print all vehicle types
         const Vehicle::Type::EnumInfo::ElemList& list = Vehicle::Type::enumInfo().elemList();
-        for (int i = 0; i < size(list); ++i) { Debug::print(sout() << list[i].id << endl); }
+        for (int i = 0; i < size(list); ++i) { debug::print(sout() << list[i].id << endl); }
     }
 
     \endcode
@@ -125,12 +126,12 @@ namespace honey
         bool operator< (int) const                                          { return false; }                                                   \
         bool operator> (int) const                                          { return false; }                                                   \
         template<class T> struct DisableCmp : mt::Value<bool, std::is_convertible<T,int>::value && !std::is_same<T,Enum>::value && !std::is_same<T,EnumNullType>::value> {};            \
-        template<class T> friend typename std::enable_if<DisableCmp<T>::value, bool>::type operator==(const T&, const Class&)   { static_assert(false, "Enum compare type mismatch"); } \
-        template<class T> friend typename std::enable_if<DisableCmp<T>::value, bool>::type operator!=(const T&, const Class&)   { static_assert(false, "Enum compare type mismatch"); } \
-        template<class T> friend typename std::enable_if<DisableCmp<T>::value, bool>::type operator<=(const T&, const Class&)   { static_assert(false, "Enum compare type mismatch"); } \
-        template<class T> friend typename std::enable_if<DisableCmp<T>::value, bool>::type operator>=(const T&, const Class&)   { static_assert(false, "Enum compare type mismatch"); } \
-        template<class T> friend typename std::enable_if<DisableCmp<T>::value, bool>::type operator< (const T&, const Class&)   { static_assert(false, "Enum compare type mismatch"); } \
-        template<class T> friend typename std::enable_if<DisableCmp<T>::value, bool>::type operator> (const T&, const Class&)   { static_assert(false, "Enum compare type mismatch"); } \
+        template<class T> friend typename std::enable_if<DisableCmp<T>::value, bool>::type operator==(const T&, const Class&)   { static_assert(!mt::True<T>::value, "Enum compare type mismatch"); } \
+        template<class T> friend typename std::enable_if<DisableCmp<T>::value, bool>::type operator!=(const T&, const Class&)   { static_assert(!mt::True<T>::value, "Enum compare type mismatch"); } \
+        template<class T> friend typename std::enable_if<DisableCmp<T>::value, bool>::type operator<=(const T&, const Class&)   { static_assert(!mt::True<T>::value, "Enum compare type mismatch"); } \
+        template<class T> friend typename std::enable_if<DisableCmp<T>::value, bool>::type operator>=(const T&, const Class&)   { static_assert(!mt::True<T>::value, "Enum compare type mismatch"); } \
+        template<class T> friend typename std::enable_if<DisableCmp<T>::value, bool>::type operator< (const T&, const Class&)   { static_assert(!mt::True<T>::value, "Enum compare type mismatch"); } \
+        template<class T> friend typename std::enable_if<DisableCmp<T>::value, bool>::type operator> (const T&, const Class&)   { static_assert(!mt::True<T>::value, "Enum compare type mismatch"); } \
     public:                                                                                                                                     \
         /** Get class Id */                                                                                                                     \
         const Id& classId() const                                           { return enumInfo().elem(val()).classId; }                          \
@@ -151,7 +152,7 @@ namespace honey
             EnumInfo()                                                                                                                          \
             {                                                                                                                                   \
                 ENUM_ELEM_CALL(ENUM_E_CTOR, Base, Class)                                                                                        \
-                setup();                                                                                                                        \
+                this->setup();                                                                                                                        \
             }                                                                                                                                   \
         };                                                                                                                                      \
                                                                                                                                                 \
@@ -163,15 +164,15 @@ namespace honey
 // Enum Private
 //====================================================
 /** \cond */
-#define ENUM_ELEM_CALL(EFunc, Base, Class)          ENUM_LIST(EFunc, STRINGIFY_EVAL(IFEMPTY(, UNBRACKET(Base)::, Base)Class))                          
+#define ENUM_ELEM_CALL(EFunc, Base, Class)          ENUM_LIST(EFunc, STRINGIFY(IFEMPTY(, UNBRACKET(Base)::, Base)Class))                          
 
-#define ENUM_E_ENUM(...)                            EVAL(TOKENIZE_EVAL(ENUM_E_ENUM_, NUMARGS(__VA_ARGS__))(__VA_ARGS__))
+#define ENUM_E_ENUM(...)                            EVAL(TOKCAT(ENUM_E_ENUM_, NUMARGS(__VA_ARGS__))(__VA_ARGS__))
 #define ENUM_E_ENUM_2(ClassId, name)                name, 
 #define ENUM_E_ENUM_4(ClassId, name, str, val)      name IFEMPTY(,= UNBRACKET(val),val), 
 
-#define ENUM_E_CTOR(...)                            EVAL(TOKENIZE_EVAL(ENUM_E_CTOR_, NUMARGS(__VA_ARGS__))(__VA_ARGS__))
+#define ENUM_E_CTOR(...)                            EVAL(TOKCAT(ENUM_E_CTOR_, NUMARGS(__VA_ARGS__))(__VA_ARGS__))
 #define ENUM_E_CTOR_2(ClassId, name)                ENUM_E_CTOR_4(ClassId, name, EMPTY, EMPTY)
-#define ENUM_E_CTOR_4(ClassId, name, str, val)      addElem(ClassId, IFEMPTY(#name, str, str), name); 
+#define ENUM_E_CTOR_4(ClassId, name, str, val)      this->addElem(ClassId, IFEMPTY(#name, str, str), name); 
 /** \endcond */
 
 //====================================================

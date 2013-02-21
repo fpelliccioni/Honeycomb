@@ -105,34 +105,44 @@ struct StorageAutoArray<Real, Size, 16>
 template<class Subclass>
 class StorageAuto : public StorageDense<Subclass>
 {
+    typedef StorageDense<Subclass> Super;
 public:
+    typedef typename Super::Real Real;
+    
     /// Access matrix element with [row][column]
-    const Real* operator[](int row) const               { assertIndex(row,0); return &data()[row*cols()]; }
-    Real* operator[](int row)                           { assertIndex(row,0); return &data()[row*cols()]; }
+    const Real* operator[](int row) const               { this->assertIndex(row,0); return &data()[row*cols()]; }
+    Real* operator[](int row)                           { this->assertIndex(row,0); return &data()[row*cols()]; }
     /// Access matrix element at index
-    const Real& operator()(int i) const                 { assertIndex(i); return data()[i]; }
-    Real& operator()(int i)                             { assertIndex(i); return data()[i]; }
+    const Real& operator()(int i) const                 { this->assertIndex(i); return data()[i]; }
+    Real& operator()(int i)                             { this->assertIndex(i); return data()[i]; }
     /// Access matrix element with (row, column)
-    const Real& operator()(int row, int col) const      { assertIndex(row,col); return data()[row*cols() + col]; }
-    Real& operator()(int row, int col)                  { assertIndex(row,col); return data()[row*cols() + col]; }
+    const Real& operator()(int row, int col) const      { this->assertIndex(row,col); return data()[row*cols() + col]; }
+    Real& operator()(int row, int col)                  { this->assertIndex(row,col); return data()[row*cols() + col]; }
 
-    int rows() const                                    { return s_rows; }
-    int cols() const                                    { return s_cols; }
-    int size() const                                    { return s_size; }
+    int rows() const                                    { return Super::s_rows; }
+    int cols() const                                    { return Super::s_cols; }
+    int size() const                                    { return Super::s_size; }
 
     /// Get as array
     const Real* data() const                            { return _a.a; }
     Real* data()                                        { return _a.a; }
 
 private:
-    StorageAutoArray<Real, s_size, Option::getAlign<options>::value> _a;
+    StorageAutoArray<Real, Super::s_size, Option::getAlign<Super::options>::value> _a;
 };
 
 /// dynamic (heap) dense storage
 template<class Subclass>
 class StorageDynamic : public StorageDense<Subclass>
 {
+    typedef StorageDense<Subclass> Super;
 public:
+    using Super::s_rows;
+    using Super::s_cols;
+    using Super::s_size;
+    typedef typename Super::Real Real;
+    typedef typename Super::Alloc Alloc;
+    
     /// Default is null array
     StorageDynamic()                                    { init(); }
     /// Init to copy of rhs
@@ -164,14 +174,14 @@ public:
     }
 
     /// Access matrix element with [row][column]
-    const Real* operator[](int row) const               { assertIndex(row,0); return &data()[row*cols()]; }
-    Real* operator[](int row)                           { assertIndex(row,0); return &data()[row*cols()]; }
+    const Real* operator[](int row) const               { this->assertIndex(row,0); return &data()[row*cols()]; }
+    Real* operator[](int row)                           { this->assertIndex(row,0); return &data()[row*cols()]; }
     /// Access matrix element at index
-    const Real& operator()(int i) const                 { assertIndex(i); return data()[i]; }
-    Real& operator()(int i)                             { assertIndex(i); return data()[i]; }
+    const Real& operator()(int i) const                 { this->assertIndex(i); return data()[i]; }
+    Real& operator()(int i)                             { this->assertIndex(i); return data()[i]; }
     /// Access matrix element with (row, column)
-    const Real& operator()(int row, int col) const      { assertIndex(row,col); return data()[row*cols() + col]; }
-    Real& operator()(int row, int col)                  { assertIndex(row,col); return data()[row*cols() + col]; }
+    const Real& operator()(int row, int col) const      { this->assertIndex(row,col); return data()[row*cols() + col]; }
+    Real& operator()(int row, int col)                  { this->assertIndex(row,col); return data()[row*cols() + col]; }
 
     void resize(int rows, int cols)
     {
@@ -187,7 +197,7 @@ public:
         _size = size;
         freeAligned(_a, _alloc); _a = nullptr;
         if (_size == 0) return;
-        _a = allocAligned<Real>(_size, Option::getAlign<options>::value, _alloc);
+        _a = allocAligned<Real>(_size, Option::getAlign<Super::options>::value, _alloc);
     }
 
     int rows() const                                    { return _rows; }

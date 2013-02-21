@@ -13,11 +13,11 @@ namespace concur
 /**
   * Internally maintains a ring-buffer (traversing from head to tail may loop around end of buffer).
   */
-template<class Data, class Alloc = std::allocator<Data>>
+template<class Data, class Alloc_ = std::allocator<Data>>
 class Deque : mt::NoCopy
 {
 public:
-    typedef typename Alloc::template rebind<Data>::other Alloc;
+    typedef typename Alloc_::template rebind<Data>::other Alloc;
 
     Deque(int size = 0, const Data& initVal = Data(), const Alloc& alloc = Alloc()) :
         _alloc(alloc),
@@ -117,7 +117,7 @@ private:
     {
         if (capacity == _capacity) return;
         //Get size (active element count) of new array, may be smaller than old
-        int size = capacity < _size ? capacity : _size;
+        int size = capacity < _size ? capacity : _size.load();
         //Alloc new array
         Data* data = nullptr;
         if (capacity > 0)

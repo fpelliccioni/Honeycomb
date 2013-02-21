@@ -20,14 +20,15 @@ namespace atomic
   *
   * \see std::memory_order for details.
   */
-struct Order { enum t {
+enum class Order
+{
     relaxed,           ///< No order constraint, same as plain load/store. Unsafe but best performance
     consume,           ///< Must be a load op. Synchronize with a prior release in another thread, but only synchronize ops dependent on this load.
     acquire,           ///< Must be a load op. Synchronize with a prior release in another thread.
     release,           ///< Must be a store op. Synchronize with a later acquire in another thread.
     acqRel,            ///< Must be a load-modify-store op. Performs both acquire and release.
     seqCst             ///< Sequential consistency, safe total order but least performance
-}; };
+};
 
 } }
 
@@ -44,48 +45,48 @@ public:
 
     /// Returns val
     template<class T>
-    static T load(volatile const T& val, Order::t o = Order::seqCst)                { return Super::load(val, o); }
+    static T load(volatile const T& val, Order o = Order::seqCst)               { return Super::load(val, o); }
     using Super::load;
 
     /// Assigns dst to newVal
     template<class T>
-    static void store(volatile T& dst, T newVal, Order::t o = Order::seqCst)        { return Super::store(dst, newVal, o); }
+    static void store(volatile T& dst, T newVal, Order o = Order::seqCst)       { return Super::store(dst, newVal, o); }
     using Super::store;
 
     /// Compare and swap.  If dst is equal to comparand `cmp` then dst is assigned to newVal and true is returned.  Returns false otherwise.
     template<class T>
-    static bool cas(volatile T& dst, T newVal, T cmp, Order::t o = Order::seqCst)   { return Super::cas(dst, newVal, cmp, o); }
+    static bool cas(volatile T& dst, T newVal, T cmp, Order o = Order::seqCst)  { return Super::cas(dst, newVal, cmp, o); }
 
     /// Assigns dst to newVal and returns initial value of dst.
     template<class T>
-    static T swap(volatile T& dst, T newVal, Order::t o = Order::seqCst)            { T v; do { v = dst; } while (!cas(dst, newVal, v, o)); return v; }
+    static T swap(volatile T& dst, T newVal, Order o = Order::seqCst)           { T v; do { v = dst; } while (!cas(dst, newVal, v, o)); return v; }
     using Super::swap;
     
     /// Increments val. Returns the initial value.
     template<class T>
-    static T inc(volatile T& val, Order::t o = Order::seqCst)                       { T v; do { v = val; } while (!cas(val, v+1, v, o)); return v; }
+    static T inc(volatile T& val, Order o = Order::seqCst)                      { T v; do { v = val; } while (!cas(val, v+1, v, o)); return v; }
     using Super::inc;
     
     /// Decrements val. Returns the initial value.
     template<class T>
-    static T dec(volatile T& val, Order::t o = Order::seqCst)                       { T v; do { v = val; } while (!cas(val, v-1, v, o)); return v; }
+    static T dec(volatile T& val, Order o = Order::seqCst)                      { T v; do { v = val; } while (!cas(val, v-1, v, o)); return v; }
     using Super::dec;
     
     /// val += rhs. Returns the initial value.
     template<class T>
-    static T add(volatile T& val, T rhs, Order::t o = Order::seqCst)                { T v; do { v = val; } while (!cas(val, v+rhs, v, o)); return v; }
+    static T add(volatile T& val, T rhs, Order o = Order::seqCst)               { T v; do { v = val; } while (!cas(val, v+rhs, v, o)); return v; }
     
     /// val &= rhs. Returns the initial value.
     template<class T>
-    static T and(volatile T& val, T rhs, Order::t o = Order::seqCst)                { T v; do { v = val; } while (!cas(val, v&rhs, v, o)); return v; }
+    static T and_(volatile T& val, T rhs, Order o = Order::seqCst)              { T v; do { v = val; } while (!cas(val, v&rhs, v, o)); return v; }
     
     /// val |= rhs. Returns the initial value.
     template<class T>
-    static T or(volatile T& val, T rhs, Order::t o = Order::seqCst)                 { T v; do { v = val; } while (!cas(val, v|rhs, v, o)); return v; }
+    static T or_(volatile T& val, T rhs, Order o = Order::seqCst)               { T v; do { v = val; } while (!cas(val, v|rhs, v, o)); return v; }
     
     /// val ^= rhs. Returns the initial value.
     template<class T>
-    static T xor(volatile T& val, T rhs, Order::t o = Order::seqCst)                { T v; do { v = val; } while (!cas(val, v^rhs, v, o)); return v; }
+    static T xor_(volatile T& val, T rhs, Order o = Order::seqCst)              { T v; do { v = val; } while (!cas(val, v^rhs, v, o)); return v; }
 
     /// Create a memory barrier that synchronizes operations.
     /**
@@ -95,14 +96,14 @@ public:
       *
       * \see std::atomic_thread_fence for details.
       */
-    static void fence(Order::t o)                                                   { Super::fence(o); }
+    static void fence(Order o)                                                  { Super::fence(o); }
 };
 
 /** \cond */
 namespace priv
 {
     /// Get an atomic type that is large enough to hold T
-    template<class T> struct VarType                            { typedef typename std::conditional<sizeof(T) <= 4, int32, int64>::type Type; };
+    template<class T> struct VarType                            { typedef typename std::conditional<sizeof(T) <= 4, int32, int64>::type type; };
 }
 /** \endcond */
 
@@ -110,7 +111,7 @@ namespace priv
 template<class T>
 class Var
 {
-    typedef typename priv::VarType<T>::Type VarType;
+    typedef typename priv::VarType<T>::type VarType;
 public:
     Var()                                                       {}
     Var(T val)                                                  { operator=(val); }
@@ -133,25 +134,25 @@ public:
     /// Sub and return new value
     T operator-=(T rhs) volatile                                { return sub(rhs); }
     /// And and return new value
-    T operator&=(T rhs) volatile                                { return and(rhs); }
+    T operator&=(T rhs) volatile                                { return and_(rhs); }
     /// Or and return new value
-    T operator|=(T rhs) volatile                                { return or(rhs); }
+    T operator|=(T rhs) volatile                                { return or_(rhs); }
     /// Xor and return new value
-    T operator^=(T rhs) volatile                                { return xor(rhs); }
+    T operator^=(T rhs) volatile                                { return xor_(rhs); }
 
     /// Read value
     operator T() const volatile                                 { return load(); }
    
-    void store(T val, Order::t o = Order::seqCst) volatile      { Op::store(_val, static_cast<VarType>(val), o); }
-    T load(Order::t o = Order::seqCst) const volatile           { return static_cast<T>(Op::load(_val, o)); }
-    T add(T rhs, Order::t o = Order::seqCst) volatile           { return Op::add(_val, rhs, o) + rhs; }
-    T sub(T rhs, Order::t o = Order::seqCst) volatile           { return Op::add(_val, -rhs, o) - rhs; }
-    T and(T rhs, Order::t o = Order::seqCst) volatile           { return Op::and(_val, rhs, o) & rhs; }
-    T or(T rhs, Order::t o = Order::seqCst) volatile            { return Op::or(_val, rhs, o) | rhs; }
-    T xor(T rhs, Order::t o = Order::seqCst) volatile           { return Op::xor(_val, rhs, o) ^ rhs; }
+    void store(T val, Order o = Order::seqCst) volatile         { Op::store(_val, static_cast<VarType>(val), o); }
+    T load(Order o = Order::seqCst) const volatile              { return static_cast<T>(Op::load(_val, o)); }
+    T add(T rhs, Order o = Order::seqCst) volatile              { return Op::add(_val, rhs, o) + rhs; }
+    T sub(T rhs, Order o = Order::seqCst) volatile              { return Op::add(_val, -rhs, o) - rhs; }
+    T and_(T rhs, Order o = Order::seqCst) volatile             { return Op::and_(_val, rhs, o) & rhs; }
+    T or_(T rhs, Order o = Order::seqCst) volatile              { return Op::or_(_val, rhs, o) | rhs; }
+    T xor_(T rhs, Order o = Order::seqCst) volatile             { return Op::xor_(_val, rhs, o) ^ rhs; }
 
     /// Compare and swap.  If atomic is equal to comparand `cmp` then atomic is assigned to newVal and true is returned. Returns false otherwise.
-    bool cas(T newVal, T cmp, Order::t o = Order::seqCst) volatile  { return Op::cas(_val, newVal, cmp, o); }
+    bool cas(T newVal, T cmp, Order o = Order::seqCst) volatile { return Op::cas(_val, newVal, cmp, o); }
 
 private:
     VarType _val;
@@ -161,7 +162,7 @@ private:
 template<class T>
 class Var<T*>
 {
-    typedef typename priv::VarType<T*>::Type VarType;
+    typedef typename priv::VarType<T*>::type VarType;
 public:
     Var()                                                       {}
     Var(T* val)                                                 { operator=(val); }
@@ -181,12 +182,12 @@ public:
     T& operator*() const volatile                               { return *load(); }
     operator T*() const volatile                                { return load(); }
 
-    void store(T* val, Order::t o = Order::seqCst) volatile     { Op::store(_val, reinterpret_cast<VarType>(val), o); }
-    T* load(Order::t o = Order::seqCst) const volatile          { return reinterpret_cast<T*>(Op::load(_val, o)); }
-    T* add(ptrdiff_t rhs, Order::t o = Order::seqCst) volatile  { return reinterpret_cast<T*>(Op::add(_val, rhs*sizeof(T), o)) + rhs; }
-    T* sub(ptrdiff_t rhs, Order::t o = Order::seqCst) volatile  { return reinterpret_cast<T*>(Op::add(_val, -rhs*sizeof(T), o)) - rhs; }
+    void store(T* val, Order o = Order::seqCst) volatile        { Op::store(_val, reinterpret_cast<VarType>(val), o); }
+    T* load(Order o = Order::seqCst) const volatile             { return reinterpret_cast<T*>(Op::load(_val, o)); }
+    T* add(ptrdiff_t rhs, Order o = Order::seqCst) volatile     { return reinterpret_cast<T*>(Op::add(_val, rhs*sizeof(T), o)) + rhs; }
+    T* sub(ptrdiff_t rhs, Order o = Order::seqCst) volatile     { return reinterpret_cast<T*>(Op::add(_val, -rhs*sizeof(T), o)) - rhs; }
 
-    bool cas(T* newVal, T* cmp, Order::t o = Order::seqCst) volatile    { return Op::cas(_val, reinterpret_cast<VarType>(newVal), reinterpret_cast<VarType>(cmp), o); }
+    bool cas(T* newVal, T* cmp, Order o = Order::seqCst) volatile   { return Op::cas(_val, reinterpret_cast<VarType>(newVal), reinterpret_cast<VarType>(cmp), o); }
 
 private:
     VarType _val;

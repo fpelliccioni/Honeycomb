@@ -9,8 +9,8 @@ namespace honey
 /// A container that wraps a function so that its result is stored in a future when invoked
 template<class Sig> class PackagedTask;
 
-template<class R, class... Args>
-class PackagedTask<R (Args...)> : mt::NoCopy
+template<class R, class... Param>
+class PackagedTask<R (Param...)> : mt::NoCopy
 {
 public:
     PackagedTask()                                  : _func(nullptr), _invoked(false) {}
@@ -68,7 +68,7 @@ private:
         promise::priv::invoke<R>()(*_promise._state, setReady, _func, forward<Args>(args)...);
     }
 
-    function<R (Args...)> _func;
+    function<R (Param...)> _func;
     Promise<R> _promise;
     bool _invoked;
 };

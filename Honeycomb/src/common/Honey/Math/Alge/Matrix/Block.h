@@ -15,12 +15,16 @@ namespace priv
     template<class Subclass>
     class StorageBlock : public StorageDense<Subclass>
     {
+        typedef StorageDense<Subclass> Super;
     public:
+        using Super::s_rows;
+        using Super::s_cols;
+        typedef typename Super::ElemT ElemT;
         typedef typename Traits<Subclass>::MatrixP          MatrixP;
 
-        ElemT* operator[](int row) const                    { assertIndex(row,0);   return &parent()(_row + row, _col); }
-        ElemT& operator()(int i) const                      { assertIndex(i);       return parent()(_row + i / _cols, _col + i % _cols); }
-        ElemT& operator()(int row, int col) const           { assertIndex(row,col); return parent()(_row + row, _col + col); }
+        ElemT* operator[](int row) const                    { this->assertIndex(row,0);   return &parent()(_row + row, _col); }
+        ElemT& operator()(int i) const                      { this->assertIndex(i);       return parent()(_row + i / _cols, _col + i % _cols); }
+        ElemT& operator()(int row, int col) const           { this->assertIndex(row,col); return parent()(_row + row, _col + col); }
 
         /// Get as array.  Top-left corner of block sub-section is at index 0 
         ElemT* data() const                                 { return &parent()(row(),col()); }
@@ -158,13 +162,13 @@ namespace priv
     bool storageEqual(const StorageDense<T>& lhs, const StorageBlock<T2>& rhs)      { return storageRowEqual(lhs, rhs); }
 
 
-    template<class MatrixP, int Rows, int Cols>
+    template<class MatrixP_, int Rows, int Cols>
     struct BlockTraits
     {
-        typedef Block<MatrixP,Rows,Cols>        Subclass;
+        typedef Block<MatrixP_,Rows,Cols>       Subclass;
         typedef MatrixBase<Subclass>            Base;
         typedef StorageBlock<Subclass>          Storage;
-        typedef MatrixP                         MatrixP;
+        typedef MatrixP_                        MatrixP;
         typedef typename MatrixP::Real          Real;
         /// Our element access is const if matrix is const
         typedef typename std::conditional<std::is_const<MatrixP>::value, const typename MatrixP::ElemT, typename MatrixP::ElemT>::type
@@ -177,27 +181,6 @@ namespace priv
 
     template<class MatrixP, int Rows, int Cols>
     struct Traits<Block<MatrixP,Rows,Cols>> : BlockTraits<MatrixP,Rows,Cols> {};
-
-    /// Column vector block traits
-    template<class Vec, int Cols>
-    struct Traits<Block<Vec,1,Cols>> : BlockTraits<Vec,1,Cols>
-    {
-        typedef VecBase<Subclass>               Base;
-    };
-
-    /// Row vector block traits
-    template<class Vec, int Rows>
-    struct Traits<Block<Vec,Rows,1>> : BlockTraits<Vec,Rows,1>
-    {
-        typedef VecBase<Subclass>               Base;
-    };
-
-    /// 1x1 block traits
-    template<class Vec>
-    struct Traits<Block<Vec,1,1>> : BlockTraits<Vec,1,1>
-    {
-        typedef VecBase<Subclass>               Base;
-    };
 }
 
 /// Matrix block view
@@ -206,11 +189,11 @@ class Block : public priv::Traits<Block<MatrixP,s_rows,s_cols>>::Base
 {
     typedef typename priv::Traits<Block<MatrixP,s_rows,s_cols>>::Base Super;
 public:
-    typedef Matrix<s_rows,s_cols,Real,Super::options,typename Super::Alloc> MatrixEval;
+    typedef Matrix<s_rows,s_cols,typename Super::Real,Super::options,typename Super::Alloc> MatrixEval;
 
     Block() {}
     Block(MatrixP& m, int row, int col, int rows = -1, int cols = -1)
-                                                            { initBlock(m, row, col, rows, cols); }
+                                                            { this->initBlock(m, row, col, rows, cols); }
 
     /// Assign to matrix
     template<class T>
@@ -232,9 +215,9 @@ namespace vec { namespace priv
     {
         typedef matrix::priv::Traits<typename std::remove_const<Vec>::type> Traits;
         typedef matrix::Block<Vec,  Traits::cols == 1 ? Dim : 1,
-                                    Traits::cols == 1 ? 1 : Dim> Type;
+                                    Traits::cols == 1 ? 1 : Dim> type;
 
-        static Type create(Vec& v, int i, int dim = -1)     { return Traits::cols == 1 ? Type(v,i,0,dim,1) : Type(v,0,i,1,dim); }
+        static type create(Vec& v, int i, int dim = -1)     { return Traits::cols == 1 ? type(v,i,0,dim,1) : type(v,0,i,1,dim); }
     };
 } }
 

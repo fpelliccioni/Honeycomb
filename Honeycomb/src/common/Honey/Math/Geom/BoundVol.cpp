@@ -7,7 +7,7 @@ namespace honey
 {
 
 
-bool BoundVol<Sphere>::test(const BoundVolBase& bv) const
+template<> bool BoundVol<Sphere>::test(const BoundVolBase& bv) const
 {
     switch (bv.type())
     {
@@ -34,7 +34,7 @@ bool BoundVol<Sphere>::test(const BoundVolBase& bv) const
 }
 
 
-bool BoundVol<Box>::test(const BoundVolBase& bv) const
+template<> bool BoundVol<Box>::test(const BoundVolBase& bv) const
 {
     switch (bv.type())
     {
@@ -61,7 +61,7 @@ bool BoundVol<Box>::test(const BoundVolBase& bv) const
 }
 
 
-bool BoundVol<Cylinder>::test(const BoundVolBase& bv) const
+template<> bool BoundVol<Cylinder>::test(const BoundVolBase& bv) const
 {
     switch (bv.type())
     {
@@ -80,7 +80,7 @@ bool BoundVol<Cylinder>::test(const BoundVolBase& bv) const
 }
 
 
-bool BoundVol<Cone>::test(const BoundVolBase& bv) const
+template<> bool BoundVol<Cone>::test(const BoundVolBase& bv) const
 {
     switch (bv.type())
     {
@@ -99,7 +99,7 @@ bool BoundVol<Cone>::test(const BoundVolBase& bv) const
 }
 
 
-bool BoundVol<Capsule>::test(const BoundVolBase& bv) const
+template<> bool BoundVol<Capsule>::test(const BoundVolBase& bv) const
 {
     switch (bv.type())
     {
@@ -122,7 +122,7 @@ bool BoundVol<Capsule>::test(const BoundVolBase& bv) const
 }
 
 
-bool BoundVol<OrientBox>::test(const BoundVolBase& bv) const
+template<> bool BoundVol<OrientBox>::test(const BoundVolBase& bv) const
 {
     switch (bv.type())
     {
@@ -145,7 +145,7 @@ bool BoundVol<OrientBox>::test(const BoundVolBase& bv) const
 }
 
 
-bool BoundVol<FrustumOrtho>::test(const BoundVolBase& bv) const
+template<> bool BoundVol<FrustumOrtho>::test(const BoundVolBase& bv) const
 {
     switch (bv.type())
     {
@@ -171,7 +171,7 @@ bool BoundVol<FrustumOrtho>::test(const BoundVolBase& bv) const
     }
 }
 
-bool BoundVol<FrustumPersp>::test(const BoundVolBase& bv) const
+template<> bool BoundVol<FrustumPersp>::test(const BoundVolBase& bv) const
 {
     switch (bv.type())
     {

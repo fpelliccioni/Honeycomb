@@ -15,23 +15,29 @@ class StorageFields :   public matrix::priv::StorageDense<Subclass>,
                                                     matrix::priv::Traits<Subclass>::dim,
                                                     matrix::Option::getAlign< matrix::priv::Traits<Subclass>::options >::value >
 {
+    typedef matrix::priv::StorageDense<Subclass> Super;
 public:
+    using Super::s_rows;
+    using Super::s_cols;
+    using Super::s_size;
+    typedef typename Super::Real Real;
+    
     /// Access vector element at index
-    const Real& operator[](int i) const                 { assertIndex(i); return data()[i]; }
-    Real& operator[](int i)                             { assertIndex(i); return data()[i]; }
+    const Real& operator[](int i) const                 { this->assertIndex(i); return data()[i]; }
+    Real& operator[](int i)                             { this->assertIndex(i); return data()[i]; }
     /// Access vector element at index
     const Real& operator()(int i) const                 { return (*this)[i]; }
     Real& operator()(int i)                             { return (*this)[i]; }
     /// Access vector element with (row, column)
-    const Real& operator()(int row, int col) const      { assertIndex(row,col); return data()[row|col]; }
-    Real& operator()(int row, int col)                  { assertIndex(row,col); return data()[row|col]; }
+    const Real& operator()(int row, int col) const      { this->assertIndex(row,col); return data()[row|col]; }
+    Real& operator()(int row, int col)                  { this->assertIndex(row,col); return data()[row|col]; }
 
     int rows() const                                    { return s_rows; }
     int cols() const                                    { return s_cols; }
     int size() const                                    { return s_size; }
 
-    Real* data()                                        { return &x; }
-    const Real* data() const                            { return &x; }
+    Real* data()                                        { return &this->x; }
+    const Real* data() const                            { return &this->x; }
 };
 
 /// Auto or dynamic vector storage
@@ -39,15 +45,17 @@ template<class Subclass>
 struct Storage : matrix::priv::Storage<Subclass>
 {
     typedef matrix::priv::Storage<Subclass> Super;
-
+    using Super::data;
+    typedef typename Super::Real Real;
+    
     /// Access vector element at index
-    const Real& operator[](int i) const                 { assertIndex(i); return data()[i]; }
-    Real& operator[](int i)                             { assertIndex(i); return data()[i]; }
+    const Real& operator[](int i) const                 { this->assertIndex(i); return data()[i]; }
+    Real& operator[](int i)                             { this->assertIndex(i); return data()[i]; }
 
     using Super::operator();
     /// Access vector element with (row, column)
-    const Real& operator()(int row, int col) const      { assertIndex(row,col); return data()[row|col]; }
-    Real& operator()(int row, int col)                  { assertIndex(row,col); return data()[row|col]; }
+    const Real& operator()(int row, int col) const      { this->assertIndex(row,col); return data()[row|col]; }
+    Real& operator()(int row, int col)                  { this->assertIndex(row,col); return data()[row|col]; }
 };
 
 } } }

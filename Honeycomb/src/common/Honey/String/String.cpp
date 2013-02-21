@@ -21,15 +21,7 @@ String& String::insert(int pos1, const Char* str, int pos2, int count)
     else                Super::insert(pos1, str + pos2, count);
     return *this;
 }
-/*
-String& String::insert(int pos1, const wchar_t* str, int pos2, int count)
-{
-    if (!str) return *this;
-    if (count == npos) count = std::char_traits<wchar_t>::length(str) - pos2;
-    Super::insert(begin() + pos1, str + pos2, str + pos2 + count);
-    return *this;
-}
-*/
+
 String& String::insert(int pos1, const char* str, int pos2, int count)
 {
     if (!str) return *this;
@@ -69,14 +61,14 @@ int String::compareIgnoreCase(const String& str, int pos1, int n1, int pos2, int
 String String::toLower() const
 {
     String str;
-    std::transform(begin(), end(), str.begin(), std::tolower);
+    std::transform(begin(), end(), str.begin(), (int (*)(int))std::tolower);
     return str;
 }
 
 String String::toUpper() const
 {
     String str;
-    std::transform(begin(), end(), str.begin(), std::toupper);
+    std::transform(begin(), end(), str.begin(), (int (*)(int))std::toupper);
     return str;
 }
 
@@ -176,14 +168,13 @@ private:
     int _token;
 };
 
-String String::join(const List& strings, const String& delim,
-                    option<List::const_iterator> itStart, option<List::const_iterator> itEnd)
+String String::join(const List& strings, const String& delim, int start, int end)
 {
-    if (!itStart) itStart = strings.begin();
-    if (!itEnd) itEnd = strings.end();
+    auto itStart = start != npos ? strings.begin() + start : strings.begin();
+    auto itEnd = end != npos ? strings.begin() + end : strings.end();
 
     String ret;
-    std::copy(*itStart, *itEnd, Linker(ret, delim));
+    std::copy(itStart, itEnd, Linker(ret, delim));
     return ret;
 }
 

@@ -43,7 +43,7 @@ Sphere_<Real>& Sphere_<Real>::fromPoints(const Vec3* vs, int count)
     //Position the sphere in the center of the cloud
     center = min + dif / 2;
     //Set radius to encompass the cloud, account for error
-    radius = dif.length() / 2 + RealT::zeroTol;
+    radius = dif.length() / 2 + Real_::zeroTol;
 
     return *this;
 }

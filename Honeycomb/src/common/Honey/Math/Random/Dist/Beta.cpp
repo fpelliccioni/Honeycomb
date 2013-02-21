@@ -62,7 +62,7 @@ Real BetaInc<Real>::calc(Real x, Real a, Real b)
     Real fx2;
 
     /*
-    Debug::print(sout()
+    debug::print(sout()
         << "  BetaIn computes the incomplete Beta function.\n"
         << "  Compare to tabulated values.\n"
         << "\n"
@@ -82,7 +82,7 @@ Real BetaInc<Real>::calc(Real x, Real a, Real b)
         int fault;
         fx2 = betaIn(x, a, b, GammaFunc::gammaLn(a) + GammaFunc::gammaLn(b) - GammaFunc::gammaLn(a + b), fault);
     /*
-        Debug::print(sout()
+        debug::print(sout()
             << "  " << setprecision(4) << std::setw(10) << a
             << "  " << setprecision(4) << std::setw(10) << b
             << "  " << setprecision(4) << std::setw(10) << x
@@ -369,7 +369,7 @@ Real BetaInc<Real>::calcInv(Real yy0, Real aa, Real bb)
         {
             x = x0  +  di * (x1 - x0);
             if (x == 1)
-                x = 1 - RealT::epsilon;
+                x = 1 - Real_::epsilon;
             if (x == 0)
             {
                 di = 0.5;
@@ -429,7 +429,7 @@ Real BetaInc<Real>::calcInv(Real yy0, Real aa, Real bb)
         else
         {
             x1 = x;
-            if (rflg == 1 && x1 < RealT::epsilon)
+            if (rflg == 1 && x1 < Real_::epsilon)
             {
                 x = 0;
                 goto done;
@@ -452,7 +452,7 @@ Real BetaInc<Real>::calcInv(Real yy0, Real aa, Real bb)
 
     if (x0 >= 1)
     {
-        x = 1 - RealT::epsilon;
+        x = 1 - Real_::epsilon;
         goto done;
     }
     if (x <= 0)
@@ -521,19 +521,19 @@ Real BetaInc<Real>::calcInv(Real yy0, Real aa, Real bb)
                 break;
         }
         x = xt;
-        if (Alge::abs(d/x) < 128 * RealT::epsilon)
+        if (Alge::abs(d/x) < 128 * Real_::epsilon)
             goto done;
     }
     /* Did not converge.  */
-    dithresh = 256 * RealT::epsilon;
+    dithresh = 256 * Real_::epsilon;
     goto ihalve;
 
     done:
 
     if( rflg )
     {
-        if (x <= RealT::epsilon)
-            x = 1 - RealT::epsilon;
+        if (x <= Real_::epsilon)
+            x = 1 - Real_::epsilon;
         else
             x = 1 - x;
     }

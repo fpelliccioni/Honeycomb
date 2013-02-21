@@ -75,9 +75,8 @@ namespace thread
         typedef function<void (T*)> Fin;
 
         /// Init / Finalize func is called once per thread to create/destroy local object instance
-        Local(const Init& init = &initObj, const Fin& fin = finalize<T>())
-                                                    : _id(Thread::allocStore()), _init(init), _fin(fin) {}
-        ~Local()                                    { Thread::freeStore(_id); }
+        Local(const Init& init = &initObj, const Fin& fin = finalize<T>());
+        ~Local();
 
         /// Assign thread-local object to rhs
         Local& operator=(const T& rhs)              { get() = rhs; return *this; }
@@ -92,20 +91,7 @@ namespace thread
         const T& get() const                        { const_cast<Local*>(this)->get(); }
 
         /// Get the thread-local object
-        T& get()
-        {
-            priv::Store& store = Thread::current().store(_id);
-            //This thread may not have init the ptr yet, or the ptr could be from an old local that has been deleted
-            if (store.reclaim != _id.reclaim)
-            {
-                store.fin();
-                store.reclaim = _id.reclaim;
-                T* ptr = _init();
-                store.ptr = ptr;
-                store.fin = bind(_fin, ptr);
-            }
-            return *reinterpret_cast<T*>(store.ptr);
-        }
+        T& get();
 
     private:
         static T* initObj()                         { return new T; }
@@ -146,7 +132,7 @@ class SpinLock;
 class Thread : private platform::Thread, mt::NoCopy
 {
     typedef platform::Thread Super;
-    friend class Super;
+    friend class platform::Thread;
     friend void thread::current::sleep(MonoClock::TimePoint time);
     friend bool thread::current::interruptEnabled();
     friend void thread::current::interruptPoint();
@@ -194,18 +180,18 @@ public:
     /// \name Thread scheduling priority
     /// Higher priority threads are favored for scheduling and will execute more often.
     /// @{
-    static const int priorityNormal                 = Super::priorityNormal;
-    static const int priorityMin                    = Super::priorityMin;
-    static const int priorityMax                    = Super::priorityMax;
+    static const int priorityNormal;
+    static const int priorityMin;
+    static const int priorityMax;
     /// @}
 
     /// Set thread execution scheduling priority
     void setPriority(int priority)                  { Super::setPriority(priority); }
     /// Get thread execution scheduling priority
-    int getPriority() const                         { Super::getPriority(); }
+    int getPriority() const                         { return Super::getPriority(); }
 
     /// Invalid thread id
-    static const ThreadId threadIdInvalid           = Super::threadIdInvalid;
+    static const ThreadId threadIdInvalid;
     /// Get the thread unique platform id
     ThreadId threadId() const                       { return Super::threadId(); }
 
@@ -257,5 +243,31 @@ private:
     };
     mt_staticObj(Static, getStatic,);
 };
+
+
+namespace thread
+{
+    template<class T>
+    Local<T>::Local(const Init& init, const Fin& fin)   : _id(Thread::allocStore()), _init(init), _fin(fin) {}
+    
+    template<class T>
+    Local<T>::~Local()                              { Thread::freeStore(_id); }
+    
+    template<class T>
+    T& Local<T>::get()
+    {
+        priv::Store& store = Thread::current().store(_id);
+        //This thread may not have init the ptr yet, or the ptr could be from an old local that has been deleted
+        if (store.reclaim != _id.reclaim)
+        {
+            store.fin();
+            store.reclaim = _id.reclaim;
+            T* ptr = _init();
+            store.ptr = ptr;
+            store.fin = bind(_fin, ptr);
+        }
+        return *reinterpret_cast<T*>(store.ptr);
+    }
+}
 
 }

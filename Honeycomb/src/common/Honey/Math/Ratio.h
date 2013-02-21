@@ -30,12 +30,12 @@ public:
         static const int64 gcd2 = mt::gcd<n, gcd1>::value;
 
     public:
-        typedef Ratio<n / gcd2, (den / gcd2) * (rhs::den / gcd1)> Type;
+        typedef Ratio<n / gcd2, (den / gcd2) * (rhs::den / gcd1)> type;
     };
 
     /// operator-
     template<class rhs>
-    struct sub                                          { typedef typename add<Ratio<-rhs::num, rhs::den>>::Type Type; };
+    struct sub                                          { typedef typename add<Ratio<-rhs::num, rhs::den>>::type type; };
 
     /// operator*
     template<class rhs>
@@ -45,12 +45,12 @@ public:
         static const int64 gcd1 = mt::gcd<num, rhs::den>::value;
         static const int64 gcd2 = mt::gcd<rhs::num, den>::value;
     public:
-        typedef Ratio<(num / gcd1) * (rhs::num / gcd2), (den / gcd2) * (rhs::den / gcd1)> Type;
+        typedef Ratio<(num / gcd1) * (rhs::num / gcd2), (den / gcd2) * (rhs::den / gcd1)> type;
     };
 
     /// operator/
     template<class rhs>
-    struct div                                          { static_assert(rhs::num != 0, "Divide by 0"); typedef typename mul<Ratio<rhs::den, rhs::num>>::Type Type; };
+    struct div                                          { static_assert(rhs::num != 0, "Divide by 0"); typedef typename mul<Ratio<rhs::den, rhs::num>>::type type; };
 
     /// operator==
     template<class rhs>
@@ -84,7 +84,7 @@ public:
         static const int64 gcdNum = mt::gcd<num, rhs::num>::value;
         static const int64 gcdDen = mt::gcd<den, rhs::den>::value;
     public:
-        typedef Ratio<gcdNum, (den / gcdDen) * rhs::den> Type;
+        typedef Ratio<gcdNum, (den / gcdDen) * rhs::den> type;
     };
 
 private:

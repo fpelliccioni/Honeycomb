@@ -108,14 +108,14 @@ Real ChiSqr_<Real>::cdfInv(Real P) const
     Double max = b + c * Gamma(ff/2, 2).cdfInv(p);
     if (max < 0)
         max = Double_::smallest;
-    return cdfInvFind(P, 0, max);
+    return this->cdfInvFind(P, 0, max);
 }
 
 template<class Real>
 Real ChiSqr_<Real>::test(const VecN& observed, const VecN& expected)
 {
     return 1 - ChiSqr_(observed.size()-1).cdf(
-        reduce(observed, expected, RealT::zero, [](Real a, Real o, Real e) { return a + Alge::sqr(o - e) / e; }));
+        reduce(observed, expected, Real_::zero, [](Real a, Real o, Real e) { return a + Alge::sqr(o - e) / e; }));
 }
 
 template<class Real>

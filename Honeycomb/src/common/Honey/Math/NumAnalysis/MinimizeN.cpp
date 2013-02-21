@@ -45,7 +45,7 @@ auto MinimizeN<Real,Dim>::calc(const Func& func, const Vec& min, const Vec& max,
         // Record the direction of max length
         Vec conj;
         Real length = 0;
-        Real maxLen = -RealT::max;
+        Real maxLen = -Real_::max;
         int maxDir = 0;
 
         for (auto i : range(dim))
@@ -86,8 +86,8 @@ auto MinimizeN<Real,Dim>::calc(const Func& func, const Vec& min, const Vec& max,
 template<class Real, int Dim>
 tuple<Real, Real> MinimizeN<Real,Dim>::calcDomain(const Vec& v, const Vec& dir, const Vec& min, const Vec& max)
 {
-    Real ell0 = -RealT::max;
-    Real ell1 = RealT::max;
+    Real ell0 = -Real_::max;
+    Real ell1 = Real_::max;
 
     for (auto i : range(dim))
     {

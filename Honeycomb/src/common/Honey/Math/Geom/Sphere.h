@@ -13,7 +13,7 @@ template<class Real> class Box_;
 template<class Real>
 class Sphere_ : public Shape<Real>
 {
-    typedef typename Numeral<Real>::RealT RealT;
+    typedef typename Numeral<Real>::Real_ Real_;
     typedef Alge_<Real>     Alge;
     typedef Vec<3,Real>     Vec3;
     typedef Box_<Real>      Box;
@@ -43,10 +43,10 @@ public:
     void extend(const Vec3& p)                                      { Alge::max((p - center).length(), radius); }
 
     /// Calc sphere surface area
-    Real area() const                                               { return 4 * RealT::pi * radius * radius; }
+    Real area() const                                               { return 4 * Real_::pi * radius * radius; }
 
     /// Calc sphere volume
-    Real volume() const                                             { return (4. / 3) * RealT::pi * radius * radius * radius; }
+    Real volume() const                                             { return (4. / 3) * Real_::pi * radius * radius * radius; }
 
     /// Get bounding box
     Box toBox() const;

@@ -30,6 +30,7 @@ class NspTreeSpace : public TreeSpace
 public:
     class Data : public SceneComponent, public NspTree::template Data<SceneObject*>
     {
+        typedef typename NspTree::template Data<SceneObject*> Super;
         friend class NspTreeSpace;
     public:
         COMPONENT(Data, sout() << "NspTreeSpace<" << NspTree::dim << ">::Data")
@@ -37,7 +38,7 @@ public:
     private:
         typedef vector<Data*> List;
 
-        Data(NspTreeSpace& space)                           : NspTree::Data<SceneObject*>(space._tree.concurMax(), nullptr), space(space), dirty(false) {}
+        Data(NspTreeSpace& space)                           : Super(space._tree.concurMax(), nullptr), space(space), dirty(false) {}
 
         void update()
         {
@@ -46,9 +47,9 @@ public:
 
             //Transform bv into tree space
             BoundVolAny bvTm;
-            obj().com<CullVolBase>().bv().clone(bvTm);
-            bvTm.mul(obj().com<Tm>());
-            box = bvTm.toBox();
+            obj().template com<CullVolBase>().bv().clone(bvTm);
+            bvTm.mul(obj().template com<Tm>());
+            this->box = bvTm.toBox();
 
             //Re-insert into tree
             space._tree.add(*this);
@@ -59,9 +60,9 @@ public:
 
         virtual void onComInsert()
         {
-            data = &obj();
-            obj().com<Tm>().listeners().add(Listener::create<Tm::sigTmChange>(bind(&Data::onChange,this), this));
-            obj().com<CullVolBase>().listeners().add(Listener::create<CullVolBase::sigShapeChange>(bind(&Data::onChange,this), this));
+            this->data = &this->obj();
+            obj().template com<Tm>().listeners().add(Listener::create<Tm::sigTmChange>(bind(&Data::onChange,this), this));
+            obj().template com<CullVolBase>().listeners().add(Listener::create<CullVolBase::sigShapeChange>(bind(&Data::onChange,this), this));
             onChange();
         }
 
@@ -72,8 +73,8 @@ public:
             space._tree.remove(*this);
             if (dirty) stdutil::erase(space._updateList, this);
             dirty = false;
-            obj().com<Tm>().listeners().removeAll(this);
-            obj().com<CullVolBase>().listeners().removeAll(this);
+            obj().template com<Tm>().listeners().removeAll(this);
+            obj().template com<CullVolBase>().listeners().removeAll(this);
         }
 
         void onChange()
@@ -112,6 +113,8 @@ public:
 private:
     struct NspTreeEnum : public NspTree::EnumVisitor
     {
+        typedef typename NspTree::EnumVisitor::State State;
+        
         NspTreeEnum(const NspTreeSpace& space, typename NspTreeSpace::EnumVisitor& spaceVisitor) :
             space(space),
             spaceVisitor(spaceVisitor)
@@ -122,7 +125,7 @@ private:
             //Found an object, enumerate its descendants
             space.enumTree(spaceVisitor, *static_cast<const Data*>(data)->data);
             if (spaceVisitor.getState() == NspTreeSpace::EnumVisitor::State::stop)
-                setState(State::stop);
+                this->setState(State::stop);
         }
 
         const NspTreeSpace& space;
@@ -131,7 +134,7 @@ private:
 
     static ComRegistry::DepNode createTypeDep()         { ComRegistry::DepNode node = TreeSpace::createTypeDep(); node.add(CullVol<Box>::s_comType()); return node; }
 
-    virtual void onComInsert()                          { obj().com<CullVol<Box>>().setShape(_tree.bounds()); }
+    virtual void onComInsert()                          { obj().template com<CullVol<Box>>().setShape(_tree.bounds()); }
     virtual void onComRemove() {}
 
     void update()

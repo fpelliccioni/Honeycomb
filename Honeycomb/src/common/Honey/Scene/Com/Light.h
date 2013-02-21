@@ -106,7 +106,7 @@ public:
         switch (_decayType)
         {
         case DecayType::none:
-            return intensity == 1 ? Real(0) : RealT::inf;
+            return intensity == 1 ? Real(0) : Real_::inf;
         case DecayType::inv:
             return _radius/intensity;
         case DecayType::invSqr:
@@ -143,7 +143,7 @@ public:
     virtual Real calcIntensity(Real /*distance*/) const { return 1; }
 
     /// Calculate distance from light at intensity. Pass in intensityZero to determine the distance where the light contribution is effectively zero.
-    virtual Real calcDistance(Real intensity) const     { return Alge::clamp(intensity, 0, 1) == 1 ? Real(0) : RealT::inf; }
+    virtual Real calcDistance(Real intensity) const     { return Alge::clamp(intensity, 0, 1) == 1 ? Real(0) : Real_::inf; }
 
     /// Normalized light direction
     void setDir(const Vec3& dir)                        { _dir = dir; }
@@ -162,7 +162,7 @@ public:
 
     LightSpot() :
         _dir(-Vec3::axisZ),
-        _spotCutoff(RealT::piHalf),
+        _spotCutoff(Real_::piHalf),
         _spotExponent(0) {}
 
     virtual LightType lightType() const                 { return LightType::spot; }
@@ -172,7 +172,7 @@ public:
     const Vec3& getDir() const                          { return _dir; }
 
     /// Cutoff angle in radians.  Range [0,90]
-    void setSpotCutoff(Real spotCutoff)                 { assert(spotCutoff >= 0 && spotCutoff <= RealT::piHalf); _spotCutoff = spotCutoff; }
+    void setSpotCutoff(Real spotCutoff)                 { assert(spotCutoff >= 0 && spotCutoff <= Real_::piHalf); _spotCutoff = spotCutoff; }
     Real getSpotCutoff() const                          { return _spotCutoff; }
 
     /// Exponent for falloff within spot cutoff angle.

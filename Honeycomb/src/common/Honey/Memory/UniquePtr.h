@@ -7,13 +7,14 @@ namespace honey
 {
 
 /// Pointer to a unique, non-shared, object.  Finalizer (deletes object by default) is run upon destruction if pointer is not null.
-template<class T, class Fin = finalize<T>>
+template<class T_, class Fin = finalize<T_>>
 class UniquePtr : mt::NoCopy
 {
-    friend class UniquePtr;
-    template<class T> struct PtrType                                { typedef T Type; };
-    template<class T> struct PtrType<T[]>                           { typedef T Type; };
-    typedef typename PtrType<T>::Type T;
+    template<class, class> friend class UniquePtr;
+    template<class T> struct PtrType                                { typedef T type; };
+    template<class T> struct PtrType<T[]>                           { typedef T type; };
+    typedef typename PtrType<T_>::type T;
+    
 public:
     UniquePtr()                                                     : _ptr(nullptr) {}
     UniquePtr(T* ptr, const Fin& f = Fin())                         : _ptr(ptr), _fin(f) {}
@@ -61,15 +62,6 @@ private:
     Fin _fin;
 };
 
-/** \cond */
-/// Allow class to be used as key in unordered containers
-template<class T, class Fin>
-struct std::hash<UniquePtr<T,Fin>>
-{
-    size_t operator()(const honey::UniquePtr<T,Fin>& val) const     { return reinterpret_cast<size_t>(val.get()); };
-};
-/** \endcond */
-
 /// Helper to create a unique a ptr using type deduction
 /** \relates UniquePtr */
 template<class T, class Fin>
@@ -79,3 +71,15 @@ template<class T>
 UniquePtr<T,finalize<T>> UniquePtrCreate(T* ptr)                    { return UniquePtrCreate(ptr, finalize<T>()); }
 
 }
+
+/** \cond */
+namespace std
+{
+    /// Allow class to be used as key in unordered containers
+    template<class T, class Fin>
+    struct hash<honey::UniquePtr<T,Fin>>
+    {
+        size_t operator()(const honey::UniquePtr<T,Fin>& val) const     { return reinterpret_cast<size_t>(val.get()); };
+    };
+}
+/** \endcond */

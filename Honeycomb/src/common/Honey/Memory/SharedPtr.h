@@ -44,11 +44,11 @@ namespace priv
     };
 
     /// Control block for shared pointer.  Holds pointer and calls finalizer.  Alloc is used to deallocate the control block.
-    template<class T, class Fin, class Alloc>
+    template<class T, class Fin, class Alloc_>
     class SharedControl : public SharedControlBase
     {
     public:
-        typedef typename Alloc::template rebind<SharedControl>::other Alloc;
+        typedef typename Alloc_::template rebind<SharedControl>::other Alloc;
 
         SharedControl(T* ptr, Fin&& f, const Alloc& a)  : _ptr(ptr), _fin(forward<Fin>(f)), _alloc(a) {}
     protected:
@@ -163,14 +163,14 @@ template<class T> class WeakPtr;
   * Intrusive pointers don't use an allocator and finalize with SharedObj::finalize().
   */
 template<class T>
-class SharedPtr : private priv::SharedControlStorage<mt::isBaseOf<SharedObj, T>::value>
+class SharedPtr : private priv::SharedControlStorage<mt::is_base_of<SharedObj, T>::value>
 {
     friend class SharedPtr;
-    template<class T> friend class WeakPtr;
-    template<class T, class U> friend SharedPtr<T> static_pointer_cast(const SharedPtr<U>&);
-    template<class T, class U> friend SharedPtr<T> dynamic_pointer_cast(const SharedPtr<U>&);
-    template<class T, class U> friend SharedPtr<T> const_pointer_cast(const SharedPtr<U>&);
-
+    template<class T_> friend class WeakPtr;
+    template<class T_, class U> friend SharedPtr<T_> static_pointer_cast(const SharedPtr<U>&);
+    template<class T_, class U> friend SharedPtr<T_> dynamic_pointer_cast(const SharedPtr<U>&);
+    template<class T_, class U> friend SharedPtr<T_> const_pointer_cast(const SharedPtr<U>&);
+    
 public:
     SharedPtr()                                                     : _ptr(nullptr) {}
     SharedPtr(nullptr_t)                                            : _ptr(nullptr) {}
@@ -188,7 +188,7 @@ public:
     SharedPtr(SharedPtr&& ptr)                                                      { set(move(ptr)); }
     template<class U> SharedPtr(SharedPtr<U>&& ptr)                                 { set(move(ptr)); }
     /// Lock a weak pointer to get access to its object.  Shared ptr will be null if the object has already been destroyed.
-    template<class U> SharedPtr(const WeakPtr<U>& ptr)              : _ptr(ptr._ptr) { _control(ptr._control()); if (_ptr && !getControl<>().refLock()) _ptr = nullptr; }
+    template<class U> SharedPtr(const WeakPtr<U>& ptr)              : _ptr(ptr._ptr) { this->_control(ptr._control()); if (_ptr && !getControl<>().refLock()) _ptr = nullptr; }
     /// Transfer ownership out of unique pointer, leaving it null
     template<class U, class Fin> SharedPtr(UniquePtr<U,Fin>&& ptr)  : _ptr(nullptr) { operator=(move(ptr)); }
 
@@ -253,9 +253,10 @@ public:
     bool unique() const                                             { return refCount() == 1; }
 
 private:
-    typedef priv::SharedControlBase Control;
-    static const bool isIntrusive                                   = mt::isBaseOf<SharedObj, T>::value;
-
+    typedef priv::SharedControlBase                                 Control;
+    static const bool isIntrusive                                   = mt::is_base_of<SharedObj, T>::value;
+    typedef priv::SharedControlStorage<isIntrusive>                 Storage;
+    
     template<class U, class Fin, class Alloc, bool isIntrusive = SharedPtr::isIntrusive>
     struct createControl {};
 
@@ -263,11 +264,11 @@ private:
     struct createControl<U,Fin,Alloc,true>
     {   static void* func(U&, Fin&&, Alloc&&)                       { return nullptr; } };
     
-    template<class U, class Fin, class Alloc>
-    struct createControl<U,Fin,Alloc,false>
+    template<class U, class Fin, class Alloc_>
+    struct createControl<U,Fin,Alloc_,false>
     {
-        typedef priv::SharedControl<U,Fin,Alloc> Control;
-        typedef typename Alloc::template rebind<Control>::other Alloc;
+        typedef priv::SharedControl<U,Fin,Alloc_> Control;
+        typedef typename Alloc_::template rebind<Control>::other Alloc;
         static Control* func(U& obj, Fin&& f, Alloc a)              { return new (a.allocate(1)) Control(&obj,forward<Fin>(f),a); }
     };
 
@@ -275,7 +276,7 @@ private:
     template<class U>
     void set(SharedPtr<U>&& rhs)
     {
-        _ptr = rhs._ptr; _control(rhs._control());
+        _ptr = rhs._ptr; this->_control(rhs._control());
         rhs._ptr = nullptr; rhs._control(nullptr);
     }
 
@@ -293,8 +294,8 @@ private:
         setControl(U* ptr, Control* control)
     {
         if (ptr) control->ref();
-        T* oldPtr = _ptr; Control* oldControl = _control();
-        _ptr = ptr; _control(control);
+        T* oldPtr = _ptr; Control* oldControl = Storage::_control();
+        _ptr = ptr; Storage::_control(control);
         if (oldPtr) oldControl->unref();
     }
 
@@ -303,7 +304,7 @@ private:
         getControl() const                                          { assert(_ptr && _ptr->SharedObj::_control); return *_ptr->SharedObj::_control; }
     template<class _ = void>
     typename mt::disable_if<mt::True<_>::value && isIntrusive, Control&>::type
-        getControl() const                                          { assert(_control()); return *_control(); }
+        getControl() const                                          { assert(Storage::_control()); return *Storage::_control(); }
 
     T* _ptr;
 };
@@ -322,15 +323,6 @@ template<class T, class U>
 SharedPtr<T> const_pointer_cast(const SharedPtr<U>& rhs)            { SharedPtr<T> ret; ret.setControl(const_cast<T*>(rhs._ptr), rhs._control()); return ret; }
 /// @}
 
-/** \cond */
-/// Allow class to be used as key in unordered containers
-template<class T>
-struct std::hash<SharedPtr<T>>
-{
-    size_t operator()(const honey::SharedPtr<T>& val) const         { return reinterpret_cast<size_t>(val.get()); };
-};
-/** \endcond */
-
 //====================================================
 // WeakPtr
 //====================================================
@@ -343,7 +335,7 @@ struct std::hash<SharedPtr<T>>
   * This problem can be solved by replacing internal shared pointers with weak pointers until the cycle is broken.
   */
 template<class T>
-class WeakPtr : private priv::SharedControlStorage<mt::isBaseOf<SharedObj, T>::value>
+class WeakPtr : private priv::SharedControlStorage<mt::is_base_of<SharedObj, T>::value>
 {
     friend class WeakPtr;
     template<class> friend class SharedPtr;
@@ -380,6 +372,7 @@ public:
 private:
     static const bool isIntrusive                                   = SharedPtr<T>::isIntrusive;
     typedef typename SharedPtr<T>::Control                          Control;
+    typedef typename SharedPtr<T>::Storage                          Storage;
 
     template<class U>
     typename std::enable_if<mt::True<U>::value && isIntrusive>::type
@@ -395,8 +388,8 @@ private:
         setControl(U* ptr, Control* control)
     {
         if (ptr) control->refWeak();
-        T* oldPtr = _ptr; Control* oldControl = _control();
-        _ptr = ptr; _control(control);
+        T* oldPtr = _ptr; Control* oldControl = Storage::_control();
+        _ptr = ptr; Storage::_control(control);
         if (oldPtr) oldControl->unrefWeak();     
     }
 
@@ -405,9 +398,21 @@ private:
         getControl() const                                          { assert(_ptr && _ptr->SharedObj::_control); return *_ptr->SharedObj::_control; }
     template<class _ = void>
     typename mt::disable_if<mt::True<_>::value && isIntrusive, Control&>::type
-        getControl() const                                          { assert(_control()); return *_control(); }
+        getControl() const                                          { assert(Storage::_control()); return *Storage::_control(); }
 
     T* _ptr;
 };
 
 }
+
+/** \cond */
+namespace std
+{
+    /// Allow class to be used as key in unordered containers
+    template<class T>
+    struct hash<honey::SharedPtr<T>>
+    {
+        size_t operator()(const honey::SharedPtr<T>& val) const     { return reinterpret_cast<size_t>(val.get()); };
+    };
+}
+/** \endcond */

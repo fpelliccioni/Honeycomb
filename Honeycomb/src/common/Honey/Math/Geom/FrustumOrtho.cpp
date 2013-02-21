@@ -75,7 +75,7 @@ void FrustumOrtho_<Real>::onTmChange()
     _planes[Planes::far].dist = -dDp - _extent[1].x;
 
     updateVertices();
-    updateBox();
+    this->updateBox();
 }
 
 template<class Real>

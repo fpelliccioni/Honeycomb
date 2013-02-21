@@ -7,11 +7,18 @@
 namespace honey
 {
 
+/** \cond */
+namespace bitset { namespace priv
+{
+    extern const int countTable[];
+} }
+/** \endcond */
+
 /// A compact array of bits. Dynamic version of std::bitset.
-template<class Block = uint32, class Alloc = std::allocator<Block>>
+template<class Block = uint32, class Alloc_ = std::allocator<Block>>
 class BitSet
 {
-    typedef typename Alloc::template rebind<Block>::other Alloc;
+    typedef typename Alloc_::template rebind<Block>::other Alloc;
 public:
     static_assert(!Numeral<Block>::isSigned, "block type must be unsigned");
 
@@ -127,12 +134,5 @@ private:
     int _blockCount;
     UniquePtr<Block, finalize<Block,Alloc>> _bits;
 };
-
-/** \cond */
-namespace bitset { namespace priv
-{
-    extern const int countTable[];
-} }
-/** \endcond */
 
 }

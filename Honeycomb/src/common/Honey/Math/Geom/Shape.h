@@ -7,11 +7,11 @@ namespace honey
 {
 
 /// Base geometric shape class
-template<class Real>
+template<class Real_>
 class Shape
 {
 public:
-    typedef Real Real;
+    typedef Real_ Real;
 };
 
 }

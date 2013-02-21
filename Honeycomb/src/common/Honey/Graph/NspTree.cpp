@@ -23,7 +23,7 @@ void NspTree<Dim>::Node::init(const Box& box, vector<Node>& nodes, int depth, in
     Vec3 center = _box.getCenter();
     for (auto i: range(NspTreeNode::Child::valMax))
     {
-        NspTreeNode::getChildBox(_box.min, _box.max, center, NspTreeNode::Child(i), childBox);
+        NspTreeNode::getChildBox(_box.min, _box.max, center, typename NspTreeNode::Child(i), childBox);
         _children[i].init(childBox, nodes, depth, depthOffset);
     }
 }

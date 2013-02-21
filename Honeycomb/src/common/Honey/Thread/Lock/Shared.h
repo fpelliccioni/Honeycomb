@@ -11,11 +11,11 @@ namespace honey
   * Instances are non-recursive (can't lock an instance twice), and can only be manipulated by one thread. \n
   * Note that if recursion is required, multiple instances can reference the same recursive lockable.
   */
-template<class Lockable>
+template<class Lockable_>
 class SharedLock : mt::NoCopy
 {
 public:
-    typedef Lockable Lockable;
+    typedef Lockable_ Lockable;
 
     SharedLock()                                                : _lock(nullptr), _owns(false) {}
 

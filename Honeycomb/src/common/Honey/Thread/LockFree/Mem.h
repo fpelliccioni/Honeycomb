@@ -57,12 +57,12 @@ struct MemConfig
 
     typedef std::allocator<Node> Alloc;
     /// Get node allocator
-    Alloc& getAlloc()                                       { error("Method not defined"); }
+    Alloc& getAlloc();
 
     /// Update all links in the node to point to active (non-deleted) nodes
-    void cleanUpNode(Node& node)                            { mt_unused(node); error("Method not defined"); }
+    void cleanUpNode(Node& node);
     /// Remove all links to other nodes.  If concurrent is false then the faster storeRef can be used instead of casRef.
-    void terminateNode(Node& node, bool concurrent)         { mt_unused(node); mt_unused(concurrent); error("Method not defined"); }
+    void terminateNode(Node& node, bool concurrent);
 };
 
 /// Lock-free memory manager for concurrent algorithms.
@@ -84,183 +84,6 @@ class Mem : mt::NoCopy
 public:
     typedef typename Config::Node Node;
     typedef typename Config::Link Link;
-
-    /**
-      * \param config
-      * \param threadMax    Max number of threads that can access the memory manager.  Use a thread pool so the threads have a longer life cycle than the mem manager.
-      */ 
-    Mem(Config& config, int threadMax = 8) :
-        _config(config),
-        _threadMax(threadMax),
-        _threshClean(_threadMax*(Config::tlrefMax + Config::linkMax + Config::linkDelMax + 1)),
-        _threshScan(Config::tlrefMax*2 < _threshClean ? Config::tlrefMax*2 : _threshClean),
-        _threadDataList(new ThreadData*[_threadMax]),
-        _threadDataCount(0),
-        _threadData(bind(&Mem::initThreadData, this)),
-        _nodeId(0)
-    {
-        memset(_threadDataList, 0, sizeof(_threadDataList));
-    }
-
-    ~Mem()
-    {
-        //Delete all thread data
-        for (int ti = 0; ti < _threadDataCount; ++ti)
-            delete_(_threadDataList[ti]);
-        delete_(_threadDataList);
-    }
-
-    Node& createNode()
-    {
-        ThreadData& td = threadData();
-
-        if (td.nodeFreeList.size() == 0)
-        {
-            recycleScan(td);
-            //If no recycled nodes were found, allocate more nodes 
-            if (td.nodeFreeList.size() == 0)
-            {
-                int nextCount = td.nodeCount*2 + 1;
-                int newCount = nextCount - td.nodeCount;
-                for (int i = 0; i < newCount; ++i)
-                {
-                    td.nodeFreeList.push_back(new (_config.getAlloc().allocate(1)) Node);
-                    td.nodeFreeList.back()->id = _nodeId++;
-                    td.nodeFreeList.back()->threadId = td.id;
-                }
-                td.nodeCount = nextCount;
-            }
-        }
-
-        //Get free node
-        Node* node = td.nodeFreeList.back();
-        td.nodeFreeList.pop_back();
-        ref(*node);
-        return *node;
-    }
-
-    void deleteNode(Node& node)
-    {
-        ThreadData& td = threadData();
-
-        node.del = true;
-        node.trace = false;
-
-        //Get free del node
-        assert(td.delNodeFreeList.size() > 0, "Not enough del nodes, algorithm problem");
-        ThreadData::DelNode& delNode = *td.delNodeFreeList.back();
-        td.delNodeFreeList.pop_back();
-        //Init del node tlref lookup
-        if (node.id >= size(td.delTlrefs))
-            td.delTlrefs.resize(node.id*2+1);
-        td.delTlrefs[node.id] = false;
-
-        delNode.done = false;
-        delNode.node = &node;
-        delNode.next = td.delHead;
-        td.delHead = &delNode; ++td.delCount;
-        while(true)
-        {
-            if (td.delCount == _threshClean) cleanUpLocal();
-            if (td.delCount >= _threshScan) scan();
-            if (td.delCount == _threshClean) cleanUpAll();
-            else break;
-        }
-    }
-
-    /// Dereference a link, protects with tlref. May return null.
-    Node* deRefLink(Link& link)
-    {
-        ThreadData& td = threadData();
-        //Get free tlref index
-        assert(td.tlrefFreeList.size() > 0, "Not enough thread-local node references");
-        int index = td.tlrefFreeList.back();
-
-        Node* node = nullptr;
-        while(true)
-        {
-            node = link.ptr();
-            //Set up tlref
-            td.tlrefs[index] = node;
-            //Ensure that link is protected
-            if (link.ptr() == node) break;
-        }
-
-        //Only add tlref if pointer is valid
-        if (node)
-        {
-            Node::Tlref& tlref = node->tlref;
-            //If tlref is already referenced by this thread then we don't need a new tlref
-            if (tlref.ref++ > 0)
-                td.tlrefs[index] = nullptr;
-            else
-            {
-                tlref.index = index;
-                td.tlrefFreeList.pop_back();
-            }
-        }
-        return node;
-    }
-
-    /// Add reference to node, sets up tlref
-    void ref(Node& node)
-    {
-        Node::Tlref& tlref = node.tlref;
-        //If tlref is already referenced by this thread then we don't need a new tlref
-        if (tlref.ref++ > 0) return;
-
-        ThreadData& td = threadData();
-        //Get free tlref index
-        assert(td.tlrefFreeList.size() > 0, "Not enough thread-local node references");
-        int index = td.tlrefFreeList.back();
-        td.tlrefFreeList.pop_back();
-        //Set up tlref
-        tlref.index = index;
-        td.tlrefs[index] = &node;
-    }
-
-    /// Release a reference to a node, clears tlref
-    void releaseRef(Node& node)
-    {
-        Node::Tlref& tlref = node.tlref;
-        //Only release if this thread has no more references
-        if (--tlref.ref > 0) return;
-        assert(tlref.ref == 0, "Thread-local node reference already released");
-
-        ThreadData& td = threadData();
-        //Return tlref index to free list
-        td.tlrefs[tlref.index] = nullptr;
-        td.tlrefFreeList.push_back(tlref.index);
-    }
-
-    /// Compare and swap link.  Set link in a concurrent environment.  Returns false if the link was changed by another thread.
-    bool casRef(Link& link, const Link& val, const Link& old)
-    {
-        if (link.data.cas(val.data, old.data))
-        {
-            if (val.ptr())
-            {
-                ++val.ptr()->ref;
-                val.ptr()->trace = false;
-            }
-            if (old.ptr()) --old.ptr()->ref;
-            return true;
-        }
-        return false;
-    }
-
-    /// Set link in a single-threaded environment
-    void storeRef(Link& link, const Link& val)
-    {
-        Link old = link;
-        link = val;
-        if (val.ptr())
-        {
-            ++val.ptr()->ref;
-            val.ptr()->trace = false;
-        }
-        if (old.ptr()) --old.ptr()->ref;
-    }
 
 private:
     /// Per thread data.  Linked list is maintained of all threads using the memory manager.
@@ -337,7 +160,186 @@ private:
         };
         Recycle*                    recycleBins;
     };
+    
+public:
+    /**
+      * \param config
+      * \param threadMax    Max number of threads that can access the memory manager.  Use a thread pool so the threads have a longer life cycle than the mem manager.
+      */ 
+    Mem(Config& config, int threadMax = 8) :
+        _config(config),
+        _threadMax(threadMax),
+        _threshClean(_threadMax*(Config::tlrefMax + Config::linkMax + Config::linkDelMax + 1)),
+        _threshScan(Config::tlrefMax*2 < _threshClean ? Config::tlrefMax*2 : _threshClean),
+        _threadDataList(new ThreadData*[_threadMax]),
+        _threadDataCount(0),
+        _threadData(bind(&Mem::initThreadData, this)),
+        _nodeId(0)
+    {
+        std::fill(_threadDataList, _threadDataList + _threadMax, nullptr);
+    }
 
+    ~Mem()
+    {
+        //Delete all thread data
+        for (int ti = 0; ti < _threadDataCount; ++ti)
+            delete_(_threadDataList[ti]);
+        delete_(_threadDataList);
+    }
+
+    Node& createNode()
+    {
+        ThreadData& td = threadData();
+
+        if (td.nodeFreeList.size() == 0)
+        {
+            recycleScan(td);
+            //If no recycled nodes were found, allocate more nodes 
+            if (td.nodeFreeList.size() == 0)
+            {
+                int nextCount = td.nodeCount*2 + 1;
+                int newCount = nextCount - td.nodeCount;
+                for (int i = 0; i < newCount; ++i)
+                {
+                    td.nodeFreeList.push_back(new (_config.getAlloc().allocate(1)) Node);
+                    td.nodeFreeList.back()->id = _nodeId++;
+                    td.nodeFreeList.back()->threadId = td.id;
+                }
+                td.nodeCount = nextCount;
+            }
+        }
+
+        //Get free node
+        Node* node = td.nodeFreeList.back();
+        td.nodeFreeList.pop_back();
+        ref(*node);
+        return *node;
+    }
+
+    void deleteNode(Node& node)
+    {
+        ThreadData& td = threadData();
+
+        node.del = true;
+        node.trace = false;
+
+        //Get free del node
+        assert(td.delNodeFreeList.size() > 0, "Not enough del nodes, algorithm problem");
+        auto& delNode = *td.delNodeFreeList.back();
+        td.delNodeFreeList.pop_back();
+        //Init del node tlref lookup
+        if (node.id >= size(td.delTlrefs))
+            td.delTlrefs.resize(node.id*2+1);
+        td.delTlrefs[node.id] = false;
+
+        delNode.done = false;
+        delNode.node = &node;
+        delNode.next = td.delHead;
+        td.delHead = &delNode; ++td.delCount;
+        while(true)
+        {
+            if (td.delCount == _threshClean) cleanUpLocal();
+            if (td.delCount >= _threshScan) scan();
+            if (td.delCount == _threshClean) cleanUpAll();
+            else break;
+        }
+    }
+
+    /// Dereference a link, protects with tlref. May return null.
+    Node* deRefLink(Link& link)
+    {
+        ThreadData& td = threadData();
+        //Get free tlref index
+        assert(td.tlrefFreeList.size() > 0, "Not enough thread-local node references");
+        int index = td.tlrefFreeList.back();
+
+        Node* node = nullptr;
+        while(true)
+        {
+            node = link.ptr();
+            //Set up tlref
+            td.tlrefs[index] = node;
+            //Ensure that link is protected
+            if (link.ptr() == node) break;
+        }
+
+        //Only add tlref if pointer is valid
+        if (node)
+        {
+            auto& tlref = *node->tlref;
+            //If tlref is already referenced by this thread then we don't need a new tlref
+            if (tlref.ref++ > 0)
+                td.tlrefs[index] = nullptr;
+            else
+            {
+                tlref.index = index;
+                td.tlrefFreeList.pop_back();
+            }
+        }
+        return node;
+    }
+
+    /// Add reference to node, sets up tlref
+    void ref(Node& node)
+    {
+        auto& tlref = *node.tlref;
+        //If tlref is already referenced by this thread then we don't need a new tlref
+        if (tlref.ref++ > 0) return;
+
+        ThreadData& td = threadData();
+        //Get free tlref index
+        assert(td.tlrefFreeList.size() > 0, "Not enough thread-local node references");
+        int index = td.tlrefFreeList.back();
+        td.tlrefFreeList.pop_back();
+        //Set up tlref
+        tlref.index = index;
+        td.tlrefs[index] = &node;
+    }
+
+    /// Release a reference to a node, clears tlref
+    void releaseRef(Node& node)
+    {
+        auto& tlref = *node.tlref;
+        //Only release if this thread has no more references
+        if (--tlref.ref > 0) return;
+        assert(tlref.ref == 0, "Thread-local node reference already released");
+
+        ThreadData& td = threadData();
+        //Return tlref index to free list
+        td.tlrefs[tlref.index] = nullptr;
+        td.tlrefFreeList.push_back(tlref.index);
+    }
+
+    /// Compare and swap link.  Set link in a concurrent environment.  Returns false if the link was changed by another thread.
+    bool casRef(Link& link, const Link& val, const Link& old)
+    {
+        if (link.data.cas(val.data, old.data))
+        {
+            if (val.ptr())
+            {
+                ++val.ptr()->ref;
+                val.ptr()->trace = false;
+            }
+            if (old.ptr()) --old.ptr()->ref;
+            return true;
+        }
+        return false;
+    }
+
+    /// Set link in a single-threaded environment
+    void storeRef(Link& link, const Link& val)
+    {
+        Link old = link;
+        link = val;
+        if (val.ptr())
+        {
+            ++val.ptr()->ref;
+            val.ptr()->trace = false;
+        }
+        if (old.ptr()) --old.ptr()->ref;
+    }
+
+private:
     /// Thread data ptr holder.  This indirection gives us control of the thread data life cycle, otherwise it would be deleted on thread exit.
     struct ThreadDataPtr
     {
@@ -363,7 +365,7 @@ private:
     void cleanUpLocal()
     {
         ThreadData& td = threadData();
-        for (ThreadData::DelNode* delNode = td.delHead; delNode; delNode = delNode->next)
+        for (auto* delNode = td.delHead; delNode; delNode = delNode->next)
             _config.cleanUpNode(*delNode->node);
     }
 
@@ -375,7 +377,7 @@ private:
             ThreadData* td = _threadDataList[ti];
             for (int i = 0; i < _threshClean; ++i)
             {
-                ThreadData::DelNode& delNode = td->delNodes[i];
+                auto& delNode = td->delNodes[i];
                 Node* node = delNode.node;
                 if (node && !delNode.done)
                 {
@@ -394,7 +396,7 @@ private:
         ThreadData& td = threadData();
 
         //Set trace to make sure ref == 0 is consistent across tlref check below
-        for (ThreadData::DelNode* delNode = td.delHead; delNode; delNode = delNode->next)
+        for (auto* delNode = td.delHead; delNode; delNode = delNode->next)
         {
             Node& node = *delNode->node;
             if (node.ref == 0)
@@ -418,12 +420,12 @@ private:
         }
 
         //Reclaim nodes and build new list of del nodes that could not be reclaimed
-        ThreadData::DelNode* newDelHead = nullptr;
+        typename ThreadData::DelNode* newDelHead = nullptr;
         int newDelCount = 0;
 
         while (td.delHead)
         {
-            ThreadData::DelNode* delNode = td.delHead;
+            auto* delNode = td.delHead;
             td.delHead = delNode->next;
             Node& node = *delNode->node;
             if (node.ref == 0 && node.trace && !td.delTlrefs[node.id])
@@ -464,7 +466,7 @@ private:
         {
             Node& node = *td.nodeFreeList.back();
             td.nodeFreeList.pop_back();
-            ThreadData::Recycle& rec = _threadDataList[node.threadId]->recycleBins[td.id];
+            auto& rec = _threadDataList[node.threadId]->recycleBins[td.id];
             node.recycleNext = nullptr;
             if (rec.tail) rec.tail->recycleNext = &node;    //Previous tail can be consumed immediately atfer recycle next is set
             rec.tail = &node;
@@ -479,7 +481,7 @@ private:
         int newSize = td.nodeCount < _threshClean ? td.nodeCount : _threshClean;
         for (int ti = 0; ti < _threadDataCount && size(td.nodeFreeList) < newSize; ++ti)
         {
-            ThreadData::Recycle& rec = td.recycleBins[ti];
+            auto& rec = td.recycleBins[ti];
             Node* node = rec.head;
             if (!node) continue;
             Node* next = static_cast<Node*>(node->recycleNext.load());

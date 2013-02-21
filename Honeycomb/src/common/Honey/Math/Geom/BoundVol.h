@@ -115,9 +115,9 @@ public:
     {
         assert(sizeof(Shape) <= sizeof(_shapeData));
         //Copy entire class including virtual table pointer
-        memcpy(this, &rhs, sizeof(BoundVol<Shape>));
+        memcpy(static_cast<void*>(this), static_cast<const void*>(&rhs), sizeof(BoundVol<Shape>));
         //Copy shape object
-        memcpy(_shapeData, &rhs.getShape(), sizeof(Shape));
+        memcpy(static_cast<void*>(_shapeData), static_cast<const void*>(&rhs.getShape()), sizeof(Shape));
         //Point our shape to our shape data
         _shape = _shapeData;
         return *this;
@@ -146,37 +146,37 @@ template<class Shape>
 inline void BoundVol<Shape>::clone(BoundVolAny& bv) const                                       { bv = *this; }
 
 
-inline BoundVolBase::Type BoundVol<Sphere>::s_type()                                            { return Type::Sphere; }
-bool BoundVol<Sphere>::test(const BoundVolBase& bv) const;
+template<> inline BoundVolBase::Type BoundVol<Sphere>::s_type()                                 { return Type::Sphere; }
+template<> bool BoundVol<Sphere>::test(const BoundVolBase& bv) const;
 
-inline BoundVolBase::Type BoundVol<Box>::s_type()                                               { return Type::Box; }
-bool BoundVol<Box>::test(const BoundVolBase& bv) const;
-inline Box BoundVol<Box>::toBox() const                                                         { return getShape(); }
+template<> inline BoundVolBase::Type BoundVol<Box>::s_type()                                    { return Type::Box; }
+template<> bool BoundVol<Box>::test(const BoundVolBase& bv) const;
+template<> inline Box BoundVol<Box>::toBox() const                                              { return getShape(); }
 
-inline BoundVolBase::Type BoundVol<Cylinder>::s_type()                                          { return Type::Cylinder; }
-bool BoundVol<Cylinder>::test(const BoundVolBase& bv) const;
-inline Real BoundVol<Cylinder>::distance(const Vec3& point, option<Vec3&> shapePoint) const     { return Intersect::distance(getShape().toSphere(), point, shapePoint); }
-inline Box BoundVol<Cylinder>::toBox() const                                                    { return getShape().toSphere().toBox(); }
+template<> inline BoundVolBase::Type BoundVol<Cylinder>::s_type()                               { return Type::Cylinder; }
+template<> bool BoundVol<Cylinder>::test(const BoundVolBase& bv) const;
+template<> inline Real BoundVol<Cylinder>::distance(const Vec3& point, option<Vec3&> shapePoint) const  { return Intersect::distance(getShape().toSphere(), point, shapePoint); }
+template<> inline Box BoundVol<Cylinder>::toBox() const                                                 { return getShape().toSphere().toBox(); }
 
-inline BoundVolBase::Type BoundVol<Cone>::s_type()                                              { return Type::Cone; }
-bool BoundVol<Cone>::test(const BoundVolBase& bv) const;
-inline Real BoundVol<Cone>::distance(const Vec3& point, option<Vec3&> shapePoint) const         { return Intersect::distance(getShape().toSphere(), point, shapePoint); }
-inline Box BoundVol<Cone>::toBox() const                                                        { return getShape().toSphere().toBox(); }
+template<> inline BoundVolBase::Type BoundVol<Cone>::s_type()                                   { return Type::Cone; }
+template<> bool BoundVol<Cone>::test(const BoundVolBase& bv) const;
+template<> inline Real BoundVol<Cone>::distance(const Vec3& point, option<Vec3&> shapePoint) const      { return Intersect::distance(getShape().toSphere(), point, shapePoint); }
+template<> inline Box BoundVol<Cone>::toBox() const                                             { return getShape().toSphere().toBox(); }
 
-inline BoundVolBase::Type BoundVol<Capsule>::s_type()                                           { return Type::Capsule; }
-bool BoundVol<Capsule>::test(const BoundVolBase& bv) const;
-inline Box BoundVol<Capsule>::toBox() const                                                     { return getShape().toSphere().toBox(); }
+template<> inline BoundVolBase::Type BoundVol<Capsule>::s_type()                                { return Type::Capsule; }
+template<> bool BoundVol<Capsule>::test(const BoundVolBase& bv) const;
+template<> inline Box BoundVol<Capsule>::toBox() const                                          { return getShape().toSphere().toBox(); }
 
-inline BoundVolBase::Type BoundVol<OrientBox>::s_type()                                         { return Type::OrientBox; }
-bool BoundVol<OrientBox>::test(const BoundVolBase& bv) const;
-inline Box BoundVol<OrientBox>::toBox() const                                                   { return getShape().toSphere().toBox(); }
+template<> inline BoundVolBase::Type BoundVol<OrientBox>::s_type()                              { return Type::OrientBox; }
+template<> bool BoundVol<OrientBox>::test(const BoundVolBase& bv) const;
+template<> inline Box BoundVol<OrientBox>::toBox() const                                        { return getShape().toSphere().toBox(); }
 
-inline BoundVolBase::Type BoundVol<FrustumOrtho>::s_type()                                      { return Type::FrustumOrtho; }
-bool BoundVol<FrustumOrtho>::test(const BoundVolBase& bv) const;
-inline Box BoundVol<FrustumOrtho>::toBox() const                                                { return getShape().box(); }
+template<> inline BoundVolBase::Type BoundVol<FrustumOrtho>::s_type()                           { return Type::FrustumOrtho; }
+template<> bool BoundVol<FrustumOrtho>::test(const BoundVolBase& bv) const;
+template<> inline Box BoundVol<FrustumOrtho>::toBox() const                                     { return getShape().box(); }
 
-inline BoundVolBase::Type BoundVol<FrustumPersp>::s_type()                                      { return Type::FrustumPersp; }
-bool BoundVol<FrustumPersp>::test(const BoundVolBase& bv) const;
-inline Box BoundVol<FrustumPersp>::toBox() const                                                { return getShape().box(); }
+template<> inline BoundVolBase::Type BoundVol<FrustumPersp>::s_type()                           { return Type::FrustumPersp; }
+template<> bool BoundVol<FrustumPersp>::test(const BoundVolBase& bv) const;
+template<> inline Box BoundVol<FrustumPersp>::toBox() const                                     { return getShape().box(); }
 
 }

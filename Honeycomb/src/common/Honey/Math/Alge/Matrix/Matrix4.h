@@ -27,6 +27,7 @@ template<class Real> class DecompAffine;
 template<class Real, int Options>
 class Matrix<4,4,Real,Options> : public MatrixBase<Matrix<4,4,Real,Options>>
 {
+    typedef MatrixBase<Matrix<4,4,Real,Options>> Super;
     template<class T> friend class MatrixBase;
 
     typedef Vec<2,Real>             Vec2;
@@ -35,10 +36,23 @@ class Matrix<4,4,Real,Options> : public MatrixBase<Matrix<4,4,Real,Options>>
     typedef Quat_<Real>             Quat;
     typedef Transform_<Real>        Transform;
     typedef DecompAffine<Double>    DecompAffine;
-
+    typedef typename Super::Alge    Alge;
+    typedef typename Super::Trig    Trig;
+    
 public:
+    using Super::s_rows;
+    using Super::s_cols;
+    typedef typename Super::VecCol VecCol;
+    typedef typename Super::VecRow VecRow;
+    using Super::mul;
+    using Super::transpose;
+    using Super::transposeMul;
+    using Super::mulTranspose;
+    using Super::transposeMulTranspose;
+    using Super::m;
+    
     /// No init
-    Matrix()                                                            {}
+    Matrix() {}
 
     /// Construct from values
     Matrix( Real _00, Real _01, Real _02, Real _03,
@@ -55,7 +69,7 @@ public:
     /// Initialize with scalar in every element
     explicit Matrix(Real scalar)                                        { fromScalar(scalar); }
     /// Initialize from array with dimensions (rows x cols). If the array is in row-major format set rowMajor to true, otherwise set to false for column-major.
-    Matrix(const Real* a, int rows, int cols, bool rowMajor = true)     { resize(rows, cols); fromArray(a, rowMajor); }
+    Matrix(const Real* a, int rows, int cols, bool rowMajor = true)     { this->resize(rows, cols); this->fromArray(a, rowMajor); }
     /// Construct from quaternion
     Matrix(const Quat& q)                                               { q.toMatrix(*this); }
     /// Initialize from transform
@@ -66,13 +80,8 @@ public:
 
     /// Forward to base
     template<class T>
-    Matrix<s_rows, T::s_cols, Real> operator*(const T& rhs) const       { return MatrixBase::operator*(rhs); }
-    Matrix operator*(Real rhs) const                                    { return MatrixBase::operator*(rhs); }
-    using MatrixBase::mul;
-    using MatrixBase::transpose;
-    using MatrixBase::transposeMul;
-    using MatrixBase::mulTranspose;
-    using MatrixBase::transposeMulTranspose;
+    Matrix<s_rows, T::s_cols, Real> operator*(const T& rhs) const       { return Super::operator*(rhs); }
+    Matrix operator*(Real rhs) const                                    { return Super::operator*(rhs); }
 
     /// Make matrix identity
     Matrix& fromIdentity()
@@ -153,7 +162,7 @@ public:
 
     /// Assign to matrix of same size
     template<class T>
-    Matrix& operator=(const MatrixBase<T>& rhs)                         { MatrixBase::operator=(rhs); return *this; }
+    Matrix& operator=(const MatrixBase<T>& rhs)                         { Super::operator=(rhs); return *this; }
 
     Matrix& mul(const Matrix& rhs, Matrix& res) const
     {
@@ -397,12 +406,12 @@ public:
     /// Make a tm that performs this transform first, then does a translation. ie. T * This
     Matrix& translate(const Vec3& v)                                    { Matrix tm; tm.fromIdentity(); tm.setTrans(v); return operator=(tm * *this); }
     /// Make a tm that does a translation first, then performs this transform. ie. This * T
-    Matrix& preTranslate(const Vec3& v)                                 { Matrix tm; tm.fromIdentity(); tm.setTrans(v); return operator*=(tm); }
+    Matrix& preTranslate(const Vec3& v)                                 { Matrix tm; tm.fromIdentity(); tm.setTrans(v); return this->operator*=(tm); }
 
     /// Make a tm that performs this transform first, then does a rotation. ie. R * This
     Matrix& rotate(const Quat& q)                                       { return operator=(Matrix(q) * *this); }
     /// Make a tm that does a rotation first, then performs this transform. ie. This * R
-    Matrix& preRotate(const Quat& q)                                    { return operator*=(Matrix(q)); }
+    Matrix& preRotate(const Quat& q)                                    { return this->operator*=(Matrix(q)); }
 
     /// Make a tm that performs this transform first, then does a scale. ie. S * This
     Matrix& scale(const Vec3& v, const Quat& skew = Quat::identity)     { Matrix tm; tm.fromIdentity(); tm.setScale(v, skew); return operator=(tm * *this); }
@@ -410,7 +419,7 @@ public:
     Matrix& scale(Real f)                                               { return scale(Vec3(f)); }
 
     /// Make a tm that does a scale first, then performs this transform. ie. This * S
-    Matrix& preScale(const Vec3& v, const Quat& skew = Quat::identity)  { Matrix tm; tm.fromIdentity(); tm.setScale(v, skew); return operator*=(tm); }
+    Matrix& preScale(const Vec3& v, const Quat& skew = Quat::identity)  { Matrix tm; tm.fromIdentity(); tm.setScale(v, skew); return this->operator*=(tm); }
     /// Uniform prescale
     Matrix& preScale(Real f)                                            { return preScale(Vec3(f)); }
 
@@ -449,8 +458,8 @@ public:
 /** \cond */
 /// \name Specialized for optimization
 /// @{
-template<class R, int O>
-struct priv::map_impl0<Matrix<4,4,R,O>, Matrix<4,4,R,O>>
+template<class R, int Opt>
+struct priv::map_impl0<Matrix<4,4,R,Opt>, Matrix<4,4,R,Opt>>
 {
     template<class T, class O, class Func>
     static O&& func(T&& m, O&& o, Func&& f)
@@ -462,8 +471,8 @@ struct priv::map_impl0<Matrix<4,4,R,O>, Matrix<4,4,R,O>>
     }
 };
 
-template<class R, int O>
-struct priv::map_impl1<Matrix<4,4,R,O>, Matrix<4,4,R,O>, Matrix<4,4,R,O>>
+template<class R, int Opt>
+struct priv::map_impl1<Matrix<4,4,R,Opt>, Matrix<4,4,R,Opt>, Matrix<4,4,R,Opt>>
 {
     template<class T, class T2, class O, class Func>
     static O&& func(T&& m, T2&& rhs, O&& o, Func&& f)
@@ -481,6 +490,7 @@ struct priv::reduce_impl0<Matrix<4,4,R,O>>
     template<class T, class Accum, class Func>
     static Accum func(T&& m, const Accum& initVal, Func&& f)
     {
+        /*
         return 
         #define FUNC(i) f(
         ITERATE(0, 15, FUNC)
@@ -490,6 +500,13 @@ struct priv::reduce_impl0<Matrix<4,4,R,O>>
         ITERATE(0, 15, FUNC)
         #undef FUNC
             ;
+        */
+        return f(f(f(f(f(f(f(f(f(f(f(f(f(f(f(f(initVal,
+                m(0)),  m(1)),  m(2)),  m(3)),
+                m(4)),  m(5)),  m(6)),  m(7)),
+                m(8)),  m(9)),  m(10)), m(11)),
+                m(12)), m(13)), m(14)), m(15));
+        
     }
 };
 
@@ -499,7 +516,8 @@ struct priv::reduce_impl1<Matrix<4,4,R,O>, Matrix<4,4,R,O>>
     template<class T, class T2, class Accum, class Func>
     static Accum func(T&& m, T2&& rhs, const Accum& initVal, Func&& f)
     {
-        return 
+        /*
+        return
         #define FUNC(i) f(
         ITERATE(0, 15, FUNC)
         #undef FUNC
@@ -508,6 +526,12 @@ struct priv::reduce_impl1<Matrix<4,4,R,O>, Matrix<4,4,R,O>>
         ITERATE(0, 15, FUNC)
         #undef FUNC
             ;
+        */
+        return f(f(f(f(f(f(f(f(f(f(f(f(f(f(f(f(initVal,
+                m(0),rhs(0)),   m(1),rhs(1)),   m(2),rhs(2)),   m(3),rhs(3)),
+                m(4),rhs(4)),   m(5),rhs(5)),   m(6),rhs(6)),   m(7),rhs(7)),
+                m(8),rhs(8)),   m(9),rhs(9)),   m(10),rhs(10)), m(11),rhs(11)),
+                m(12),rhs(12)), m(13),rhs(13)), m(14),rhs(14)), m(15),rhs(15));
     }
 };
 /// @}

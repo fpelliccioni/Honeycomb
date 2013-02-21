@@ -13,7 +13,7 @@ auto BisectN<Real,Dim>::root(const Funcs& funcs, const Vec& min, const Vec& max)
     //Build root node and start recursion using node stack
     _funcs = &funcs;
     _root.fromZero();
-    _minRes = RealT::inf;
+    _minRes = Real_::inf;
     _nodes.push_back(Node());
     Node& node = _nodes.back();
     node.min = min;

@@ -53,7 +53,7 @@ template<class Real>
 Real Weibull_<Real>::cdfInv(Real P) const
 {
     if (P >= 1)
-        return RealT::inf;
+        return Real_::inf;
     else if (P <= 0)
         return 0;
     return Double(a) * Alge_d::pow(-Alge_d::log1p(Double(-P)), 1 / Double(b));

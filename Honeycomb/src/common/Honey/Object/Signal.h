@@ -25,7 +25,7 @@ namespace honey
     struct Name                                 : Signal<void Param> { IdStatic(id, sout() << _signalBase() << "::"#Name) };
 
 /// Multicast sender
-template<class Sig> struct Signal               : mt::funcTraits<Sig> { typedef Sig Sig; };
+template<class Sig_> struct Signal              : mt::funcTraits<Sig_> { typedef Sig_ Sig; };
 
 /// Multicast receiver
 class SlotBase : public SmallAllocatorObject
@@ -48,7 +48,7 @@ namespace priv
 
     template<class Signal, int Arity> struct SlotSignal;
   
-    #define SLOT_SIGNAL_PARAM(It)               COMMA_IFNOT(It,1) typename Signal::template param<It-1>::Type const& a##It
+    #define SLOT_SIGNAL_PARAM(It)               COMMA_IFNOT(It,1) typename Signal::template param<It-1>::type const& a##It
 
     #define CLASS(It)                                                                                   \
         template<class Signal> struct SlotSignal<Signal,It> : SlotBase                                  \
@@ -68,8 +68,9 @@ namespace priv
     #define CLASS(It)                                                                                   \
         template<class Signal, class F> class Slot<Signal,It,F> : public SlotSignal<Signal,It>          \
         {                                                                                               \
+            typedef SlotSignal<Signal,It> Super;                                                        \
         public:                                                                                         \
-            Slot(const Id& id, F&& f)           : SlotSignal(id), _f(forward<F>(f)) {}                  \
+            Slot(const Id& id, F&& f)           : Super(id), _f(forward<F>(f)) {}                       \
                                                                                                         \
             virtual void operator()(ITERATE_(1,It,SLOT_SIGNAL_PARAM))                                   \
             {                                                                                           \
@@ -77,7 +78,7 @@ namespace priv
             }                                                                                           \
                                                                                                         \
         private:                                                                                        \
-            typename mt::removeConstRef<F>::Type _f; /* F is forwarded, remove any c/r for storage */   \
+            typename mt::removeConstRef<F>::type _f; /* F is forwarded, remove any c/r for storage */   \
         };                                                                                              \
 
     ITERATE(0, SLOT_ARG_MAX, CLASS);

@@ -16,7 +16,7 @@ namespace honey
 /// @{
 
 /// Forwards to COMPONENT_\#args
-#define COMPONENT(...)                          EVAL(TOKENIZE_EVAL(COMPONENT_, NUMARGS(__VA_ARGS__))(__VA_ARGS__))
+#define COMPONENT(...)                          EVAL(TOKCAT(COMPONENT_, NUMARGS(__VA_ARGS__))(__VA_ARGS__))
 /// Declare a component. Call inside class definition.
 /**
   * Every component type must have a unique type id (uses class name by default).
@@ -26,7 +26,7 @@ namespace honey
 #define COMPONENT_2(Class, typeId)              COMPONENT_SUB(, Class, typeId)
 
 /// Forwards to COMPONENT_SUB_\#args
-#define COMPONENT_SUB(...)                      EVAL(TOKENIZE_EVAL(COMPONENT_SUB_, NUMARGS(__VA_ARGS__))(__VA_ARGS__))
+#define COMPONENT_SUB(...)                      EVAL(TOKCAT(COMPONENT_SUB_, NUMARGS(__VA_ARGS__))(__VA_ARGS__))
 /// Declare a derived component that inherits from component class `SuperCom`.  A derived component can be typecasted to its super component.
 #define COMPONENT_SUB_2(SuperCom, Class)        COMPONENT_SUB_3(SuperCom, Class, #Class)
 /// Declare a derived component with a custom type id
@@ -50,13 +50,24 @@ namespace honey
   */
 #ifdef Component_reg
     /// Register a component class.  Call outside class definition.
-    #define COMPONENT_REG(Class)                static mt::Void TOKENIZE_EVAL(__autoReg_,__COUNTER__)(ComRegistry::inst().reg<UNBRACKET(Class)>());
+    #define COMPONENT_REG(Class)                static mt::Void TOKCAT(__autoReg_,__COUNTER__)(ComRegistry::inst().reg<UNBRACKET(Class)>());
 #else
     #define COMPONENT_REG(Class)
 #endif
 
-
 class Component;
+
+/// Component methods
+namespace component
+{ 
+    /// Called by registry to create a component.  May be specialized for a component type.
+    template<class Com>
+    typename std::enable_if<std::is_default_constructible<Com>::value && !std::is_abstract<Com>::value, Component&>::type
+        create() { return *new Com; }
+    template<class Com>
+    typename mt::disable_if<std::is_default_constructible<Com>::value && !std::is_abstract<Com>::value, Component&>::type
+        create() { error("ComRegistry can't create non-default-constructible components. Must specialize component::create()."); return *static_cast<Component*>(nullptr); }
+}
 
 /// Holds global list of all component types
 class ComRegistry
@@ -199,18 +210,6 @@ private:
     ComObject* _comObj;
     ListenerList _listeners;
 };
-
-/// Component methods
-namespace component
-{ 
-    /// Called by registry to create a component.  May be specialized for a component type.
-    template<class Com>
-    typename std::enable_if<std::is_default_constructible<Com>::value && !std::is_abstract<Com>::value, Component&>::type
-        create() { return *new Com; }
-    template<class Com>
-    typename mt::disable_if<std::is_default_constructible<Com>::value && !std::is_abstract<Com>::value, Component&>::type
-        create() { error("ComRegistry can't create non-default-constructible components. Must specialize component::create()."); return *static_cast<Component*>(nullptr); }
-}
 
 /// @}
 

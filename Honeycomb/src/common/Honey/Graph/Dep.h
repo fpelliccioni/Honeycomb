@@ -11,7 +11,7 @@ namespace honey
 {
 
 /// Dependency node for insertion into graph
-template<class Data, class Key = Id>
+template<class Data_, class Key_ = Id>
 class DepNode
 {
 public:
@@ -26,9 +26,9 @@ public:
     ENUM(DepNode, DepType);
     #undef ENUM_LIST
 
-    typedef Data Data;
-    typedef Key Key;
-    typedef typename UnorderedMap<Key, DepType, SmallAllocator>::Type DepMap;
+    typedef Data_ Data;
+    typedef Key_ Key;
+    typedef typename UnorderedMap<Key, DepType, SmallAllocator>::type DepMap;
 
     DepNode(const Data& data = Data(), const Key& key = Key())      : _data(data), _key(key) {}
     ~DepNode() {}
@@ -93,9 +93,10 @@ private:
   * Nodes can be added and removed from the graph freely, even after calls to condense().
   * Do not change a node's dependency list while it is still in the graph, the node must be removed first and re-added after.
   */
-template<class DepNode>
+template<class DepNode_>
 class DepGraph
 {
+    typedef DepNode_ DepNode;
     typedef typename DepNode::Data Data;
     typedef typename DepNode::Key Key;
     typedef typename DepNode::DepType DepType;
@@ -104,13 +105,13 @@ public:
     class Vertex;
 
 private:
-    typedef typename UnorderedMap<Key, Vertex*, SmallAllocator>::Type VertexMap;
+    typedef typename UnorderedMap<Key, Vertex*, SmallAllocator>::type VertexMap;
     typedef list<Vertex, SmallAllocator<Vertex>> VertexList;
 
 public:
-    typedef typename UnorderedSet<DepNode*, SmallAllocator>::Type       NodeList;
-    typedef typename UnorderedSet<const DepNode*, SmallAllocator>::Type NodeListConst;
-    typedef typename UnorderedSet<Key, SmallAllocator>::Type            KeyList;
+    typedef typename UnorderedSet<DepNode*, SmallAllocator>::type       NodeList;
+    typedef typename UnorderedSet<const DepNode*, SmallAllocator>::type NodeListConst;
+    typedef typename UnorderedSet<Key, SmallAllocator>::type            KeyList;
 
     /// A vertex is initially associated with one key and acts like a multi-map, storing all nodes and graph links of DepNodes matching that key.
     /**
@@ -121,8 +122,8 @@ public:
     {
         friend class DepGraph;
     public:
-        typedef typename UnorderedMap<Vertex*, int, SmallAllocator>::Type LinkMap;
-        typedef typename UnorderedMap<const Vertex*, int, SmallAllocator>::Type LinkMapConst;
+        typedef typename UnorderedMap<Vertex*, int, SmallAllocator>::type LinkMap;
+        typedef typename UnorderedMap<const Vertex*, int, SmallAllocator>::type LinkMapConst;
 
         /// Get all nodes that constitute this vertex
         const NodeList& nodes()                         { return nodeList; }
@@ -180,17 +181,17 @@ public:
 
 private:
     typedef vector<Vertex*, SmallAllocator<Vertex*>> VertexPList;
-    typedef typename UnorderedSet<Vertex*, SmallAllocator>::Type VertexSet;
+    typedef typename UnorderedSet<Vertex*, SmallAllocator>::type VertexSet;
 
     struct CondenseData
     {
         CondenseData() : preOrd(0) {}
 
-        typedef typename UnorderedMap<Vertex*, int, SmallAllocator>::Type PreOrdMap;
+        typedef typename UnorderedMap<Vertex*, int, SmallAllocator>::type PreOrdMap;
         //Merge vertex -> Component vertices
-        typedef typename UnorderedMap<Vertex*, VertexSet, SmallAllocator>::Type MergeMap;
+        typedef typename UnorderedMap<Vertex*, VertexSet, SmallAllocator>::type MergeMap;
         //Component vertices -> Merge vertex
-        typedef typename UnorderedMap<Vertex*, Vertex*, SmallAllocator>::Type MergeMapR;
+        typedef typename UnorderedMap<Vertex*, Vertex*, SmallAllocator>::type MergeMapR;
 
         VertexPList stackS;
         VertexPList stackP;
@@ -208,7 +209,7 @@ private:
     typedef typename MtMap< Vertex*, k_vertex,
                             const typename Vertex::LinkMap*, k_linkMap,
                             typename Vertex::LinkMap::const_iterator, k_linkIt
-                            >::Type VertexLink;
+                            >::type VertexLink;
 
     typedef vector<VertexLink, SmallAllocator<VertexLink>> VertexLinkList;
 
@@ -430,7 +431,7 @@ public:
     public:
         typedef Iter_<Vertex_>                  Iter;
         typedef typename std::conditional<std::is_const<Vertex_>::value, NodeListConst, NodeList>::type  NodeList;
-        typedef typename mt::removePtr<typename NodeList::value_type>::Type     DepNode;
+        typedef typename mt::removePtr<typename NodeList::value_type>::type     DepNode;
         typedef std::forward_iterator_tag       iterator_category;
         typedef DepNode                         value_type;
         typedef ptrdiff_t                       difference_type;
@@ -460,9 +461,9 @@ public:
         void reset(option<const Key&> start = optnull, DepType type = DepType::out)
                                                             { _it.reset(start, type); initIt(); }
         /// Skip the current vertex's edges on next step of this iterator
-        void skipEdges()                                    { it._skipEdges(); }
+        void skipEdges()                                    { _it._skipEdges(); }
         /// Get the current vertex
-        Vertex_& vertex() const                             { return *it; }
+        Vertex_& vertex() const                             { return *_it; }
 
     private:
         void initIt()                                       { _node = _it._vertex ? *(_nodeIt = _it->nodes().begin()) : nullptr; }

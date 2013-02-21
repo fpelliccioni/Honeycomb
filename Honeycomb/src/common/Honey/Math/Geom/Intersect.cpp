@@ -92,7 +92,7 @@ template<class Real>
 bool Intersect_<Real>::test(const Frustum& frustum, const Plane& plane)
 {
     // There is an intersection if a vertex is on the opposite side of another
-    Plane::Side side = Geom::side(plane, frustum.vertex(0));
+    typename Plane::Side side = Geom::side(plane, frustum.vertex(0));
     for (int i = 1; i < frustum.vertexCount; ++i)
         if (Geom::side(plane, frustum.vertex(i)) != side)
             return true;
@@ -137,7 +137,7 @@ bool Intersect_<Real>::test(const OrientBox& box1, const OrientBox& box2)
     // the cases when at least one pair of axes are parallel.  If this
     // happens, there is no need to test for separation along the
     // cross(A[i],B[j]) directions.
-    const Real cutoff = 1 - RealT::zeroTol;
+    const Real cutoff = 1 - Real_::zeroTol;
     bool existsParallelPair = false;
     int i;
 
@@ -1031,7 +1031,7 @@ template<class Real>
 bool Intersect_<Real>::test(const Box& box, const Plane& plane)
 {
     // There is an intersection if a vertex is on the opposite side of another
-    Plane::Side side = Geom::side(plane, box.vertex(0));
+    typename Plane::Side side = Geom::side(plane, box.vertex(0));
     for (int i = 1; i < box.vertexCount; ++i)
         if (Geom::side(plane, box.vertex(i)) != side)
             return true;
@@ -1543,11 +1543,11 @@ bool Intersect_<Real>::test(const Triangle& tri, const Line& line)
     //   |dot(D,N)|*t = -sign(dot(D,N))*dot(Q,N)
     Real DdN = lineDir.dot(normal);
     Real sign;
-    if (DdN > RealT::zeroTol)
+    if (DdN > Real_::zeroTol)
     {
         sign = 1;
     }
-    else if (DdN < -RealT::zeroTol)
+    else if (DdN < -Real_::zeroTol)
     {
         sign = -1;
         DdN = -DdN;
@@ -1602,11 +1602,11 @@ bool Intersect_<Real>::test(const Triangle& tri, const Ray& ray)
     //   |dot(D,N)|*t = -sign(dot(D,N))*dot(Q,N)
     Real DdN = ray.dir.dot(normal);
     Real sign;
-    if (DdN > RealT::zeroTol)
+    if (DdN > Real_::zeroTol)
     {
         sign = 1;
     }
-    else if (DdN < -RealT::zeroTol)
+    else if (DdN < -Real_::zeroTol)
     {
         sign = -1;
         DdN = -DdN;
@@ -1647,7 +1647,7 @@ bool Intersect_<Real>::test(const Triangle& tri, const Ray& ray)
 template<class Real>
 Real Intersect_<Real>::distance(const Frustum& frustum, const Box& box, option<Vec3&> frustumPoint, option<Vec3&> boxPoint)
 {
-    Real dist_min = -RealT::max;
+    Real dist_min = -Real_::max;
     int plane_index_min = -1;
     int box_index_min = -1;
 
@@ -1660,7 +1660,7 @@ Real Intersect_<Real>::distance(const Frustum& frustum, const Box& box, option<V
         //If all the corners are outside, then the minimum distance is valid
         bool in = false;
 
-        Real inner_dist_min = -RealT::max;
+        Real inner_dist_min = -Real_::max;
         int inner_box_index_min = -1;
     
         for (int j = 0; j < box.vertexCount; ++j)
@@ -1718,10 +1718,10 @@ Real Intersect_<Real>::distance(const Frustum& frustum, const Sphere& sphere, op
 {
     bool outside = false;
 
-    Real dist_min = -RealT::max;
+    Real dist_min = -Real_::max;
     int index_min = -1;
 
-    Real dist_in_min = -RealT::max;
+    Real dist_in_min = -Real_::max;
     int index_in_min = -1;
 
     for (int i = 0; i < frustum.planeCount; ++i)
@@ -1782,7 +1782,7 @@ template<class Real>
 Real Intersect_<Real>::distance(const Frustum& frustum, const Vec3& point, option<Vec3&> frustumPoint)
 {
     bool outside = false;
-    Real dist_min = -RealT::max;
+    Real dist_min = -Real_::max;
     int index_min = -1;
 
     for (int i = 0; i < frustum.planeCount; ++i)
@@ -2078,7 +2078,7 @@ template<class Real>
 Real Intersect_<Real>::distance(const Triangle& tri1, const Triangle& tri2, option<Vec3&> triPoint1, option<Vec3&> triPoint2)
 {
     // Compare edges of tri1 to the interior of tri2.
-    Real dist = RealT::max;
+    Real dist = Real_::max;
     Vec3 closest;
 
     for (int i = 0; i < tri1.edgeCount; ++i)
@@ -2093,7 +2093,7 @@ Real Intersect_<Real>::distance(const Triangle& tri1, const Triangle& tri2, opti
 
             if (triPoint1) triPoint1 = linePoint;
             if (triPoint2) triPoint2 = closest;
-            if (dist <= RealT::zeroTol) return 0;
+            if (dist <= Real_::zeroTol) return 0;
         }
     }
 
@@ -2110,7 +2110,7 @@ Real Intersect_<Real>::distance(const Triangle& tri1, const Triangle& tri2, opti
 
             if (triPoint1) triPoint1 = triPoint;
             if (triPoint2) triPoint2 = closest;
-            if (dist <= RealT::zeroTol) return 0;
+            if (dist <= Real_::zeroTol) return 0;
         }
     }
 
@@ -2148,7 +2148,7 @@ Real Intersect_<Real>::distance(const Triangle& tri, const Ray& ray, option<Vec3
     Vec3 edge1 = tri[2] - tri[0];
     Vec3 normal = edge0.crossUnit(edge1);
     Real NdD = normal.dot(ray.dir);
-    if (Alge::abs(NdD) > RealT::zeroTol)
+    if (Alge::abs(NdD) > Real_::zeroTol)
     {
         // The line and triangle are not parallel, so the line intersects
         // the plane of the triangle.
@@ -2195,7 +2195,7 @@ Real Intersect_<Real>::distance(const Triangle& tri, const Ray& ray, option<Vec3
     // triangle or (2) the line and triangle are parallel.  Regardless, the
     // closest point on the triangle is on an edge of the triangle.  Compare
     // the line to all three edges of the triangle.
-    Real sqrDist = RealT::max;
+    Real sqrDist = Real_::max;
     Vec3 closest;
     for (int i = 0; i < tri.edgeCount; ++i)
     {
@@ -3384,7 +3384,7 @@ Real Intersect_<Real>::distanceSqr(const Ray& ray1, const Ray& ray2, option<Vec3
     Real det = Alge::abs(1 - a01*a01);
     Real b1, s0, s1, sqrDist;
 
-    if (det >= RealT::zeroTol)
+    if (det >= Real_::zeroTol)
     {
         // Rays are not parallel.
         b1 = -diff.dot(ray2.dir);
@@ -3571,7 +3571,7 @@ void Intersect_<Real>::OrientBoxTriangleInt::
 
         // TODO: This should probably be a relative tolerance.  Multiplying
         // by the constant is probably not the best way to do this.
-        test[i] = normal.dot(P[i]) - constant + Alge::abs(constant)*RealT::zeroTol;
+        test[i] = normal.dot(P[i]) - constant + Alge::abs(constant)*Real_::zeroTol;
 
         if (test[i] >= 0)
         {
@@ -3778,8 +3778,8 @@ int Intersect_<Real>::find(const OrientBox& box, const Ray& ray, Real t[2])
         ray.dir.dot(box.axis[2])
     );
 
-    t[0] = -RealT::max;
-    t[1] = RealT::max;
+    t[0] = -Real_::max;
+    t[1] = Real_::max;
 
     bool notAllClipped =
         OrientBoxRayInt::clip(+BDirection.x, -BOrigin.x-box.extent[0], t) &&
@@ -3898,7 +3898,7 @@ int Intersect_<Real>::find(const Capsule& capsule, const Ray& ray, Real t[2])
     // Get the z-value, in capsule coordinates, of the incoming line's
     // unit-length direction.
     Real dz = W.dot(ray.dir);
-    if (Alge::abs(dz) >= 1 - RealT::zeroTol)
+    if (Alge::abs(dz) >= 1 - Real_::zeroTol)
     {
         // The line is parallel to the capsule axis.  Determine whether the
         // line intersects the capsule hemispheres.
@@ -3943,7 +3943,7 @@ int Intersect_<Real>::find(const Capsule& capsule, const Ray& ray, Real t[2])
 
     Real root, inv, tValue, zValue;
     int quantity = 0;
-    if (discr > RealT::zeroTol)
+    if (discr > Real_::zeroTol)
     {
         // Line intersects infinite cylinder in two places.
         root = Alge::sqrt(discr);
@@ -3989,7 +3989,7 @@ int Intersect_<Real>::find(const Capsule& capsule, const Ray& ray, Real t[2])
     a1 += PZpE*D.z;
     a0 += PZpE*PZpE;
     discr = a1*a1 - a0;
-    if (discr > RealT::zeroTol)
+    if (discr > Real_::zeroTol)
     {
         root = Alge::sqrt(discr);
         tValue = -a1 - root;
@@ -4026,7 +4026,7 @@ int Intersect_<Real>::find(const Capsule& capsule, const Ray& ray, Real t[2])
             }
         }
     }
-    else if (Alge::abs(discr) <= RealT::zeroTol)
+    else if (Alge::abs(discr) <= Real_::zeroTol)
     {
         tValue = -a1;
         zValue = P.z + tValue*D.z;
@@ -4054,7 +4054,7 @@ int Intersect_<Real>::find(const Capsule& capsule, const Ray& ray, Real t[2])
     a1 -= 2*extent*D.z;
     a0 -= 4*extent*P.z;
     discr = a1*a1 - a0;
-    if (discr > RealT::zeroTol)
+    if (discr > Real_::zeroTol)
     {
         root = Alge::sqrt(discr);
         tValue = -a1 - root;
@@ -4091,7 +4091,7 @@ int Intersect_<Real>::find(const Capsule& capsule, const Ray& ray, Real t[2])
             }
         }
     }
-    else if (Alge::abs(discr) <= RealT::zeroTol)
+    else if (Alge::abs(discr) <= Real_::zeroTol)
     {
         tValue = -a1;
         zValue = P.z + tValue*D.z;
@@ -4309,7 +4309,7 @@ bool Intersect_<Real>::find(const Cone& cone, const Ray& ray, Real t[2])
     //Points are in cone angle span but we must must check to see if they also lie between vertex and base plane
     //Normal of base plane points away from vertex (positive = outside)
     Plane coneBase = cone.plane(1);
-    Plane::Side side[2];
+    typename Plane::Side side[2];
     side[0] = Geom::side(coneBase, vInt[0]);
     side[1] = Geom::side(coneBase, vInt[1]);
 
@@ -4398,7 +4398,7 @@ int Intersect_<Real>::find(const Cylinder& cylinder, const Ray& ray, Real t[2])
     // unit-length direction.
     Real dz = W.dot(ray.dir);
 
-    if (Alge::abs(dz) >= 1 - RealT::zeroTol)
+    if (Alge::abs(dz) >= 1 - Real_::zeroTol)
     {
         // The line is parallel to the cylinder axis.  Determine if the line
         // intersects the cylinder end disks.
@@ -4428,7 +4428,7 @@ int Intersect_<Real>::find(const Cylinder& cylinder, const Ray& ray, Real t[2])
 
     Real a0, a1, a2, discr, root, inv, tValue;
 
-    if (Alge::abs(D.z) <= RealT::zeroTol)
+    if (Alge::abs(D.z) <= Real_::zeroTol)
     {
         // The line is perpendicular to the cylinder axis.
         if (Alge::abs(P.z) > halfHeight)
@@ -4451,7 +4451,7 @@ int Intersect_<Real>::find(const Cylinder& cylinder, const Ray& ray, Real t[2])
             // Line does not intersect cylinder.
             return 0;
         }
-        else if (discr > RealT::zeroTol)
+        else if (discr > Real_::zeroTol)
         {
             // Line intersects cylinder in two places.
             root = Alge::sqrt(discr);
@@ -4516,7 +4516,7 @@ int Intersect_<Real>::find(const Cylinder& cylinder, const Ray& ray, Real t[2])
         assert(quantity == 0, "Unexpected condition\n");
         return 0;
     }
-    else if (discr > RealT::zeroTol)
+    else if (discr > Real_::zeroTol)
     {
         root = Alge::sqrt(discr);
         inv = 1/a2;
@@ -4696,8 +4696,8 @@ bool Intersect_<Real>::find(const Box& box, const Ray& ray, Real t[2], Vec3 norm
     const Vec3& dir = ray.dir;
     const Vec3& ll = box.min;
     const Vec3& ur = box.max;
-    Vec3 ll_test = ll.elemSub(RealT::zeroTol); //Accommodate for error
-    Vec3 ur_test = ur.elemAdd(RealT::zeroTol);
+    Vec3 ll_test = ll.elemSub(Real_::zeroTol); //Accommodate for error
+    Vec3 ur_test = ur.elemAdd(Real_::zeroTol);
 
     //Intersect X normal planes
     if (!Alge::isNearZero(dir.x))
@@ -4999,12 +4999,12 @@ void Intersect_<Real>::TriangleInt::
     for (int i = 0; i < 3; ++i)
     {
         distances[i] = distance(plane, triangle[i]);
-        if (distances[i] > RealT::zeroTol)
+        if (distances[i] > Real_::zeroTol)
         {
             signs[i] = 1;
             positive++;
         }
-        else if (distances[i] < -RealT::zeroTol)
+        else if (distances[i] < -Real_::zeroTol)
         {
             signs[i] = -1;
             negative++;
@@ -5384,11 +5384,11 @@ bool Intersect_<Real>::find(const Triangle& tri, const Line& line, option<Vec3&>
     //   |dot(D,N)|*t = -sign(dot(D,N))*dot(Q,N)
     Real DdN = lineDir.dot(normal);
     Real sign;
-    if (DdN > RealT::zeroTol)
+    if (DdN > Real_::zeroTol)
     {
         sign = 1;
     }
-    else if (DdN < -RealT::zeroTol)
+    else if (DdN < -Real_::zeroTol)
     {
         sign = -1;
         DdN = -DdN;
@@ -5445,11 +5445,11 @@ bool Intersect_<Real>::find(const Triangle& tri, const Ray& ray, option<Vec3&> i
     //   |dot(D,N)|*t = -sign(dot(D,N))*dot(Q,N)
     Real DdN = ray.dir.dot(normal);
     Real sign;
-    if (DdN > RealT::zeroTol)
+    if (DdN > Real_::zeroTol)
     {
         sign = 1;
     }
-    else if (DdN < -RealT::zeroTol)
+    else if (DdN < -Real_::zeroTol)
     {
         sign = -1;
         DdN = -DdN;
@@ -5507,7 +5507,7 @@ bool Intersect_<Real>::find(const Plane& plane1, const Plane& plane2, option<Ray
     // where det = 1 - d^2.
 
     Real dot = plane1.normal.dot(plane2.normal);
-    if (Alge::abs(dot) >= 1 - RealT::zeroTol)
+    if (Alge::abs(dot) >= 1 - Real_::zeroTol)
     {
         // The planes are parallel.  Check if they are coplanar.
         Real cDiff;
@@ -5522,7 +5522,7 @@ bool Intersect_<Real>::find(const Plane& plane1, const Plane& plane2, option<Ray
             cDiff = plane1.dist + plane2.dist;
         }
 
-        if (Alge::abs(cDiff) < RealT::zeroTol)
+        if (Alge::abs(cDiff) < Real_::zeroTol)
         {
             // Planes are coplanar.
             if (intRay)

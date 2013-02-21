@@ -24,7 +24,7 @@ Real Interp_<Real>::linearAngle(Real t, Real angleStart, Real angleEnd, option<i
     Real angleRet = angleStart;
     
     //Take shortest direction around circle
-    if (Alge::abs(angleStart - angleEnd) <= RealT::pi)
+    if (Alge::abs(angleStart - angleEnd) <= Real_::pi)
     {
         //We don't have to cross -pi -> pi boundary
         if (angleEnd < angleStart)
@@ -51,8 +51,8 @@ Real Interp_<Real>::linearAngle(Real t, Real angleStart, Real angleEnd, option<i
         {
             angleRet += angleAmount;
             rotSign = 1;
-            if (angleRet > RealT::pi)
-                angleRet -= RealT::piTwo;
+            if (angleRet > Real_::pi)
+                angleRet -= Real_::piTwo;
             //Check if we passed desired angle and turn is done
             if (angleRet < 0 && angleEnd < angleRet)
                 angleRet = angleEnd;
@@ -61,8 +61,8 @@ Real Interp_<Real>::linearAngle(Real t, Real angleStart, Real angleEnd, option<i
         {
             angleRet -= angleAmount;
             rotSign = -1;
-            if (angleRet < -RealT::pi)
-                angleRet += RealT::piTwo;
+            if (angleRet < -Real_::pi)
+                angleRet += Real_::piTwo;
             //Check if we passed desired angle and turn is done
             if (angleRet > 0 && angleEnd > angleRet)
                 angleRet = angleEnd;
@@ -91,10 +91,10 @@ void Interp_<Real>::alignDir(Vec3& dir, const Vec3& targetDir, Real angleAmount,
 }
 
 template<class Real>
-auto Interp_<Real>::bzRoots(Real y, Real v0, Real v1, Real v2, Real v3) -> tuple<Vec3, int>
+auto Interp_<Real>::bezierRoots(Real y, Real v0, Real v1, Real v2, Real v3) -> tuple<Vec3, int>
 {
     //Root finder is most stable if normalized to range [0,1]
-    const Real eps = RealT::epsilon*10;
+    const Real eps = Real_::epsilon*10;
     Real norm_start = v0;
     Real norm_dist = abs(v3 - v0);
     if (!Alge::isNearZero(norm_dist, eps))
@@ -117,7 +117,7 @@ auto Interp_<Real>::bzRoots(Real y, Real v0, Real v1, Real v2, Real v3) -> tuple
 }
 
 template<class Real>
-auto Interp_<Real>::bzNormalizeHandles(const Vec2& v0, const Vec2& v1, const Vec2& v2, const Vec2& v3) -> tuple<Vec2, Vec2>
+auto Interp_<Real>::bezierNormalizeHandles(const Vec2& v0, const Vec2& v1, const Vec2& v2, const Vec2& v3) -> tuple<Vec2, Vec2>
 {
     //Handle deltas
     Vec2 h0 = v1 - v0;
@@ -136,29 +136,29 @@ auto Interp_<Real>::bzNormalizeHandles(const Vec2& v0, const Vec2& v1, const Vec
 }
 
 template<class Real>
-Real Interp_<Real>::bzAtTime(Real time, const Vec2& v0, const Vec2& v1_, const Vec2& v2_, const Vec2& v3)
+Real Interp_<Real>::bezierAtTime(Real time, const Vec2& v0, const Vec2& v1_, const Vec2& v2_, const Vec2& v3)
 {
     assert(Alge::isInRange(time, v0.x, v3.x));
     Vec2 v1, v2;
-    tie(v1, v2) = bzNormalizeHandles(v0, v1_, v2_, v3);
-    Vec3 roots = get<0>(bzRoots(time, v0.x, v1.x, v2.x, v3.x));
-    return bzSpline(roots.x, v0.y, v1.y, v2.y, v3.y);
+    tie(v1, v2) = bezierNormalizeHandles(v0, v1_, v2_, v3);
+    Vec3 roots = get<0>(bezierRoots(time, v0.x, v1.x, v2.x, v3.x));
+    return bezier(roots.x, v0.y, v1.y, v2.y, v3.y);
 }
 
 template<class Real>
-Real Interp_<Real>::bzAngleAtTime(Real time, const Vec2& v0, const Vec2& v1_, const Vec2& v2_, const Vec2& v3_)
+Real Interp_<Real>::bezierAngleAtTime(Real time, const Vec2& v0, const Vec2& v1_, const Vec2& v2_, const Vec2& v3_)
 {
     Vec2 v1, v2, v3 = v3_;
-    tie(v1, v2) = bzNormalizeHandles(v0, v1_, v2_, v3);
+    tie(v1, v2) = bezierNormalizeHandles(v0, v1_, v2_, v3);
     Real dist = Trig::alignAngle(v0.y, v3.y);
     Real c1 = v2.y - v3.y;      // save end-handle delta
     v3.y = v0.y + dist;         // move end-point to create shortest path (end-point is now non-normalized)
     v2.y = v3.y + c1;           // set end-handle at new end-point
-    return Trig::normalizeAngle(bzAtTime(time, v0, v1, v2, v3));
+    return Trig::normalizeAngle(bezierAtTime(time, v0, v1, v2, v3));
 }
 
 template<class Real>
-void Interp_<Real>::bzSubdiv(vector<Vec2>& cs, int index, Real t)
+void Interp_<Real>::bezierSubdiv(vector<Vec2>& cs, int index, Real t)
 {
     // De Casteljau triangle matrix
     Vec2 mat[4][4];
@@ -180,7 +180,7 @@ void Interp_<Real>::bzSubdiv(vector<Vec2>& cs, int index, Real t)
 }
 
 template<class Real>
-Real Interp_<Real>::bzSubdivAdapt(vector<Vec2>& cs, int index, Real tol)
+Real Interp_<Real>::bezierSubdivAdapt(vector<Vec2>& cs, int index, Real tol)
 {
     Real arc = 0;
     for (int i = index; i >= index; i -= 3)
@@ -197,7 +197,7 @@ Real Interp_<Real>::bzSubdivAdapt(vector<Vec2>& cs, int index, Real tol)
             arc += (poly + chord) / 2;
             continue;
         }
-        bzSubdiv(cs, i, 0.5);
+        bezierSubdiv(cs, i, 0.5);
         //Recurse to right segment of subdivision
         i += 6;
     }

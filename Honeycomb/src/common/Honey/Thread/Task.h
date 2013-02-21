@@ -8,6 +8,13 @@
 namespace honey
 {
 
+class Task;
+class TaskSched;
+/** \cond */
+//for weak ptr, is_base_of doesn't work when a class tests itself in the class definition
+namespace mt { template<> struct is_base_of<SharedObj, Task> : Value<bool, true>{}; }
+/** \endcond */
+
 /// Base class of `Task_`, can be added to scheduler.  Instances must be created through class `Task_`.
 class Task : public SharedObj, mt::NoCopy
 {
@@ -71,20 +78,20 @@ protected:
     
     void bindDirty();
 
-    State _state;
-    DepNode _depNode;
-    Mutex _lock;
-    int _regCount;
-    TaskSched* _sched;
-    WeakPtr<Task> _root;
-    int _bindId;
-    bool _bindDirty;
-    int _depUpWaitInit;
-    int _depUpWait;
-    int _depDownWaitInit;
-    int _depDownWait;
+    State           _state;
+    DepNode         _depNode;
+    Mutex           _lock;
+    int             _regCount;
+    TaskSched*      _sched;
+    WeakPtr<Task>   _root;
+    int             _bindId;
+    bool            _bindDirty;
+    int             _depUpWaitInit;
+    int             _depUpWait;
+    int             _depDownWaitInit;
+    int             _depDownWait;
     DepGraph::Vertex* _vertex;
-    bool _onStack;
+    bool            _onStack;
 };
 
 /// Holds a functor and dependency information, enqueue in a scheduler to run the task. \see TaskSched
@@ -113,7 +120,7 @@ public:
 
     /// Set functor to execute
     template<class Func>
-    void setFunctor(Func&& f)                       { _func = PackagedTask(forward<Func>(f)); }
+    void setFunctor(Func&& f)                       { _func = PackagedTask<Result ()>(forward<Func>(f)); }
 
 private:
     virtual void operator()()                       { _func.invoke_delayedReady(); }
@@ -199,13 +206,13 @@ private:
     String stackTrace();
     bool enqueue_priv(Task& task);
     
-    int _workerTaskMax;
-    Mutex _lock;
+    int                 _workerTaskMax;
+    Mutex               _lock;
     vector<UniquePtr<Worker>> _workers;
-    deque<Task::Ptr> _tasks;
-    vector<Task*> _taskStack;
-    Task::DepGraph _depGraph;
-    int _bindId;
+    deque<Task::Ptr>    _tasks;
+    vector<Task*>       _taskStack;
+    Task::DepGraph      _depGraph;
+    int                 _bindId;
 };
 
 /** \cond */

@@ -35,18 +35,18 @@ private:
 };
 
 /** \cond */
-template<class T, int D, class R, int O>
-struct priv::map_impl0<T, VecSwizCon<D,R,O>>
+template<class T_, int D, class R, int Opt>
+struct priv::map_impl0<T_, VecSwizCon<D,R,Opt>>
 {
     template<class T, class O, class Func>
-    static O&& func(T&&, O&&, Func&&)                               { static_assert(false, "Can't map with const swizzle output"); }
+    static O&& func(T&&, O&&, Func&&)                               { static_assert(!mt::True<T>::value, "Can't map with const swizzle output"); }
 };
 
-template<class T, class T2, int D, class R, int O>
-struct priv::map_impl1<T, T2, VecSwizCon<D,R,O>>
+template<class T_, class T2_, int D, class R, int Opt>
+struct priv::map_impl1<T_, T2_, VecSwizCon<D,R,Opt>>
 {
     template<class T, class T2, class O, class Func>
-    static O&& func(T&&, T2&&, O&&, Func&&)                         { static_assert(false, "Can't map with const swizzle output"); }
+    static O&& func(T&&, T2&&, O&&, Func&&)                         { static_assert(!mt::True<T>::value, "Can't map with const swizzle output"); }
 };
 /** \endcond */
 
@@ -61,7 +61,8 @@ class VecSwizRefBase : public Vec<  matrix::priv::Traits<SwizT>::dim, typename m
                                     matrix::priv::Traits<SwizT>::options>
 {
 public:
-    typedef Vec Super;
+    typedef Vec<matrix::priv::Traits<SwizT>::dim, typename matrix::priv::Traits<SwizT>::Real,
+                matrix::priv::Traits<SwizT>::options> Super;
 
     /// Allow scalar ops
     SwizT& operator=(Real rhs)                                      { return fromScalar(rhs); }
@@ -69,23 +70,23 @@ public:
     SwizT& operator-=(Real rhs)                                     { return elemSubEq(rhs); }
 
     /// Wrapper ops
-    SwizT& fromZero()                                               { Vec::fromZero(); return swiz().commit(); }
-    SwizT& fromScalar(Real f)                                       { Vec::fromScalar(f); return swiz().commit(); }
-    SwizT& operator=(const VecSwizRefBase& rhs)                     { Vec::operator=(rhs); return swiz().commit(); }
+    SwizT& fromZero()                                               { Super::fromZero(); return swiz().commit(); }
+    SwizT& fromScalar(Real f)                                       { Super::fromScalar(f); return swiz().commit(); }
+    SwizT& operator=(const VecSwizRefBase& rhs)                     { Super::operator=(rhs); return swiz().commit(); }
     template<class T>
-    SwizT& operator=(const MatrixBase<T>& rhs)                      { Vec::operator=(rhs.subc()); return swiz().commit(); }
+    SwizT& operator=(const MatrixBase<T>& rhs)                      { Super::operator=(rhs.subc()); return swiz().commit(); }
     template<class T>
-    SwizT& operator+=(const MatrixBase<T>& rhs)                     { Vec::operator+=(rhs.subc()); return swiz().commit(); }
+    SwizT& operator+=(const MatrixBase<T>& rhs)                     { Super::operator+=(rhs.subc()); return swiz().commit(); }
     template<class T>
-    SwizT& operator-=(const MatrixBase<T>& rhs)                     { Vec::operator-=(rhs.subc()); return swiz().commit(); }
-    SwizT& operator*=(Real rhs)                                     { Vec::operator*=(rhs); return swiz().commit(); }
-    SwizT& operator/=(Real rhs)                                     { Vec::operator/=(rhs); return swiz().commit(); }
-    SwizT& elemAddEq(Real rhs)                                      { Vec::elemAddEq(rhs); return swiz().commit(); }
-    SwizT& elemSubEq(Real rhs)                                      { Vec::elemSubEq(rhs); return swiz().commit(); }
+    SwizT& operator-=(const MatrixBase<T>& rhs)                     { Super::operator-=(rhs.subc()); return swiz().commit(); }
+    SwizT& operator*=(Real rhs)                                     { Super::operator*=(rhs); return swiz().commit(); }
+    SwizT& operator/=(Real rhs)                                     { Super::operator/=(rhs); return swiz().commit(); }
+    SwizT& elemAddEq(Real rhs)                                      { Super::elemAddEq(rhs); return swiz().commit(); }
+    SwizT& elemSubEq(Real rhs)                                      { Super::elemSubEq(rhs); return swiz().commit(); }
     template<class T>
-    SwizT& elemMulEq(const MatrixBase<T>& rhs)                      { Vec::elemMulEq(rhs.subc()); return swiz().commit(); }
+    SwizT& elemMulEq(const MatrixBase<T>& rhs)                      { Super::elemMulEq(rhs.subc()); return swiz().commit(); }
     template<class T>
-    SwizT& elemDivEq(const MatrixBase<T>& rhs)                      { Vec::elemDivEq(rhs.subc()); return swiz().commit(); }
+    SwizT& elemDivEq(const MatrixBase<T>& rhs)                      { Super::elemDivEq(rhs.subc()); return swiz().commit(); }
 
     /// Get subclass
     const SwizT& swiz() const                                       { return reinterpret_cast<const SwizT&>(*this); }
@@ -93,15 +94,15 @@ public:
 };
 
 /** \cond */
-template<class T, int D, class R, int O>
-struct priv::map_impl0<T, VecSwizRef<D,R,O>>
+template<class T_, int D, class R, int Opt>
+struct priv::map_impl0<T_, VecSwizRef<D,R,Opt>>
 {
     template<class T, class O, class Func>
     static O&& func(T&& v, O&& o, Func&& f)                         { map(forward<T>(v), forward<typename O::Super>(o), forward<Func>(f)); o.swiz().commit(); return forward<O>(o); }
 };
 
-template<class T, class T2, int D, class R, int O>
-struct priv::map_impl1<T, T2, VecSwizRef<D,R,O>>
+template<class T_, class T2_, int D, class R, int Opt>
+struct priv::map_impl1<T_, T2_, VecSwizRef<D,R,Opt>>
 {
     template<class T, class T2, class O, class Func>
     static O&& func(T&& v, T2&& v2, O&& o, Func&& f)                { map(forward<T>(v), forward<T2>(v2), forward<typename O::Super>(o), forward<Func>(f)); o.swiz().commit(); return forward<O>(o); }

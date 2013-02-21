@@ -27,11 +27,17 @@ namespace honey
 template<class Real>
 class Poisson_ : public RandomDist<Real>
 {
+    typedef RandomDist<Real>    Super;
+    RandomDist_imports();
     template<class> friend class Poisson_;
     typedef typename Numeral<Real>::Int Int;
+    typedef Gaussian_<Double>   Gaussian;
+    typedef Gamma_<Double>      Gamma;
+    typedef GammaFunc_<Double>  GammaFunc;
     typedef Binomial_<Double>   Binomial;
+    
 public:
-    Poisson_(RandomGen& gen, Real mu)       : RandomDist(gen), mu(mu) { assert(mu > 0); }
+    Poisson_(RandomGen& gen, Real mu)       : Super(gen), mu(mu) { assert(mu > 0); }
 
     virtual Real next() const;
     virtual Real pdf(Real x) const;

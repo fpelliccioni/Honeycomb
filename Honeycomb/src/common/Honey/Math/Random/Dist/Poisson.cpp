@@ -104,7 +104,7 @@ Real Poisson_<Real>::cdfInv(Real P) const
     if (max == Double_::inf)
         max = 0;
 
-    return cdfInvFind(P, 0, max, true);
+    return this->cdfInvFind(P, 0, max, true);
 }
 
 template<class Real>

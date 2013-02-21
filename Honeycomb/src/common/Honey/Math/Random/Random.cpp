@@ -49,7 +49,7 @@ typename Random_<Real>::Vec3 Random_<Real>::dir(const Vec3& dir, Real dirVarMin,
     Vec3 dirRand = dir.crossUnit(dirAxis);
     
     //Rotate perp axis for random directional component
-    dirRand = Quat(dir, Uniform(getGen(), -RealT::pi, RealT::pi).next())*dirRand;
+    dirRand = Quat(dir, Uniform(getGen(), -Real_::pi, Real_::pi).next())*dirRand;
 
     //Use perp axis to rotate by variation angle
     return Quat(dirRand, dirAngle)*dir;

@@ -16,19 +16,11 @@ namespace honey
 namespace mt
 {
 
-/** \cond */
-namespace priv
-{
-    template<class T, int I> struct extentOfCount {};
-    template<class T, size_t Cnt> struct rankOfCount;
-}
-/** \endcond */
-
 /// Remove the unused parameter warning
 #define mt_unused(Param)                                        (void)Param;
 
 /// Returns the same type passed in. Can be used as a barrier to prevent type deduction.
-template<class T> struct identity                               { typedef T Type; };
+template<class T> struct identity                               { typedef T type; };
 /// Holds a constant integral value
 template<class T, T val> struct Value                           { static const T value = val; };
 /// Always return true
@@ -41,17 +33,17 @@ struct Void {};
 template<int> struct tag                                        { tag() {} tag(int) {} };
 
 /// Add reference to type
-template<class T> struct addRef                                 { typedef typename std::add_lvalue_reference<T>::type Type; };
+template<class T> struct addRef                                 : std::add_lvalue_reference<T> {};
 /// Remove reference from type
-template<class T> struct removeRef                              { typedef typename std::remove_reference<T>::type Type; };
+template<class T> struct removeRef                              : std::remove_reference<T> {};
 /// Add pointer to type
-template<class T> struct addPtr                                 { typedef typename std::add_pointer<T>::type Type; };
+template<class T> struct addPtr                                 : std::add_pointer<T> {};
 /// Remove pointer from type
-template<class T> struct removePtr                              { typedef typename std::remove_pointer<T>::type Type; };
+template<class T> struct removePtr                              : std::remove_pointer<T> {};
 /// Add top-level const qualifier and reference to type
-template<class T> struct addConstRef                            { typedef typename addRef<typename std::add_const<T>::type>::Type Type; };
+template<class T> struct addConstRef                            : addRef<typename std::add_const<T>::type> {};
 /// Remove reference and top-level const qualifier from type
-template<class T> struct removeConstRef                         { typedef typename std::remove_const<typename removeRef<T>::Type>::type Type; };
+template<class T> struct removeConstRef                         : std::remove_const<typename removeRef<T>::type> {};
 
 /// Check if type is an lvalue reference
 template<class T> struct isLref                                 : Value<bool, std::is_lvalue_reference<T>::value> {};
@@ -61,22 +53,9 @@ template<class T> struct isRref                                 : Value<bool, st
 template<class T> struct isRef                                  : Value<bool, std::is_reference<T>::value> {};
 /// Check if type is a pointer
 template<class T> struct isPtr                                  : Value<bool, std::is_pointer<T>::value> {};
-/// Check if type is an iterator (has iterator category or is pointer) or a reference to one
-/** \class isIterator */
-template<class T> struct isIterator;
-/// Check if type is a range (has std::begin) or a reference to one
-/** \class isRange */
-template<class T> class isRange;
 /// Check if type is a tuple
 /** \class isTuple */
 template<class T> class isTuple;
-
-/// Call sizeof(extentOf<I>(a)) to get number of elements in I'th dimension of an array variable. Default I is 0.
-template<class T> typename priv::extentOfCount<T,0>::Type           extentOf(T&);
-template<int I, class T> typename priv::extentOfCount<T,I>::Type    extentOf(T&);
-
-/// Call sizeof(rankOf(a)) to get number of dimensions of an array variable
-template<class T> typename priv::rankOfCount<T,0>::Type         rankOf(T&);
 
 /// Opposite of std::enable_if
 template<bool b, class T = void> struct disable_if              : std::enable_if<!b, T> {};
@@ -84,17 +63,16 @@ template<bool b, class T = void> struct disable_if              : std::enable_if
 /// Variant of std::conditional for integers, stores result in `value`
 template<bool b, int64 t, int64 f> struct conditional_int       : Value<int64, f> {};
 
-/// Check if one class is derived from another.  Const qualifiers do not affect result.
-/** \class isBaseOf */
-template<class Base, class Derived> class isBaseOf;
+/// Version of std::is_base_of that removes reference qualifiers before testing
+template<class Base, class Derived> struct is_base_of           : std::is_base_of<typename removeConstRef<Base>::type, typename removeConstRef<Derived>::type> {};
 
 /// Create a method to check if a class has a member with matching name and type
 /**
-  * Result stores the test result. Type stores the member type if it exists, mt::Void otherwise.
+  * `Result` stores the test result. `type` stores the member type if it exists, mt::Void otherwise.
   *
-  *     struct A { int Foo;         };  =>  mt_hasMember(Foo);  ->  mt_HasMember_Foo<A, int A::*>           ->  { value = true,    Type = int A::*         }
-  *     struct A { void Foo(int);   };  =>  mt_hasMember(Foo);  ->  mt_HasMember_Foo<A, void (A::*)(int)>   ->  { value = true,    Type = void (A::*)(int) }
-  *     struct A { int Bar;         };  =>  mt_hasMember(Foo);  ->  mt_HasMember_Foo<A, int A::*>           ->  { value = false,   Type = mt::Void         }
+  *     struct A { int Foo;         };  =>  mt_hasMember(Foo);  ->  mt_HasMember_Foo<A, int A::*>           ->  { value = true,    type = int A::*         }
+  *     struct A { void Foo(int);   };  =>  mt_hasMember(Foo);  ->  mt_HasMember_Foo<A, void (A::*)(int)>   ->  { value = true,    type = void (A::*)(int) }
+  *     struct A { int Bar;         };  =>  mt_hasMember(Foo);  ->  mt_HasMember_Foo<A, int A::*>           ->  { value = false,   type = mt::Void         }
   *
   * mt_hasMember2() can be used to specify the test function name. \n
   * mt_hasMember2() must be used for operator checks because of the special characters in the operator name.
@@ -104,11 +82,11 @@ template<class Base, class Derived> class isBaseOf;
 
 /// Create a method to check if a class has a nested type/class
 /**
-  * `value` stores the test result. `Type` stores the nested type if it exists, mt::Void otherwise.
+  * `value` stores the test result. `type` stores the nested type if it exists, mt::Void otherwise.
   *
-  *     struct A { typedef int Foo; };              =>  mt_hasType(Foo);            ->  mt_hasType_Foo<A>   ->  { value = true,     Type = int          }
-  *     struct A { template<class> struct Foo{}; }; =>  mt_hasType2(Foo<int>, Foo); ->  mt_hasType_Foo<A>   ->  { value = true,     Type = A::Foo<int>  }
-  *     struct A { typedef int Bar; };              =>  mt_hasType(Foo);            ->  mt_hasType_Foo<A>   ->  { value = false,    Type = mt::Void     }
+  *     struct A { typedef int Foo; };              =>  mt_hasType(Foo);            ->  mt_hasType_Foo<A>   ->  { value = true,     type = int          }
+  *     struct A { template<class> struct Foo{}; }; =>  mt_hasType2(Foo<int>, Foo); ->  mt_hasType_Foo<A>   ->  { value = true,     type = A::Foo<int>  }
+  *     struct A { typedef int Bar; };              =>  mt_hasType(Foo);            ->  mt_hasType_Foo<A>   ->  { value = false,    type = mt::Void     }
   *
   * mt_hasType2() can be used to specify the test function name. \n
   * mt_hasType2() must be used if type has special characters (ie. <>, ::)
@@ -131,12 +109,12 @@ template<class Base, class Derived> class isBaseOf;
   * \retval Base            base class if this is a non-static member function, `void` otherwise
   * \retval Return          return type
   * \retval arity           number of parameters, includes the hidden base pointer as the first param if there's a base class
-  * \retval param<N>::Type  parameter types, from 0 to `arity`-1
+  * \retval param<N>::type  parameter types, from 0 to `arity`-1
   */
 template<class T> struct funcTraits;
 
 /// Create an object that can be retrieved safely from a static context
-#define mt_staticObj(Class, Func, Ctor)                         static inline UNBRACKET(Class)& Func()  { static UNBRACKET(Class) _obj##Ctor; return _obj; }
+#define mt_staticObj(Class, Func, Ctor)                         static inline UNBRACKET(Class)& Func()  { static UNBRACKET(Class) _obj Ctor; return _obj; }
 
 /// Solves static init order, call in header with unique id
 #define mt_staticInit(id)                                       mt::Void __init_##id(); static mt::Void __initVar_##id(__init_##id());
@@ -168,15 +146,6 @@ template<int64 a, int64 b> struct gcd                           : gcd<b, a % b> 
 //====================================================
 /** \cond */
 
-namespace priv
-{
-    template<class T, size_t N, int I> struct extentOfCount<T[N], I>        { typedef typename extentOfCount<T, I-1>::Type Type; };
-    template<class T, size_t N> struct extentOfCount<T[N], 0>               { typedef char (&Type)[N]; };
-
-    template<class T, size_t Cnt> struct rankOfCount                        { typedef char (&Type)[Cnt]; };
-    template <class T, size_t N, size_t Cnt> struct rankOfCount<T[N], Cnt>  { typedef typename rankOfCount<T,Cnt+1>::Type Type; };
-}
-
 template<int64 t, int64 f> struct conditional_int<true, t, f>   : Value<int64, t> {};
 
 #define mt_priv_hasMember(MemberName, TestName)                                                                                 \
@@ -188,60 +157,34 @@ template<int64 t, int64 f> struct conditional_int<true, t, f>   : Value<int64, t
         template<class T> static std::false_type                memberMatch(...);                                               \
     public:                                                                                                                     \
         static const bool value = mt::IsTrue<decltype(memberMatch<Class>(nullptr))>::value;                                     \
-        typedef typename std::conditional<value, MemberType, mt::Void>::Type Type;                                              \
+        typedef typename std::conditional<value, MemberType, mt::Void>::type type;                                              \
     };
 
-#define mt_priv_hasType(TypeName, TestName)                                                                     \
-    template<class Class>                                                                                       \
-    class mt_hasType_##TestName                                                                                 \
-    {                                                                                                           \
-        template<class T> static std::true_type                 testFunc(typename T::TypeName*);                \
-        template<class T> static std::false_type                testFunc(...);                                  \
-                                                                                                                \
-        template<bool Res, class Enable = void>                                                                 \
-        struct type                                             { typedef mt::Void Type; };                     \
-        template<bool Res>                                                                                      \
-        struct type<Res, typename std::enable_if<Res>::type>    { typedef typename Class::TypeName Type; };     \
-    public:                                                                                                     \
-        static const bool value = mt::IsTrue<decltype(testFunc<Class>(nullptr))>::value;                        \
-        typedef typename type<value>::Type Type;                                                                \
+#define mt_priv_hasType(TypeName, TestName)                                                                         \
+    template<class Class>                                                                                           \
+    class mt_hasType_##TestName                                                                                     \
+    {                                                                                                               \
+        template<class T> static std::true_type                 test(typename T::TypeName*);                        \
+        template<class T> static std::false_type                test(...);                                          \
+                                                                                                                    \
+        template<bool Res, class Enable = void>                                                                     \
+        struct testType                                             { typedef mt::Void type; };                     \
+        template<bool Res>                                                                                          \
+        struct testType<Res, typename std::enable_if<Res>::type>    { typedef typename Class::TypeName type; };     \
+    public:                                                                                                         \
+        static const bool value = mt::IsTrue<decltype(test<Class>(nullptr))>::value;                                \
+        typedef typename testType<value>::type type;                                                                \
     };
-
-namespace priv
-{
-    mt_hasType(iterator_category)
-    template<class T> struct isIterator                         : Value<bool, isPtr<T>::value || mt_hasType_iterator_category<T>::value> {};
-}
-
+    
 /** \endcond */
-
-template<class T> struct isIterator                             : priv::isIterator<typename removeRef<T>::Type> {};
-
-template<class T>
-class isRange
-{
-    template<class _> static std::true_type                     testFunc(decltype(begin(T()))*);
-    template<class _> static std::false_type                    testFunc(...);
-public:
-    static const bool value = IsTrue<decltype(testFunc<T>(nullptr))>::value;
-};
 
 template<class T>
 class isTuple
 {
-    template<class T> static std::true_type                     testFunc(typename std::tuple_element<0,T>::type*);
-    template<class T> static std::false_type                    testFunc(...);
+    template<class T_> static std::true_type                    test(typename std::tuple_element<0,T_>::type*);
+    template<class T_> static std::false_type                   test(...);
 public:
-    static const bool value = IsTrue<decltype(testFunc<T>(nullptr))>::value;
-};
-
-template<class Base, class Derived>
-class isBaseOf
-{
-    static std::true_type           testFunc(typename addPtr<typename std::remove_const<Base>::type>::Type);
-    static std::false_type          testFunc(...);
-public:
-    static const bool value = IsTrue<decltype(testFunc(static_cast<typename addPtr<typename std::remove_const<Derived>::type>::Type>(nullptr)))>::value;
+    static const bool value = IsTrue<decltype(test<T>(nullptr))>::value;
 };
 
 //====================================================
@@ -259,7 +202,7 @@ template<class T> struct funcTraits                             : priv::functorT
 
 #define T_PARAM(It)     , class T##It
 #define T_SPEC(It)      COMMA_IFNOT(It,1) T##It
-#define PARAM(It)       template<> struct param<It-1> { typedef T##It Type; };
+#define PARAM(It)       template<int _> struct param<It-1, _> { typedef T##It type; };
 
 #define STRUCT(It, Ptr)                                                                     \
     template<class R ITERATE_(1,It,T_PARAM)>                                                \
@@ -269,35 +212,35 @@ template<class T> struct funcTraits                             : priv::functorT
         typedef void Base;                                                                  \
         typedef R Return;                                                                   \
         static const int arity = It;                                                        \
-        template<int N> struct param;                                                       \
+        template<int N, int _=0> struct param;                                              \
         ITERATE_(1,It,PARAM)                                                                \
     };                                                                                      \
 
-#define M_PARAM(It)       template<> struct param<It> { typedef T##It Type; };
+#define M_PARAM(It)       template<int _> struct param<It, _> { typedef T##It type; };
 
 #define M_STRUCT(It, Const)                                                                 \
-    template<class R, class Base ITERATE_(1,It,T_PARAM)>                                    \
-    struct funcTraits<R (Base::*) ( ITERATE_(1,It,T_SPEC) ) Const>                          \
+    template<class R, class Base_ ITERATE_(1,It,T_PARAM)>                                   \
+    struct funcTraits<R (Base_::*) ( ITERATE_(1,It,T_SPEC) ) Const>                         \
     {                                                                                       \
-        typedef R (Base::*Sig) ( ITERATE_(1,It,T_SPEC) );                                   \
-        typedef Base Base;                                                                  \
+        typedef R (Base_::*Sig) ( ITERATE_(1,It,T_SPEC) );                                  \
+        typedef Base_ Base;                                                                 \
         typedef R Return;                                                                   \
         static const int arity = It+1;                                                      \
-        template<int N> struct param;                                                       \
-        template<> struct param<0> { typedef Const Base* Type; };                           \
+        template<int N, int _=0> struct param;                                              \
+        template<int _> struct param<0, _> { typedef Const Base* type; };                   \
         ITERATE_(1,It,M_PARAM)                                                              \
     };                                                                                      \
                                                                                             \
     namespace priv                                                                          \
     {                                                                                       \
-    template<class R, class Base ITERATE_(1,It,T_PARAM)>                                    \
-    struct functorTraits<R (Base::*) ( ITERATE_(1,It,T_SPEC) ) Const>                       \
+    template<class R, class Base_ ITERATE_(1,It,T_PARAM)>                                   \
+    struct functorTraits<R (Base_::*) ( ITERATE_(1,It,T_SPEC) ) Const>                      \
     {                                                                                       \
         typedef R Sig( ITERATE_(1,It,T_SPEC) );                                             \
         typedef void Base;                                                                  \
         typedef R Return;                                                                   \
         static const int arity = It;                                                        \
-        template<int N> struct param;                                                       \
+        template<int N, int _=0> struct param;                                              \
         ITERATE_(1,It,PARAM)                                                                \
     };                                                                                      \
     }                                                                                       \

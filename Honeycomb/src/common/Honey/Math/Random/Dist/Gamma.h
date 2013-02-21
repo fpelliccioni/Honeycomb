@@ -6,6 +6,7 @@
 namespace honey
 {
 
+template<class Real> class GammaFunc_;
 template<class Real> class GammaInc;
 
 /// Generate a random variate from a gamma distribution \f$\mathrm{Gamma}\f$
@@ -27,10 +28,16 @@ template<class Real> class GammaInc;
 template<class Real>
 class Gamma_ : public RandomDist<Real>
 {
-    typedef GammaInc<Double> GammaInc;
+    typedef RandomDist<Real>    Super;
+    RandomDist_imports();
+    typedef Trig_<Real>         Trig;
+    typedef Gaussian_<Double>   Gaussian;
+    typedef GammaFunc_<Double>  GammaFunc;
+    typedef GammaInc<Double>    GammaInc;
+    
 public:
-    Gamma_(Real a, Real b)                      :                   a(a), b(b) { assert(a > 0 && b > 0); }
-    Gamma_(RandomGen& gen, Real a, Real b)      : RandomDist(gen),  a(a), b(b) { assert(a > 0 && b > 0); }
+    Gamma_(option<RandomGen&> gen, Real a, Real b)      : Super(gen), a(a), b(b) { assert(a > 0 && b > 0); }
+    Gamma_(Real a, Real b)                              : Gamma_(optnull, a, b) {}
 
     virtual Real next() const;
     virtual Real pdf(Real x) const;
@@ -53,8 +60,8 @@ typedef Gamma_<Double>    Gamma_d;
 template<class Real>
 class GammaFunc_
 {
-    typedef typename Numeral<Real>::RealT   RealT;
-    typedef typename RealT::DoubleType      Double_;
+    typedef typename Numeral<Real>::Real_   Real_;
+    typedef typename Real_::DoubleType      Double_;
     typedef typename Double_::Real          Double;
     typedef Alge_<Real> Alge;
 public:

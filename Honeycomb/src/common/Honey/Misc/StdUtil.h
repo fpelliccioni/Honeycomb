@@ -57,10 +57,10 @@ namespace stdutil
     auto keys(Range&& range) ->
         // Doxygen can't parse this
         /** \cond */
-        Range_<TupleIter<typename itertype(range),0>, TupleIter<typename itertype(range),0>>
+        Range_<TupleIter<itertype(range),0>, TupleIter<itertype(range),0>>
         /** \endcond */
     {
-        return honey::range(TupleIter<typename itertype(range),0>(begin(range)), TupleIter<typename itertype(range),0>(end(range)));
+        return honey::range(TupleIter<itertype(range),0>(begin(range)), TupleIter<itertype(range),0>(end(range)));
     }
 
     /// Create a range over the values of a map or map iterator range. \see keys()
@@ -68,15 +68,15 @@ namespace stdutil
     auto values(Range&& range) ->
         // Doxygen can't parse this
         /** \cond */
-        Range_<TupleIter<typename itertype(range),1>, TupleIter<typename itertype(range),1>>
+        Range_<TupleIter<itertype(range),1>, TupleIter<itertype(range),1>>
         /** \endcond */
     {
-        return honey::range(TupleIter<typename itertype(range),1>(begin(range)), TupleIter<typename itertype(range),1>(end(range)));
+        return honey::range(TupleIter<itertype(range),1>(begin(range)), TupleIter<itertype(range),1>(end(range)));
     }
 
     /// Convert reverse iterator to forward iterator
     template<class Iter>
-    auto reverseIterToForward(Iter&& it) -> typename mt::removeRef<decltype(--it.base())>::Type
+    auto reverseIterToForward(Iter&& it) -> typename mt::removeRef<decltype(--it.base())>::type
                                                                 { return --it.base(); }
 
     /// Erase element at index
@@ -84,8 +84,8 @@ namespace stdutil
     void erase_at(std::vector<T,A>& list, int index)            { list.erase(list.begin()+index); }
 
     /// Erase first occurrence of value.  Returns iterator to next element after the erased element, or end if not found.
-    template<class List, class T>
-    typename List::iterator erase(List& list, const T& val)
+    template<class List>
+    typename List::iterator erase(List& list, const typename List::value_type& val)
     {
         auto it = std::find(list.begin(), list.end(), val);
         if (it == list.end()) return list.end();
@@ -96,12 +96,12 @@ namespace stdutil
     template<class List>
     typename List::reverse_iterator erase(List& list, const typename List::reverse_iterator& iter)
     {
-        return List::reverse_iterator(list.erase(reverseIterToForward(iter)));
+        return typename List::reverse_iterator(list.erase(reverseIterToForward(iter)));
     }
 
     /// Erase all occurrences of value.
     template<class List, class T>
-    typename void erase_all(List& list, const T& val)
+    void erase_all(List& list, const T& val)
     {
         auto it = list.begin();
         while((it = std::find(it, list.end(), val)) != list.end())
@@ -110,7 +110,7 @@ namespace stdutil
 
     /// Get iterator to key with value.  Returns end if not found.
     template<class MultiMap, class Key, class Val>
-    auto find(MultiMap& map, const Key& key, const Val& val) -> typename itertype(map)
+    auto find(MultiMap& map, const Key& key, const Val& val) -> itertype(map)
     {
         return honey::find(range(map.equal_range(key)), [&](elemtype(map)& e) { return e.second == val; });
     }
@@ -119,17 +119,17 @@ namespace stdutil
 /// Convenient method to get an unordered map type with custom allocator
 template<class Key, class Value, template<class> class Alloc>
 struct UnorderedMap : mt::NoCopy
-{ typedef unordered_map<Key, Value, std::hash<Key>, std::equal_to<Key>, Alloc<pair<const Key, Value>>> Type; };
+{ typedef unordered_map<Key, Value, std::hash<Key>, std::equal_to<Key>, Alloc<pair<const Key, Value>>> type; };
 
 /// Convenient method to get an unordered multi-map type with custom allocator
 template<class Key, class Value, template<class> class Alloc>
 struct UnorderedMultiMap : mt::NoCopy
-{ typedef unordered_multimap<Key, Value, std::hash<Key>, std::equal_to<Key>, Alloc<pair<const Key, Value>>> Type; };
+{ typedef unordered_multimap<Key, Value, std::hash<Key>, std::equal_to<Key>, Alloc<pair<const Key, Value>>> type; };
 
 /// Convenient method to get an unordered set type with custom allocator
 template<class Key, template<class> class Alloc>
 struct UnorderedSet : mt::NoCopy
-{ typedef unordered_set<Key, std::hash<Key>, std::equal_to<Key>, Alloc<Key>> Type; };
+{ typedef unordered_set<Key, std::hash<Key>, std::equal_to<Key>, Alloc<Key>> type; };
 
 
 //====================================================

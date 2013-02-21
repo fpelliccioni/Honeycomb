@@ -11,7 +11,7 @@ namespace honey
 template<class Real>
 class Interp_ : mt::NoCopy
 {
-    typedef typename Numeral<Real>::RealT RealT;
+    typedef typename Numeral<Real>::Real_ Real_;
     typedef Alge_<Real>         Alge;
     typedef Trig_<Real>         Trig;
     typedef Vec<2,Real>         Vec2;
@@ -75,7 +75,7 @@ public:
 
     /// Linearly blend a range of values by applying an associated weight to each value. If all weights are 0 then the first value is returned.
     template<class Range, class Seq>
-    static auto blend(Range&& vals, Seq&& weights_) -> typename elemtype(vals)
+    static auto blend(Range&& vals, Seq&& weights_) -> elemtype(vals)
     {
         auto val = begin(vals), last = end(vals);
         auto weights = seqToIter(weights_);
@@ -83,7 +83,7 @@ public:
         for (; val != last && *weights == 0; ++val, ++weights);
         if (val == last) return *begin(vals);
         //Blend the values
-        typename elemtype(vals) ret(*val++);
+        elemtype(vals) ret(*val++);
         Real weightAccum = *weights++;
         for (; val != last; ++val, ++weights)
         {
@@ -104,18 +104,18 @@ public:
     static Real sin(Real t, bool smoothIn, bool smoothOut)
     {
         if (smoothIn && smoothOut)
-            return 0.5 - (Trig::sin(RealT::piHalf + t*RealT::pi)/2);
+            return 0.5 - (Trig::sin(Real_::piHalf + t*Real_::pi)/2);
         else if (smoothIn)
-            return 1 - Trig::sin(RealT::piHalf + t*RealT::piHalf);
+            return 1 - Trig::sin(Real_::piHalf + t*Real_::piHalf);
         else
-            return Trig::sin(t*RealT::piHalf);
+            return Trig::sin(t*Real_::piHalf);
     }
 
 
     /// Gaussian / Normal distribution. The standard distribution parameters are (offset, scale) = (0, 1)
     static Real gaussian(Real x, Real offset, Real scale)
     {
-        static const Real sqrtTwoPi = Alge::sqrt(RealT::piTwo);
+        static const Real sqrtTwoPi = Alge::sqrt(Real_::piTwo);
         return Alge::exp( -Alge::sqr(x - offset) / (2 * Alge::sqr(scale)) ) / ( scale * sqrtTwoPi );
     }
 
@@ -128,17 +128,17 @@ public:
             [](Real x, Real offset, Real scale) { return gaussian(x, offset, scale); });
     }
 
-    /// Bezier spline interpolation.  Interpolate along a curve passing through v0 and v3, using control points v1 and v2.
+    /// Interpolate along a Bezier curve passing through v0 and v3, using handles (control points) v1 and v2.  The handles shape the curve and typically don't lie on it.
     /**
       * \param t    distance along curve [0-1]
       * \param v0   start point
-      * \param v1   control point
-      * \param v2   control point
+      * \param v1   start handle
+      * \param v2   end handle
       * \param v3   end point
       * \return     interpolated value
     */
     template<class T>
-    static T bzSpline(Real t, const T& v0, const T& v1, const T& v2, const T& v3)
+    static T bezier(Real t, const T& v0, const T& v1, const T& v2, const T& v3)
     {
         T c = 3 * (v1 - v0);
         T b = 3 * (v2 - v1) - c;
@@ -153,33 +153,33 @@ public:
       * \retval roots
       * \retval rootCount
       */
-    static tuple<Vec3, int> bzRoots(Real y, Real v0, Real v1, Real v2, Real v3);
+    static tuple<Vec3, int> bezierRoots(Real y, Real v0, Real v1, Real v2, Real v3);
     
     /// Given a bezier curve with dim (time, value), normalize the handles (v1,v2) such that there is only 1 root at any point along the time axis.
-    static tuple<Vec2, Vec2> bzNormalizeHandles(const Vec2& v0, const Vec2& v1, const Vec2& v2, const Vec2& v3);
+    static tuple<Vec2, Vec2> bezierNormalizeHandles(const Vec2& v0, const Vec2& v1, const Vec2& v2, const Vec2& v3);
     
     /// Given a bezier curve with dim (time, value), get value on curve parameterized by `time` in range [0,1]
-    static Real bzAtTime(Real time, const Vec2& v0, const Vec2& v1, const Vec2& v2, const Vec2& v3);
+    static Real bezierAtTime(Real time, const Vec2& v0, const Vec2& v1, const Vec2& v2, const Vec2& v3);
     
-    /// Similar to bzAtTime() except the value is interpolated by taking the shortest angular path
-    static Real bzAngleAtTime(Real time, const Vec2& v0, const Vec2& v1, const Vec2& v2, const Vec2& v3);
+    /// Similar to bezierAtTime() except the value is interpolated by taking the shortest angular path
+    static Real bezierAngleAtTime(Real time, const Vec2& v0, const Vec2& v1, const Vec2& v2, const Vec2& v3);
     
-    /// Subdivide a bezier curve segment at index (4 control points) by spline param 't' [0,1].  Replaces curve segment with equivalent left/right segments (7 control points)
-    static void bzSubdiv(vector<Vec2>& cs, int index, Real t);
+    /// Subdivide a bezier curve segment at index (4 control points) by curve param 't' [0,1].  Replaces curve segment with equivalent left/right segments (7 control points)
+    static void bezierSubdiv(vector<Vec2>& cs, int index, Real t);
     
     /// Adaptively subdivide a bezier curve segment at index (4 control points).  Subdivides curve segment until the arc length does not change more than the given tolerance.
     /**
      * \return Bezier curve arc length
      */
-    static Real bzSubdivAdapt(vector<Vec2>& cs, int index, Real tol = 0.01);
+    static Real bezierSubdivAdapt(vector<Vec2>& cs, int index, Real tol = 0.01);
 
     /// Bezier 2D patch coefficient matrix generator
     /**
       * \param val      a 4x4 grid of control points to interpolate
       * \retval patch
-      * \see            bzPatch() to evaluate `patch`
+      * \see            bezierPatch() to evaluate `patch`
       */
-    static Matrix4 bzPatchCoeff(const Matrix4& val)
+    static Matrix4 bezierPatchCoeff(const Matrix4& val)
     {
         // Bezier basis matrix
         static const Matrix4 m(             
@@ -198,9 +198,9 @@ public:
       * \param x        eval point X [0-1]
       * \param y        eval point Y [0-1]
       * \return         interpolated value
-      * \see            bzPatchCoeff() to generate `coeff`
+      * \see            bezierPatchCoeff() to generate `coeff`
       */
-    static Real bzPatch(const Matrix4& coeff, Real x, Real y)
+    static Real bezierPatch(const Matrix4& coeff, Real x, Real y)
     {
         return  x*( x*( x*(y * (y * (y * coeff( 0) + coeff( 1)) + coeff( 2)) + coeff( 3))
                         + (y * (y * (y * coeff( 4) + coeff( 5)) + coeff( 6)) + coeff( 7))
@@ -209,17 +209,17 @@ public:
     }
 
 
-    /// Catmull-rom spline interpolation. Interpolate along a curve between v1 and v2, using control points v0 and v3.  The curve passes through all points.
+    /// Interpolate along a Catmull-Rom curve passing through v1 and v2, using handles (control points) v0 and v3.  The spline (piecewise curve) will pass through all control points.
     /**
       * \param t    distance along curve [0-1]
-      * \param v0   control point
+      * \param v0   start handle
       * \param v1   start point
       * \param v2   end point
-      * \param v3   control point
+      * \param v3   end handle
       * \return     interpolated value
       */
     template<class T>
-    static T crSpline(Real t, const T& v0, const T& v1, const T& v2, const T& v3)
+    static T catmull(Real t, const T& v0, const T& v1, const T& v2, const T& v3)
     {
         T c1 = -0.5*v0           +  0.5*v2           ;
         T c2 =      v0 + -2.5*v1 +    2*v2 + -0.5*v3 ;
@@ -231,9 +231,9 @@ public:
     /**
       * \param val      a 4x4 grid of control points to interpolate
       * \retval patch
-      * \see            crPatch() to evaluate `patch`
+      * \see            catmullPatch() to evaluate `patch`
       */
-    static Matrix4 crPatchCoeff(const Matrix4& val)
+    static Matrix4 catmullPatchCoeff(const Matrix4& val)
     {
         // Catmull-Rom basis matrix
         static const Matrix4 m(             
@@ -253,9 +253,9 @@ public:
       * \param x        eval point X [0-1]
       * \param y        eval point Y [0-1]
       * \return         interpolated value
-      * \see            crPatchCoeff() to generate `coeff`
+      * \see            catmullPatchCoeff() to generate `coeff`
       */
-    static Real crPatch(const Matrix4& coeff, Real x, Real y)
+    static Real catmullPatch(const Matrix4& coeff, Real x, Real y)
     {
         return  x*( x*( x*(y * (y * (y * coeff( 0) + coeff( 1)) + coeff( 2)) + coeff( 3))
                         + (y * (y * (y * coeff( 4) + coeff( 5)) + coeff( 6)) + coeff( 7))

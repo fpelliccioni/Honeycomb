@@ -69,8 +69,8 @@ template<class R> class SharedFuture;
 template<class R>
 class Future : public FutureBase
 {
-    template<class R> friend class Promise;
-    template<class R> friend class SharedFuture;
+    template<class R_> friend class Promise;
+    template<class R_> friend class SharedFuture;
 
 public:
     typedef promise::priv::State<R> State;
@@ -87,15 +87,7 @@ public:
     /**
       * \throws promise::NoState    if the result has been retrieved with get() more than once
       */
-    R get()
-    {
-        wait();
-        R res = getResult<R>::func(_state);
-        auto e = _state->e;
-        _state = nullptr;
-        if (e) e->raise();
-        return res;
-    }
+    R get();
 
 protected:
     virtual StateBase* stateBase() const                        { return _state; }
@@ -103,16 +95,27 @@ protected:
 private:
     Future(const SharedPtr<State>& state)                       : _state(state) {}
 
-    template<class R>
-    struct getResult        { static R&& func(const SharedPtr<State>& state) { return move(state->result); } };
-    template<class R>
-    struct getResult<R&>    { static R& func(const SharedPtr<State>& state) { return *state->result; } };
+    template<class R_>
+    struct getResult        { static R_&& func(const SharedPtr<State>& state) { return move(state->result); } };
+    template<class R_>
+    struct getResult<R_&>   { static R_& func(const SharedPtr<State>& state) { return *state->result; } };
 
     SharedPtr<State> _state;
 };
 
+template<class R>
+inline R Future<R>::get()
+{
+    wait();
+    R res = getResult<R>::func(_state);
+    auto e = _state->e;
+    _state = nullptr;
+    if (e) e->raise();
+    return res;
+}
+
 template<>
-void Future<void>::get()
+inline void Future<void>::get()
 {
     wait();
     auto e = _state->e;

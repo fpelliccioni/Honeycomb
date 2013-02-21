@@ -14,23 +14,32 @@
 namespace honey
 {
 
-template<class R, int O>
-const Matrix<4,4,R,O> Matrix<4,4,R,O>::zero(    0,  0,  0,  0,
-                                                0,  0,  0,  0,
-                                                0,  0,  0,  0,
-                                                0,  0,  0,  0);
+template<class Real, int O>
+const Matrix<4,4,Real,O> Matrix<4,4,Real,O>::zero
+(
+    0,  0,  0,  0,
+    0,  0,  0,  0,
+    0,  0,  0,  0,
+    0,  0,  0,  0
+);
 
-template<class R, int O>
-const Matrix<4,4,R,O> Matrix<4,4,R,O>::identity(1,  0,  0,  0,
-                                                0,  1,  0,  0,
-                                                0,  0,  1,  0,
-                                                0,  0,  0,  1);
+template<class Real, int O>
+const Matrix<4,4,Real,O> Matrix<4,4,Real,O>::identity
+(
+    1,  0,  0,  0,
+    0,  1,  0,  0,
+    0,  0,  1,  0,
+    0,  0,  0,  1
+);
 
-template<class R, int O>
-Matrix<4,4,R,O>& Matrix<4,4,R,O>::fromTm(const Transform& tm)   { return fromTrs(tm.getTrans(), tm.getRot(), tm.getScale(), tm.getSkew()); }
+template<class Real, int O>
+Matrix<4,4,Real,O>& Matrix<4,4,Real,O>::fromTm(const Transform& tm)
+{
+    return fromTrs(tm.getTrans(), tm.getRot(), tm.getScale(), tm.getSkew());
+}
 
-template<class R, int O>
-Matrix<4,4,R,O>& Matrix<4,4,R,O>::fromObliqueProjection(const Vec3& normal, const Vec3& point, const Vec3& dir)
+template<class Real, int O>
+Matrix<4,4,Real,O>& Matrix<4,4,Real,O>::fromObliqueProjection(const Vec3& normal, const Vec3& point, const Vec3& dir)
 {
     // The projection plane is dot(N,X-P) = 0 where N is a 3-by-1 unit-length
     // normal vector and P is a 3-by-1 poInt on the plane.  The projection
@@ -74,8 +83,8 @@ Matrix<4,4,R,O>& Matrix<4,4,R,O>::fromObliqueProjection(const Vec3& normal, cons
     return *this;
 }
 
-template<class R, int O>
-Matrix<4,4,R,O>& Matrix<4,4,R,O>::fromPerspectiveProjection(const Vec3& normal, const Vec3& point, const Vec3& eye)
+template<class Real, int O>
+Matrix<4,4,Real,O>& Matrix<4,4,Real,O>::fromPerspectiveProjection(const Vec3& normal, const Vec3& point, const Vec3& eye)
 {
     //     +-                                                 -+
     // M = | dot(N,E-P)*I - E*N^T    -(dot(N,E-P)*I - E*N^T)*E |
@@ -107,8 +116,8 @@ Matrix<4,4,R,O>& Matrix<4,4,R,O>::fromPerspectiveProjection(const Vec3& normal, 
     return *this;
 }
 
-template<class R, int O>
-Matrix<4,4,R,O>& Matrix<4,4,R,O>::fromReflection(const Vec3& normal, const Vec3& point)
+template<class Real, int O>
+Matrix<4,4,Real,O>& Matrix<4,4,Real,O>::fromReflection(const Vec3& normal, const Vec3& point)
 {
     //     +-                         -+
     // M = | I-2*N*N^T    2*dot(N,P)*N |
@@ -139,21 +148,21 @@ Matrix<4,4,R,O>& Matrix<4,4,R,O>::fromReflection(const Vec3& normal, const Vec3&
     return *this;
 }
 
-template<class R, int O>
-Matrix<4,4,R,O>& Matrix<4,4,R,O>::fromLookAt(const Vec3& eye, const Vec3& at, const Vec3& up)
+template<class Real, int O>
+Matrix<4,4,Real,O>& Matrix<4,4,Real,O>::fromLookAt(const Vec3& eye, const Vec3& at, const Vec3& up)
 {
     Vec3 z = (eye - at).normalize();
     Vec3 x = up.crossUnit(z);
     Vec3 y = z.cross(x);
-    row(0) = Vec4(x, -x.dot(eye));
-    row(1) = Vec4(y, -y.dot(eye));
-    row(2) = Vec4(z, -z.dot(eye));
-    row(3) = Vec4::axisW;
+    this->row(0) = Vec4(x, -x.dot(eye));
+    this->row(1) = Vec4(y, -y.dot(eye));
+    this->row(2) = Vec4(z, -z.dot(eye));
+    this->row(3) = Vec4::axisW;
     return *this;
 }
 
-template<class R, int O>
-void Matrix<4,4,R,O>::orthonormalize()
+template<class Real, int O>
+void Matrix<4,4,Real,O>::orthonormalize()
 {
     // Algorithm uses Gram-Schmidt orthogonalization.  If 'this' matrix has
     // upper-left 3x3 block M = [m0|m1|m2], then the orthonormal output matrix
@@ -202,8 +211,8 @@ void Matrix<4,4,R,O>::orthonormalize()
     m(10) *= invLength;
 }
 
-template<class R, int O>
-Matrix<4,4,R,O> Matrix<4,4,R,O>::inverse(option<Real&> det) const
+template<class Real, int O>
+Matrix<4,4,Real,O> Matrix<4,4,Real,O>::inverse(option<Real&> det) const
 {
     Real a0 = m( 0)*m( 5) - m( 1)*m( 4);
     Real a1 = m( 0)*m( 6) - m( 2)*m( 4);
@@ -247,8 +256,8 @@ Matrix<4,4,R,O> Matrix<4,4,R,O>::inverse(option<Real&> det) const
     return inv;
 }
 
-template<class R, int O>
-Matrix<4,4,R,O> Matrix<4,4,R,O>::adjugate() const
+template<class Real, int O>
+Matrix<4,4,Real,O> Matrix<4,4,Real,O>::adjugate() const
 {
     Real a0 = m( 0)*m( 5) - m( 1)*m( 4);
     Real a1 = m( 0)*m( 6) - m( 2)*m( 4);
@@ -284,8 +293,8 @@ Matrix<4,4,R,O> Matrix<4,4,R,O>::adjugate() const
     return adj;
 }
 
-template<class R, int O>
-typename Matrix<4,4,R,O>::Real Matrix<4,4,R,O>::determinant() const
+template<class Real, int O>
+Real Matrix<4,4,Real,O>::determinant() const
 {
     Real a0 = m( 0)*m( 5) - m( 1)*m( 4);
     Real a1 = m( 0)*m( 6) - m( 2)*m( 4);
@@ -303,16 +312,16 @@ typename Matrix<4,4,R,O>::Real Matrix<4,4,R,O>::determinant() const
     return det;
 }
 
-template<class R, int O>
-void Matrix<4,4,R,O>::decompose(option<Vec3&> trans, option<Quat&> rot,
-                                option<Vec3&> scale, option<Quat&> skew) const
+template<class Real, int O>
+void Matrix<4,4,Real,O>::decompose( option<Vec3&> trans, option<Quat&> rot,
+                                    option<Vec3&> scale, option<Quat&> skew) const
 {
     //Get scale and shear.
     Vec3 row[3], scl;
 
-    row[0] = Vec3(col(0).eval());
-    row[1] = Vec3(col(1).eval());
-    row[2] = Vec3(col(2).eval());
+    row[0] = Vec3(this->col(0).eval());
+    row[1] = Vec3(this->col(1).eval());
+    row[2] = Vec3(this->col(2).eval());
 
     // Compute X scale factor and normalize first row.
     row[0] = row[0].normalize(scl.x);
@@ -378,27 +387,6 @@ void Matrix<4,4,R,O>::decompose(option<Vec3&> trans, option<Quat&> rot,
     }
 }
 
-template<class R, int O>
-void Matrix<4,4,R,O>::decomposeSkew(option<Vec3&> trans, option<Quat&> rot,
-                                    option<Vec3&> scale, option<Quat&> skew) const
-{
-    DecompAffine::HMatrix hmat;
-    toArray(&hmat[0][0]);
-    DecompAffine::AffineParts parts;
-    DecompAffine::decomp_affine(hmat, &parts);
-    if (trans) trans = Vec3(Real(parts.t.x), Real(parts.t.y), Real(parts.t.z));
-    if (rot) rot = Quat(Real(parts.q.x), Real(parts.q.y), Real(parts.q.z), Real(parts.q.w));
-    if (scale) scale = parts.f >= 0 ?   Vec3(Real(parts.k.x), Real(parts.k.y), Real(parts.k.z)) :
-                                        Vec3(Real(-parts.k.x), Real(-parts.k.y), Real(-parts.k.z));
-    if (skew) skew = Quat(Real(parts.u.x), Real(parts.u.y), Real(parts.u.z), Real(parts.u.w));
-}
-
-
-template class Matrix<4,4,Float>;
-template class Matrix<4,4,Double>;
-template class Matrix<4,4,Quad>;
-
-
 //==============================================================================================================
 //  Algorithm to handle special case where skew is required in decomposition
 //==============================================================================================================
@@ -450,7 +438,6 @@ private:
     static void do_rank1(HMatrix M, HMatrix Q);
     static void do_rank2(HMatrix M, HMatrix MadjT, HMatrix Q);
 };
-
 
 /**** Decompose.c ****/
 /* Ken Shoemake, 1993 */
@@ -956,5 +943,24 @@ void DecompAffine<Real>::invert_affine(AffineParts *parts, AffineParts *inverse)
 //==============================================================================================================
 //==============================================================================================================
 
+template<class Real, int O>
+void Matrix<4,4,Real,O>::decomposeSkew( option<Vec3&> trans, option<Quat&> rot,
+                                        option<Vec3&> scale, option<Quat&> skew) const
+{
+    DecompAffine::HMatrix hmat;
+    this->toArray(&hmat[0][0]);
+    DecompAffine::AffineParts parts;
+    DecompAffine::decomp_affine(hmat, &parts);
+    if (trans) trans = Vec3(Real(parts.t.x), Real(parts.t.y), Real(parts.t.z));
+    if (rot) rot = Quat(Real(parts.q.x), Real(parts.q.y), Real(parts.q.z), Real(parts.q.w));
+    if (scale) scale = parts.f >= 0 ?   Vec3(Real(parts.k.x), Real(parts.k.y), Real(parts.k.z)) :
+                                        Vec3(Real(-parts.k.x), Real(-parts.k.y), Real(-parts.k.z));
+    if (skew) skew = Quat(Real(parts.u.x), Real(parts.u.y), Real(parts.u.z), Real(parts.u.w));
+}
+
+
+template class Matrix<4,4,Float>;
+template class Matrix<4,4,Double>;
+template class Matrix<4,4,Quad>;
 
 }

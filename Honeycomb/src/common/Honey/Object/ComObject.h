@@ -21,13 +21,13 @@ class ComObject : public Object
     struct Slot
     {
         Slot()                  : type(nullptr) {}
-        typedef UnorderedMap<Id, Component*, SmallAllocator>::Type Map;
+        typedef UnorderedMap<Id, Component*, SmallAllocator>::type Map;
         typedef vector<Component::Ptr> List;
         Map map;                ///< Look up component by instance id
         List list;              ///< List of components of the same type
         ComRegistry::Type* type;
     };
-    typedef UnorderedMap<Id, Slot, SmallAllocator>::Type SlotMap;
+    typedef UnorderedMap<Id, Slot, SmallAllocator>::type SlotMap;
 
 public:
     SIGNAL_DECL(ComObject)

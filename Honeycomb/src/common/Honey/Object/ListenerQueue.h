@@ -37,7 +37,7 @@ namespace priv
         static T& load(T* lhs)                  { return *lhs; }
     };
 
-    #define ARG_TYPE(It)                        priv::SlotQueueArg<typename Signal::template param<It-1>::Type>
+    #define ARG_TYPE(It)                        priv::SlotQueueArg<typename Signal::template param<It-1>::type>
     #define ARG_M(It)                           typename ARG_TYPE(It)::StorageType a##It; 
     #define ARG_STORE(It)                       ARG_TYPE(It)::store(arg.a##It, a##It); 
     #define ARG_LOAD(It)                        COMMA_IFNOT(It,1) ARG_TYPE(It)::load(arg.a##It)
@@ -46,8 +46,9 @@ namespace priv
         template<class Signal, class F> class SlotQueue<Signal,It,F>                                    \
             : public priv::SlotSignal<Signal,It>, public SlotQueueBase                                  \
         {                                                                                               \
+            typedef priv::SlotSignal<Signal,It> Super;                                                  \
         public:                                                                                         \
-            SlotQueue(const Id& id, F&& f)      : SlotSignal(id), _f(forward<F>(f)) {}                  \
+            SlotQueue(const Id& id, F&& f)      : Super(id), _f(forward<F>(f)) {}                       \
             virtual void operator()(ITERATE_(1,It,SLOT_SIGNAL_PARAM))                                   \
             {                                                                                           \
                 SpinLock::Scoped _(_lock);                                                              \
@@ -76,7 +77,7 @@ namespace priv
         private:                                                                                        \
             struct Arg { ITERATE_(1,It,ARG_M) };                                                        \
                                                                                                         \
-            typename mt::removeConstRef<F>::Type _f; /* F is forwarded, remove any c/r for storage */   \
+            typename mt::removeConstRef<F>::type _f; /* F is forwarded, remove any c/r for storage */   \
             vector<Arg, SmallAllocator<Arg>> _arg;                                                      \
             SpinLock _lock;                                                                             \
         };                                                                                              \
@@ -125,7 +126,7 @@ public:
     template<class Signal, class F>
     ListIter set(ListIter pos, F&& f, option<const Id&> id = optnull)
     {
-        Id slotId = !id ? (*pos)->id() : id;
+        Id slotId = id ? *id : (*pos)->id();
         return insert<Signal>(remove(pos), forward<F>(f), slotId);
     }
 
@@ -159,7 +160,7 @@ public:
 
 protected:
     typedef list<SlotQueueBase*, SmallAllocator<SlotQueueBase*>> QueueList;
-    typedef UnorderedMap<SlotBase*, QueueList::iterator, SmallAllocator>::Type QueueMap;
+    typedef UnorderedMap<SlotBase*, QueueList::iterator, SmallAllocator>::type QueueMap;
 
     /// Each slot has a corresponding queued slot, queued slot list must have same order as slot list
     QueueList _queueList;

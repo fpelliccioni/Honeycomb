@@ -9,49 +9,50 @@ namespace honey
 
 class String;
 
-/// Forwards to assert_\#args. See assert_1(), assert_2().
-#define assert(...)                                     EVAL(TOKENIZE_EVAL(assert_, NUMARGS(__VA_ARGS__))(__VA_ARGS__))
-/// Forwards to verify_\#args. See verify_1(), verify_2().
-#define verify(...)                                     EVAL(TOKENIZE_EVAL(verify_, NUMARGS(__VA_ARGS__))(__VA_ARGS__))
-
-#ifndef FINAL
-    /// Assert that an expression is true. Does not evaluate expression in final mode. On failure expression is displayed and the program is halted.
-    #define assert_1(Expr)                              if (!(Expr)) { honey::Debug::assertPrint(#Expr, __FILE__, __LINE__, String()); }
-    /// Assert with extra message to be displayed on failure
-    #define assert_2(Expr, Msg)                         if (!(Expr)) { honey::Debug::assertPrint(#Expr, __FILE__, __LINE__, (Msg)); }
-    /// Similar to assert() but the expression is evaluated even in final mode
-    #define verify_1(Expr)                              assert_1(Expr)
-    /// Verify with extra message to be displayed on failure
-    #define verify_2(Expr, Msg)                         assert_2(Expr, Msg)
-    /// Display an error message
-    #define error(Msg)                                  honey::Debug::assertPrint("Error", __FILE__, __LINE__, (Msg))
-#else
-    #define assert_1(Expr)                              {}
-    #define assert_2(Expr, Msg)                         {}
-    #define verify_1(Expr)                              if (!(Expr)) {}
-    #define verify_2(Expr, Msg)                         if (!(Expr)) {}
-    #define error(Msg)                                  {}
-#endif
-
-/// Debug mode functions.
+/// Debug mode functions
 /**
-  * \see defines assert(), error()
-  * \see class Release
+  * \see defines assert(), verify(), error()
   */
-class Debug : private platform::Debug
+namespace debug
 {
-    typedef platform::Debug Super;
-public:
-    /// Used by Assert macros
-    static void assertPrint(const String& expr, const String& file, int line, const String& msg)    { Super::assertPrint(expr, file, line, msg); }
+    /// Forwards to assert_\#args. See assert_1(), assert_2().
+    #define assert(...)                                 EVAL(TOKCAT(assert_, NUMARGS(__VA_ARGS__))(__VA_ARGS__))
+    /// Forwards to verify_\#args. See verify_1(), verify_2().
+    #define verify(...)                                 EVAL(TOKCAT(verify_, NUMARGS(__VA_ARGS__))(__VA_ARGS__))
 
     #ifndef FINAL
-        /// Print string to debug output window
-        static void print(const String& str)            { Super::print(str); }
+        /// Assert that an expression is true, otherwise throws AssertionFailure with the expression. Does nothing in final mode.
+        #define assert_1(Expr)                          assert_2(Expr, "")
+        /// Assert with extra message to be displayed on failure
+        #define assert_2(Expr, Msg)                     if (!(Expr)) { honey::debug::priv::assertFail(#Expr, __FUNC__, __FILE__, __LINE__, (Msg)); }
+        /// Similar to assert() but evaluates the expression and throws an error even in final mode
+        #define verify_1(Expr)                          assert_1(Expr)
+        /// Verify with extra message to be displayed on failure.  Message ignored in final mode.
+        #define verify_2(Expr, Msg)                     assert_2(Expr, Msg)
+        /// Throw AssertionFailure with a message.  Message ignored in final mode.
+        #define error(Msg)                              assert_2(false, Msg)
     #else
-        static void print(const String&)                {}
+        #define assert_1(Expr) {}
+        #define assert_2(Expr, Msg) {}
+        #define verify_1(Expr)                          verify_2(Expr, "")
+        #define verify_2(Expr, Msg)                     if (!(Expr)) { honey::debug::priv::assertFail("", "", "", 0, ""); }
+        #define error(Msg)                              verify_2(false, Msg)
     #endif
-};
 
+    #ifndef FINAL
+        /// Print string to debug output window.  Does nothing in final mode.
+        inline void print(const String& str)            { platform::print(str); }
+    #else
+        inline void print(const String&) {}
+    #endif
+    
+    /** \cond */
+    namespace priv
+    {
+        inline void assertFail(const char* expr, const char* func, const char* file, int line, const String& msg)
+                                                        { platform::assertFail(expr, func, file, line, msg); }
+    }
+    /** \endcond */
+}
 
 }

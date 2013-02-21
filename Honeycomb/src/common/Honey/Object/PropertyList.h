@@ -40,13 +40,13 @@ public:
 
 /// Integer list property
 typedef vector<int> IntList;
-inline const Id& Property<IntList>::s_type()                        { static const Id& id = "IntList"; return id; }
+template<> inline const Id& Property<IntList>::s_type()             { static const Id& id = "IntList"; return id; }
 
 /// Real list property
 typedef vector<Real> RealList;
-inline const Id& Property<RealList>::s_type()                       { static const Id& id = "RealList"; return id; }
+template<> inline const Id& Property<RealList>::s_type()            { static const Id& id = "RealList"; return id; }
 
 /// String list property
-inline const Id& Property<String::List>::s_type()                   { static const Id& id = "String::List"; return id; }
+template<> inline const Id& Property<String::List>::s_type()        { static const Id& id = "String::List"; return id; }
 
 }

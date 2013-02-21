@@ -19,11 +19,13 @@ namespace honey
 template<class Int>
 class Discrete_ : public RandomDist<typename Numeral<Int>::Real>
 {
+    typedef RandomDist<typename Numeral<Int>::Real> Super;
+    RandomDist_imports();
     typedef typename Numeral<Int>::Real Real;
-
+    
 public:
-    Discrete_(RandomGen& gen)                       : RandomDist(gen), _std(true)   { this->min = numeral<Int>().min(); this->max = numeral<Int>().max(); assert(min <= max); }
-    Discrete_(RandomGen& gen, Int min, Int max)     : RandomDist(gen), _std(false)  { this->min = min;                  this->max = max;                  assert(min <= max); }
+    Discrete_(RandomGen& gen)                       : Super(gen), _std(true)    { this->min = numeral<Int>().min(); this->max = numeral<Int>().max(); assert(min <= max); }
+    Discrete_(RandomGen& gen, Int min, Int max)     : Super(gen), _std(false)   { this->min = min;                  this->max = max;                  assert(min <= max); }
 
     /// Static function for standard distribution. Generate a random variate within full integer range (up to 64 bits) with uniform (flat) distribution
     static Int nextStd(RandomGen& gen)              { return static_cast<Int>(gen.next()); }
@@ -31,7 +33,7 @@ public:
     virtual Real next() const                       { return static_cast<Real>(nextInt()); }
     virtual Real pdf(Real x) const                  { return Alge::isInRange(x,min,max) ? 1. / N() : 0;  }
     virtual Real cdf(Real x) const                  { if (x < min) return 0; return x > max ? Real(1) : (Alge::floor(x) - min + 1) / N(); }
-    virtual Real cdfInv(Real P) const               { if (P < 0) return min-1; return P > 1 ? max : Alge::floor(min + (P+RealT::zeroTol)*N() - 1); }
+    virtual Real cdfInv(Real P) const               { if (P < 0) return min-1; return P > 1 ? max : Alge::floor(min + (P+Real_::zeroTol)*N() - 1); }
     virtual Real mean() const                       { return 0.5*(min+max); }
     virtual Real variance() const                   { return (Alge::sqr(N()) - 1) / 12; }
 

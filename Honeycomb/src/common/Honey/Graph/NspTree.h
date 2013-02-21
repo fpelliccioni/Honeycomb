@@ -109,7 +109,6 @@ public:
     class Node
     {
         friend class NspTree;
-        template<int> friend class Node;
     public:
         Node()                                                      : _children(nullptr), _activeFirst(activeEnd), _activeNext(inactive) {}
         ~Node() {}
@@ -130,11 +129,11 @@ public:
         void add(DataBase& data)
         {
             //Check if data already exists while inserting temp list position into map
-            pair<Map::iterator, bool> pair = _dataMap.insert(make_pair(&data, _data.end()));
-            if (!pair.second) return;
+            auto res = _dataMap.insert(make_pair(&data, _data.end()));
+            if (!res.second) return;
             //Data doesn't exist, add to list and update list position in map
             _data.push_back(&data);
-            pair.first->second = --_data.end();
+            res.first->second = --_data.end();
             return;
         }
 
@@ -142,7 +141,7 @@ public:
         void remove(DataBase& data)
         {
             //Use map to quickly find position in list
-            Map::iterator it = _dataMap.find(&data);
+            auto it = _dataMap.find(&data);
             if (it == _dataMap.end()) return;
             _data.erase(it->second);
             _dataMap.erase(it);
@@ -155,7 +154,7 @@ public:
         typedef DataBase* MapKey;
         typedef list<MapKey, SmallAllocator<MapKey>> List;
         typedef typename List::iterator MapVal;
-        typedef typename UnorderedMap<MapKey, MapVal, SmallAllocator>::Type Map;
+        typedef typename UnorderedMap<MapKey, MapVal, SmallAllocator>::type Map;
 
         bool hasActiveChild() const                                 { return _activeFirst != activeEnd; }
 
@@ -273,7 +272,7 @@ namespace priv
             e(_, left)          \
             e(_, right)         \
 
-        ENUM(NspTreeNode<1>, Child);
+        ENUM((NspTreeNode<1>), Child);
         #undef ENUM_LIST
 
         static void getChildBox(const Vec3& min, const Vec3& max, const Vec3& center, Child index, Box& childBox)
@@ -310,7 +309,7 @@ namespace priv
             e(_, sw)            \
             e(_, nw)            \
 
-        ENUM(NspTreeNode<2>, Child);
+        ENUM((NspTreeNode<2>), Child);
         #undef ENUM_LIST
 
         static void getChildBox(const Vec3& min, const Vec3& max, const Vec3& center, Child index, Box& childBox)
@@ -361,7 +360,7 @@ namespace priv
             e(_, lne)           \
             e(_, lse)           \
 
-        ENUM(NspTreeNode<3>, Child);
+        ENUM((NspTreeNode<3>), Child);
         #undef ENUM_LIST
 
         static void getChildBox(const Vec3& min, const Vec3& max, const Vec3& center, Child index, Box& childBox)

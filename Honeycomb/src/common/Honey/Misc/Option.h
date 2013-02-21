@@ -9,9 +9,9 @@ namespace honey
 class StringStream;
 
 /// Null option type. See \ref optnull.
-class optnull_t {};
+struct optnull_t {};
 /** \cond */
-mt_staticObj(const optnull_t, _optnull,)
+mt_staticObj(const optnull_t, _optnull,{})
 /** \endcond */
 /// Null option, use to reset an option to an uninitialized state or test for initialization
 #define optnull _optnull()
@@ -61,7 +61,7 @@ namespace priv { struct optionTag {}; }
 template<class T>
 class option : public priv::optionTag
 {
-    friend class option;
+    template<class T_> friend class option;
 public:
     typedef T Wrapped;
 
@@ -79,18 +79,18 @@ public:
 
     /// Assign option
     template<class U>
-    typename std::enable_if<mt::isBaseOf<priv::optionTag,U>::value, option&>::type
+    typename std::enable_if<mt::is_base_of<priv::optionTag,U>::value, option&>::type
         operator=(U&& rhs)
     {
         // Assign rhs' object if available
-        if (rhs._val) operator=(forward<typename mt::removeRef<U>::Type::Wrapped>(rhs.get()));
+        if (rhs._val) operator=(forward<typename mt::removeRef<U>::type::Wrapped>(rhs.get()));
         else uninit();
         return *this;
     }
 
     /// Assign object
     template<class U>
-    typename mt::disable_if<mt::isBaseOf<priv::optionTag,U>::value, option&>::type
+    typename mt::disable_if<mt::is_base_of<priv::optionTag,U>::value, option&>::type
         operator=(U&& rhs)
     {
         if (!_val)
@@ -133,13 +133,13 @@ private:
     /// Use generic storage so wrapped object is not constructed until needed
     typedef typename std::aligned_storage<sizeof(T), std::alignment_of<T>::value>::type Storage;
 
-    template<bool isConstructible> struct construct {};
-    template<> struct construct<true>               { template<class U> static void func(void* storage, U&& rhs)    { new (storage) T(forward<U>(rhs)); } };
-    template<> struct construct<false>              { template<class U> static void func(void*, U&&)                { error("Can't copy construct from type"); } };
+    template<bool isConstructible, int _=0> struct construct {};
+    template<int _> struct construct<true,_>        { template<class U> static void func(void* storage, U&& rhs)    { new (storage) T(forward<U>(rhs)); } };
+    template<int _> struct construct<false,_>       { template<class U> static void func(void*, U&&)                { error("Can't copy construct from type"); } };
 
-    template<bool isAssignable> struct assign {};
-    template<> struct assign<true>                  { template<class U> static void func(T& lhs, U&& rhs)   { lhs = forward<U>(rhs); } };
-    template<> struct assign<false>                 { template<class U> static void func(T&, U&&)           { error("Can't assign to type"); } };
+    template<bool isAssignable, int _=0> struct assign {};
+    template<int _> struct assign<true,_>           { template<class U> static void func(T& lhs, U&& rhs)   { lhs = forward<U>(rhs); } };
+    template<int _> struct assign<false,_>          { template<class U> static void func(T&, U&&)           { error("Can't assign to type"); } };
 
     /// Destructs wrapped object if initialized
     void uninit()                                   { if (!_val) return; get().~T(); _val = nullptr; }
@@ -158,7 +158,7 @@ private:
 template<class T>
 class option<T&> : public priv::optionTag
 {
-    friend class option;
+    template<class T_> friend class option;
 public:
     typedef T& Wrapped;
 
@@ -175,7 +175,7 @@ public:
 
     /// Assign option
     template<class U>
-    typename std::enable_if<mt::isBaseOf<priv::optionTag,U>::value, option&>::type
+    typename std::enable_if<mt::is_base_of<priv::optionTag,U>::value, option&>::type
         operator=(U&& rhs)
     {
         if (rhs._val) operator=(rhs.get());
@@ -185,12 +185,12 @@ public:
 
     /// Assign object
     template<class U>
-    typename mt::disable_if<mt::isBaseOf<priv::optionTag,U>::value, option&>::type
+    typename mt::disable_if<mt::is_base_of<priv::optionTag,U>::value, option&>::type
         operator=(U&& rhs)
     {
         if (!_val)
             //First assignment, bind object
-            bind<std::is_convertible<typename mt::addPtr<U>::Type,T*>::value>::func(_val, &rhs);
+            bind<std::is_convertible<typename mt::addPtr<U>::type,T*>::value>::func(_val, &rhs);
         else
             assign<std::is_const<T>::value>::func(get(),rhs);
         return *this;
@@ -219,13 +219,13 @@ public:
     friend StringStream& operator<<(StringStream& os, const option<T&>& rhs)    { if (!rhs) return os << "optnull"; return os << *rhs; }
 
 private:
-    template<bool isConvertible> struct bind {};
-    template<> struct bind<true>                    { template<class U> static void func(T*& lhs, U* rhs)       { lhs = rhs; } };
-    template<> struct bind<false>                   { template<class U> static void func(T*&, U*)               { error("Can't bind reference, rhs type inconvertible"); } };
+    template<bool isConvertible, int _=0> struct bind {};
+    template<int _> struct bind<true,_>             { template<class U> static void func(T*& lhs, U* rhs)       { lhs = rhs; } };
+    template<int _> struct bind<false,_>            { template<class U> static void func(T*&, U*)               { error("Can't bind reference, rhs type inconvertible"); } };
 
-    template<bool isConst> struct assign {};
-    template<> struct assign<true>                  { template<class U> static void func(T&, const U&)          { error("Can't assign const reference"); } };
-    template<> struct assign<false>                 { template<class U> static void func(T& lhs, const U& rhs)  { lhs = rhs; } };
+    template<bool isConst, int _=0> struct assign {};
+    template<int _> struct assign<true,_>           { template<class U> static void func(T&, const U&)          { error("Can't assign const reference"); } };
+    template<int _> struct assign<false,_>          { template<class U> static void func(T& lhs, const U& rhs)  { lhs = rhs; } };
 
     T* _val;
 };

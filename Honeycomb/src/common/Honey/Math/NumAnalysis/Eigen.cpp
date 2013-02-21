@@ -9,7 +9,7 @@ namespace honey
 template<class Real>
 void Eigen<Real>::jacobi(Matrix& A, Vec& W, option<Matrix&> V, vector<int>& indR, vector<int>& indC)
 {
-    const Real eps = RealT::epsilon;
+    const Real eps = Real_::epsilon;
     int i, j, k, m;
     int n = A.rows();
 

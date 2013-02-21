@@ -24,7 +24,7 @@ template<class Real> class Intersect_;
 template<class Real>
 class Geom_ : mt::NoCopy
 {
-    typedef typename Numeral<Real>::RealT RealT;
+    typedef typename Numeral<Real>::Real_ Real_;
     typedef Alge_<Real> Alge;
     typedef Trig_<Real> Trig;
     typedef Intersect_<Real> Intersect;

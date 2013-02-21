@@ -41,7 +41,7 @@ tuple<bool, Real> Bisect<Real>::root(const Func& func, Real min, Real max)
     if (fmin*fmax > 0) return make_tuple(false, Real(0));
 
     //Do a bisection search through the function until the root is found within a certain precision
-    Real x = 0, fxmin = RealT::inf;
+    Real x = 0, fxmin = Real_::inf;
     bool found = false;
     for (auto _: range(_iterMax))
     {

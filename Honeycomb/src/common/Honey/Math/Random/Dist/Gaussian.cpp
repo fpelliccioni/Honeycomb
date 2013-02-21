@@ -65,22 +65,12 @@ Real Gaussian_<Real>::cdf(Real x) const
     return w;
 }
 
-template<class Real>
-Real Gaussian_<Real>::cdfInv(Real P) const
-{
-    return Double(mu) + Double(sigma) * GaussianInv<Double>::calc(Double(P));
-}
-
-
-template class Gaussian_<Float>;
-template class Gaussian_<Double>;
-
-
+//==============================================================================================================
 /// Class to get inverse of gaussian
 template<class Real>
 class GaussianInv
 {
-    typedef typename Numeral<Real>::RealT RealT;
+    typedef typename Numeral<Real>::Real_ Real_;
     typedef Alge_<Real> Alge;
 public:
     static Real calc(Real y0);
@@ -239,10 +229,10 @@ template<class Real>
 Real GaussianInv<Real>::calc(Real y0)
 {
     if (y0 <= 0)
-        return -RealT::max;
+        return -Real_::max;
 
     if (y0 >= 1)
-        return RealT::max;
+        return Real_::max;
 
     int code = 1;
     Real y = y0;
@@ -257,7 +247,7 @@ Real GaussianInv<Real>::calc(Real y0)
         y = y - 0.5;
         Real y2 = y * y;
         Real x = y + y * (y2 * polevl(y2, P0, 4) / p1evl(y2, Q0, 8));
-        static const Real sqrtTwoPi = Alge::sqrt(RealT::piTwo);
+        static const Real sqrtTwoPi = Alge::sqrt(Real_::piTwo);
         x = x * sqrtTwoPi; 
         return x;
     }
@@ -276,5 +266,16 @@ Real GaussianInv<Real>::calc(Real y0)
         x = -x;
     return x;
 }
+//==============================================================================================================
+
+template<class Real>
+Real Gaussian_<Real>::cdfInv(Real P) const
+{
+    return Double(mu) + Double(sigma) * GaussianInv<Double>::calc(Double(P));
+}
+
+
+template class Gaussian_<Float>;
+template class Gaussian_<Double>;
 
 }

@@ -16,11 +16,35 @@ namespace honey
 #define RANGE_ARG_MAX 3
 
 /// Get range iterator begin type. \see elemtype()
-#define itertype(Range)                                             mt::removeConstRef<decltype(honey::begin(Range))>::Type
+#define itertype(Range)                                             typename mt::removeConstRef<decltype(honey::begin(Range))>::type
 /// Get range iterator end type. \see elemtype()
-#define itertype_end(Range)                                         mt::removeConstRef<decltype(honey::end(Range))>::Type
+#define itertype_end(Range)                                         typename mt::removeConstRef<decltype(honey::end(Range))>::type
 /// Get range element type. \see itertype()
-#define elemtype(Range)                                             mt::removeRef<decltype(*honey::begin(Range))>::Type
+#define elemtype(Range)                                             typename mt::removeRef<decltype(*honey::begin(Range))>::type
+
+namespace mt
+{
+    /** \cond */
+    namespace priv
+    {
+        mt_hasType(iterator_category)
+        template<class T> struct isIterator                         : Value<bool, isPtr<T>::value || mt_hasType_iterator_category<T>::value> {};
+    }
+    /** \endcond */
+    
+    /// Check if type is an iterator (has iterator category or is pointer) or a reference to one
+    template<class T> struct isIterator                             : priv::isIterator<typename removeRef<T>::type> {};
+
+    /// Check if type is a range (has std::begin) or a reference to one
+    template<class T>
+    class isRange
+    {
+        template<class T_> static auto              test(void*) -> decltype(begin(declval<T_>()), std::true_type());
+        template<class T_> static std::false_type   test(...);
+    public:
+        static const bool value = IsTrue<decltype(test<T>(nullptr))>::value;
+    };
+}
 
 /// Convert a sequence to a forward iterator. Overload for iterator type. Returns the iterator itself.
 /**
@@ -31,19 +55,19 @@ auto seqToIter(Iter&& seq) -> typename std::enable_if<mt::isIterator<Iter>::valu
                                                                     { return forward<Iter>(seq); }
 /// Convert a sequence to a forward iterator. Overload for range type. Returns the range's begin iterator.
 template<class Range>
-auto seqToIter(Range&& seq) -> typename std::enable_if<mt::isRange<Range>::value, typename itertype(seq)>::type
+auto seqToIter(Range&& seq) -> typename std::enable_if<mt::isRange<Range>::value, itertype(seq)>::type
                                                                     { return begin(seq); }
 
 /// Iterator range. See range(Iter1&&, Iter2&&) to create.
-template<class T1, class T2>
+template<class T1_, class T2_>
 class Range_
 {
     template<class T1, class T2> friend class Range_;
 public:
-    typedef typename mt::removeConstRef<T1>::Type T1;
-    typedef typename mt::removeConstRef<T2>::Type T2;
+    typedef typename mt::removeConstRef<T1_>::type T1;
+    typedef typename mt::removeConstRef<T2_>::type T2;
 
-    Range_() {}
+    Range_() = default;
     template<class T1, class T2> Range_(T1&& first, T2&& last)                  : _first(forward<T1>(first)), _last(forward<T2>(last)) {}
     template<class T1, class T2> Range_(const Range_<T1,T2>& rhs)               { operator=(rhs); }
     template<class T1, class T2> Range_(Range_<T1,T2>&& rhs)                    { operator=(move(rhs)); }
@@ -80,9 +104,9 @@ Range_<T1,T2> range(const tuple<T1,T2>& t)                          { return Ran
 
 /// Reverse a range.  Begin/End iterators must be bidirectional.
 template<class Range>
-auto reversed(Range&& range) -> Range_<std::reverse_iterator<typename itertype(range)>, std::reverse_iterator<typename itertype_end(range)>>
+auto reversed(Range&& range) -> Range_<std::reverse_iterator<itertype(range)>, std::reverse_iterator<itertype_end(range)>>
 {
-    return honey::range(std::reverse_iterator<typename itertype(range)>(end(range)), std::reverse_iterator<typename itertype_end(range)>(begin(range)));
+    return honey::range(std::reverse_iterator<itertype(range)>(end(range)), std::reverse_iterator<itertype_end(range)>(begin(range)));
 }
 
 //====================================================
@@ -102,17 +126,18 @@ OutSeq&& map(Range&&, Seqs&&..., OutSeq&&, Func&&);
 #undef OutSeq
 /** \cond */
 #define PARAMT(It)      , class S##It
+#define PARAMT_(It)     , class S##It##_
 #define PARAM(It)       , S##It&& seq##It
 #define SEQTOITER(It)   auto it##It = seqToIter(seq##It);
 #define NEXT(It)        , ++it##It
 #define ARG(It)         , *it##It
-#define FORWARDT(It)    , typename mt::removeConstRef<S##It>::Type
+#define FORWARDT(It)    , typename mt::removeConstRef<S##It>::type
 #define FORWARD(It)     , forward<S##It>(seq##It)
 
 #define FUNC(It)                                                                                                    \
     namespace priv                                                                                                  \
     {                                                                                                               \
-    template<class Range ITERATE_(1,It,PARAMT), class OutSeq>                                                       \
+    template<class Range_ ITERATE_(1,It,PARAMT_), class OutSeq_>                                                    \
     struct map_impl##It                                                                                             \
     {                                                                                                               \
         template<class Range ITERATE_(1,It,PARAMT), class OutSeq, class Func>                                       \
@@ -133,14 +158,15 @@ OutSeq&& map(Range&&, Seqs&&..., OutSeq&&, Func&&);
     OutSeq&& map(Range&& range ITERATE_(1,It,PARAM), OutSeq&& out, Func&& f)                                        \
     {                                                                                                               \
         return forward<OutSeq>(                                                                                     \
-            priv::map_impl##It< typename mt::removeConstRef<Range>::Type ITERATE_(1,It,FORWARDT),                   \
-                                typename mt::removeConstRef<OutSeq>::Type>                                          \
+            priv::map_impl##It< typename mt::removeConstRef<Range>::type ITERATE_(1,It,FORWARDT),                   \
+                                typename mt::removeConstRef<OutSeq>::type>                                          \
                                 ::func( forward<Range>(range) ITERATE_(1,It,FORWARD),                               \
                                         forward<OutSeq>(out), forward<Func>(f)));                                   \
     }                                                                                                               \
 
 ITERATE(0, RANGE_ARG_MAX, FUNC)
 #undef PARAMT
+#undef PARAMT_
 #undef PARAM
 #undef SEQTOITER
 #undef NEXT
@@ -168,17 +194,18 @@ Accum reduce(Range&&, Seqs&&..., const Accum& initVal, Func&&);
 #undef Accum
 /** \cond */
 #define PARAMT(It)      , class S##It
+#define PARAMT_(It)     , class S##It##_
 #define PARAM(It)       , S##It&& seq##It
 #define SEQTOITER(It)   auto it##It = seqToIter(seq##It);
 #define NEXT(It)        , ++it##It
 #define ARG(It)         , *it##It
-#define FORWARDT(It)    , typename mt::removeConstRef<S##It>::Type
+#define FORWARDT(It)    , typename mt::removeConstRef<S##It>::type
 #define FORWARD(It)     , forward<S##It>(seq##It)
 
 #define FUNC(It)                                                                                                    \
     namespace priv                                                                                                  \
     {                                                                                                               \
-    template<class Range ITERATE_(1,It,PARAMT)>                                                                     \
+    template<class Range_ ITERATE_(1,It,PARAMT_)>                                                                   \
     struct reduce_impl##It                                                                                          \
     {                                                                                                               \
         template<class Range ITERATE_(1,It,PARAMT), class Accum, class Func>                                        \
@@ -198,13 +225,14 @@ Accum reduce(Range&&, Seqs&&..., const Accum& initVal, Func&&);
     template<class Range ITERATE_(1,It,PARAMT), class Accum, class Func>                                            \
     Accum reduce(Range&& range ITERATE_(1,It,PARAM), const Accum& initVal, Func&& f)                                \
     {                                                                                                               \
-        return priv::reduce_impl##It<typename mt::removeConstRef<Range>::Type ITERATE_(1,It,FORWARDT)>              \
+        return priv::reduce_impl##It<typename mt::removeConstRef<Range>::type ITERATE_(1,It,FORWARDT)>              \
                                         ::func( forward<Range>(range) ITERATE_(1,It,FORWARD),                       \
                                                 initVal, forward<Func>(f));                                         \
     }                                                                                                               \
 
 ITERATE(0, RANGE_ARG_MAX, FUNC)
 #undef PARAMT
+#undef PARAMT_
 #undef PARAM
 #undef SEQTOITER
 #undef NEXT
@@ -238,7 +266,7 @@ Iter find(Range&&, Seqs&&..., Func&& pred);
 
 #define FUNC(It)                                                                                                    \
     template<class Range ITERATE_(1,It,PARAMT), class Func>                                                         \
-    auto find(Range&& range ITERATE_(1,It,PARAM), Func&& pred) -> typename itertype(range)                          \
+    auto find(Range&& range ITERATE_(1,It,PARAM), Func&& pred) -> itertype(range)                                   \
     {                                                                                                               \
         auto it = begin(range);                                                                                     \
         auto last = end(range);                                                                                     \
@@ -286,8 +314,8 @@ Range_<FilterIter, FilterIter> filter(Range&&, Seqs&&..., Func&& pred);
     class FilterIter##It                                                                                                \
     {                                                                                                                   \
     public:                                                                                                             \
-        typedef typename itertype(declval<Range>()) Iter;                                                               \
-        typedef typename itertype_end(declval<Range>()) IterEnd;                                                        \
+        typedef itertype(declval<Range>()) Iter;                                                                        \
+        typedef itertype_end(declval<Range>()) IterEnd;                                                                 \
         typedef std::forward_iterator_tag                               iterator_category;                              \
         typedef typename std::iterator_traits<Iter>::value_type         value_type;                                     \
         typedef typename std::iterator_traits<Iter>::difference_type    difference_type;                                \
@@ -372,7 +400,7 @@ public:
     typedef const T*                                                pointer;
     typedef const T&                                                reference;
 
-    IntIter()                                                       {}
+    IntIter() = default;
     IntIter(T i)                                                    : _i(i) {}
 
     IntIter& operator++()                                           { ++_i; return *this; }
@@ -426,7 +454,7 @@ public:
     typedef const T*                                                pointer;
     typedef const T&                                                reference;
 
-    IntStepIter()                                                   {}
+    IntStepIter() = default;
     IntStepIter(T i, T step)                                        : _i(i), _step(step) {}
 
     IntStepIter& operator++()                                       { _i += _step; return *this; }
@@ -483,7 +511,7 @@ public:
     typedef T*                                                      pointer;
     typedef T                                                       reference;
 
-    RealIter()                                                      {}
+    RealIter() = default;
     RealIter(T begin, T step, int i)                                : _begin(begin), _step(step), _i(i) {}
 
     RealIter& operator++()                                          { ++_i; return *this; }
@@ -525,29 +553,30 @@ typename std::enable_if<std::is_floating_point<Real>::value, Range_<RealIter<Rea
     }
     else
         if (end > begin) end = begin;
-    typedef typename Numeral<Real>::RealT RealT;
-    return range(RealIter<Real>(begin, step, 0), RealIter<Real>(begin, step, RealT::ceil((end-begin)/step)));
+    typedef typename Numeral<Real>::Real_ Real_;
+    return range(RealIter<Real>(begin, step, 0), RealIter<Real>(begin, step, Real_::ceil((end-begin)/step)));
 }
 
 
 /// Wrapper around an iterator with tuple value type. When dereferenced returns `I`'th element.
+template<class Iter, int I, class IterCategory = typename Iter::iterator_category>
+class TupleIter;
+
 template<class Iter, int I>
-class TupleIter
+class TupleIter<Iter, I, std::forward_iterator_tag>
 {
 public:
-    typedef std::bidirectional_iterator_tag                         iterator_category;
+    typedef std::forward_iterator_tag                               iterator_category;
     typedef decltype(get<I>(*Iter()))                               reference;
-    typedef typename mt::removeRef<reference>::Type                 value_type;
+    typedef typename mt::removeRef<reference>::type                 value_type;
     typedef typename std::iterator_traits<Iter>::difference_type    difference_type;
     typedef value_type*                                             pointer;
 
-    TupleIter()                                                     {}
+    TupleIter() = default;
     TupleIter(const Iter& i)                                        : _i(i) {}
 
     TupleIter& operator++()                                         { ++_i; return *this; }
-    TupleIter& operator--()                                         { --_i; return *this; }
     TupleIter operator++(int)                                       { auto tmp = *this; ++*this; return tmp; }
-    TupleIter operator--(int)                                       { auto tmp = *this; --*this; return tmp; }
 
     bool operator==(const TupleIter& rhs) const                     { return _i == rhs._i; }
     bool operator!=(const TupleIter& rhs) const                     { return !operator==(rhs); }
@@ -556,8 +585,26 @@ public:
     pointer operator->() const                                      { return &get<I>(*_i); }
     operator Iter() const                                           { return _i; }
 
-private:
+protected:
     Iter _i;
+};
+
+template<class Iter, int I>
+class TupleIter<Iter, I, std::bidirectional_iterator_tag> : public TupleIter<Iter, I, std::forward_iterator_tag>
+{
+    typedef TupleIter<Iter, I, std::forward_iterator_tag> Super;
+    using Super::_i;
+    
+public:
+    typedef std::bidirectional_iterator_tag                         iterator_category;
+
+    TupleIter() = default;
+    TupleIter(const Iter& i)                                        : Super(i) {}
+
+    TupleIter& operator++()                                         { Super::operator++(); return *this; }
+    TupleIter& operator--()                                         { --_i; return *this; }
+    TupleIter operator++(int)                                       { auto tmp = *this; ++*this; return tmp; }
+    TupleIter operator--(int)                                       { auto tmp = *this; --*this; return tmp; }
 };
 
 /// Wrapper around an iterator with pointer value type. When dereferenced returns a reference instead of a pointer.
@@ -568,12 +615,12 @@ public:
     typedef std::bidirectional_iterator_tag                         iterator_category;
     typedef typename std::iterator_traits<Iter>::difference_type    difference_type;
     typedef typename std::iterator_traits<Iter>::value_type         pointer;
-    typedef typename mt::removePtr<pointer>::Type                   value_type;
-    typedef typename mt::removePtr<pointer>::Type&                  reference;
+    typedef typename mt::removePtr<pointer>::type                   value_type;
+    typedef typename mt::removePtr<pointer>::type&                  reference;
 
-    DerefIter()                                                     {}
+    DerefIter() = default;
     DerefIter(const Iter& i)                                        : _i(i) {}
-
+    
     DerefIter& operator++()                                         { ++_i; return *this; }
     DerefIter& operator--()                                         { --_i; return *this; }
     DerefIter operator++(int)                                       { auto tmp = *this; ++*this; return tmp; }
@@ -595,8 +642,8 @@ template<class Range, class Iter>
 class RingIter
 {
 public:
-    typedef typename itertype(declval<Range>()) RangeIter;
-    typedef typename itertype_end(declval<Range>()) RangeIterEnd;
+    typedef itertype(declval<Range>()) RangeIter;
+    typedef itertype_end(declval<Range>()) RangeIterEnd;
     typedef std::bidirectional_iterator_tag                         iterator_category;
     typedef typename std::iterator_traits<Iter>::value_type         value_type;
     typedef typename std::iterator_traits<Iter>::difference_type    difference_type;
@@ -637,8 +684,10 @@ public:
     
     reference operator*() const                                     { return *_cur; }
     pointer operator->() const                                      { return _cur.operator->(); }
-    operator Iter() const                                           { return _cur; }
-
+    operator const Iter&() const                                    { return _cur; }
+    
+    const Iter& iter() const                                        { return _cur; }
+    
 private:
     RangeIter _begin;
     RangeIterEnd _end;

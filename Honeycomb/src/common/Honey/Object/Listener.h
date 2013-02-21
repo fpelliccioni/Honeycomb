@@ -36,7 +36,7 @@ public:
     template<class Signal, class F>
     ListIter set(ListIter pos, F&& f, option<const Id&> id = optnull)
     {
-        Id slotId = !id ? (*pos)->id() : id;
+        Id slotId = id ? *id : (*pos)->id();
         return insert<Signal>(remove(pos), forward<F>(f), slotId);
     }
 
@@ -65,7 +65,7 @@ public:
     const Id& id() const                                { return _id; }
 
 protected:
-    typedef UnorderedMap<Id, List::iterator, SmallAllocator>::Type Map;
+    typedef UnorderedMap<Id, List::iterator, SmallAllocator>::type Map;
 
     const void* _base;
     Id _id;

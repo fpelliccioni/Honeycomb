@@ -12,7 +12,9 @@ class ScopeGuard_ : mt::NoCopy
 {
 public:
     ScopeGuard_(F&& func)               : _func(forward<F>(func)), _engaged(true) {}
+    ScopeGuard_(ScopeGuard_&& rhs)      : _func(move(rhs._func)), _engaged(move(rhs._engaged)) { rhs.release(); }
     ~ScopeGuard_()                      { if (_engaged) _func(); }
+    
     /// Disengage the guard so the function isn't run at scope exit
     void release()                      { _engaged = false; }
 private:

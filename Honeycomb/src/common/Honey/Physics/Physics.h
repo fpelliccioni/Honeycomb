@@ -12,7 +12,7 @@ namespace honey
 template<class Real>
 class Physics_
 {
-    typedef typename Numeral<Real>::RealT RealT;
+    typedef typename Numeral<Real>::Real_ Real_;
     typedef Vec<3,Real>     Vec3;
 
 public:

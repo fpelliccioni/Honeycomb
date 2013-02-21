@@ -51,15 +51,21 @@ namespace honey
 template<class Real>
 class ChiSqr_ : public RandomDist<Real>
 {
+    typedef RandomDist<Real> Super;
+    RandomDist_imports();
     template<class> friend class ChiSqr_;
+    typedef Gaussian_<Double>   Gaussian;
+    typedef Gamma_<Double>      Gamma;
+    typedef GammaFunc_<Double>  GammaFunc;
+    
 public:
     typedef Matrix<matrix::dynamic, matrix::dynamic, Real> MatrixN;
     typedef Vec<matrix::dynamic, Real>  VecN;
     typedef Vec<2,Real>                 Vec2;
 
-    ChiSqr_(Real nu, Real lambda = 0)                   :                  nu(nu), lambda(lambda) { assert(nu > 0 && lambda >= 0); }
-    ChiSqr_(RandomGen& gen, Real nu, Real lambda = 0)   : RandomDist(gen), nu(nu), lambda(lambda) { assert(nu > 0 && lambda >= 0); }
-
+    ChiSqr_(option<RandomGen&> gen, Real nu, Real lambda = 0)   : RandomDist<Real>(gen), nu(nu), lambda(lambda) { assert(nu > 0 && lambda >= 0); }
+    ChiSqr_(Real nu, Real lambda = 0)                           : ChiSqr_(optnull, nu, lambda) {}
+    
     virtual Real next() const;
     virtual Real pdf(Real x) const;
     virtual Real cdf(Real x) const;

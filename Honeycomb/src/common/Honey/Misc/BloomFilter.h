@@ -15,7 +15,7 @@ namespace bloom_filter
     namespace priv
     {
         extern const int seedCount;
-        extern const int seeds[];
+        extern const uint32 seeds[];
     }
     /** \endcond */
 
@@ -26,6 +26,17 @@ namespace bloom_filter
         int operator()(const T& val, int hashIndex) const       { return honey::Hash::fast(reinterpret_cast<const uint8*>(&val), sizeof(T), priv::seeds[hashIndex]); }
     };
 
+    /// Calculate optimal bloom parameters -- bit and hash count
+    inline tuple<Real,int> calcParams(int elemCount, Real errorProb)
+    {
+        // Optimal hash count (k) formula that minimizes error (p):
+        // m = -n*ln(p) / ln(2)^2
+        Real bitCount = -elemCount * Alge::log(errorProb) / Alge::sqr(Alge::log(2));
+        // k = ln(2) * m / n
+        int hashCount = Alge::ceil(Alge::log(2) * bitCount / elemCount);
+        return make_tuple(bitCount, hashCount);
+    }
+    
     /// Caches multiple hashes of an object.  The key can be inserted into a bloom filter and tested very quickly.
     template<class T, class Alloc = std::allocator<int>>
     struct Key
@@ -33,7 +44,7 @@ namespace bloom_filter
         Key() {}
         /// Same params as bloom filter, key will cache the required number of hashes
         Key(int elemCount, Real errorProb = 0.01, const Alloc& a = Alloc()) :
-            hashes(get<1>(BloomFilter<T>::calcParams(elemCount, errorProb)), 0, a) {}
+            hashes(get<1>(calcParams(elemCount, errorProb)), 0, a) {}
 
         bool operator==(const Key& rhs) const                   { return hashes == rhs.hashes; }
         
@@ -51,14 +62,6 @@ namespace bloom_filter
     {
         int operator()(const Key<T,Alloc>& val, int hashIndex) const
         { assert(hashIndex < size(val.hashes), "Key does not have enough hashes for bloom filter"); return val.hashes[hashIndex]; }
-    };
-
-    /// Adapter for std hasher
-    template<class T, class Alloc>
-    struct std::hash<honey::bloom_filter::Key<T,Alloc>>
-    {
-        size_t operator()(const honey::bloom_filter::Key<T,Alloc>& val) const
-        { assert(size(val.hashes)); return val.hashes[0]; }
     };
     /** \endcond */
 }
@@ -85,7 +88,7 @@ public:
         _bits(0, false, a)
     {
         Real bitCount;
-        tie(bitCount, _hashCount) = calcParams(elemCount, errorProb);
+        tie(bitCount, _hashCount) = bloom_filter::calcParams(elemCount, errorProb);
         assert(_hashCount <= bloom_filter::priv::seedCount, "Not enough seeds, either try a higher error prob or add more seeds");
         // Round up to nearest power of two so that hash can be converted to index without a modulo
         _bits.resize(Alge::pow2Ceil(Alge::ceil(bitCount)));
@@ -115,17 +118,6 @@ public:
     /// Get underlying bit array
     const BitSet& bits() const                  { return _bits; }
 
-    /// Calculate optimal bloom parameters -- bit and hash count
-    static tuple<Real,int> calcParams(int elemCount, Real errorProb)
-    {
-        // Optimal hash count (k) formula that minimizes error (p):
-        // m = -n*ln(p) / ln(2)^2
-        Real bitCount = -elemCount * Alge::log(errorProb) / Alge::sqr(Alge::log(2));
-        // k = ln(2) * m / n
-        int hashCount = Alge::ceil(Alge::log(2) * bitCount / elemCount);
-        return make_tuple(bitCount, hashCount);
-    }
-
 private:
     /// Convert hash to valid index into bit vector
     int bitIndex(int hash) const                { return hash & _bitIndexMask; }
@@ -138,3 +130,20 @@ private:
 };
 
 }
+
+/** \cond */
+namespace std
+{
+    /// Adapter for std hasher
+    template<class T, class Alloc>
+    struct hash<honey::bloom_filter::Key<T,Alloc>>
+    {
+        size_t operator()(const honey::bloom_filter::Key<T,Alloc>& val) const
+        {
+            using namespace honey;
+            assert(size(val.hashes));
+            return val.hashes[0];
+        }
+    };
+}
+/** \endcond */

@@ -20,9 +20,11 @@ namespace honey
 /// Allocate memory for `count` number of T objects.  Objects are not constructed.
 template<class T>
 T* alloc(size_t count = 1)                      { return static_cast<T*>(operator new(sizeof(T)*count)); }
-/// Deallocate memory at pointer. Object is not destroyed.
+/// Deallocate memory and set pointer to null. Object is not destroyed.
 template<class T>
-void free(T* p)                                 { if (!p) return; operator delete(p); }
+void free(T*& p)                                { if (!p) return; operator delete(p); p = nullptr; }
+template<class T>
+void free(T* const& p)                          { if (!p) return; operator delete(p); }
 
 /// Align a pointer to the previous byte boundary `bytes`. Does nothing if p is already on boundary.  Alignment must be a power of two.
 template<class T>
@@ -99,6 +101,12 @@ template<class T> struct finalize<T[],void>
     void operator()(T*& p)                      { deleteArray(p); }
     void operator()(T* const& p)                { deleteArray(p); }
 };
+/// Specialization for void
+template<> struct finalize<void,void>
+{
+    void operator()(void*& p)                   { free(p); }
+    void operator()(void* const& p)             { free(p); }
+};
 /** \endcond */
 
 /// std::allocator compatible allocator.  Subclass must define std::allocator constructors and alloc()/free().
@@ -120,7 +128,7 @@ public:
     const_pointer address(const_reference x) const          { return &x; }
     pointer allocate(size_type n, const void* hint=0)       { (void)hint; return subc().alloc(n); }
     void deallocate(pointer p, size_type /*n*/)             { subc().free(p); }
-    size_type max_size() const                              { return numeral<size_type>().max(); }
+    size_type max_size() const                              { return std::numeric_limits<size_type>::max(); }
     void construct(pointer p, const_reference val)          { new (p) T(val); }
     void destroy(pointer p)                                 { (void)p; p->~T(); }
     Subclass<T> select_on_container_copy_construction() const   { return subc(); }
@@ -138,7 +146,7 @@ template<template<class> class Alloc>
 class AllocatorObject
 {
 public:
-    template<class T> struct Allocator { typedef Alloc<T> Type; };
+    template<class T> struct Allocator { typedef Alloc<T> type; };
 
     void* operator new(size_t size)                                         { return _alloc.alloc(size); }
     void* operator new(size_t size, const char* srcFile, int srcLine)       { return _alloc.alloc(size, srcFile, srcLine); }
@@ -160,7 +168,7 @@ template<template<class> class Alloc> Alloc<int8> AllocatorObject<Alloc>::_alloc
 /// Inherit to use global new and delete
 struct GlobalAllocatorObject
 {
-    template<class T> struct Allocator { typedef std::allocator<T> Type; };
+    template<class T> struct Allocator { typedef std::allocator<T> type; };
 };
 
 }

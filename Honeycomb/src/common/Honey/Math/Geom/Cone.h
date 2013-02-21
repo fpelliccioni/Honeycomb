@@ -3,6 +3,7 @@
 
 #include "Honey/Math/Geom/Line.h"
 #include "Honey/Math/Geom/Plane.h"
+#include "Honey/Math/Alge/Trig.h"
 
 namespace honey
 {

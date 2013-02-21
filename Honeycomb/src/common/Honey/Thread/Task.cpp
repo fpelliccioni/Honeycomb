@@ -50,7 +50,7 @@ void Task::bindDirty()
     {
         int pos = file.find_last_of(String("\\/"));
         String filename = pos != String::npos ? file.substr(pos+1) : file;
-        Debug::print(sout() << "[Task: " << getId() << ":" << Thread::current().threadId() << ", "
+        debug::print(sout() << "[Task: " << getId() << ":" << Thread::current().threadId() << ", "
                             << filename << ":" << line << "] " << msg << endl);
     }
 #endif
@@ -162,9 +162,9 @@ void TaskSched::bind(Task& root)
         }
         #endif
         
-        //Bind upstream tasks. Reverse order so that first link is on top of stack.
+        //Bind upstream tasks
         task._depUpWaitInit = 0; //count upstream tasks
-        for (auto& vertex: reversed(task._vertex->links()))
+        for (auto& vertex: task._vertex->links())
         {
             if (!vertex->nodes().size()) continue;
             Task& e = ****vertex->nodes().begin();

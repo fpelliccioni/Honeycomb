@@ -42,29 +42,31 @@ namespace matrix { namespace priv
 template<class Real, int Options>
 class Vec<1,Real,Options> : public VecBase<Vec<1,Real,Options>>
 {
+    typedef VecBase<Vec<1,Real,Options>> Super;
 public:
+    using Super::dot;
+    using Super::operator*;
+    using Super::operator*=;
+    using Super::operator/;
+    using Super::operator/=;
+    using Super::x;
+    
     /// No init
     Vec()                                                           {}
     Vec(Real x)                                                     { this->x = x; }
     /// Construct from vector of same dimension
     template<class T>
     Vec(const MatrixBase<T>& rhs)                                   { operator=(rhs); }
-
-    using VecBase::dot;
-    using VecBase::operator*;
-    using VecBase::operator*=;
-    using VecBase::operator/;
-    using VecBase::operator/=;
-
+    
     template<class T>
-    Vec& operator=(const MatrixBase<T>& rhs)                        { VecBase::operator=(rhs); return *this; }
+    Vec& operator=(const MatrixBase<T>& rhs)                        { Super::operator=(rhs); return *this; }
 
     /// Implicit conversion to real causes ambiguity with int
     Vec  operator* (int rhs) const                                  { return operator*(Real(rhs)); }
     Vec& operator*=(int rhs)                                        { return operator*=(Real(rhs)); }
     Vec  operator/ (int rhs) const                                  { return operator/(Real(rhs)); }
     Vec& operator/=(int rhs)                                        { return operator/=(Real(rhs)); }
-    friend Vec operator*(int lhs, const Vec& rhs)                   { return operator*(Real(lhs), *this); }
+    friend Vec operator*(int lhs, const Vec& rhs)                   { return operator*(Real(lhs), rhs); }
 
     /// \name Specialized for optimization
     /// @{
@@ -88,15 +90,15 @@ template<class R, int O> const Vec<1,R,O> Vec<1,R,O>::axis[1]       = { axisX };
 /** \cond */
 /// \name Specialized for optimization
 /// @{
-template<class R, int O>
-struct priv::map_impl0<Vec<1,R,O>, Vec<1,R,O>>
+template<class R, int Opt>
+struct priv::map_impl0<Vec<1,R,Opt>, Vec<1,R,Opt>>
 {
     template<class T, class O, class Func>
     static O&& func(T&& v, O&& o, Func&& f)                         { o.x = f(v.x); return forward<O>(o); }
 };
 
-template<class R, int O>
-struct priv::map_impl1<Vec<1,R,O>, Vec<1,R,O>, Vec<1,R,O>>
+template<class R, int Opt>
+struct priv::map_impl1<Vec<1,R,Opt>, Vec<1,R,Opt>, Vec<1,R,Opt>>
 {
     template<class T, class T2, class O, class Func>
     static O&& func(T&& v, T2&& rhs, O&& o, Func&& f)               { o.x = f(v.x,rhs.x); return forward<O>(o); }
@@ -127,6 +129,9 @@ typedef Vec<1,Double>   Vec1_d;
 /// Matrix 1x1 vector
 template<class Real, int Options>
 class Matrix<1,1,Real,Options> : public Vec<1,Real,Options>
-{ MATRIX_VEC_ADAPTER };
+{
+    typedef Vec<1,Real,Options> Super;
+    MATRIX_VEC_ADAPTER
+};
 
 }

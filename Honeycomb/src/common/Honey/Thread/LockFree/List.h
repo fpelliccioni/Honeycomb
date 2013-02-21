@@ -20,16 +20,20 @@ namespace lockfree
   * \tparam Backoff     Backoff algorithm to reduce contention
   * \tparam iterMax     Max number of iterator instances per thread
   */
-template<class Data, class Alloc = std::allocator<Data>, class Backoff = Backoff, int iterMax = 2>
+template<class Data_, class Alloc_ = std::allocator<Data_>, class Backoff = Backoff, int iterMax = 2>
 class List : MemConfig, mt::NoCopy
 {
     template<class> friend class Mem;
-
+public:
+    typedef Data_ Data;
+    
+private:
     struct Node : MemNode
     {
         ///Combines node pointer and delete mark in one Cas-able integer
         struct Link : MemLink<Node>
         {
+            using MemLink<Node>::data;
             static const int d_mask = 1;
             static const int ptr_mask = ~d_mask;
 
@@ -47,11 +51,10 @@ class List : MemConfig, mt::NoCopy
         Link prev;
         Data data;
     };
-
     typedef typename Node::Link Link;
 
 public:
-    typedef typename Alloc::template rebind<Node>::other Alloc;
+    typedef typename Alloc_::template rebind<Node>::other Alloc;
 
     /**
       * \param threadMax    Max number of threads that can access this container. Use a thread pool so the threads have a longer life cycle than this container.

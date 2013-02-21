@@ -9,7 +9,7 @@ namespace honey
 
 template<class Real>
 DiscreteGen_<Real>::DiscreteGen_(RandomGen& gen, List pdf) :
-    RandomDist(gen)
+    RandomDist<Real>(gen)
 {
     _mean = 0;
     _variance = 0;
@@ -162,7 +162,7 @@ Real DiscreteGen_<Real>::cdfInv(Real P) const
         return variateMin();
     if (P >= 1)
         return variateMax();
-    return cdfInvFind(P, variateMin(), variateMax(), true);
+    return this->cdfInvFind(P, variateMin(), variateMax(), true);
 }
 
 template class DiscreteGen_<Float>;

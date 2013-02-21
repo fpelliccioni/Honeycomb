@@ -145,11 +145,11 @@ IdStatic(_idnull, "")
 //===================================================================
 /** \cond */
 
-#define IDSWITCH_ENUMELEM(...)          EVAL(TOKENIZE_EVAL(IDSWITCH_ENUMELEM_, NUMARGS(__VA_ARGS__))(__VA_ARGS__))
+#define IDSWITCH_ENUMELEM(...)          EVAL(TOKCAT(IDSWITCH_ENUMELEM_, NUMARGS(__VA_ARGS__))(__VA_ARGS__))
 #define IDSWITCH_ENUMELEM_1(name)       _IdSwitchEnum_##name, 
 #define IDSWITCH_ENUMELEM_2(name, str)  IDSWITCH_ENUMELEM_1(name)
 
-#define IDSWITCH_MAPELEM(...)           EVAL(TOKENIZE_EVAL(IDSWITCH_MAPELEM_, NUMARGS(__VA_ARGS__))(__VA_ARGS__))
+#define IDSWITCH_MAPELEM(...)           EVAL(TOKCAT(IDSWITCH_MAPELEM_, NUMARGS(__VA_ARGS__))(__VA_ARGS__))
 #define IDSWITCH_MAPELEM_1(name)        << #name 
 #define IDSWITCH_MAPELEM_2(name, str)   << UNBRACKET(str) 
 

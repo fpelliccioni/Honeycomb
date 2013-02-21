@@ -26,17 +26,19 @@ namespace honey
   * Algorithm from: "VEGAS: An Adaptive Multi-dimensional Integration Program", G.P. Lepage, 1980. \n
   * Code adapted from C implementation by Richard Kreckel.  
   */
-template<int Dim = 1, int DimRes = 1, class Real = Real, int BinCount = 100>
+template<int Dim = 1, int DimRes = 1, class Real__ = Real, int BinCount = 100>
 class Vegas
 {
-    typedef typename Numeral<Real>::RealT   RealT;
-    typedef typename RealT::DoubleType      Double_;
+public:
+    typedef Real__                          Real;
+private:
+    typedef typename Numeral<Real>::Real_   Real_;
+    typedef typename Real_::DoubleType      Double_;
     typedef typename Double_::Real          Double;
     typedef Alge_<Real>                     Alge;
     typedef Uniform_<Real>                  Uniform;
 
 public:
-    typedef Real                            Real;
     static const int dim                    = Dim;
     static const int dimRes                 = DimRes;
     typedef Vec<dimRes,Real>                VecRes;
@@ -351,7 +353,7 @@ void Vegas<Dim,DimRes,Real,BinCount>::integrate_priv(int samplesMax)
             {
                 Ax[j].f2b = Alge::sqrt(Ax[j].f2b*Ax[j].npg);
                 Ax[j].f2b = (Ax[j].f2b-Ax[j].fb)*(Ax[j].f2b+Ax[j].fb);
-                if (Ax[j].f2b <= 0) Ax[j].f2b = RealT::smallest;
+                if (Ax[j].f2b <= 0) Ax[j].f2b = Real_::smallest;
                 Ab[j].ti += Ax[j].fb;
                 Ab[j].tsi += Ax[j].f2b;
             }
@@ -406,7 +408,7 @@ void Vegas<Dim,DimRes,Real,BinCount>::integrate_priv(int samplesMax)
             Real rc = 0;
             for (int i=0; i<nd; ++i)
             {
-                if (d[i][j] < RealT::smallest) d[i][j] = RealT::smallest;
+                if (d[i][j] < Real_::smallest) d[i][j] = Real_::smallest;
                 r[i] =  Alge::pow((1.0-d[i][j]/dt[j])/
                         (Alge::log(dt[j])-Alge::log(d[i][j])),alpha);
                 rc += r[i];

@@ -10,7 +10,7 @@ namespace honey
 template<class Real, int Dim>
 class MinimizeN
 {
-    typedef typename Numeral<Real>::RealT   RealT;
+    typedef typename Numeral<Real>::Real_   Real_;
     typedef Alge_<Real>                     Alge;
 
 public:
@@ -25,7 +25,7 @@ public:
       * \param levelMax     see Minimize
       * \param bracketMax   see Minimize
       */
-    MinimizeN(Real tol = RealT::zeroTol, int iterMax = 30, int levelMax = 30, int bracketMax = 30)
+    MinimizeN(Real tol = Real_::zeroTol, int iterMax = 30, int levelMax = 30, int bracketMax = 30)
         : _tol(tol), _iterMax(iterMax), _minimize(tol, levelMax, bracketMax) {}
 
     /// Find the minimum of a function within bounds [min,max] using `init` as an initial guess

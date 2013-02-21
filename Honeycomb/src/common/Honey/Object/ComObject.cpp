@@ -11,7 +11,8 @@ const vector<Component::Ptr> ComObject::_nullComs;
 void ComObject::insertCom_priv(Component& com, int index, bool createDeps)
 {
     static mt::Void _ = ComRegistry::inst().buildDepGraph();  //Build dep graph the first time this function is called
-
+    mt_unused(_);
+    
     Component::Ptr comPtr = &com;   //Prevent destruction in scope
     //Remove from previous obj
     if (com.hasObj()) com._comObj->removeCom(com);

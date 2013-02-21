@@ -8,3 +8,5 @@
 *.lib
 Build
 ipch
+.DS_Store
+xcuserdata

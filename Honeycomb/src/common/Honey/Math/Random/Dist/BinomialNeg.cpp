@@ -39,7 +39,7 @@ Real BinomialNeg_<Real>::cdfInv(Real y) const
     if (y <= 0)
         return 0;
     if (y >= 1)
-        return RealT::inf;
+        return Real_::inf;
 
     Double yd = y, yq = 1-y, sf = p, sfc = 1-p, nd = n;
 
@@ -81,7 +81,7 @@ Real BinomialNeg_<Real>::cdfInv(Real y) const
     if (Alge_d::isNan(max))
         max = 0;
 
-    return cdfInvFind(y, 0, max, true);
+    return this->cdfInvFind(y, 0, max, true);
 }
 
 template<class Real>

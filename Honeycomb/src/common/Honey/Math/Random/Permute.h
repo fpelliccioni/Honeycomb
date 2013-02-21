@@ -26,8 +26,8 @@ namespace honey
 template<class Real>
 class Permute_
 {
-    typedef typename Numeral<Real>::RealT   RealT;
-    typedef typename RealT::DoubleType      Double_;
+    typedef typename Numeral<Real>::Real_   Real_;
+    typedef typename Real_::DoubleType      Double_;
     typedef typename Double_::Real          Double;
     typedef Alge_<Real>                     Alge;
     
@@ -67,9 +67,8 @@ public:
         typedef const vector<const T*>*                 pointer;
         typedef const vector<const T*>&                 reference;
         
-        Iter() {}
+        Iter() = default;
         Iter(SharedPtr<State> state);
-        Iter(const Iter& it)                            { operator=(it); }
 
         Iter& operator++();
         Iter operator++(int)                            { auto tmp = *this; ++*this; return tmp; }
@@ -96,7 +95,7 @@ public:
     template<class T>
     static Range_<Iter<T>, Iter<T>>
         range(const vector<T>& list, const typename Iter<T>::Func& func = nullptr)
-                                                        { return honey::range(Iter<T>(new Iter<T>::State(list, func)), Iter<T>(nullptr)); }
+                                                        { return honey::range(Iter<T>(new typename Iter<T>::State(list, func)), Iter<T>(nullptr)); }
 };
 
 template<class Real>
@@ -126,7 +125,7 @@ Permute_<Real>::Iter<T>::Iter(SharedPtr<State> state) :
 
 template<class Real>
 template<class T>
-typename Permute_<Real>::Iter<T>& Permute_<Real>::Iter<T>::operator++()
+typename Permute_<Real>::template Iter<T>& Permute_<Real>::Iter<T>::operator++()
 {
     if (_ps->k <= 0)
     {

@@ -2,8 +2,10 @@
 #pragma once
 
 #include "Honey/Misc/StdUtil.h"
+#include "Honey/Misc/Option.h"
 #include "Honey/Math/Alge/Matrix/Builder.h"
 #include "Honey/Math/Alge/Matrix/Iter.h"
+#include "Honey/Math/Alge/Matrix/Block.h"
 
 namespace honey
 {
@@ -22,19 +24,21 @@ public:
     typedef Subclass                        MatrixS;
     typedef typename Storage::Real          Real;
 protected:
-    typedef typename Numeral<Real>::RealT   RealT;
-    typedef typename RealT::DoubleType      Double_;
+    typedef typename Numeral<Real>::Real_   Real_;
+    typedef typename Real_::DoubleType      Double_;
     typedef typename Double_::Real          Double;
     typedef Alge_<Real>                     Alge;
     typedef Alge_<Double>                   Alge_d;
     typedef Trig_<Real>                     Trig;
     typedef Svd<Real>                       Svd;
-
+    using Storage::assertSize;
+    using Storage::assertIndex;
+    
 public:
-    static const int s_rows                 = Storage::s_rows;
-    static const int s_cols                 = Storage::s_cols;
-    static const int s_size                 = Storage::s_size;
-    static const int options                = Storage::options;
+    using Storage::s_rows;
+    using Storage::s_cols;
+    using Storage::s_size;
+    using Storage::options;
     typedef typename Storage::Alloc         Alloc;
     using Storage::subc;
     using Storage::operator[];
@@ -42,7 +46,7 @@ public:
     using Storage::rows;
     using Storage::cols;
     using Storage::size;
-
+    
     typedef Vec<s_rows, Real>                           VecCol;
     typedef Vec<s_cols, Real, matrix::Option::vecRow>   VecRow;
 
@@ -220,7 +224,7 @@ public:
     /// Check if each element is exactly zero
     bool isZero() const                                                 { return find(subc(), [](Real e) { return e != 0; }) == end(); }
     /// Check if each element is close to zero
-    bool isNearZero(Real tol = RealT::zeroTol) const                    { return find(subc(), [&](Real e) { return !Alge::isNearZero(e, tol); }) == end(); }
+    bool isNearZero(Real tol = Real_::zeroTol) const                    { return find(subc(), [&](Real e) { return !Alge::isNearZero(e, tol); }) == end(); }
     /// Clamp each element between its corresponding elements in min and max. Returns a new matrix with the results.
     template<class T>
     MatrixS clamp(const MatrixBase<T>& min, const MatrixBase<T>& max) const
@@ -233,9 +237,9 @@ public:
     /// Get the mean of all elements
     Real mean() const                                                   { return sum() / size(); }
     /// Get the minimum element
-    Real min() const                                                    { return reduce(subc(), RealT::inf, [](Real a, Real e) { return Alge::min(a,e); }); }
+    Real min() const                                                    { return reduce(subc(), Real_::inf, [](Real a, Real e) { return Alge::min(a,e); }); }
     /// Get the maximum element
-    Real max() const                                                    { return reduce(subc(), -RealT::inf, [](Real a, Real e) { return Alge::max(a,e); }); }
+    Real max() const                                                    { return reduce(subc(), -Real_::inf, [](Real a, Real e) { return Alge::max(a,e); }); }
 
     /// Get block at offset (row,col) with size (Rows, Cols).  If Rows or Cols is fixed then `rows` or `cols` may be left unspecified.
     /**
@@ -496,7 +500,7 @@ public:
             {
             case 1: res = m(0,0); break;
             case 2: res = m(0,0)*m(1,1) - m(1,0)*m(0,1); break;
-            case 3: { Matrix<3,3> tmp; res = determinant3(tmp); } break;
+            case 3: { MatrixS tmp(*this); res = determinant3(tmp); } break;
             default:
                 {
                     for (int j = 0; j < cols(); j++)
@@ -523,7 +527,7 @@ public:
     {
         //Condition is a function of the non-zero singular values: max(sv) / min(sv)
         Svd svd;
-        auto bounds = reduce(svd.calcValues(subc()).w(), make_tuple(RealT::inf, -RealT::inf),
+        auto bounds = reduce(svd.calcValues(subc()).w(), make_tuple(Real_::inf, -Real_::inf),
             [](tuple<Real,Real> a, Real e) { return !Alge::isNearZero(e) ? make_tuple(Alge::min(get<0>(a), e), Alge::max(get<1>(a), e)) : a; });
         return get<1>(bounds) / get<0>(bounds);
     }

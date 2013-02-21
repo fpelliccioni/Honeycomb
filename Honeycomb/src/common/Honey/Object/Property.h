@@ -61,11 +61,11 @@ private:
 };
 
 /// Integer property
-inline const Id& Property<int>::s_type()                            { static const Id& id = "int"; return id; }
+template<> inline const Id& Property<int>::s_type()                 { static const Id& id = "int"; return id; }
 /// Real property
-inline const Id& Property<Real>::s_type()                           { static const Id& id = "Real"; return id; }
+template<> inline const Id& Property<Real>::s_type()                { static const Id& id = "Real"; return id; }
 /// String property
-inline const Id& Property<String>::s_type()                         { static const Id& id = "String"; return id; }
+template<> inline const Id& Property<String>::s_type()              { static const Id& id = "String"; return id; }
 
 }
 

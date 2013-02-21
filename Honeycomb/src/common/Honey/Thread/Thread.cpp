@@ -86,6 +86,11 @@ Thread::Static::~Static()
 {
 }
 
+const int Thread::priorityNormal                    = Super::priorityNormal;
+const int Thread::priorityMin                       = Super::priorityMin;
+const int Thread::priorityMax                       = Super::priorityMax;
+const Thread::ThreadId Thread::threadIdInvalid      = Super::threadIdInvalid;
+
 Thread::Thread(bool external, int stackSize) :
     Super(external, stackSize),
     _lock(new SpinLock),

@@ -1,7 +1,7 @@
 // Honeycomb, Copyright (C) 2013 Daniel Carter.  Distributed under the Boost Software License v1.0.
 #pragma once
 
-#include "Honey/Misc/Debug.h"
+#include "Honey/String/String.h"
 
 namespace honey
 {
@@ -34,7 +34,7 @@ public:
     /// Real representation of type
     typedef typename Info::Real             Real;
     /// Real operations and constants class
-    typedef typename Info::RealT            RealT;
+    typedef typename Info::Real_            Real_;
 
     /// Whether type is signed
     static const bool isSigned              = Info::isSigned;
@@ -56,13 +56,13 @@ class NumeralFloat : public NumeralInt<T>
 {
 public:
     /// Smallest representable value (close to zero)
-    T smallest() const                      { return _info.smallest; }
+    T smallest() const                      { return this->_info.smallest; }
     /// Smallest value such that 1.0 + epsilon != 1.0
-    T epsilon() const                       { return _info.epsilon; }
+    T epsilon() const                       { return this->_info.epsilon; }
     /// Infinity. ie. 1.0 / 0.0
-    T inf() const                           { return _info.inf; }
+    T inf() const                           { return this->_info.inf; }
     /// Not a number. ie. 0.0 / 0.0, sqrt(-1)
-    T nan() const                           { return _info.nan; }
+    T nan() const                           { return this->_info.nan; }
 };
 
 
@@ -100,7 +100,7 @@ namespace numeral_priv
         typedef uint8   Unsigned;
         typedef int8    Int;
         typedef float   Real;
-        typedef Float_  RealT;
+        typedef Float_  Real_;
         static const bool isSigned  = true;
         static const bool isInteger = true;
         static const int8 min       = -0x7F - 1; 
@@ -113,7 +113,7 @@ namespace numeral_priv
         typedef uint8   Unsigned;
         typedef uint8   Int;
         typedef float   Real;
-        typedef Float_  RealT;
+        typedef Float_  Real_;
         static const bool isSigned  = false;
         static const bool isInteger = true;
         static const uint8 min      = 0;
@@ -126,7 +126,7 @@ namespace numeral_priv
         typedef uint16  Unsigned;
         typedef int16   Int;
         typedef float   Real;
-        typedef Float_  RealT;
+        typedef Float_  Real_;
         static const bool isSigned  = true;
         static const bool isInteger = true;
         static const int16 min      = -0x7FFF - 1;
@@ -139,7 +139,7 @@ namespace numeral_priv
         typedef uint16  Unsigned;
         typedef uint16  Int;
         typedef float   Real;
-        typedef Float_  RealT;
+        typedef Float_  Real_;
         static const bool isSigned  = false;
         static const bool isInteger = true;
         static const uint16 min     = 0;
@@ -152,7 +152,7 @@ namespace numeral_priv
         typedef uint32  Unsigned;
         typedef int32   Int;
         typedef float   Real;
-        typedef Float_  RealT;
+        typedef Float_  Real_;
         static const bool isSigned  = true;
         static const bool isInteger = true;
         static const int32 min      = -0x7FFFFFFF - 1;
@@ -165,7 +165,7 @@ namespace numeral_priv
         typedef uint32  Unsigned;
         typedef uint32  Int;
         typedef float   Real;
-        typedef Float_  RealT;
+        typedef Float_  Real_;
         static const bool isSigned  = false;
         static const bool isInteger = true;
         static const uint32 min     = 0;
@@ -178,7 +178,7 @@ namespace numeral_priv
         typedef uint64  Unsigned;
         typedef int64   Int;
         typedef double  Real;
-        typedef Double_ RealT;
+        typedef Double_ Real_;
         static const bool isSigned  = true;
         static const bool isInteger = true;
         static const int64 min      = -0x7FFFFFFFFFFFFFFFL - 1;
@@ -191,7 +191,7 @@ namespace numeral_priv
         typedef uint64  Unsigned;
         typedef uint64  Int;
         typedef double  Real;
-        typedef Double_ RealT;
+        typedef Double_ Real_;
         static const bool isSigned  = false;
         static const bool isInteger = true;
         static const uint64 min     = 0;
@@ -204,7 +204,7 @@ namespace numeral_priv
         typedef float   Unsigned;
         typedef int32   Int;
         typedef float   Real;
-        typedef Float_  RealT;
+        typedef Float_  Real_;
         static const bool isSigned  = true;
         static const bool isInteger = false;
 
@@ -238,7 +238,7 @@ namespace numeral_priv
         typedef double  Unsigned;
         typedef int64   Int;
         typedef double  Real;
-        typedef Double_ RealT;
+        typedef Double_ Real_;
         static const bool isSigned  = true;
         static const bool isInteger = false;
 

@@ -13,8 +13,8 @@ namespace honey
 template<class Real>
 class Random_
 {
-    typedef typename Numeral<Real>::RealT   RealT;
-    typedef typename RealT::DoubleType      Double_;
+    typedef typename Numeral<Real>::Real_   Real_;
+    typedef typename Real_::DoubleType      Double_;
     typedef typename Double_::Real          Double;
     typedef Random_<Double>                 Random_d;
     typedef Alge_<Real>                     Alge;
@@ -100,7 +100,7 @@ public:
     template<class Range>
     static tuple<Real,Real,Real> mean(const Range& samples)
     {
-        auto res = reduce(samples, make_tuple(Real(0), RealT::inf, -RealT::inf),
+        auto res = reduce(samples, make_tuple(Real(0), Real_::inf, -Real_::inf),
             [](tuple<Real,Real,Real> a, Real e) { return make_tuple(get<0>(a) + e, Alge::min(get<1>(a), e), Alge::max(get<2>(a), e)); });
         int n = end(samples) - begin(samples);
         get<0>(res) = n > 0 ? get<0>(res) / n : 0;

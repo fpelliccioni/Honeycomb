@@ -18,13 +18,13 @@ template<class Real> class Interp_;
   *
   * ie. To rotate a vector first by `q0`, followed by a rotation of `q1`, apply \f$ v' = q_1*q_0*v \f$
   */
-template<class Real>
+template<class Real__>
 class Quat_
 {
 public:
-    typedef Real Real;
+    typedef Real__ Real;
 private:
-    typedef typename Numeral<Real>::RealT RealT;
+    typedef typename Numeral<Real>::Real_ Real_;
     typedef Alge_<Real>         Alge;
     typedef Trig_<Real>         Trig;
     typedef Vec<3,Real>         Vec3;
@@ -35,6 +35,20 @@ private:
     typedef Geom_<Real>         Geom;
     typedef Interp_<Real>       Interp;
 
+    /// Euler order options
+    enum
+    {
+        eulAxX = 0,
+        eulAxY = 1,
+        eulAxZ = 2,
+        eulFrmS = 0,
+        eulFrmR = 1,
+        eulRepNo = 0,
+        eulRepYes = 1,
+        eulParEven = 0,
+        eulParOdd = 1
+    };
+    
 public:
     static const int dim = 4;
 
@@ -161,13 +175,13 @@ public:
     }
 
     Quat_ operator*(Real rhs) const                                         { return Quat_(x*rhs, y*rhs, z*rhs, w*rhs); }
-    Quat_& operator*=(const Quat_& rhs)                                     { operator=(operator*(rhs)); return *this; }
-    Quat_& operator*=(Real rhs)                                             { operator=(operator*(rhs)); return *this; }
+    Quat_& operator*=(const Quat_& rhs)                                     { this->operator=(operator*(rhs)); return *this; }
+    Quat_& operator*=(Real rhs)                                             { this->operator=(operator*(rhs)); return *this; }
 
     Quat_ operator/(const Quat_& rhs) const                                 { return operator*(rhs.inverseNonUnit()); }
     Quat_ operator/(Real rhs) const                                         { return operator*(1/rhs); }
-    Quat_& operator/=(const Quat_& rhs)                                     { operator=(operator/(rhs)); return *this; }
-    Quat_& operator/=(Real rhs)                                             { operator=(operator/(rhs)); return *this; }
+    Quat_& operator/=(const Quat_& rhs)                                     { this->operator=(operator/(rhs)); return *this; }
+    Quat_& operator/=(Real rhs)                                             { this->operator=(operator/(rhs)); return *this; }
 
     friend Quat_ operator*(Real lhs, const Quat_& rhs)                      { return rhs.operator*(lhs); }
 
@@ -188,7 +202,7 @@ public:
     Quat_ inverseNonUnit() const
     {
         Real l = lengthSqr();
-        if (l > RealT::zeroTol)
+        if (l > Real_::zeroTol)
         {
             Real l_inv = 1/l;
             return Quat_(-x*l_inv, -y*l_inv, -z*l_inv, w*l_inv);
@@ -207,7 +221,7 @@ public:
     Quat_ normalize(option<Real&> len = optnull) const
     {
         Real l = length();
-        if (l > RealT::zeroTol)
+        if (l > Real_::zeroTol)
         {
             if (len) len = l;
             return *this / l;
@@ -291,21 +305,6 @@ public:
     }
 
 private:
-
-    /// Euler order options
-    enum
-    {
-        eulAxX = 0,
-        eulAxY = 1,
-        eulAxZ = 2,
-        eulFrmS = 0,
-        eulFrmR = 1,
-        eulRepNo = 0,
-        eulRepYes = 1,
-        eulParEven = 0,
-        eulParOdd = 1
-    };
-
     /// Unpacks all information about order
     static void eulGetOrd(EulerOrder ord, int& i, int& j, int& k, int& h, int& n, int& s, int& f)
     {

@@ -71,9 +71,8 @@ public:
             friend StringStream& operator<<(StringStream& os, const Source& source)
             {
                 return os
-                    << "Function:   "   << source.func  << endl
-                    << "File:       "   << source.file  << endl
-                    << "Line:       "   << source.line  << endl;
+                    << "Function:   " << source.func << endl
+                    << "File:       " << source.file << ":" << source.line << endl;
             }
 
             const char* func;
@@ -104,7 +103,7 @@ public:
     /// Get full diagnostic message
     const String& what_() const                                             { const_cast<Exception*>(this)->cacheWhat(); return *_what; }
     /// Get full diagnostic message
-    const char* what() const                                                { what_(); return _csWhat->c_str(); }
+    const char* what() const throw()                                        { what_(); return _csWhat->c_str(); }
 
     /// Create a clone of the current exception caught with (...)
     static Exception& current();
@@ -126,7 +125,7 @@ protected:
 private:
     /// operator<<(Exception, String)   Append custom error message to exception
     template<class E>
-    friend typename std::enable_if<mt::isBaseOf<Exception, E>::value, E>::type&
+    friend typename std::enable_if<mt::is_base_of<Exception, E>::value, E>::type&
         operator<<(E&& e, const String& error)                              { e.getError() += error; return e; }
 
     void cacheWhat()
@@ -193,6 +192,12 @@ inline Exception& Exception::current()
     catch(std::bad_exception& e)        { return createStd(e); }
     catch(std::exception& e)            { return createStd(e); }
     catch(...)                          { return *new Unknown(); }
+}
+
+namespace debug
+{
+    /// Thrown on debug::assert() failure
+    struct AssertionFailure : Exception { EXCEPTION(AssertionFailure) };
 }
 
 }

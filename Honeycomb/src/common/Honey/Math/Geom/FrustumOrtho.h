@@ -14,8 +14,12 @@ namespace honey
 template<class Real>
 class FrustumOrtho_ : public Frustum_<Real>
 {
+    typedef Frustum_<Real> Super;
+    typedef typename Super::FrustumType FrustumType;
 public:
-
+    typedef typename Super::Orientation Orientation;
+    typedef typename Super::Planes Planes;
+    
     /// No initialization
     FrustumOrtho_() {}
 
@@ -79,7 +83,15 @@ public:
     }
 
 protected:
-
+    using Super::_orientation;
+    using Super::_extent;
+    using Super::_axis;
+    using Super::_origin;
+    using Super::_planes;
+    using Super::_proj;
+    using Super::_clipDepth;
+    using Super::_verts;
+    
     virtual void onProjChange();
     virtual void onTmChange();
     virtual void onOrientChange();

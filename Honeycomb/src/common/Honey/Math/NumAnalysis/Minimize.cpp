@@ -11,8 +11,8 @@ tuple<Real,Real> Minimize<Real>::calc(const Func& func, Real t0, Real t1, Real t
 {
     assert(Alge::isInRange(tInit, t0, t1), "Invalid initial guess");
     _func = &func;
-    _tMin = RealT::max;
-    _fMin = RealT::max;
+    _tMin = Real_::max;
+    _fMin = Real_::max;
 
     Real f0 = (*_func)(t0);
     if (f0 < _fMin)
@@ -42,7 +42,7 @@ void Minimize<Real>::min(Real t0, Real f0, Real tm, Real t1, Real f1, int level)
     if (fm < _fMin) { _tMin = tm; _fMin = fm; }
 
     // Test for convergence. Tolerance must scale with numbers in range.
-    if (Alge::isNear(t0, t1, 2*_tol*Alge::abs(tm) + RealT::epsilon)) return;
+    if (Alge::isNear(t0, t1, 2*_tol*Alge::abs(tm) + Real_::epsilon)) return;
 
     if ((t1 - tm)*(f0 - fm) > (tm - t0)*(fm - f1))
     {
@@ -103,7 +103,7 @@ void Minimize<Real>::bracketedMin(Real t0, Real f0, Real tm, Real fm, Real t1, R
         }
 
         // Test for convergence. Tolerance must scale with numbers in range.
-        if (Alge::isNear(t0, t1, 2*_tol*Alge::abs(tm) + RealT::epsilon)) break;
+        if (Alge::isNear(t0, t1, 2*_tol*Alge::abs(tm) + Real_::epsilon)) break;
 
         // Compute vertex of interpolating parabola
         Real dt0 = t0 - tm;
@@ -113,7 +113,7 @@ void Minimize<Real>::bracketedMin(Real t0, Real f0, Real tm, Real fm, Real t1, R
         Real tmp0 = dt0*df1;
         Real tmp1 = dt1*df0;
         Real denom = tmp1 - tmp0;
-        if (Alge::abs(denom) < RealT::epsilon) break;
+        if (Alge::abs(denom) < Real_::epsilon) break;
 
         Real tv = tm + 0.5*(dt1*tmp1 - dt0*tmp0)/denom;
         assert(t0 <= tv && tv <= t1, "Vertex not in interval");

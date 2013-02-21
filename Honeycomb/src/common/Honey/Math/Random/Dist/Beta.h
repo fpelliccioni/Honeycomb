@@ -29,10 +29,16 @@ template<class Real> class BetaInc;
 template<class Real>
 class Beta_ : public RandomDist<Real>
 {
-    typedef BetaInc<Double> BetaInc;
+    typedef RandomDist<Real> Super;
+    RandomDist_imports();
+    typedef Gaussian_<Double>   Gaussian;
+    typedef Gamma_<Double>      Gamma;
+    typedef GammaFunc_<Double>  GammaFunc;
+    typedef BetaInc<Double>     BetaInc;
+    
 public:
-    Beta_(Real a, Real b)                   :                   a(a), b(b) { assert(a > 0 && b > 0); }
-    Beta_(RandomGen& gen, Real a, Real b)   : RandomDist(gen),  a(a), b(b) { assert(a > 0 && b > 0); }
+    Beta_(option<RandomGen&> gen, Real a, Real b)   : RandomDist<Real>(gen), a(a), b(b) { assert(a > 0 && b > 0); }
+    Beta_(Real a, Real b)                           : Beta_(optnull, a, b) {}
 
     virtual Real next();
     virtual Real pdf(Real x);
@@ -56,7 +62,7 @@ typedef Beta_<Double>    Beta_d;
 template<class Real>
 class BetaInc
 {
-    typedef typename Numeral<Real>::RealT RealT;
+    typedef typename Numeral<Real>::Real_ Real_;
     typedef Alge_<Real>         Alge;
     typedef GammaFunc_<Real>    GammaFunc;
     typedef Gaussian_<Real>     Gaussian;

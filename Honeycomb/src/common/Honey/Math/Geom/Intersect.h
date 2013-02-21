@@ -10,7 +10,7 @@ namespace honey
 template<class Real>
 class Intersect_
 {
-    typedef typename Numeral<Real>::RealT RealT;
+    typedef typename Numeral<Real>::Real_ Real_;
     typedef Alge_<Real> Alge;
     typedef Trig_<Real> Trig;
     typedef Geom_<Real> Geom;

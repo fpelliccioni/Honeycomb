@@ -110,7 +110,7 @@ void FrustumPersp_<Real>::onTmChange()
     _planes[Planes::far].dist = -ddE - _extent[1].x;
 
     updateVertices();
-    updateBox();
+    this->updateBox();
 }
 
 template<class Real>

@@ -23,18 +23,20 @@ namespace honey
   * 
   * Algorithm from "Better Bootstrap Confidence Intervals", Efron, 1987.
   */
-template<class SampleT, int Dim = 1, class Real = Real>
+template<class SampleT, int Dim = 1, class Real__ = Real>
 class Bootstrap
 {
-    typedef typename Numeral<Real>::RealT       RealT;
-    typedef typename RealT::DoubleType          Double_;
+public:
+    typedef Real__                              Real;
+private:
+    typedef typename Numeral<Real>::Real_       Real_;
+    typedef typename Real_::DoubleType          Double_;
     typedef typename Double_::Real              Double;
     typedef Alge_<Real>                         Alge;
     typedef Interp_<Real>                       Interp;
     typedef Gaussian_<Real>                     Gaussian;
 
 public:
-    typedef Real                                Real;
     static const int dim                        = Dim;
     typedef Vec<dim,Real>                       Vec;
     typedef vector<const SampleT*>              SampleList;

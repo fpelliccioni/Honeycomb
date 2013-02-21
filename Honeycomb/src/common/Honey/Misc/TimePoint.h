@@ -7,12 +7,12 @@ namespace honey
 {
 
 /// TimePoint represented by a duration since a clock's epoch time
-template<class Clock, class Dur = typename Clock::Duration>
+template<class Clock_, class Dur = typename Clock_::Duration>
 class TimePoint
 {
     friend class TimePoint;
 public:
-    typedef Clock Clock;
+    typedef Clock_ Clock;
     typedef Dur Duration;
 
     /// Initialized to zero time, the clock's epoch
@@ -73,17 +73,17 @@ public:
 /// operator+(TimePoint, Duration).  Returns a time point with a best-fit duration.
 /** \relates TimePoint */
 template<class Clock, class Dur, class Rep, class Period>
-TimePoint<Clock, typename Duration<Rep,Period>::template common<Dur>::Type>
+TimePoint<Clock, typename Duration<Rep,Period>::template common<Dur>::type>
 operator+(const TimePoint<Clock,Dur>& lhs, const Duration<Rep,Period>& rhs)
 {
-    typedef TimePoint<Clock, typename Duration<Rep,Period>::common<Dur>::Type> TimeCommon;
+    typedef TimePoint<Clock, typename Duration<Rep,Period>::template common<Dur>::type> TimeCommon;
     return TimeCommon(lhs) += rhs;
 }
 
 /// operator+(Duration, TimePoint).  Returns a time point with a best-fit duration.
 /** \relates TimePoint */
 template<class Clock, class Dur, class Rep, class Period>
-TimePoint<Clock, typename Duration<Rep,Period>::template common<Dur>::Type>
+TimePoint<Clock, typename Duration<Rep,Period>::template common<Dur>::type>
 operator+(const Duration<Rep,Period>& rhs, const TimePoint<Clock,Dur>& lhs)
 {
     return rhs + lhs;
@@ -92,7 +92,7 @@ operator+(const Duration<Rep,Period>& rhs, const TimePoint<Clock,Dur>& lhs)
 /// operator-(TimePoint, Duration).  Returns a time point with a best-fit duration.
 /** \relates TimePoint */
 template<class Clock, class Dur, class Rep, class Period>
-TimePoint<Clock, typename Duration<Rep,Period>::template common<Dur>::Type>
+TimePoint<Clock, typename Duration<Rep,Period>::template common<Dur>::type>
 operator-(const TimePoint<Clock,Dur>& lhs, const Duration<Rep,Period>& rhs)
 {
     return lhs + (-rhs);
@@ -101,7 +101,7 @@ operator-(const TimePoint<Clock,Dur>& lhs, const Duration<Rep,Period>& rhs)
 /// operator-(TimePoint, TimePoint).  Returns a best-fit duration.
 /** \relates TimePoint */
 template<class Clock, class Dur, class Rep, class Period>
-typename Duration<Rep,Period>::template common<Dur>::Type
+typename Duration<Rep,Period>::template common<Dur>::type
 operator-(const TimePoint<Clock,Dur>& lhs, const TimePoint<Clock,Duration<Rep,Period>>& rhs)
 {
     return lhs.time() - rhs.time();

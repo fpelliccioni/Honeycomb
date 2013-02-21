@@ -3,6 +3,7 @@
 
 #include "Honey/Math/Random/Dist/ChiSqr.h"
 #include "Honey/Math/Random/Dist/Beta.h"
+#include "Honey/Math/Random/Random.h"
 
 namespace honey
 {
@@ -27,13 +28,20 @@ namespace honey
 template<class Real>
 class StudentT_ : public RandomDist<Real>
 {
-    typedef BetaInc<Double> BetaInc;
-    typedef ChiSqr_<Double> ChiSqr;
+    typedef RandomDist<Real>    Super;
+    RandomDist_imports();
+    typedef Gaussian_<Double>   Gaussian;
+    typedef Beta_<Double>       Beta;
+    typedef BetaInc<Double>     BetaInc;
+    typedef ChiSqr_<Double>     ChiSqr;
+    typedef Random_<Real>       Random;
+    
 public:
+    typedef typename Random::DistStats DistStats;
     typedef Vec<2,Real>     Vec2;
 
-    StudentT_(Real n)                                   :                  n(n) { assert(n > 0); }
-    StudentT_(RandomGen& gen, Real n)                   : RandomDist(gen), n(n) { assert(n > 0); }
+    StudentT_(option<RandomGen&> gen, Real n)           : Super(gen), n(n) { assert(n > 0); }
+    StudentT_(Real n)                                   : StudentT_(optnull, n) {}
 
     virtual Real next() const;
     virtual Real pdf(Real x) const;
@@ -45,7 +53,7 @@ public:
 
     struct Stats
     {
-        typename Random::DistStats dist;    ///< Sample distribution stats
+        DistStats dist;         ///< Sample distribution stats
         Vec2    meanCi;         ///< Lower and upper 100*(1-alpha)% confidence interval of the mean
         Vec2    stdDevCi;       ///< Lower and upper 100*(1-alpha)% confidence interval of the standard deviation
         int     df;             ///< Degrees of freedom
@@ -91,7 +99,7 @@ public:
     static bool test(const Range& samples, option<Stats&> stats = optnull, Real mu = 0, Real alpha = 0.05, int tail = 0)
     {
         assert(tail >= -1 && tail <= 1);
-        Random::DistStats d = Random::stats(samples);
+        DistStats d = Random::stats(samples);
         int df = d.n - 1;
         StudentT_ student(df);
         Real t = (d.mean - mu) / d.stdErr;
@@ -102,9 +110,9 @@ public:
         {
             stats->dist = d;
             Real meanCi = student.cdfInv(1 - (tail == 0 ? alpha/2 : alpha)) * d.stdErr;
-            stats->meanCi = Vec2(   tail == -1 ? -RealT::inf : d.mean - meanCi,
-                                    tail == 1 ? RealT::inf : d.mean + meanCi);
-            stats->stdDevCi = ChiSqr(df).stdDevCi(d.stdDev, alpha).cast<Vec2>();
+            stats->meanCi = Vec2(   tail == -1 ? -Real_::inf : d.mean - meanCi,
+                                    tail == 1 ? Real_::inf : d.mean + meanCi);
+            stats->stdDevCi = ChiSqr(df).stdDevCi(d.stdDev, alpha).template cast<Vec2>();
             stats->df = df;
             stats->alpha = alpha;
             stats->tail = tail;
@@ -117,7 +125,7 @@ public:
 
     struct PooledStats
     {
-        typename Random::DistStats dist[2];     ///< Sample distribution stats
+        DistStats dist[2];      ///< Sample distribution stats
         Real    mean;           ///< Pooled mean (1 - 2)
         Real    stdDev;         ///< Pooled standard deviation
         Real    stdErr;         ///< Pooled standard error
@@ -177,8 +185,8 @@ public:
         test(const Range& samples1, const Range2& samples2, option<PooledStats&> stats = optnull, Real mu = 0, Real alpha = 0.05, int tail = 0)
     {
         assert(tail >= -1 && tail <= 1);
-        Random::DistStats d1 = Random::stats(samples1);
-        Random::DistStats d2 = Random::stats(samples2);
+        DistStats d1 = Random::stats(samples1);
+        DistStats d2 = Random::stats(samples2);
 
         int df = d1.n + d2.n - 2;
         StudentT_ student(df);
@@ -197,9 +205,9 @@ public:
             stats->stdDev = stdDev;
             stats->stdErr = stdErr;
             Real meanCi = student.cdfInv(1 - (tail == 0 ? alpha/2 : alpha)) * stdErr;
-            stats->meanCi = Vec2(   tail == -1 ? -RealT::inf : mean - meanCi,
-                                    tail == 1 ? RealT::inf : mean + meanCi);
-            stats->stdDevCi = ChiSqr(df).stdDevCi(stdDev, alpha).cast<Vec2>();
+            stats->meanCi = Vec2(   tail == -1 ? -Real_::inf : mean - meanCi,
+                                    tail == 1 ? Real_::inf : mean + meanCi);
+            stats->stdDevCi = ChiSqr(df).stdDevCi(stdDev, alpha).template cast<Vec2>();
             stats->df = df;
             stats->alpha = alpha;
             stats->tail = tail;

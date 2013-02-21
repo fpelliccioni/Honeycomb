@@ -23,7 +23,7 @@ public:
       * \param tol      find root to within tolerance of zero
       * \param iterMax  max bisections
       */
-    Bisect(Real tol = RealT::zeroTol, int iterMax = 30)     : _tol(tol), _iterMax(iterMax) {}
+    Bisect(Real tol = Real_::zeroTol, int iterMax = 30)     : _tol(tol), _iterMax(iterMax) {}
 
     /// Find the lower and upper bounds of the root of a function. ie. Estimate bounds where somewhere within the function returns 0.
     /**

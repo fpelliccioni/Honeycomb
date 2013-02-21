@@ -45,7 +45,7 @@ public:
         e(_, persp)         \
 
     /// Frustum types
-    ENUM(Frustum, FrustumType);
+    ENUM(Frustum_, FrustumType);
     #undef ENUM_LIST
 
     /// Orientation, projection will be rotated counter-clockwise
@@ -55,7 +55,7 @@ public:
         e(_, angle_180)     \
         e(_, angle_270)     \
 
-    ENUM(Frustum, Orientation);
+    ENUM(Frustum_, Orientation);
     #undef ENUM_LIST
 
     #define ENUM_LIST(e,_)  \
@@ -67,7 +67,7 @@ public:
         e(_, far)           \
 
     /// Bounding planes
-    ENUM(Frustum, Planes);
+    ENUM(Frustum_, Planes);
     #undef ENUM_LIST
 
     virtual ~Frustum_()                                                     {}
@@ -128,11 +128,11 @@ public:
     {
         switch (getOrientation())
         {
-        case Frustum::Orientation::angle_90:
+        case Orientation::angle_90:
             return Vec2(point.y, -point.x);
-        case Frustum::Orientation::angle_180:
+        case Orientation::angle_180:
             return Vec2(-point.x, -point.y);
-        case Frustum::Orientation::angle_270:
+        case Orientation::angle_270:
             return Vec2(-point.y, point.x);
         }
         return point;
@@ -143,11 +143,11 @@ public:
     {
         switch (getOrientation())
         {
-        case Frustum::Orientation::angle_90:
+        case Orientation::angle_90:
             return Vec2(-point.y, point.x);
-        case Frustum::Orientation::angle_180:
+        case Orientation::angle_180:
             return Vec2(-point.x, -point.y);
-        case Frustum::Orientation::angle_270:
+        case Orientation::angle_270:
             return Vec2(point.y, -point.x);
         }
         return point;

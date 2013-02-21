@@ -2,6 +2,7 @@
 #pragma hdrstop
 
 #include "Honey/Memory/Pool.h"
+#include "Honey/Math/Alge/Alge.h"
 
 namespace honey
 {

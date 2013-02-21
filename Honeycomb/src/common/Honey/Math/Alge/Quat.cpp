@@ -102,8 +102,8 @@ Quat_<Real>& Quat_<Real>::fromMatrix(const Matrix4& rot)
     {
         // |w| > 1/2, may as well choose w > 1/2
         root = Alge::sqrt(trace + 1);  // 2w
-        w = RealT::half*root;
-        root = (root == 0) ? 0 : RealT::half/root;  // 1/(4w)
+        w = Real_::half*root;
+        root = (root == 0) ? 0 : Real_::half/root;  // 1/(4w)
         x = (rot[2][1]-rot[1][2])*root;
         y = (rot[0][2]-rot[2][0])*root;
         z = (rot[1][0]-rot[0][1])*root;
@@ -121,8 +121,8 @@ Quat_<Real>& Quat_<Real>::fromMatrix(const Matrix4& rot)
         int k = s_next[j];
 
         root = Alge::sqrt(rot[i][i]-rot[j][j]-rot[k][k] + 1);
-        (*this)[i] = RealT::half*root;
-        root = (root == 0) ? 0 : RealT::half/root;
+        (*this)[i] = Real_::half*root;
+        root = (root == 0) ? 0 : Real_::half/root;
         w = (rot[k][j]-rot[j][k])*root;
         (*this)[j] = (rot[j][i]+rot[i][j])*root;
         (*this)[k] = (rot[k][i]+rot[i][k])*root;
@@ -374,9 +374,9 @@ typename Quat_<Real>::Vec3 Quat_<Real>::eulerAngles() const
     ret.x = Trig::atan2((y*z + x*w)*2, -sqx - sqy + sqz + sqw );
     resy = -((x*z - y*w)*2);
     if (resy <= -1)
-        ret.y = -RealT::piHalf;
+        ret.y = -Real_::piHalf;
     else if (resy >= 1)
-        ret.y = RealT::piHalf;
+        ret.y = Real_::piHalf;
     else
         ret.y = Trig::asin(resy);
     
@@ -465,7 +465,7 @@ template<class Real>
 Quat_<Real> Quat_<Real>::slerp_fast(Real t, const Quat_& q0, const Quat_& q1, Real cosAlpha)
 {
     //The spline correction diverges after t=0.5, so make sure under 0.5 is passed in
-    if (t <= RealT::half)
+    if (t <= Real_::half)
         t = slerpCorrection(t, cosAlpha);
     else
         t = 1 - slerpCorrection(1 - t, cosAlpha);
@@ -488,10 +488,10 @@ void Quat_<Real>::squadSetup(   const Quat_& q0, const Quat_& q1, const Quat_& q
     Quat_ _q3 = q2.dot(q3) >= 0 ? q3 : -q3;
 
     Quat_ q1inv = q1.conjugate();
-    a = q1 * (-(RealT::quarter) * ( (q1inv*_q0).ln() + (q1inv*c).ln() )).exp();
+    a = q1 * (-(Real_::quarter) * ( (q1inv*_q0).ln() + (q1inv*c).ln() )).exp();
 
     Quat_ q2inv = c.conjugate();
-    b = c * (-(RealT::quarter) * ( (q2inv*q1).ln() + (q2inv*_q3).ln() )).exp();
+    b = c * (-(Real_::quarter) * ( (q2inv*q1).ln() + (q2inv*_q3).ln() )).exp();
 }
 
 template<class Real>

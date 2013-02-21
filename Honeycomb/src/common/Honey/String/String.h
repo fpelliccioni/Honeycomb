@@ -1,14 +1,13 @@
 // Honeycomb, Copyright (C) 2013 Daniel Carter.  Distributed under the Boost Software License v1.0.
 #pragma once
 
-#include "Honey/Math/Numeral.h"
-#include "Honey/Misc/Option.h"
+#include "Honey/Misc/Debug.h"
 
 namespace honey
 {
-
+    
 /// Represents a single code unit (not code point) for class String
-typedef wchar_t Char;
+typedef char16_t Char;
 
 /// Unicode UTF-16 string class, wrapper around std::u16string
 /**
@@ -33,9 +32,6 @@ public:
     String(const Char* str)                                                 { operator=(str); }
     String(Char c)                                                          { operator=(c); }
     /// Does nothing if `str` is null
-    //String(const wchar_t* str)                                              { operator=(str); }
-    //String(wchar_t c)                                                       { operator=(c); }
-    /// Does nothing if `str` is null
     String(const char* str)                                                 { operator=(str); }
     String(char c)                                                          { operator=(c); }
 
@@ -44,10 +40,10 @@ public:
     String& operator=(T&& rhs)                                              { return assign(forward<T>(rhs)); }
     String& operator+=(const String& rhs)                                   { return append(rhs); }
 
-    int size() const                                                        { return utos(Super::size()); }
-    int length() const                                                      { return utos(Super::length()); }
-    int max_size() const                                                    { return utos(Super::max_size()); }
-    int capacity() const                                                    { return utos(Super::capacity()); }
+    int size() const                                                        { return static_cast<int>(Super::size()); }
+    int length() const                                                      { return static_cast<int>(Super::length()); }
+    int max_size() const                                                    { return static_cast<int>(Super::max_size()); }
+    int capacity() const                                                    { return static_cast<int>(Super::capacity()); }
     String& clear()                                                         { Super::clear(); return *this; }
 
     /// Forwards to insert() at back
@@ -73,10 +69,6 @@ public:
     /// Does nothing if `str` is null
     String& insert(int pos1, const Char* str, int pos2 = 0, int count = npos);
     String& insert(int pos1, Char c, int count = 1)                                 { Super::insert(pos1, count, c); return *this; }
-    /// Does nothing if `str` is null
-    //String& insert(int pos1, const wchar_t* str, int pos2 = 0, int count = npos);
-    /// Converts wchar_t to String and inserts
-    //String& insert(int pos1, wchar_t c, int count = 1)                            { wchar_t str[] = { c, 0 }; for (int i = 0; i < count; ++i) insert(pos1, str); return *this; }
     /// Does nothing if `str` is null
     String& insert(int pos1, const char* str, int pos2 = 0, int count = npos);
     /// Converts char to Char and inserts
@@ -107,8 +99,7 @@ public:
     List split(const String& delim = ' ', int pos = 0, int count = npos) const;
 
     /// Join list into one string, separated by delim
-    static String join( const List& strings, const String& delim = ' ',
-                        option<List::const_iterator> itStart = optnull, option<List::const_iterator> itEnd = optnull);
+    static String join(const List& strings, const String& delim = ' ', int start = npos, int end = npos);
 
     /// Convert string to lower case
     String toLower() const;
@@ -116,7 +107,6 @@ public:
     String toUpper() const;
 
     std::string toStdString() const                                         { return std::string(begin(), end()); }
-    std::wstring toStdWString() const                                       { return std::wstring(begin(), end()); }
 };
 
 /// \name String operators

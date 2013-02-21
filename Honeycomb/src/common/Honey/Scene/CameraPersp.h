@@ -11,7 +11,7 @@ namespace honey
 class CameraPersp : public Camera
 {
 public:
-    CameraPersp(Real fov = RealT::piQuarter, Real aspect = 4./3, Real near = RealT::quarter, Real far = 1000) :
+    CameraPersp(Real fov = Real_::piQuarter, Real aspect = 4./3, Real near = Real_::quarter, Real far = 1000) :
         _frustum(fov, aspect, near, far),
         _frustumWorld([&](FrustumPersp& val) { val = getTm() * _frustum; }) {}
 

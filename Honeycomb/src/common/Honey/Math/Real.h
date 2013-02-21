@@ -7,22 +7,22 @@ namespace honey
 {
 
 /// Base class for real number operations
-template<class Real>
+template<class Real_>
 class RealBase : mt::NoCopy
 {
 public:
-    typedef Real Real;
+    typedef Real_ Real;
 };
 
 /// \name Real types
 /// @{
 
-/// Real number type. See \ref RealT for real number operations and constants.
+/// Real number type. See \ref Real_ for real number operations and constants.
 typedef float Real;
 /// @}
 
 /// Operations and constants for \ref Real type. See Float_, Double_.
-typedef Numeral<Real>::RealT RealT;
+typedef Numeral<Real>::Real_ Real_;
 
 }
 

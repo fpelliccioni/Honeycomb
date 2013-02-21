@@ -26,7 +26,7 @@ void Salsa::setSeed()
     //Time for high period but slow changing
     seed.a[1] = static_cast<uint32>(time(nullptr));
     //Process id
-    seed.a[2] = static_cast<uint32>(_getpid());
+    seed.a[2] = static_cast<uint32>(getpid());
     //Value of static counter
     static atomic::Var<int> counter = 0;
     seed.a[3] = counter++;

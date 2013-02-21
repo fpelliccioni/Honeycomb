@@ -26,9 +26,14 @@ namespace honey
 template<class Real>
 class Weibull_ : public RandomDist<Real>
 {
+    typedef RandomDist<Real>    Super;
+    RandomDist_imports();
+    typedef Gamma_<Double>      Gamma;
+    typedef GammaFunc_<Double>  GammaFunc;
     typedef Poisson_<Double>    Poisson;
+    
 public:
-    Weibull_(RandomGen& gen, Real a, Real b)    : RandomDist(gen), a(a), b(b) { assert(a > 0 && b > 0); }
+    Weibull_(RandomGen& gen, Real a, Real b)    : Super(gen), a(a), b(b) { assert(a > 0 && b > 0); }
 
     virtual Real next() const;
     virtual Real pdf(Real x) const;

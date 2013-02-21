@@ -52,12 +52,12 @@ ITERATE(1, LOCK_ARG_MAX, FUNC)
   */
 template<class Range>
 auto tryLock(Range&& range) ->
-    typename std::enable_if<mt::isRange<Range>::value, typename itertype(range)>::type
+    typename std::enable_if<mt::isRange<Range>::value, itertype(range)>::type
 {
     auto& begin = honey::begin(range);
     auto& end = honey::end(range);
     if (begin == end) return end;
-    UniqueLock<typename itertype(range)::value_type> lock(*begin, lock::Op::tryLock);
+    UniqueLock<itertype(range)::value_type> lock(*begin, lock::Op::tryLock);
     if (!lock.owns()) return begin;
     auto failed = tryLock(honey::range(next(begin),end));
     if (failed == end) lock.release();
@@ -92,12 +92,12 @@ namespace priv
     /// Part of lock implementation. Locks first mutex then tries to lock rest, returns failed iterator or end on success.
     template<class Range>
     auto lockTest(Range&& range) ->
-        typename std::enable_if<mt::isRange<Range>::value, typename itertype(range)>::type
+        typename std::enable_if<mt::isRange<Range>::value, itertype(range)>::type
     {
         auto& begin = honey::begin(range);
         auto& end = honey::end(range);
         if (begin == end) return end;
-        UniqueLock<typename itertype(range)::value_type> lock(*begin);
+        UniqueLock<itertype(range)::value_type> lock(*begin);
         auto failed = tryLock(honey::range(next(begin),end));
         if (failed == end) lock.release();
         return failed;
@@ -136,7 +136,7 @@ void lock(Locks&...);
     typename mt::disable_if<mt::isRange<L1>::value, void>::type                                                         \
         lock(ITERATE_(1, It, PARAM))                                                                                    \
     {                                                                                                                   \
-        typedef typename MtMap<ITERATE_(1, It, MAP_TYPE)>::Type Map;                                                    \
+        typedef typename MtMap<ITERATE_(1, It, MAP_TYPE)>::type Map;                                                    \
         Map map = mtmap( ITERATE_(1, It, MAP_INIT) );                                                                   \
         int lockFirst = 1;                                                                                              \
         while(true) switch(lockFirst) { ITERATE1_(1, It, CASE, It) }                                                    \
@@ -155,91 +155,15 @@ ITERATE(1, LOCK_ARG_MAX, FUNC)
 
 /// Lock a range of lockables safely without deadlocking.
 template<class Range>
-typename std::enable_if<mt::isRange<Range>::value, void>::type
+typename std::enable_if<mt::isRange<Range>::value>::type
     lock(Range&& range)
 {
     auto lockFirst = begin(range);
     while(true)
     {
         auto it = ringRange(range,lockFirst);
-        if ((lockFirst = priv::lockTest(it)) == end(it)) break;
+        if ((lockFirst = priv::lockTest(it)) == end(it).iter()) break;
     }
 }
-
-
-//====================================================
-/// Holds shared state for callOnce()
-struct OnceFlag
-{
-    OnceFlag()          : invoked(false), done(false) {}
-
-    bool invoked;
-    bool done;
-    ConditionLock cond;
-};
-
-/** \cond */
-namespace priv
-{
-    /// Call once without function args
-    inline void callOnce(OnceFlag& flag, const function<void()>& f)
-    {
-        ConditionLock::Scoped lock(flag.cond);
-        while (!flag.done)
-        {
-            if (!flag.invoked)
-            {
-                flag.invoked = true;
-                try
-                {
-                    auto lockGuard = ScopeGuard(lock::lockGuard(lock));
-                    lock.unlock();
-                    f();
-                    lockGuard.release();
-                    lock.lock();
-                    flag.done = true;
-                    flag.cond.broadcast();
-                }
-                catch(...) { flag.invoked = false; flag.cond.broadcast(); throw; }
-            }
-            else
-            {
-                while (!flag.done && flag.invoked) { flag.cond.wait(); }
-            }
-        }
-    }
-}
-/** \endcond */
-
-#define callOnce(...) __callOnce()
-/// Thread-safe way to make sure a function is called only once, useful for singletons and global initializers.
-/**
-  * One thread is active while all other threads wait for the result.
-  * All callers are synchronized on exit.
-  * If an exception is thrown, one of the waiting threads will take over as the active thread and try again.
-  *
-  * \param flag  OnceFlag shared state. All callOnce() calls with the same state are part of the same group that is limited to one function invocation.
-  */
-void callOnce(OnceFlag& flag, Func&&, Args&&...);
-#undef callOnce
-
-#define PARAMT(It)  , class Arg##It
-#define PARAM(It)   , Arg##It&& arg##It
-#define ARG(It)     , forward<Arg##It>(arg##It)
-
-#define FUNC(It)                                                                                                        \
-    template<class F ITERATE_(1,It,PARAMT)>                                                                             \
-    void callOnce(OnceFlag& flag, F&& f ITERATE_(1,It,PARAM))                                                           \
-    {                                                                                                                   \
-        if (flag.done) return;                                                                                          \
-        priv::callOnce(flag, bind(forward<F>(f) ITERATE_(1,It,ARG)));                                                   \
-    }                                                                                                                   \
-
-ITERATE(0, LOCK_ARG_MAX, FUNC)
-#undef PARAMT
-#undef PARAM
-#undef ARG
-#undef FUNC
-//====================================================
 
 } }

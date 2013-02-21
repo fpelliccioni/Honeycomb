@@ -25,11 +25,17 @@ namespace honey
 template<class Real>
 class BinomialNeg_ : public RandomDist<Real>
 {
+    typedef RandomDist<Real> Super;
+    RandomDist_imports();
     template<class> friend class BinomialNeg_;
     typedef typename Numeral<Real>::Int Int;
+    typedef Gaussian_<Double>   Gaussian;
+    typedef Gamma_<Double>      Gamma;
+    typedef GammaFunc_<Double>  GammaFunc;
+    typedef Beta_<Double>       Beta;
     typedef Poisson_<Double>    Poisson;
 public:
-    BinomialNeg_(RandomGen& gen, Real n, Real p)    : RandomDist(gen), n(n), p(p) { assert(n > 0 && p >= 0 && p <= 1); }
+    BinomialNeg_(RandomGen& gen, Real n, Real p)    : RandomDist<Real>(gen), n(n), p(p) { assert(n > 0 && p >= 0 && p <= 1); }
 
     virtual Real next() const;
     virtual Real pdf(Real x) const;
