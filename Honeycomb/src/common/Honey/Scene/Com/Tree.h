@@ -44,7 +44,7 @@ private:
         setParent(nullptr);
         clearChildren();
         setData(nullptr);
-        obj().listeners().removeAll(this);
+        obj().listeners().remove(this);
     }
 
     Callback _cb;

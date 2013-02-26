@@ -9,7 +9,7 @@ namespace honey
 
 /// Factory method to generate type-safe enumeration classes with runtime reflection
 /**
-    \defgroup Enum Enumeration Classes
+    \defgroup Enum  Enumeration Classes
 
     To generate an enum class, define ENUM_LIST and call ENUM():
 

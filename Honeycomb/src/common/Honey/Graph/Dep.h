@@ -34,22 +34,22 @@ public:
     ~DepNode() {}
 
     /// Set the data that this node contains
-    void setData(const Data& data)          { _data = data; }
-    const Data& getData() const             { return _data; }
-    Data& getData()                         { return _data; }
+    void setData(const Data& data)              { _data = data; }
+    const Data& getData() const                 { return _data; }
+    Data& getData()                             { return _data; }
     /// Implicit cast to the data at this node
-    operator const Data&() const            { return getData(); }
-    operator Data&()                        { return getData(); }
+    operator const Data&() const                { return getData(); }
+    operator Data&()                            { return getData(); }
     /// Get the data at this node
-    const Data& operator*() const           { return getData(); }
-    Data& operator*()                       { return getData(); }
-    const Data& operator->() const          { return getData(); }
-    Data& operator->()                      { return getData(); }
+    const Data& operator*() const               { return getData(); }
+    Data& operator*()                           { return getData(); }
+    const Data& operator->() const              { return getData(); }
+    Data& operator->()                          { return getData(); }
 
     /// Set the key used to identify this node
-    void setKey(const Key& key)             { _key = key; }
-    const Key& getKey() const               { return _key; }
-    Key& getKey()                           { return _key; }
+    void setKey(const Key& key)                 { _key = key; }
+    const Key& getKey() const                   { return _key; }
+    Key& getKey()                               { return _key; }
 
     /// Add a dependency link
     void add(const Key& key, DepType type = DepType::out)
@@ -60,25 +60,15 @@ public:
     }
 
     /// Remove a dependency link
-    void remove(const Key& key)             { _deps.erase(key); }
+    void remove(const Key& key)                 { _deps.erase(key); }
     /// Remove all dependency links
-    void clear()                            { _deps.clear(); }
+    void clear()                                { _deps.clear(); }
 
     /// Get dep links
-    const DepMap& deps() const              { return _deps; }
+    const DepMap& deps() const                  { return _deps; }
 
     /// Get opposite dependency type
-    static DepType depTypeOpp(DepType type)
-    {
-        switch (type)
-        {
-        case DepType::out:
-            return DepType::in;
-        case DepType::in:
-            return DepType::out;
-        }
-        return DepType::out;
-    }
+    static DepType depTypeOpp(DepType type)     { return type == DepType::out ? DepType::in : DepType::out; }
 
 private:
     Data    _data;
@@ -160,14 +150,6 @@ public:
         const LinkMap& linkMap(DepType type) const      { return linkMaps[type]; }
         LinkMap& linkMap(DepType type)                  { return linkMaps[type]; }
 
-        //Get total number of links
-        int linkCount() const
-        {
-            int count = 0;
-            for (auto i : honey::range(DepType::valMax)) count += linkMaps[i].size();
-            return count;
-        }
-
         /// A phantom vertex exists only because it was referenced as a dependency, but it is otherwise uninitialized and not considered for graph operations
         bool isPhantom() const                          { return nodeList.empty(); }
         /// A normal vertex is associated with one key, a merged vertex after condensation is associated with multiple keys.
@@ -231,7 +213,7 @@ public:
             //Vertex can't depend on itself
             if (&depVertex == &vertex) continue;
 
-            switch ((int)type)
+            switch (type)
             {
             case DepType::out:
                 vertex.add(DepType::out, &depVertex);
@@ -271,7 +253,7 @@ public:
             //Vertex can't depend on itself
             if (&depVertex == &vertex) continue;
 
-            switch ((int)type)
+            switch (type)
             {
             case DepType::out:
                 vertex.remove(DepType::out, &depVertex);
@@ -284,12 +266,12 @@ public:
             }
 
             //Don't keep around unreferenced phantoms
-            if (depVertex.isPhantom() && depVertex.linkCount() == 0)
+            if (depVertex.isPhantom() && depVertex.linkMap(DepType::in).empty() && depVertex.linkMap(DepType::out).empty())
                 deleteVertex(depVertex);
         }
 
         //Don't keep around unreferenced phantoms
-        if (vertex.isPhantom() && vertex.linkCount() == 0)
+        if (vertex.isPhantom() && vertex.linkMap(DepType::in).empty() && vertex.linkMap(DepType::out).empty())
             deleteVertex(vertex);
         //If we changed a merged vertex then we've probably broken the cyclic dependency so we should decompose it
         else if (vertex.isMerged())
@@ -344,8 +326,9 @@ public:
             {
                 if (_stack.empty())
                 {
-                    //move to next vertex in global list
-                    _vertex = ++_vertexIt != _graph->_vertexList.end() ? const_cast<Vertex*>(&*_vertexIt) : nullptr;
+                    //move to next root vertex in global list
+                    ++_vertexIt;
+                    nextRoot();
                 }
                 else
                 {
@@ -391,9 +374,9 @@ public:
             }
             else
             {
-                //get first vertex in global list (ignore phantom)
-                for (_vertexIt = _graph->_vertexList.begin(); _vertexIt != _graph->_vertexList.end() && _vertexIt->isPhantom(); ++_vertexIt);
-                _vertex = _vertexIt != _graph->_vertexList.end() ? const_cast<Vertex*>(&*_vertexIt) : nullptr;
+                //get first root vertex in global list (ignore phantom)
+                _vertexIt = _graph->_vertexList.begin();
+                nextRoot();
             }
             if (!_vertex) return;
 
@@ -406,8 +389,15 @@ public:
 
         /// Skip the current vertex's edges on next step of this iterator
         void skipEdges()                                    { _skipEdges = true; }
-
+        
     private:
+        void nextRoot()
+        {
+            auto typeOpp = DepNode::depTypeOpp(_type);
+            for (; _vertexIt != _graph->_vertexList.end() && (_vertexIt->isPhantom() || !_vertexIt->linkMap(typeOpp).empty()); ++_vertexIt);
+            _vertex = _vertexIt != _graph->_vertexList.end() ? const_cast<Vertex*>(&*_vertexIt) : nullptr;
+        }
+        
         const DepGraph*     _graph;
         Vertex*             _vertex;
         DepType             _type;
@@ -419,7 +409,7 @@ public:
     typedef Iter_<Vertex> Iter;
     typedef Iter_<const Vertex> ConstIter;
 
-    /// Get a depth-first pre-order range starting from a vertex.  If start vertex is null then range is over all vertices in graph.
+    /// Get a depth-first pre-order range starting from a vertex.  If start vertex is null then range is over all vertices, starting from all roots.
     Range_<ConstIter, ConstIter> range(option<const Key&> start = optnull, DepType type = DepType::out) const   { return honey::range(ConstIter(*this, start, type), ConstIter()); }
     Range_<Iter, Iter>           range(option<const Key&> start = optnull, DepType type = DepType::out)         { return honey::range(Iter(*this, start, type), Iter()); }
 
@@ -757,7 +747,7 @@ private:
                         //Create phantom vertex if it doesn't exist
                         auto& depVertex = createVertex(key);
 
-                        switch ((int)type)
+                        switch (type)
                         {
                         case DepType::out:
                             vertex.add(DepType::out, &depVertex);

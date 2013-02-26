@@ -8,7 +8,7 @@ namespace honey
 
 /// Meta-programming and compile-time util
 /**
-  * \defgroup Meta Meta-programming
+  * \defgroup Meta  Meta-programming
   */
 /// @{
 

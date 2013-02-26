@@ -10,7 +10,7 @@ namespace honey
 
 /// Methods that extend the functionality of the standard library.
 /**
-  * \defgroup StdUtil Standard Util
+  * \defgroup StdUtil   Standard Util
   */
 /// @{
 

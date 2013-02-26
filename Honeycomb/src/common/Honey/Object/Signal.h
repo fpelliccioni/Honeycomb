@@ -10,7 +10,7 @@ namespace honey
 
 /// Methods to create and operate on signals and listeners
 /**
-  * \defgroup Signal Signals and Listeners
+  * \defgroup Signal    Signals and Listeners
   *
   * Signals and listeners provide a way for one function call to be received by multiple callees.
   */

@@ -11,7 +11,7 @@ namespace honey
 /**
   * \ingroup Signal
   *
-  * Listeners receive signals in the same order as they are added.
+  * Listeners receive signals in the same order as the listeners are added.
   */
 class ListenerList
 {
@@ -24,24 +24,24 @@ public:
     };
 
     typedef list<SlotBase*, SmallAllocator<SlotBase*>> SlotList;
-    typedef UnorderedMultiMap<const void*, Listener::ConstPtr, SmallAllocator>::type BaseMap;
+    typedef UnorderedMultiMap<const void*, Listener::ConstPtr, SmallAllocator>::type ObjMap;
 
     ListenerList()                                      : _cb(nullptr) {}
     virtual ~ListenerList()                             { clear(); }
 
-    /// Add a listener reference
+    /// Add a listener shared reference
     void add(const Listener& listener);
-    /// Remove listener
+    /// Remove a listener
     void remove(const Listener& listener);
-    /// Remove all listeners with base instance
-    void removeAll(const void* base);
-    /// Remove all listeners with base instance and id
-    void removeAll(const void* base, const Id& id);
+    /// Remove all listeners with object instance
+    void remove(const void* obj);
+    /// Remove all listeners with object instance and id
+    void remove(const void* obj, const Id& id);
     /// Remove all listeners
     void clear();
 
-    /// Get all listeners, ordered by base instance
-    const BaseMap& list() const                         { return _baseMap; }
+    /// Get all listeners, ordered by object instance
+    const ObjMap& list() const                          { return _objMap; }
 
     /// Get slots that receive signal.  Returns null if none found.
     template<class Signal>
@@ -72,10 +72,10 @@ private:
 
     const SlotList* slotList(const Id& signalId) const;
 
-    BaseMap         _baseMap;
-    SignalMap       _signalMap;
-    SpinLock        _lock;
-    Callback*       _cb;
+    ObjMap      _objMap;
+    SignalMap   _signalMap;
+    SpinLock    _lock;
+    Callback*   _cb;
 };
 
 }

@@ -10,17 +10,14 @@ void ListenerList::add(const Listener& listener)
 {
     SpinLock::Scoped _(_lock);
 
-    //Add listener to base map
-    _baseMap.insert(make_pair(listener.base(), &listener));
+    //Add listener to object map
+    _objMap.insert(make_pair(listener.obj(), &listener));
 
-    //Add listener slots to signal map
-    auto& slots = listener.slots();
-    for (auto& slot : slots)
-    {
-        auto& index = _signalMap[slot->signalId()];
-        index.list.push_back(slot);
-        index.map.insert(make_pair(slot, --index.list.end()));
-    }
+    //Add listener slot to signal map
+    auto& slot = listener.slot();
+    auto& index = _signalMap[slot.signalId()];
+    index.list.push_back(&slot);
+    index.map.insert(make_pair(&slot, --index.list.end()));
 
     if (_cb) _cb->onAdd(listener);
 }
@@ -30,38 +27,38 @@ void ListenerList::remove(const Listener& listener)
     SpinLock::Scoped _(_lock);
     Listener::ConstPtr __ = &listener;  //Prevent destruction in scope
 
-    //Remove listener from base map
-    auto itMap = stdutil::find(_baseMap, listener.base(), &listener);
-    if (itMap != _baseMap.end()) _baseMap.erase(itMap);
+    //Remove listener from object map
+    auto itMap = stdutil::find(_objMap, listener.obj(), &listener);
+    if (itMap != _objMap.end()) _objMap.erase(itMap);
 
-    //Remove listener slots from signal map
-    auto& slots = listener.slots();
-    for (auto& slot : slots)
+    //Remove listener slot from signal map
+    do
     {
-        auto itMap = _signalMap.find(slot->signalId());
-        if (itMap == _signalMap.end()) continue;
+        auto& slot = listener.slot();
+        auto itMap = _signalMap.find(slot.signalId());
+        if (itMap == _signalMap.end()) break;
         auto& index = itMap->second;
-        auto itIndex = index.map.find(slot);
-        if (itIndex == index.map.end()) continue;
+        auto itIndex = index.map.find(&slot);
+        if (itIndex == index.map.end()) break;
         index.list.erase(itIndex->second);
         index.map.erase(itIndex);
         if (index.list.empty()) _signalMap.erase(itMap);
-    }
+    } while (false);
 
     if (_cb) _cb->onRemove(listener);
 }
 
-void ListenerList::removeAll(const void* base)
+void ListenerList::remove(const void* obj)
 {
     SpinLock::Scoped _(_lock);
-    auto itPair = _baseMap.equal_range(base);
+    auto itPair = _objMap.equal_range(obj);
     for (auto it = itPair.first; it != itPair.second;) remove(*it++->second);
 }
 
-void ListenerList::removeAll(const void* base, const Id& id)
+void ListenerList::remove(const void* obj, const Id& id)
 {
     SpinLock::Scoped _(_lock);
-    auto itPair = _baseMap.equal_range(base);
+    auto itPair = _objMap.equal_range(obj);
     for (auto it = itPair.first; it != itPair.second;)
     {
         auto& listener = it++->second;
@@ -73,7 +70,7 @@ void ListenerList::removeAll(const void* base, const Id& id)
 void ListenerList::clear()
 {
     SpinLock::Scoped _(_lock);
-    while (!_baseMap.empty()) remove(*_baseMap.begin()->second);
+    while (!_objMap.empty()) remove(*_objMap.begin()->second);
 }
 
 const ListenerList::SlotList* ListenerList::slotList(const Id& signalId) const

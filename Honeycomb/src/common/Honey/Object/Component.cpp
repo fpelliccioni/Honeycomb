@@ -11,7 +11,7 @@ mt::Void ComRegistry::buildDepGraph()
 {
     //Build dep graph
     _depGraph.clear();
-    for (auto& e: _types)
+    for (auto& e : _types)
     {
         //Create type dep node
         Type& type = *e.second;
@@ -25,7 +25,7 @@ mt::Void ComRegistry::buildDepGraph()
     //For dep order, we need to expand any specified links to also link the entire subtype tree
     DepGraph graph;
     list<DepNode> nodes;
-    for (auto& e: _types)
+    for (auto& e : _types)
     {
         Type& type = *e.second;
         type._depOrder = -1;

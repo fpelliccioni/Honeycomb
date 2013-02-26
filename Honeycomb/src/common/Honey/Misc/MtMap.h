@@ -9,7 +9,7 @@ namespace honey
 
 /// class MtMap, a compile-time associative heterogeneous container.
 /**
-    \defgroup MtMap Meta-map
+    \defgroup MtMap     Meta-map
 
     Each value may have a different type.
     Lookups are resolved at compile-time, so they are O(1) constant-time.
@@ -125,11 +125,12 @@ namespace honey
         for_each_mtmap(fooInsert.iter(key_int()), fooInsert.end(), Functor());
     }
 
-                                                            //Define a function that takes keyword arguments
-                                                            //Note that key_id is optional and has a default, all others are required
+                                                            //Define a function that takes keyword arguments.
+                                                            //Note that key_id is optional and has a default, all others are required.
+                                                            //The default value is wrapped in a lambda so the Id ctor can be omitted.
     void keywordFunc(MtMap<int8, key_char, int, key_int, option<Id>, key_id>::type _)
     {
-        _.setDefaults(mtmap(key_id() = "default"));
+        _.setDefaults(mtmap(key_id() = []{ return "default"; }));
         debug::print(sout() << "Keyword Args: " << _ << endl);
     }
 
@@ -277,7 +278,7 @@ ITERATE(1, MTMAP_KEY_MAX, MTMAP_TYPE)
         IdStatic(id, #Name);                                                    \
         /** Generate pairs with any value. Pair may store ref to rvalue. */     \
         template<class Val> MtPair<Name, Val> operator=(Val&& val)              \
-        { return MtPair<Name, Val>(val); }                                      \
+        { return MtPair<Name, Val>(forward<Val>(val)); }                        \
     };                                                                          \
 
 /// Construct a templated key generator that creates keys from static ints
@@ -286,7 +287,7 @@ ITERATE(1, MTMAP_KEY_MAX, MTMAP_TYPE)
     {                                                                           \
         IdStatic(id, sout() << #Name << "<" << Index << ">");                   \
         template<class Val> MtPair<Name, Val> operator=(Val&& val)              \
-        { return MtPair<Name, Val>(val); }                                      \
+        { return MtPair<Name, Val>(forward<Val>(val)); }                        \
     };                                                                          \
 
 /// Key/value pair.  A pair can be constructed with the syntax: `(key() = value)`
@@ -296,10 +297,11 @@ struct MtPair
     typedef Key_ Key;
     typedef Val_ Val;
     
-    MtPair(Val& val)                                                : key(), val(val) {}
+    template<class Val>
+    MtPair(Val&& val)                                               : key(), val(forward<Val>(val)) {}
 
     const Key key;
-    Val& val;
+    Val val;
 };
 
 /// Bidirectional iterator over map key/value pairs
@@ -320,7 +322,7 @@ class MtMapIter
 public:
     // Propogate const to pair value
     typedef MtPair< typename Elem::Key,
-                    typename std::conditional<std::is_const<Head>::value, const Val, Val>::type> Pair;
+                    typename std::conditional<std::is_const<Head>::value, const Val&, Val&>::type> Pair;
 
     MtMapIter(Head& head)                                           : _head(&head), pair(_head->get(Key())) {}
 
@@ -342,22 +344,33 @@ private:
     Pair pair;
 };
 
-/// Iterate over map calling functor for each key/value pair
-template<class Iter1, class Iter2, class Func>
-void for_each_mtmap(Iter1 itBegin, Iter2 itEnd, Func&& func,
-                    typename std::enable_if<!std::is_same<typename Iter1::Pair::Key, typename Iter2::Pair::Key>::value>::type*_=0)
+
+/** \cond */
+namespace priv
 {
-    mt_unused(_);
-    func(itBegin->key, itBegin->val);
+    /// If visitor can't accept key/value pair, skip the pair
+    template<class Iter, class Func>
+    auto for_each_mtmap_call(Iter&& it, Func&& func) -> decltype(func(it->key, it->val), void())
+                                                                    { func(it->key, it->val); }
+    inline void for_each_mtmap_call(...) {}
+}
+/// Stop iteration when end is reached
+template<class Iter1, class Iter2, class Func>
+auto for_each_mtmap(Iter1, Iter2, Func&&) ->
+    typename mt::disable_if<!std::is_same<typename Iter1::Pair::Key, typename Iter2::Pair::Key>::value>::type {}
+/** \endcond */
+
+/// Iterate over map calling functor (visitor) for each key/value pair
+template<class Iter1, class Iter2, class Func>
+auto for_each_mtmap(Iter1 itBegin, Iter2 itEnd, Func&& func) ->
+    typename std::enable_if<!std::is_same<typename Iter1::Pair::Key, typename Iter2::Pair::Key>::value>::type
+{
+    priv::for_each_mtmap_call(itBegin, func);
     for_each_mtmap(++itBegin, itEnd, forward<Func>(func));
 }
 
-/** \cond */
-/// Stop iteration when end is reached
-template<class Iter1, class Iter2, class Func>
-void for_each_mtmap(Iter1, Iter2, Func&&,
-                    typename mt::disable_if<!std::is_same<typename Iter1::Pair::Key, typename Iter2::Pair::Key>::value>::type*_=0) { mt_unused(_); }
 
+/** \cond */
 namespace priv
 {
     /// Check if value can be omitted in construction
@@ -462,8 +475,8 @@ public:
         typedef MtMapIter<Subclass> type;
     };
     /// Get beginning of an iterator over keys and values of this map
-    typename beginResult::ConstType begin() const                   { return beginResult::ConstType(subc()); }
-    typename beginResult::type      begin()                         { return beginResult::type(subc()); }
+    typename beginResult::ConstType begin() const                   { return typename beginResult::ConstType(subc()); }
+    typename beginResult::type      begin()                         { return typename beginResult::type(subc()); }
 
     /// Result of end()
     struct endResult
@@ -472,8 +485,8 @@ public:
         typedef MtMapIter<Subclass, MtMapTail> type;
     };
     /// Get end of an iterator over keys and values of this map
-    typename endResult::ConstType   end() const                     { return endResult::ConstType(subc()); }
-    typename endResult::type        end()                           { return endResult::type(subc()); }
+    typename endResult::ConstType   end() const                     { return typename endResult::ConstType(subc()); }
+    typename endResult::type        end()                           { return typename endResult::type(subc()); }
 
     /// Result of iter()
     template<class Key> struct iterResult
@@ -490,7 +503,7 @@ public:
     /// Result of clear()
     struct clearResult                                              { typedef MtMapTail type; };
     /// Clear map of all keys
-    typename clearResult::type clear()                              { return clearResult::type(); }
+    typename clearResult::type clear()                              { return typename clearResult::type(); }
 
     /// Get size of map at compile-time
     struct sizeMt                                                   : sizeR<0> {};
@@ -554,10 +567,12 @@ public:
     /// Ctor with key/value argument list
     ITERATE(1, MTMAP_KEY_MAX, MTMAPE_CTOR)
     /// Copy/Move any map type. Init with matching key in other map, recurse to tail.
-    template<class Map> MtMapElem(Map&& map)                        : List(forward<Map>(map)), _val(priv<Map>::init(map.get(Key()))) {}
+    template<class Map>
+    MtMapElem(Map&& map)                                            : List(forward<Map>(map)), _val(priv<Map>::init(map.get(Key()))) {}
 
     /// Copy/Move-assign any map type. Assign to matching key in other map, recurse to tail.
-    template<class Map> MtMapElem& operator=(Map&& rhs)             { priv<Map>::assign(_val, rhs.get(Key())); List::operator=(forward<Map>(rhs)); return *this; }
+    template<class Map>
+    MtMapElem& operator=(Map&& rhs)                                 { priv<Map>::assign(_val, rhs.get(Key())); List::operator=(forward<Map>(rhs)); return *this; }
 
     using List::operator[];
     /// Get value at key
@@ -571,10 +586,12 @@ public:
 
     using List::set;
     /// Set value at key from the pair `(key() = value)`.  Returns false if the key isn't found.
-    template<class Val> bool set(const MtPair<Key, Val>& pair)      { _val = pair.val; return true; }
+    template<class Val>
+    bool set(const MtPair<Key, Val>& pair)                          { _val = pair.val; return true; }
     
-    /// Set any uninitialized optional values to the defaults provided
-    template<class Map> void setDefaults(const Map& defaults)       { priv<Map>::setDefault(_val, defaults.get(Key())); List::setDefaults(defaults); }
+    /// Set any uninitialized optional values to the defaults provided.  A default for a key must be a functor that returns the value, so that the value ctor can be omitted if the key is already set.
+    template<class Map>
+    void setDefaults(Map&& defaults)                                { priv<Map>::setDefault(_val, defaults.get(Key())); List::setDefaults(forward<Map>(defaults)); }
 
     /// Result of insert()
     template<ITERATE(1, MTMAP_KEY_MODIFY_MAX, MTMAP_PARAMT_DEF), class _ = mt::tag<0>>
@@ -628,7 +645,7 @@ private:
         static void assign(Val&, mt::Void){}
 
         template<class T>
-        static auto setDefault(Val& lhs, T&& rhs) -> typename std::enable_if<mt::True<T>::value && optional>::type      { if (!lhs) lhs = rhs; }
+        static auto setDefault(Val& lhs, T&& rhs) -> typename std::enable_if<mt::True<T>::value && optional>::type      { if (!lhs) lhs = rhs(); }
         template<class T>
         static auto setDefault(Val&, T&&) -> typename mt::disable_if<mt::True<T>::value && optional>::type {}
         static void setDefault(Val&, mt::Void) {}
@@ -667,7 +684,7 @@ public:
     template<class Key, class Val>
     bool set(const MtPair<Key, Val>&)                               { return false; }
     /// End recursion
-    template<class Map> void setDefaults(const Map&) {}
+    template<class Map> void setDefaults(Map&&) {}
 
     /// Result of insert()
     template<ITERATE(1, MTMAP_KEY_MODIFY_MAX, MTMAP_PARAMT_DEF), class _ = mt::tag<0>>

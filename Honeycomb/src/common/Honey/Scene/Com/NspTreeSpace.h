@@ -73,8 +73,8 @@ public:
             space._tree.remove(*this);
             if (dirty) stdutil::erase(space._updateList, this);
             dirty = false;
-            obj().template com<Tm>().listeners().removeAll(this);
-            obj().template com<CullVolBase>().listeners().removeAll(this);
+            obj().template com<Tm>().listeners().remove(this);
+            obj().template com<CullVolBase>().listeners().remove(this);
         }
 
         void onChange()

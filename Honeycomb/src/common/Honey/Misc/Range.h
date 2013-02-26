@@ -8,7 +8,7 @@ namespace honey
 
 /// Methods that create and operate on ranges
 /**
-  * \defgroup Range Range Util
+  * \defgroup Range     Range Util
   */
 /// @{
 

@@ -94,77 +94,36 @@ namespace priv
 // ListenerQueue
 //====================================================
 
-/// Listener that holds queued slots for delayed processing of signals.
+/// Listener that holds queued slot for delayed processing of signals.
 /**
   * \ingroup Signal
   *
   * Signal args must be default constructible and assignable.
-  * For queue storage, const and reference are automatically removed from the signal arg types.
   */
 class ListenerQueue : public Listener
 {
-    typedef priv::SlotQueueBase SlotQueueBase;
 public:
     typedef SharedPtr<ListenerQueue> Ptr;
     typedef SharedPtr<const ListenerQueue> ConstPtr;
 
-    /// The base instance and id are used together to identify this listener
-    ListenerQueue(const void* base = nullptr, const Id& id = idnull)        : Listener(base, id) {};
-
-    /// Construct with slot and listener id
+    /// Construct with slot to receive `Signal` using function `F`.  The object instance and id are used together to identify this listener.
     template<class Signal, class F>
-    static ListenerQueue& create(F&& f, const void* base = nullptr, const Id& id = idnull)
-                                                        { auto& inst = *new ListenerQueue(base, id); inst.add<Signal>(forward<F>(f)); return inst; }
-
-    virtual ~ListenerQueue()                            { clear(); }
-
-    /// Add slot to receive `Signal` using function F. An id may be specified for slot lookup.  Returns position of new slot.
-    template<class Signal, class F>
-    ListIter add(F&& f, const Id& id = idnull)          { return insert<Signal>(_list.end(), forward<F>(f), id); }
-
-    /// Set slot at `pos` to receive `Signal` using function F. If id is not specified then existing id will be used.  Returns position of new slot.
-    template<class Signal, class F>
-    ListIter set(ListIter pos, F&& f, option<const Id&> id = optnull)
+    static ListenerQueue& create(F&& f, const void* obj = nullptr, const Id& id = idnull)
     {
-        Id slotId = id ? *id : (*pos)->id();
-        return insert<Signal>(remove(pos), forward<F>(f), slotId);
+        return *new ListenerQueue(*new priv::SlotQueue<Signal,Signal::arity,F>(id, forward<F>(f)), obj, id);
     }
-
-    /// Insert slot before `pos` to receive `Signal` using function F. An id may be specified for slot lookup.  Returns position of new slot.
-    template<class Signal, class F>
-    ListIter insert(ListIter pos, F&& f, const Id& id = idnull)
-    {
-        auto slot = new priv::SlotQueue<Signal,Signal::arity,F>(id, forward<F>(f));
-        auto it = _list.insert(pos, slot);
-        if (id != idnull) _map[id] = it;
-        auto posQueue = _queueList.end();
-        if (pos != _list.end())
-        {
-            auto itMap = _queueMap.find(*pos);
-            assert(itMap != _queueMap.end());
-            posQueue = itMap->second;
-        }
-        _queueMap[slot] = _queueList.insert(posQueue, slot);
-        return it;
-    }
-
-    /// Remove slot at `pos`.  Returns position of the next slot.
-    virtual ListIter remove(ListIter pos);
-    /// Remove all slots
-    virtual void clear();
-
+    
     /// Dispatch all signals stored in queue, clears queue when done
-    void process();
+    void process()                                          { _slot.process(); }
     /// Remove all signals stored in queue
-    void clearQueue();
-
-protected:
-    typedef list<SlotQueueBase*, SmallAllocator<SlotQueueBase*>> QueueList;
-    typedef UnorderedMap<SlotBase*, QueueList::iterator, SmallAllocator>::type QueueMap;
-
-    /// Each slot has a corresponding queued slot, queued slot list must have same order as slot list
-    QueueList _queueList;
-    QueueMap _queueMap;
+    void clear()                                            { _slot.clear(); }
+    
+private:
+    template<class SlotQueue>
+    ListenerQueue(SlotQueue& slot, const void* obj, const Id& id) :
+        Listener(slot, obj, id), _slot(slot) {};
+    
+    priv::SlotQueueBase& _slot;
 };
 
 }

@@ -11,7 +11,7 @@ namespace honey
 
 /// Methods to create and operate on components and component objects
 /**
-  * \defgroup Component Component System
+  * \defgroup Component     Component System
   */
 /// @{
 

@@ -9,7 +9,7 @@ namespace honey
 
 /// Methods to create and operate on string ids.
 /**
-  * \defgroup Id String Identifier
+  * \defgroup Id    String Identifier
   *
   * String ids provide a fast way to compare strings. \n
   * An Id is composed of a string and its hashed integer value. The strings are hashed using Hash::fast().

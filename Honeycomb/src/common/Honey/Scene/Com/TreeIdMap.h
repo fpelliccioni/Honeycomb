@@ -69,8 +69,8 @@ public:
 
         virtual void onComRemove()
         {
-            obj().listeners().removeAll(this);
-            obj().com<Tree>().listeners().removeAll(this);
+            obj().listeners().remove(this);
+            obj().com<Tree>().listeners().remove(this);
 
             //Remove from our map
             if (obj().hasCom<TreeIdMap>()) obj().com<TreeIdMap>().remove(*this);

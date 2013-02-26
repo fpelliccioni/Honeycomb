@@ -65,7 +65,7 @@ private:
 
     virtual void onComRemove()
     {
-        obj().com<Tree>().listeners().removeAll(this);
+        obj().com<Tree>().listeners().remove(this);
     }
 
     virtual void onTmChange()

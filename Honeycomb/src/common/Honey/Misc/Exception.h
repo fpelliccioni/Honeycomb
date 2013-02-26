@@ -60,31 +60,24 @@ public:
         return *this;
     }
 
-    #ifndef FINAL
-        /// Info about source where exception was thrown
-        struct Source
-        {
-            Source()                                                        : func(nullptr), file(nullptr), line(0) {}
-            Source(const char* func, const char* file, int line)            : func(func), file(file), line(line) {}
-            template<class E> E& operator<<(E&& e)                          { e._source = *this; return e; }
+    /// Info about source where exception was thrown
+    struct Source
+    {
+        Source()                                                        : func(nullptr), file(nullptr), line(0) {}
+        Source(const char* func, const char* file, int line)            : func(func), file(file), line(line) {}
+        template<class E> E& operator<<(E&& e)                          { e._source = *this; return e; }
 
-            friend StringStream& operator<<(StringStream& os, const Source& source)
-            {
-                return os
-                    << "Function:   " << source.func << endl
-                    << "File:       " << source.file << ":" << source.line << endl;
-            }
-
-            const char* func;
-            const char* file;
-            int line;
-        };
-    #else
-        struct Source
+        friend StringStream& operator<<(StringStream& os, const Source& source)
         {
-            friend StringStream& operator<<(StringStream& os, const Source&)    { return os; }
-        };
-    #endif
+            return os
+                << "Function:   " << source.func << endl
+                << "File:       " << source.file << ":" << source.line << endl;
+        }
+
+        const char* func;
+        const char* file;
+        int line;
+    };
 
     /// Helper to raise an exception after the right side of ^ has been evaluated
     struct Raiser

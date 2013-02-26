@@ -6,7 +6,7 @@
 namespace honey
 {
 
-/// \defgroup Preprocessor Global Preprocessor Macros
+/// \defgroup Preprocessor  Global Preprocessor Macros
 /// @{
 
 /// Evaluate expression

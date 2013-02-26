@@ -13,14 +13,13 @@ class TreeClone
 {
 public:
 
-    TreeClone() :
-        _queue(new ListenerQueue)
+    TreeClone()
     {
-        _queue->add<typename TreeNode::sigDestroy>(bind_fill(&TreeClone::onDestroy, this));
-        _queue->add<typename TreeNode::sigSetData>(bind_fill(&TreeClone::onSetData, this));
-        _queue->add<typename TreeNode::sigSetKey>(bind_fill(&TreeClone::onSetKey, this));
-        _queue->add<typename TreeNode::sigInsertChild>(bind_fill(&TreeClone::onInsertChild, this));
-        _queue->add<typename TreeNode::sigRemoveChild>(bind_fill(&TreeClone::onRemoveChild, this));
+        _listeners.push_back(&ListenerQueue::create<typename TreeNode::sigDestroy>(bind_fill(&TreeClone::onDestroy, this)));
+        _listeners.push_back(&ListenerQueue::create<typename TreeNode::sigSetData>(bind_fill(&TreeClone::onSetData, this)));
+        _listeners.push_back(&ListenerQueue::create<typename TreeNode::sigSetKey>(bind_fill(&TreeClone::onSetKey, this)));
+        _listeners.push_back(&ListenerQueue::create<typename TreeNode::sigInsertChild>(bind_fill(&TreeClone::onInsertChild, this)));
+        _listeners.push_back(&ListenerQueue::create<typename TreeNode::sigRemoveChild>(bind_fill(&TreeClone::onRemoveChild, this)));
     }
 
     ~TreeClone()                                        { clear(); }
@@ -99,7 +98,7 @@ public:
     void update()
     {
         //Process all signals to bring cloned nodes into the latest up-to-date state
-        _queue->process();
+        for (auto& e : _listeners) e->process();
 
         //Clone any phantoms that were registered or attached as unknown children
         while (!_phantomMap.empty())
@@ -109,9 +108,9 @@ public:
     /// Reset the state of the tree clone structure, unregister all nodes and destroy all clones 
     void clear()
     {
-        //Remove listener from orig nodes
-        for (auto& e : stdutil::keys(_regMap)) { const_cast<TreeNode*>(e)->listeners().remove(*_queue); }
-        _queue->clearQueue();
+        //Remove listeners from orig nodes
+        for (auto& node : stdutil::keys(_regMap)) for (auto& e : _listeners) const_cast<TreeNode*>(node)->listeners().remove(*e);
+        for (auto& e : _listeners) e->clear();
 
         //Free clone resources
         deleteRange(stdutil::values(_cloneMap));
@@ -284,7 +283,7 @@ private:
             phantom->addChild(*phantomChild);
         }
 
-        const_cast<TreeNode&>(parent).listeners().add(*_queue);
+        for (auto& e : _listeners) const_cast<TreeNode&>(parent).listeners().add(*e);
     }
 
     /// Unregister a single node without recursing to children.  Returns clone if successful
@@ -298,7 +297,7 @@ private:
                     sout()  << "Node can't be unregistered because its parent is registered. Parent Id: "
                             << clone->getParent()->getKey() << " ; Child Id: " << clone->getKey());
 
-        const_cast<TreeNode&>(node).listeners().remove(*_queue);
+        for (auto& e : _listeners) const_cast<TreeNode&>(node).listeners().remove(*e);
 
         _regMap.erase(&node);
         _phantomMap.erase(&node);
@@ -312,7 +311,7 @@ private:
     /// Reverse map from clone to original node
     typedef unordered_map<TreeNode*, const TreeNode*> CloneRMap;
 
-    ListenerQueue::Ptr _queue;
+    vector<ListenerQueue::Ptr> _listeners;
     CloneMap _cloneMap;
     CloneRMap _cloneRMap;
     CloneMap _regMap;
