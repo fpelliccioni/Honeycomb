@@ -23,11 +23,13 @@ namespace mt
 template<class T> struct identity                               { typedef T type; };
 /// Holds a constant integral value
 template<class T, T val> struct Value                           { static const T value = val; };
-/// Always return true
-template<class T> struct True                                   : Value<bool, true> {};
+/// Always returns true.  Can be used to force a clause to be type dependent.
+template<class...> struct True                                  : Value<bool, true> {};
+/// Variant of True for integers
+template<int...> struct True_int                                : Value<bool, true> {};
 /// Check if type is std::true_type
 template<class T> struct IsTrue                                 : Value<bool, std::is_same<T, std::true_type>::value> {};
-/// Empty type
+/// Special void type, use where void is intended but implicit members are required (default ctor, copyable, etc.)
 struct Void {};
 /// Use to differentiate an overloaded function by type. Accepts parameter default value: `func(tag<0> _ = 0)`
 template<int> struct tag                                        { tag() {} tag(int) {} };
@@ -66,6 +68,10 @@ template<bool b, int64 t, int64 f> struct conditional_int       : Value<int64, f
 /// Version of std::is_base_of that removes reference qualifiers before testing
 template<class Base, class Derived> struct is_base_of           : std::is_base_of<typename removeConstRef<Base>::type, typename removeConstRef<Derived>::type> {};
 
+/// Check if functor is callable with arguments
+/** \class isCallable */
+template<class Func, class... Args> class isCallable;
+    
 /// Create a method to check if a class has a member with matching name and type
 /**
   * `Result` stores the test result. `type` stores the member type if it exists, mt::Void otherwise.
@@ -132,6 +138,9 @@ private:
     NoCopy& operator=(const NoCopy&);
 };
 
+/// Get maximum of all arguments
+/** \class max */
+template<int64... vals> struct max;
 /// Get the absolute value of a number
 template<int64 val> struct abs                                  : Value<int64, (val < 0) ? -val : val> {};
 /// Get the sign of a number
@@ -152,28 +161,28 @@ template<int64 t, int64 f> struct conditional_int<true, t, f>   : Value<int64, t
     template<class Class, class MemberType>                                                                                     \
     class mt_hasMember_##TestName                                                                                               \
     {                                                                                                                           \
-        template<class T, T>                                    struct matchType;                                               \
-        template<class T> static std::true_type                 memberMatch(matchType<MemberType, &T::MemberName>*);            \
-        template<class T> static std::false_type                memberMatch(...);                                               \
+        template<class T, T>                        struct matchType;                                                           \
+        template<class T> static auto               memberMatch(void*) -> decltype(declval<matchType<MemberType, &T::MemberName>>(), std::true_type()); \
+        template<class T> static std::false_type    memberMatch(...);                                                           \
     public:                                                                                                                     \
         static const bool value = mt::IsTrue<decltype(memberMatch<Class>(nullptr))>::value;                                     \
         typedef typename std::conditional<value, MemberType, mt::Void>::type type;                                              \
     };
 
-#define mt_priv_hasType(TypeName, TestName)                                                                         \
-    template<class Class>                                                                                           \
-    class mt_hasType_##TestName                                                                                     \
-    {                                                                                                               \
-        template<class T> static std::true_type                 test(typename T::TypeName*);                        \
-        template<class T> static std::false_type                test(...);                                          \
-                                                                                                                    \
-        template<bool Res, class Enable = void>                                                                     \
-        struct testType                                             { typedef mt::Void type; };                     \
-        template<bool Res>                                                                                          \
-        struct testType<Res, typename std::enable_if<Res>::type>    { typedef typename Class::TypeName type; };     \
-    public:                                                                                                         \
-        static const bool value = mt::IsTrue<decltype(test<Class>(nullptr))>::value;                                \
-        typedef typename testType<value>::type type;                                                                \
+#define mt_priv_hasType(TypeName, TestName)                                                                                     \
+    template<class Class>                                                                                                       \
+    class mt_hasType_##TestName                                                                                                 \
+    {                                                                                                                           \
+        template<class T> static auto               test(void*) -> decltype(declval<typename T::TypeName>(), std::true_type()); \
+        template<class T> static std::false_type    test(...);                                                                  \
+                                                                                                                                \
+        template<bool Res, class Enable = void>                                                                                 \
+        struct testType                                             { typedef mt::Void type; };                                 \
+        template<bool Res>                                                                                                      \
+        struct testType<Res, typename std::enable_if<Res>::type>    { typedef typename Class::TypeName type; };                 \
+    public:                                                                                                                     \
+        static const bool value = mt::IsTrue<decltype(test<Class>(nullptr))>::value;                                            \
+        typedef typename testType<value>::type type;                                                                            \
     };
     
 /** \endcond */
@@ -181,10 +190,19 @@ template<int64 t, int64 f> struct conditional_int<true, t, f>   : Value<int64, t
 template<class T>
 class isTuple
 {
-    template<class T_> static std::true_type                    test(typename std::tuple_element<0,T_>::type*);
+    template<class T_> static auto                              test(void*) -> decltype(declval<typename std::tuple_element<0,T_>::type>(), std::true_type());
     template<class T_> static std::false_type                   test(...);
 public:
     static const bool value = IsTrue<decltype(test<T>(nullptr))>::value;
+};
+
+template<class Func, class... Args>
+class isCallable
+{
+    template<class F> static auto                               test(void*) -> decltype(declval<F>()(declval<Args>()...), std::true_type());
+    template<class F> static std::false_type                    test(...);
+public:
+    static const bool value = IsTrue<decltype(test<Func>(nullptr))>::value;
 };
 
 //====================================================
@@ -259,6 +277,8 @@ ITERATE1(0, FUNCTRAITS_ARG_MAX, M_STRUCT, const )
 /** \endcond */
 //====================================================
 /** \cond */
+template<int64 val, int64... vals> struct max<val, vals...>     : Value<int64, (val > max<vals...>::value ? val : max<vals...>::value)> {};
+template<int64 val> struct max<val>                             : Value<int64, val> {};
 template<> struct log2Floor<0>                                  : Value<int, -1> {};
 template<int64 a> struct gcd<a, 0>                              : Value<int64, abs<a>::value> {};
 template<int64 b> struct gcd<0, b>                              : Value<int64, abs<b>::value> {};

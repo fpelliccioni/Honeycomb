@@ -10,7 +10,7 @@ namespace honey { namespace debug { namespace platform
 
 void print(const String& str)
 {
-    printf("%s", str.toStdString().c_str());
+    printf("%s", str.u8().c_str());
 }
 
 void assertFail(const char* expr, const char* func, const char* file, int line, const String& msg)

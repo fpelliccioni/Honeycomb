@@ -105,8 +105,8 @@ public:
     String toLower() const;
     /// Convert string to upper case
     String toUpper() const;
-
-    std::string toStdString() const                                         { return std::string(begin(), end()); }
+    /// Convert to UTF-8 string
+    std::string u8() const                                                  { return std::string(begin(), end()); }
 };
 
 /// \name String operators

@@ -6,9 +6,9 @@
 
 namespace honey
 {
-
+    
 void test()
-{
+{    
     //=============================
     //LockFree list test
     //=============================
@@ -613,9 +613,9 @@ void test()
 
     crypt.setKey(key);
     crypt.setIv(iv);
-    crypt.encrypt(reinterpret_cast<const uint8*>(msg.toStdString().c_str()), reinterpret_cast<uint8*>(cipher), msg.length());
+    crypt.encrypt(reinterpret_cast<const uint8*>(msg.u8().c_str()), reinterpret_cast<uint8*>(cipher), msg.length());
     crypt.setIv(iv2);
-    crypt.encrypt(reinterpret_cast<const uint8*>(msg2.toStdString().c_str()), reinterpret_cast<uint8*>(cipher+msg.length()), msg2.length());
+    crypt.encrypt(reinterpret_cast<const uint8*>(msg2.u8().c_str()), reinterpret_cast<uint8*>(cipher+msg.length()), msg2.length());
 
     crypt.setKey(key);
     crypt.setIv(iv);

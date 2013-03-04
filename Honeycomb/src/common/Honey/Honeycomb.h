@@ -88,6 +88,7 @@
 #include "Honey/Misc/Range.h"
 #include "Honey/Misc/ScopeGuard.h"
 #include "Honey/Misc/StdUtil.h"
+#include "Honey/Misc/Variant.h"
 #include "Honey/Object/ComObject.h"
 #include "Honey/Object/Listener.h"
 #include "Honey/Object/ListenerList.h"

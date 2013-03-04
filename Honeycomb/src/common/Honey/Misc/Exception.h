@@ -125,7 +125,7 @@ private:
     {
         if (_what) return;
         _what = new String(createWhat());
-        _csWhat = new std::string(_what->toStdString());
+        _csWhat = new std::string(_what->u8());
     }
 
     Source _source;

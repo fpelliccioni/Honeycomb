@@ -356,6 +356,7 @@
 		371FD2AD16D75818006E9A11 /* Vec4.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vec4.h; sourceTree = "<group>"; };
 		3722802816D8C65D00F6959E /* TimedMutex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimedMutex.h; sourceTree = "<group>"; };
 		3722802916D8C67900F6959E /* TimedMutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TimedMutex.cpp; sourceTree = "<group>"; };
+		37955F1016E5425500480966 /* Variant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Variant.h; sourceTree = "<group>"; };
 		37A4A4EB16D63DBC002B6539 /* Honeycomb.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Honeycomb.pch; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -683,6 +684,7 @@
 				3719A75316D5DC2B00B09BDB /* ScopeGuard.h */,
 				3719A75416D5DC2B00B09BDB /* StdUtil.h */,
 				3719A75516D5DC2B00B09BDB /* TimePoint.h */,
+				37955F1016E5425500480966 /* Variant.h */,
 			);
 			name = Misc;
 			path = ../common/Honey/Misc;

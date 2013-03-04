@@ -32,7 +32,7 @@ public:
     {
         friend class MemPool;
     public:
-        Factory()                                           : param(mtmap(align() = std::alignment_of<double>::value)) {}
+        Factory()                                           : param(mtmap(align() = alignof(double))) {}
 
         /// Create pool using factory config
         MemPool& create()                                   { return *new MemPool(*this); }

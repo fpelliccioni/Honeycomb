@@ -52,9 +52,9 @@ namespace honey
         foo[key_int()] = 2;                                 //Set
         foo[key_id()] = "foo2";
                                                                             
-        assert(foo.hasKey(key_id()) && FooMap::hasKeyMt<key_id>::value);        //Check if has key at run/compile-time
+        assert(foo.hasKey(key_id()) && FooMap::hasKey_<key_id>::value);         //Check if has key at run/compile-time
         assert(( std::is_same< FooMap::getResult<key_id>::type, Id >::value )); //The result type of get(key_id) is Id 
-        assert(foo.size() == 2 && FooMap::sizeMt::value == 2);                  //Get number of keys at run/compile-time
+        assert(foo.size() == 2 && FooMap::size_::value == 2);                   //Get number of keys at run/compile-time
 
         x = foo.get(key_int());                             //Get at key
         foo.set(key_id() = "foo3");                         //Set accepts any type, converts using operator=.  Returns true.
@@ -167,7 +167,7 @@ namespace honey
     { static_assert((std::is_same<Key,Key1>::value), "Ctor failed. Key mismatch. Wrong init order."); }     \
 
 #define MTMAPE_INSERT_TYPE_ASSERT(It)                                                                       \
-    static_assert(!hasKeyMt<Key##It>::value, "Insert failed. Key " #It " already exists.");
+    static_assert(!hasKey_<Key##It>::value, "Insert failed. Key " #It " already exists.");
 
 #define MTMAPE_INSERT_TYPE(It)                                                                              \
     /* template to get insert result type. New keys/vals at front, rest of map at back */                   \
@@ -349,10 +349,10 @@ private:
 namespace priv
 {
     /// If visitor can't accept key/value pair, skip the pair
-    template<class Iter, class Func>
-    auto for_each_mtmap_call(Iter&& it, Func&& func) -> decltype(func(it->key, it->val), void())
-                                                                    { func(it->key, it->val); }
-    inline void for_each_mtmap_call(...) {}
+    template<class Iter, class Func, typename std::enable_if<mt::isCallable<Func, typename Iter::Pair::Key, typename Iter::Pair::Val&>::value, int>::type=0>
+    void for_each_mtmap_call(Iter& it, Func&& func)                { func(it->key, it->val); }
+    template<class Iter, class Func, typename mt::disable_if<mt::isCallable<Func, typename Iter::Pair::Key, typename Iter::Pair::Val&>::value, int>::type=0>
+    void for_each_mtmap_call(Iter&, Func&&) {}
 }
 /// Stop iteration when end is reached
 template<class Iter1, class Iter2, class Func>
@@ -461,9 +461,9 @@ private:
     /** \endcond */
 public:
     /// Check if key exists at compile-time
-    template<class Key> struct hasKeyMt                             : mt::Value<bool, !std::is_same<typename findElem<Key>::type, MtMapTail>::value> {};
+    template<class Key> struct hasKey_                              : mt::Value<bool, !std::is_same<typename findElem<Key>::type, MtMapTail>::value> {};
     /// Check if has key
-    template<class Key> bool hasKey(Key) const                      { return hasKeyMt<Key>::value; }
+    template<class Key> bool hasKey(Key) const                      { return hasKey_<Key>::value; }
 
     /// Result of get()
     template<class Key> struct getResult                            { typedef typename findElem<Key>::type::Val type; };
@@ -506,14 +506,14 @@ public:
     typename clearResult::type clear()                              { return typename clearResult::type(); }
 
     /// Get size of map at compile-time
-    struct sizeMt                                                   : sizeR<0> {};
+    struct size_                                                    : sizeR<0> {};
     /// Get size of map
-    int size() const                                                { return sizeMt::value; };
+    int size() const                                                { return size_::value; };
 
     /// Check if empty at compile-time
-    struct emptyMt                                                  : mt::Value<bool, isTail> {};
+    struct empty_                                                   : mt::Value<bool, isTail> {};
     /// Check if empty
-    bool empty() const                                              { return emptyMt::value; }
+    bool empty() const                                              { return empty_::value; }
 
     /// Convert to string
     friend StringStream& operator<<(StringStream& os, const Subclass& map)
@@ -545,7 +545,7 @@ public:
     typedef typename Super::Val Val;
     typedef typename Super::List List;
 
-    template<class Key> struct hasKeyMt                             : Super::template hasKeyMt<Key> {};
+    template<class Key> struct hasKey_                              : Super::template hasKey_<Key> {};
     using Super::hasKey;
     template<class Key> struct getResult                            : Super::template getResult<Key> {};
     template<class Key> struct beginResult                          : Super::template beginResult<Key> {};
@@ -556,9 +556,9 @@ public:
     using Super::iter;
     typedef typename Super::clearResult clearResult;
     using Super::clear;
-    typedef typename Super::sizeMt sizeMt;
+    typedef typename Super::size_ size_;
     using Super::size;
-    typedef typename Super::emptyMt emptyMt;
+    typedef typename Super::empty_ empty_;
     using Super::empty;
     /** \endcond */
 
