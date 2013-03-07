@@ -1,0 +1,8 @@
+<map id="honey::TreeIdMap" name="honey::TreeIdMap">
+<area shape="rect" id="node2" href="$classhoney_1_1_scene_component.html" title="Scene component. Component that can be added to a scene object." alt="" coords="46,339,217,367"/>
+<area shape="rect" id="node3" href="$classhoney_1_1_component.html" title="Base class for components. Components can only be attached to one ComObject at a time." alt="" coords="65,259,199,287"/>
+<area shape="rect" id="node4" href="$classhoney_1_1_property_object.html" title="Object that contains properties." alt="" coords="55,179,208,207"/>
+<area shape="rect" id="node5" href="$classhoney_1_1_object.html" title="Base class for objects." alt="" coords="80,99,183,127"/>
+<area shape="rect" id="node6" href="$classhoney_1_1_shared_obj.html" title="Reference&#45;counted object for intrusive shared pointers." alt="" coords="5,6,133,34"/>
+<area shape="rect" id="node7" href="$classhoney_1_1_id.html" title="Holds a string and its hashed value for fast comparison ops. See String Identifier." alt="" coords="158,6,233,34"/>
+</map>

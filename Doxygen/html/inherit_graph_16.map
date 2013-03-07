@@ -1,0 +1,5 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classhoney_1_1_bit_op_endian.html" title="honey::BitOpEndian\l\&lt; ENDIAN \&gt;" alt="" coords="11,5,151,49"/>
+<area shape="rect" id="node2" href="$classhoney_1_1_bit_op.html" title="Provides methods for manipulating bits." alt="" coords="205,43,304,71"/>
+<area shape="rect" id="node3" href="$classhoney_1_1_bit_op_common.html" title="Bit util common to any endian type. Use through class BitOp." alt="" coords="5,73,158,101"/>
+</map>

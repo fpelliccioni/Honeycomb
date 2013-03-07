@@ -1,0 +1,9 @@
+<map id="honey::MemPool::Heap::BlockHeader" name="honey::MemPool::Heap::BlockHeader">
+<area shape="rect" id="node4" title="Allocator that wraps blocks allocated from the system heap." alt="" coords="654,119,815,147"/>
+<area shape="rect" id="node2" title="Bucket block header, 8 bytes. Block header types are determined by examining the 4 bytes prior to the..." alt="" coords="5,235,211,263"/>
+<area shape="rect" id="node3" href="$structhoney_1_1_mem_pool_1_1_block_header_1_1_debug_info.html" title="Info only available in debug, 24 bytes." alt="" coords="301,266,507,310"/>
+<area shape="rect" id="node5" href="$classhoney_1_1_mem_pool.html" title="Memory pool." alt="" coords="343,5,465,33"/>
+<area shape="rect" id="node6" href="$structhoney_1_1mt_1_1_no_copy.html" title="Inherit to declare that class is not copyable." alt="" coords="40,5,176,33"/>
+<area shape="rect" id="node7" href="$classhoney_1_1_spin_lock.html" title="A thread lock where the lock is acquired through a busy wait loop." alt="" coords="344,57,464,85"/>
+<area shape="rect" id="node8" href="$classhoney_1_1atomic_1_1_var.html" title="honey::atomic::Var\l\&lt; int \&gt;" alt="" coords="338,111,470,155"/>
+</map>

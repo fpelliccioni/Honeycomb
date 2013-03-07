@@ -1,0 +1,19 @@
+<map id="src/Win/Honey/Thread/platform/Thread.cpp" name="src/Win/Honey/Thread/platform/Thread.cpp">
+<area shape="rect" id="node2" href="$common_2_honey_2_thread_2_thread_8h.html" title="Honey/Thread/Thread.h" alt="" coords="1325,99,1488,127"/>
+<area shape="rect" id="node3" href="$_exception_8h.html" title="Honey/Misc/Exception.h" alt="" coords="1072,363,1236,391"/>
+<area shape="rect" id="node42" href="$common_2_honey_2_misc_2_clock_8h.html" title="Honey/Misc/Clock.h" alt="" coords="1337,185,1476,213"/>
+<area shape="rect" id="node4" href="$common_2_honey_2_string_2_stream_8h.html" title="Honey/String/Stream.h" alt="" coords="1207,441,1363,469"/>
+<area shape="rect" id="node38" href="$_shared_ptr_8h.html" title="Honey/Memory/SharedPtr.h" alt="" coords="1000,526,1185,554"/>
+<area shape="rect" id="node41" href="$_unique_ptr_8h.html" title="Honey/Memory/UniquePtr.h" alt="" coords="973,611,1157,639"/>
+<area shape="rect" id="node5" href="$_string_8h.html" title="Honey/String/String.h" alt="" coords="1385,526,1532,554"/>
+<area shape="rect" id="node6" href="$common_2_honey_2_misc_2_debug_8h.html" title="Honey/Misc/Debug.h" alt="" coords="1258,611,1403,639"/>
+<area shape="rect" id="node7" href="$_meta_8h.html" title="Honey/Core/Meta.h" alt="" coords="1112,697,1248,725"/>
+<area shape="rect" id="node8" href="$_preprocessor_8h.html" title="Honey/Core/Preprocessor.h" alt="" coords="1087,782,1272,810"/>
+<area shape="rect" id="node9" href="$common_2_honey_2_core_2_core_8h.html" title="Honey/Core/Core.h" alt="" coords="1112,859,1248,887"/>
+<area shape="rect" id="node35" href="$_core_2_mem_8h.html" title="Honey/Core/Mem.h" alt="" coords="2350,945,2487,973"/>
+<area shape="rect" id="node39" href="$common_2_honey_2_thread_2_atomic_8h.html" title="Honey/Thread/Atomic.h" alt="" coords="787,611,948,639"/>
+<area shape="rect" id="node43" href="$_time_point_8h.html" title="Honey/Misc/TimePoint.h" alt="" coords="1324,278,1489,306"/>
+<area shape="rect" id="node44" href="$_duration_8h.html" title="Honey/Math/Duration.h" alt="" coords="1437,363,1595,391"/>
+<area shape="rect" id="node45" href="$_ratio_8h.html" title="Honey/Math/Ratio.h" alt="" coords="1644,441,1783,469"/>
+<area shape="rect" id="node46" href="$common_2_honey_2_math_2_numeral_8h.html" title="Honey/Math/Numeral.h" alt="" coords="1437,441,1595,469"/>
+</map>

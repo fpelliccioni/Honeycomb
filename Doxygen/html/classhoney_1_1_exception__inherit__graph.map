@@ -1,0 +1,11 @@
+<map id="honey::Exception" name="honey::Exception">
+<area shape="rect" id="node4" href="$structhoney_1_1debug_1_1_assertion_failure.html" title="Thrown on debug::assert() failure." alt="" coords="362,5,568,33"/>
+<area shape="rect" id="node5" href="$structhoney_1_1promise_1_1_already_satisfied.html" title="honey::promise::AlreadySatisfied" alt="" coords="357,57,573,85"/>
+<area shape="rect" id="node6" href="$structhoney_1_1promise_1_1_broken.html" title="Exceptions." alt="" coords="384,109,546,137"/>
+<area shape="rect" id="node7" href="$structhoney_1_1promise_1_1_future_already_retrieved.html" title="honey::promise::FutureAlready\lRetrieved" alt="" coords="364,161,567,205"/>
+<area shape="rect" id="node8" href="$structhoney_1_1promise_1_1_no_state.html" title="honey::promise::NoState" alt="" coords="381,229,549,257"/>
+<area shape="rect" id="node9" href="$structhoney_1_1thread_1_1_interrupted.html" title="Interrupted exception." alt="" coords="378,281,553,309"/>
+<area shape="rect" id="node10" href="$structhoney_1_1_variant_error.html" title="honey::VariantError" alt="" coords="397,333,533,361"/>
+<area shape="rect" id="node2" href="$classhoney_1_1_shared_obj.html" title="Reference&#45;counted object for intrusive shared pointers." alt="" coords="6,142,135,170"/>
+<area shape="rect" id="node3" title="STL class." alt="" coords="19,194,122,222"/>
+</map>

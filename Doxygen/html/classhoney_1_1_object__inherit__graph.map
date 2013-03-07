@@ -1,0 +1,34 @@
+<map id="honey::Object" name="honey::Object">
+<area shape="rect" id="node3" href="$classhoney_1_1_com_object.html" title="Component object. Object that consists of a collection of components." alt="" coords="347,98,479,126"/>
+<area shape="rect" id="node5" href="$classhoney_1_1_property_base.html" title="Base class for all properties." alt="" coords="340,179,486,207"/>
+<area shape="rect" id="node8" href="$classhoney_1_1_property_object.html" title="Object that contains properties." alt="" coords="336,231,490,259"/>
+<area shape="rect" id="node33" href="$classhoney_1_1_scene.html" title="Provides high&#45;level scene control." alt="" coords="362,283,465,311"/>
+<area shape="rect" id="node2" href="$classhoney_1_1_shared_obj.html" title="Reference&#45;counted object for intrusive shared pointers." alt="" coords="6,206,135,234"/>
+<area shape="rect" id="node4" href="$classhoney_1_1_scene_object.html" title="Consists of SceneComponent objects." alt="" coords="549,98,691,126"/>
+<area shape="rect" id="node6" href="$classhoney_1_1_property.html" title="Generic property." alt="" coords="547,150,693,178"/>
+<area shape="rect" id="node7" href="$classhoney_1_1_property_3_01vector_3_01_t_01_4_01_4.html" title="Generic vector property." alt="" coords="538,202,702,246"/>
+<area shape="rect" id="node9" href="$classhoney_1_1_component.html" title="Base class for components. Components can only be attached to one ComObject at a time." alt="" coords="553,270,687,298"/>
+<area shape="rect" id="node10" href="$classhoney_1_1_scene_component.html" title="Scene component. Component that can be added to a scene object." alt="" coords="750,270,922,298"/>
+<area shape="rect" id="node11" href="$classhoney_1_1_cull_vol_base.html" title="Cull volume base class." alt="" coords="986,57,1123,85"/>
+<area shape="rect" id="node15" href="$classhoney_1_1_light.html" title="Base class for lights." alt="" coords="1008,123,1102,151"/>
+<area shape="rect" id="node19" href="$classhoney_1_1_nsp_tree_space_1_1_data.html" title="honey::NspTreeSpace\l\&lt; NspTree \&gt;::Data" alt="" coords="978,175,1131,219"/>
+<area shape="rect" id="node20" href="$classhoney_1_1_scene_space.html" title="Base class for space components." alt="" coords="984,243,1125,271"/>
+<area shape="rect" id="node29" href="$classhoney_1_1_tm.html" title="Transform component." alt="" coords="1013,295,1097,323"/>
+<area shape="rect" id="node30" href="$classhoney_1_1_tree.html" title="Tree component." alt="" coords="1009,347,1101,375"/>
+<area shape="rect" id="node31" href="$classhoney_1_1_tree_id_map.html" title="Provides a fast way to retrieve objects in a tree by instance id." alt="" coords="990,399,1119,427"/>
+<area shape="rect" id="node32" href="$classhoney_1_1_tree_id_map_1_1_elem.html" title="Element that tracks its Id in the nearest TreeIdMap ancestor." alt="" coords="971,451,1138,479"/>
+<area shape="rect" id="node12" href="$classhoney_1_1_cull_vol.html" title="honey::CullVol\&lt; Box \&gt;" alt="" coords="1194,5,1347,33"/>
+<area shape="rect" id="node14" href="$classhoney_1_1_cull_vol.html" title="Generic volume for culling." alt="" coords="1187,57,1355,85"/>
+<area shape="rect" id="node13" href="$classhoney_1_1_cull_box_gen.html" title="Generated box for culling." alt="" coords="1412,5,1548,33"/>
+<area shape="rect" id="node16" href="$classhoney_1_1_light_dir.html" title="Directional light (ex. sunlight)" alt="" coords="1215,109,1326,137"/>
+<area shape="rect" id="node17" href="$classhoney_1_1_light_omni.html" title="Omni directional (spherical) light." alt="" coords="1208,161,1334,189"/>
+<area shape="rect" id="node18" href="$classhoney_1_1_light_spot.html" title="Spot light." alt="" coords="1419,145,1541,173"/>
+<area shape="rect" id="node21" href="$classhoney_1_1_tree_space.html" title="Space that is ordered by a hierarchy of bounding volumes." alt="" coords="1206,273,1336,301"/>
+<area shape="rect" id="node22" href="$classhoney_1_1_nsp_tree_space.html" title="Space divided by N&#45;dimensional spatial partitioning tree." alt="" coords="1403,197,1557,241"/>
+<area shape="rect" id="node23" href="$classhoney_1_1_nsp_tree_space.html" title="honey::NspTreeSpace\l\&lt; BspTree \&gt;" alt="" coords="1403,265,1557,309"/>
+<area shape="rect" id="node25" href="$classhoney_1_1_nsp_tree_space.html" title="honey::NspTreeSpace\l\&lt; OctTree \&gt;" alt="" coords="1403,333,1557,377"/>
+<area shape="rect" id="node27" href="$classhoney_1_1_nsp_tree_space.html" title="honey::NspTreeSpace\l\&lt; QuadTree \&gt;" alt="" coords="1403,401,1557,445"/>
+<area shape="rect" id="node24" href="$classhoney_1_1_bsp_tree_space.html" title="Space from a BspTree." alt="" coords="1610,273,1763,301"/>
+<area shape="rect" id="node26" href="$classhoney_1_1_oct_tree_space.html" title="Space from a OctTree." alt="" coords="1611,341,1762,369"/>
+<area shape="rect" id="node28" href="$classhoney_1_1_quad_tree_space.html" title="Space from a QuadTree." alt="" coords="1605,409,1768,437"/>
+</map>

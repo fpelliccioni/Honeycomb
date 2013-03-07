@@ -1,0 +1,9 @@
+<map id="honey::CameraPersp" name="honey::CameraPersp">
+<area shape="rect" id="node2" href="$classhoney_1_1_camera.html" title="Base camera class. In the identity local space the camera axes are oriented so that the coordinate ax..." alt="" coords="157,491,269,519"/>
+<area shape="rect" id="node3" href="$classhoney_1_1_viewport.html" title="Viewport rectangle for rendering. Viewport space coordinates are (0,0) at top&#45;left, (1,1) at bottom&#45;right." alt="" coords="4,318,120,346"/>
+<area shape="rect" id="node4" href="$classhoney_1_1lazy.html" title="honey::lazy\&lt; Matrix\l\&lt; 4, 4, Real \&gt; \&gt;" alt="" coords="145,310,281,354"/>
+<area shape="rect" id="node5" href="$classhoney_1_1_vec.html" title="honey::Vec\&lt; 3 \&gt;" alt="" coords="305,318,423,346"/>
+<area shape="rect" id="node6" href="$classhoney_1_1_vec_base.html" title="Vector base class." alt="" coords="273,198,455,258"/>
+<area shape="rect" id="node7" href="$classhoney_1_1_matrix_base.html" title="Matrix base class." alt="" coords="294,102,433,146"/>
+<area shape="rect" id="node9" href="$classhoney_1_1lazy.html" title="honey::lazy\&lt; honey\l::FrustumPersp_ \&gt;" alt="" coords="293,483,429,527"/>
+</map>

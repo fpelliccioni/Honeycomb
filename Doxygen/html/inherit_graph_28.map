@@ -1,0 +1,6 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classhoney_1_1_bound_vol_base.html" title="Base class for all bounding volumes." alt="" coords="5,57,158,85"/>
+<area shape="rect" id="node2" href="$classhoney_1_1_bound_vol.html" title="honey::BoundVol\&lt; Box \&gt;" alt="" coords="213,5,381,33"/>
+<area shape="rect" id="node3" href="$classhoney_1_1_bound_vol.html" title="Generic bounding volume. Wrapper around a shape that allows for generic intersection testing and tran..." alt="" coords="205,57,389,85"/>
+<area shape="rect" id="node4" href="$classhoney_1_1_bound_vol_any.html" title="Allows a clone of any bounding volume to be stored on the stack, to which write ops like transforms c..." alt="" coords="225,109,370,137"/>
+</map>

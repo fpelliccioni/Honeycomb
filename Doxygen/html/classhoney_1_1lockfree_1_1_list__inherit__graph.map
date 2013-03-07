@@ -1,0 +1,4 @@
+<map id="honey::lockfree::List&lt; Data_, Alloc_, Backoff, iterMax &gt;" name="honey::lockfree::List&lt; Data_, Alloc_, Backoff, iterMax &gt;">
+<area shape="rect" id="node2" href="$structhoney_1_1lockfree_1_1_mem_config.html" title="Configuration interface for memory manager. Inherit this class and override types and static members..." alt="" coords="5,6,192,34"/>
+<area shape="rect" id="node3" href="$structhoney_1_1mt_1_1_no_copy.html" title="Inherit to declare that class is not copyable." alt="" coords="216,6,351,34"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="honey::ComObject" name="honey::ComObject">
+<area shape="rect" id="node4" href="$classhoney_1_1_scene_object.html" title="Consists of SceneComponent objects." alt="" coords="5,238,147,266"/>
+<area shape="rect" id="node2" href="$classhoney_1_1_object.html" title="Base class for objects." alt="" coords="24,83,127,111"/>
+<area shape="rect" id="node3" href="$classhoney_1_1_shared_obj.html" title="Reference&#45;counted object for intrusive shared pointers." alt="" coords="12,6,140,34"/>
+</map>

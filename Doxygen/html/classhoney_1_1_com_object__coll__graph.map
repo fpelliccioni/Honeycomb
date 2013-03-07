@@ -1,0 +1,5 @@
+<map id="honey::ComObject" name="honey::ComObject">
+<area shape="rect" id="node2" href="$classhoney_1_1_object.html" title="Base class for objects." alt="" coords="80,99,183,127"/>
+<area shape="rect" id="node3" href="$classhoney_1_1_shared_obj.html" title="Reference&#45;counted object for intrusive shared pointers." alt="" coords="5,6,133,34"/>
+<area shape="rect" id="node4" href="$classhoney_1_1_id.html" title="Holds a string and its hashed value for fast comparison ops. See String Identifier." alt="" coords="158,6,233,34"/>
+</map>

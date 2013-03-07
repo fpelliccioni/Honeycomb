@@ -1,0 +1,12 @@
+<map id="src/common/Honey/Misc/Clock.h" name="src/common/Honey/Misc/Clock.h">
+<area shape="rect" id="node2" href="$_time_point_8h.html" title="Honey/Misc/TimePoint.h" alt="" coords="1179,107,1344,135"/>
+<area shape="rect" id="node3" href="$_duration_8h.html" title="Honey/Math/Duration.h" alt="" coords="1182,193,1340,221"/>
+<area shape="rect" id="node4" href="$_ratio_8h.html" title="Honey/Math/Ratio.h" alt="" coords="1109,441,1248,469"/>
+<area shape="rect" id="node34" href="$common_2_honey_2_math_2_numeral_8h.html" title="Honey/Math/Numeral.h" alt="" coords="1253,270,1411,298"/>
+<area shape="rect" id="node5" href="$_meta_8h.html" title="Honey/Core/Meta.h" alt="" coords="1112,526,1248,554"/>
+<area shape="rect" id="node6" href="$_preprocessor_8h.html" title="Honey/Core/Preprocessor.h" alt="" coords="1087,611,1272,639"/>
+<area shape="rect" id="node7" href="$common_2_honey_2_core_2_core_8h.html" title="Honey/Core/Core.h" alt="" coords="1112,689,1248,717"/>
+<area shape="rect" id="node33" href="$_core_2_mem_8h.html" title="Honey/Core/Mem.h" alt="" coords="2350,774,2487,802"/>
+<area shape="rect" id="node35" href="$_string_8h.html" title="Honey/String/String.h" alt="" coords="1258,355,1405,383"/>
+<area shape="rect" id="node36" href="$common_2_honey_2_misc_2_debug_8h.html" title="Honey/Misc/Debug.h" alt="" coords="1273,441,1417,469"/>
+</map>

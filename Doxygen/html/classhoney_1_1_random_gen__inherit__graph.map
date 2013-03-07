@@ -1,0 +1,4 @@
+<map id="honey::RandomGen" name="honey::RandomGen">
+<area shape="rect" id="node2" href="$classhoney_1_1concur_1_1_salsa.html" title="Thread&#45;safe random variate generator. Maintains a separate generator for each thread." alt="" coords="4,83,149,111"/>
+<area shape="rect" id="node3" href="$classhoney_1_1_salsa.html" title="Salsa20/8, a cryptographically secure pseudo random number generator." alt="" coords="175,83,272,111"/>
+</map>

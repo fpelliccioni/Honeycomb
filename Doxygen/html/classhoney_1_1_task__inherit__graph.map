@@ -1,0 +1,5 @@
+<map id="honey::Task" name="honey::Task">
+<area shape="rect" id="node4" href="$classhoney_1_1_task__.html" title="Holds a functor and dependency information, enqueue in a scheduler to run the task." alt="" coords="66,161,227,189"/>
+<area shape="rect" id="node2" href="$classhoney_1_1_shared_obj.html" title="Reference&#45;counted object for intrusive shared pointers." alt="" coords="5,6,133,34"/>
+<area shape="rect" id="node3" href="$structhoney_1_1mt_1_1_no_copy.html" title="Inherit to declare that class is not copyable." alt="" coords="158,6,292,34"/>
+</map>

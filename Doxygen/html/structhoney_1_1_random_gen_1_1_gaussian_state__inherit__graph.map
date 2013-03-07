@@ -1,0 +1,4 @@
+<map id="honey::RandomGen::GaussianState" name="honey::RandomGen::GaussianState">
+<area shape="rect" id="node2" href="$structhoney_1_1_random_gen_1_1_state.html" title="Base random state, must be inherited by generators." alt="" coords="17,99,196,127"/>
+<area shape="rect" id="node3" href="$structhoney_1_1_salsa_1_1_state.html" title="Generator State." alt="" coords="38,177,175,205"/>
+</map>

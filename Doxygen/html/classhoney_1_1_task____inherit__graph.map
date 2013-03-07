@@ -1,0 +1,5 @@
+<map id="honey::Task_&lt; Result &gt;" name="honey::Task_&lt; Result &gt;">
+<area shape="rect" id="node2" href="$classhoney_1_1_task.html" title="Base class of Task_, can be added to scheduler. Instances must be created through class Task_..." alt="" coords="100,83,192,111"/>
+<area shape="rect" id="node3" href="$classhoney_1_1_shared_obj.html" title="Reference&#45;counted object for intrusive shared pointers." alt="" coords="5,6,133,34"/>
+<area shape="rect" id="node4" href="$structhoney_1_1mt_1_1_no_copy.html" title="Inherit to declare that class is not copyable." alt="" coords="158,6,292,34"/>
+</map>

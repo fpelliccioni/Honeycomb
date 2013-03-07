@@ -1,0 +1,3 @@
+<map id="honey::MemPool::Heap::BlockHeader" name="honey::MemPool::Heap::BlockHeader">
+<area shape="rect" id="node2" title="Bucket block header, 8 bytes. Block header types are determined by examining the 4 bytes prior to the..." alt="" coords="4,6,208,34"/>
+</map>

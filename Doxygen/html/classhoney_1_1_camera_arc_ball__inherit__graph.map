@@ -1,0 +1,4 @@
+<map id="honey::CameraArcBall" name="honey::CameraArcBall">
+<area shape="rect" id="node2" href="$classhoney_1_1_camera_persp.html" title="Perspective camera." alt="" coords="9,83,156,111"/>
+<area shape="rect" id="node3" href="$classhoney_1_1_camera.html" title="Base camera class. In the identity local space the camera axes are oriented so that the coordinate ax..." alt="" coords="26,6,139,34"/>
+</map>

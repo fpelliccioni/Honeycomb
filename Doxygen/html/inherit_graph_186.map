@@ -1,0 +1,5 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$structhoney_1_1_random_gen_1_1_gaussian_state.html" title="State of Gaussian generator." alt="" coords="6,5,210,49"/>
+<area shape="rect" id="node2" href="$structhoney_1_1_random_gen_1_1_state.html" title="Base random state, must be inherited by generators." alt="" coords="258,13,438,41"/>
+<area shape="rect" id="node3" href="$structhoney_1_1_salsa_1_1_state.html" title="Generator State." alt="" coords="486,13,623,41"/>
+</map>

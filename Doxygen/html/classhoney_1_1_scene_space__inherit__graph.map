@@ -1,0 +1,15 @@
+<map id="honey::SceneSpace" name="honey::SceneSpace">
+<area shape="rect" id="node7" href="$classhoney_1_1_tree_space.html" title="Space that is ordered by a hierarchy of bounding volumes." alt="" coords="1134,115,1264,143"/>
+<area shape="rect" id="node2" href="$classhoney_1_1_scene_component.html" title="Scene component. Component that can be added to a scene object." alt="" coords="723,115,895,143"/>
+<area shape="rect" id="node3" href="$classhoney_1_1_component.html" title="Base class for components. Components can only be attached to one ComObject at a time." alt="" coords="540,115,674,143"/>
+<area shape="rect" id="node4" href="$classhoney_1_1_property_object.html" title="Object that contains properties." alt="" coords="336,115,490,143"/>
+<area shape="rect" id="node5" href="$classhoney_1_1_object.html" title="Base class for objects." alt="" coords="184,115,288,143"/>
+<area shape="rect" id="node6" href="$classhoney_1_1_shared_obj.html" title="Reference&#45;counted object for intrusive shared pointers." alt="" coords="6,115,135,143"/>
+<area shape="rect" id="node8" href="$classhoney_1_1_nsp_tree_space.html" title="Space divided by N&#45;dimensional spatial partitioning tree." alt="" coords="1313,5,1466,49"/>
+<area shape="rect" id="node9" href="$classhoney_1_1_nsp_tree_space.html" title="honey::NspTreeSpace\l\&lt; BspTree \&gt;" alt="" coords="1313,73,1466,117"/>
+<area shape="rect" id="node11" href="$classhoney_1_1_nsp_tree_space.html" title="honey::NspTreeSpace\l\&lt; OctTree \&gt;" alt="" coords="1313,141,1466,185"/>
+<area shape="rect" id="node13" href="$classhoney_1_1_nsp_tree_space.html" title="honey::NspTreeSpace\l\&lt; QuadTree \&gt;" alt="" coords="1313,209,1466,253"/>
+<area shape="rect" id="node10" href="$classhoney_1_1_bsp_tree_space.html" title="Space from a BspTree." alt="" coords="1520,81,1672,109"/>
+<area shape="rect" id="node12" href="$classhoney_1_1_oct_tree_space.html" title="Space from a OctTree." alt="" coords="1521,149,1671,177"/>
+<area shape="rect" id="node14" href="$classhoney_1_1_quad_tree_space.html" title="Space from a QuadTree." alt="" coords="1515,217,1677,245"/>
+</map>

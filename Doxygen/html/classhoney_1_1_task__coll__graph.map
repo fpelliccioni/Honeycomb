@@ -1,0 +1,9 @@
+<map id="honey::Task" name="honey::Task">
+<area shape="rect" id="node2" href="$classhoney_1_1_shared_obj.html" title="Reference&#45;counted object for intrusive shared pointers." alt="" coords="289,5,418,33"/>
+<area shape="rect" id="node3" href="$structhoney_1_1mt_1_1_no_copy.html" title="Inherit to declare that class is not copyable." alt="" coords="286,57,421,85"/>
+<area shape="rect" id="node4" href="$classhoney_1_1_mutex.html" title="A thread lock where the lock is acquired by suspending thread execution until it becomes available..." alt="" coords="303,109,404,137"/>
+<area shape="rect" id="node6" href="$classhoney_1_1_dep_node.html" title="honey::DepNode\&lt; Task * \&gt;" alt="" coords="263,161,444,189"/>
+<area shape="rect" id="node7" href="$classhoney_1_1_task_sched.html" title="Task scheduler, serializes and parallelizes task execution, given a dependency graph of tasks and a p..." alt="" coords="288,213,418,241"/>
+<area shape="rect" id="node8" href="$classhoney_1_1_dep_graph_1_1_vertex.html" title="A vertex is initially associated with one key and acts like a multi&#45;map, storing all nodes and graph ..." alt="" coords="256,265,451,309"/>
+<area shape="rect" id="node9" href="$classhoney_1_1_weak_ptr.html" title="honey::WeakPtr\&lt; honey\l::Task \&gt;" alt="" coords="271,333,435,377"/>
+</map>

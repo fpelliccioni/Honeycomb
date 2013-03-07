@@ -1,0 +1,5 @@
+<map id="honey::Camera" name="honey::Camera">
+<area shape="rect" id="node2" href="$classhoney_1_1_camera_ortho.html" title="Orthographic camera for 2D rendering on the XY plane." alt="" coords="4,83,149,111"/>
+<area shape="rect" id="node3" href="$classhoney_1_1_camera_persp.html" title="Perspective camera." alt="" coords="174,83,321,111"/>
+<area shape="rect" id="node4" href="$classhoney_1_1_camera_arc_ball.html" title="An arcball camera looks at a point and rotates around it." alt="" coords="171,161,325,189"/>
+</map>
