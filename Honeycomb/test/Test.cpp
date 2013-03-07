@@ -6,9 +6,9 @@
 
 namespace honey
 {
-    
+
 void test()
-{    
+{
     //=============================
     //LockFree list test
     //=============================
