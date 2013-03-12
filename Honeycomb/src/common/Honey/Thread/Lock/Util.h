@@ -15,49 +15,37 @@ namespace lock
 #define LOCK_ARG_MAX 5
 
 //====================================================
-#define tryLock(...) __tryLock()
-/// Try to lock a series of lockables. Locks either all or none.
+// tryLock
+//====================================================
+
+inline int tryLock()    { return -1; }
+
+/// Try to lock all lockables. Locks either all or none.
 /**
   * Returns the zero-based index of the first failed lock, or -1 if all locks were successful.
   */
-int tryLock(Locks&...);
-#undef tryLock
+template<class Lock, class... Locks, typename mt::disable_if<mt::isRange<Lock>::value, int>::type=0>
+int tryLock(Lock& l, Locks&... ls)
+{
+    UniqueLock<Lock> lock(l, lock::Op::tryLock);
+    if (!lock.owns()) return 0;
+    int failed = tryLock(ls...);
+    if (failed >= 0) return failed+1;
+    lock.release();
+    return -1;
+}
 
-#define PARAMT(It)  COMMA_IFNOT(It,1) class L##It
-#define PARAM(It)   COMMA_IFNOT(It,1) L##It& l##It
-#define ARG(It)     COMMA_IFNOT(It,2) l##It
-
-#define FUNC(It)                                                                                                        \
-    template<ITERATE_(1, It, PARAMT)>                                                                                   \
-    typename mt::disable_if<mt::isRange<L1>::value, int>::type                                                          \
-        tryLock(ITERATE_(1, It, PARAM))                                                                                 \
-    {                                                                                                                   \
-        UniqueLock<L1> lock(l1, lock::Op::tryLock);                                                                     \
-        if (!lock.owns()) return 0;                                                                                     \
-        IFEQUAL(It, 1, , int failed = tryLock(ITERATE_(2, It, ARG)); if (failed >= 0) return failed+1; )                \
-        lock.release();                                                                                                 \
-        return -1;                                                                                                      \
-    }                                                                                                                   \
-     
-ITERATE(1, LOCK_ARG_MAX, FUNC)
-#undef PARAMT
-#undef PARAM
-#undef ARG
-#undef FUNC
-//====================================================
-
-/// Try to lock a range of lockables. Locks either all or none.
+/// Try to lock all lockables in a range. Locks either all or none.
 /**
   * Returns an iterator to the first failed lock, or end if all locks were successful.
   */
-template<class Range>
-auto tryLock(Range&& range) ->
-    typename std::enable_if<mt::isRange<Range>::value, itertype(range)>::type
+template<class Range, typename std::enable_if<mt::isRange<Range>::value, int>::type=0>
+auto tryLock(Range&& range) -> mt_iterOf(range)
 {
     auto& begin = honey::begin(range);
     auto& end = honey::end(range);
     if (begin == end) return end;
-    UniqueLock<itertype(range)::value_type> lock(*begin, lock::Op::tryLock);
+    UniqueLock<mt_iterOf(range)::value_type> lock(*begin, lock::Op::tryLock);
     if (!lock.owns()) return begin;
     auto failed = tryLock(honey::range(next(begin),end));
     if (failed == end) lock.release();
@@ -65,39 +53,33 @@ auto tryLock(Range&& range) ->
 }
 
 //====================================================
+// lock
+//====================================================
 
 /** \cond */
 namespace priv
 {
-    #define PARAMT(It)  COMMA_IFNOT(It,1) class L##It
-    #define PARAM(It)   COMMA_IFNOT(It,1) L##It& l##It
-    #define ARG(It)     COMMA_IFNOT(It,2) l##It
-
-    /// Part of lock implementation. Locks first mutex then tries to lock rest, returns failed index or -1 on success
-    #define FUNC(It)                                                                                                    \
-        template<ITERATE_(1, It, PARAMT)>                                                                               \
-        typename mt::disable_if<mt::isRange<L1>::value, int>::type                                                      \
-            lockTest(ITERATE_(1, It, PARAM))                                                                            \
-        {                                                                                                               \
-            UniqueLock<L1> lock(l1);                                                                                    \
-            IFEQUAL(It, 1, , int failed = tryLock(ITERATE_(2, It, ARG)); if (failed >= 0) return failed+1; )            \
-            lock.release();                                                                                             \
-            return -1;                                                                                                  \
-        }                                                                                                               \
-
-    ITERATE(1, LOCK_ARG_MAX, FUNC)
-    #undef FUNC
     mtkeygen(LockIdx);
 
+    /// Part of lock implementation. Locks first mutex then tries to lock rest, returns failed index or -1 on success.
+    template<class Lock, class... Locks, typename mt::disable_if<mt::isRange<Lock>::value, int>::type=0>
+    int lockTest(Lock& l, Locks&... ls)
+    {
+        UniqueLock<Lock> lock(l);
+        int failed = tryLock(ls...);
+        if (failed >= 0) return failed+1;
+        lock.release();
+        return -1;
+    }
+    
     /// Part of lock implementation. Locks first mutex then tries to lock rest, returns failed iterator or end on success.
-    template<class Range>
-    auto lockTest(Range&& range) ->
-        typename std::enable_if<mt::isRange<Range>::value, itertype(range)>::type
+    template<class Range, typename std::enable_if<mt::isRange<Range>::value, int>::type=0>
+    auto lockTest(Range&& range) -> mt_iterOf(range)
     {
         auto& begin = honey::begin(range);
         auto& end = honey::end(range);
         if (begin == end) return end;
-        UniqueLock<itertype(range)::value_type> lock(*begin);
+        UniqueLock<mt_iterOf(range)::value_type> lock(*begin);
         auto failed = tryLock(honey::range(next(begin),end));
         if (failed == end) lock.release();
         return failed;
@@ -105,8 +87,9 @@ namespace priv
 }
 /** \endcond */
 
+//====================================================
 #define lock(...) __lock()
-/// Lock a series of lockables safely without deadlocking.
+/// Lock all lockables safely without deadlocking.
 /** 
   * Deadlock can be avoided by waiting only for the first lock, then trying to lock the others without waiting.
   * If any of the others fail, restart and wait for a failed lock instead.
@@ -117,6 +100,10 @@ namespace priv
   */
 void lock(Locks&...);
 #undef lock
+
+#define PARAMT(It)  COMMA_IFNOT(It,1) class L##It
+#define PARAM(It)   COMMA_IFNOT(It,1) L##It& l##It
+#define ARG(It)     COMMA_IFNOT(It,2) l##It
 
 /// A compile-time map is used as an array so we can access the locks by index and use modular arithmetic to rotate the locks.
 #define MAP_TYPE(It) COMMA_IFNOT(It,1) L##It&, priv::LockIdx<It>
@@ -153,7 +140,7 @@ ITERATE(1, LOCK_ARG_MAX, FUNC)
 #undef FUNC
 //====================================================
 
-/// Lock a range of lockables safely without deadlocking.
+/// Lock all lockables in a range safely without deadlocking.
 template<class Range>
 typename std::enable_if<mt::isRange<Range>::value>::type
     lock(Range&& range)

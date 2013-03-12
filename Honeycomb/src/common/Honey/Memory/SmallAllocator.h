@@ -6,46 +6,30 @@
 namespace honey
 {
 
-/// Memory pool tailored for small block allocation
-class SmallMemPool : mt::NoCopy
-{
-public:
-    /// Get singleton
-    mt_staticObj(SmallMemPool, inst,);
+MemPool& SmallAllocator_createSingleton();
 
-    ~SmallMemPool() {}
-
-    MemPool& pool()                             { return *_pool; }
-
-private:
-    SmallMemPool()                              : _pool(&createPool()) { _pool->setId("Small"); }
-
-    /// Creates the pool used by SmallMemPool. To provide a custom pool, define SMALL_ALLOCATOR_CUSTOM and a createPool() implementation.
-    static MemPool& createPool();
-
-    UniquePtr<MemPool> _pool;
-};
-
-/// SmallMemPool allocator
+/// Global allocator for small memory blocks.  To provide a custom pool define `SmallAllocator_createSingleton_` and implement SmallAllocator_createSingleton().
 template<class T>
 class SmallAllocator : public MemPoolAllocator<SmallAllocator, T>
 {
 public:
-    SmallAllocator()                            {}
-    SmallAllocator(const SmallAllocator&)       {}
+    SmallAllocator() {}
+    SmallAllocator(const SmallAllocator&) {}
     template<class U>
-    SmallAllocator(const SmallAllocator<U>&)    {}
+    SmallAllocator(const SmallAllocator<U>&) {}
 
-    MemPool& pool()                             { return SmallMemPool::inst().pool(); }
+    static MemPool& pool()                              { static UniquePtr<MemPool> inst = &createSingleton(); return *inst; }
+    
+private:
+    static MemPool& createSingleton()                   { MemPool& pool = SmallAllocator_createSingleton(); pool.setId("Small"); return pool; }
 };
 
 /// Inherit from this class to use the small block allocator
 typedef AllocatorObject<SmallAllocator> SmallAllocatorObject;
 
-
-#ifndef SMALL_ALLOCATOR_CUSTOM
+#ifndef SmallAllocator_createSingleton_
     /// Default implementation
-    inline MemPool& SmallMemPool::createPool()
+    inline MemPool& SmallAllocator_createSingleton()
     {
         MemPool::Factory factory;
         factory.addBucket(8, 5000);

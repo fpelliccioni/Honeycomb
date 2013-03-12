@@ -374,9 +374,9 @@ auto for_each_mtmap(Iter1 itBegin, Iter2 itEnd, Func&& func) ->
 namespace priv
 {
     /// Check if value can be omitted in construction
-    template<class Val> struct isOptional                           : mt::Value<bool, false> {};
-    template<class Val> struct isOptional<option<Val>>              : mt::Value<bool, true> {};
-    template<> struct isOptional<mt::Void>                          : mt::Value<bool, true> {};
+    template<class Val> struct isOptional                           : std::false_type {};
+    template<class Val> struct isOptional<option<Val>>              : std::true_type {};
+    template<> struct isOptional<mt::Void>                          : std::true_type {};
 
     /// Functor to convert map to string
     struct MtMapToString
@@ -408,8 +408,6 @@ public:
     typedef List_ List; ///< Rest of map
 
 private:
-    // Use cond, some of these private types were appearing in Doxygen
-    /** \cond */
     static const bool isTail = std::is_same<List, mt::Void>::value;
 
     /// Private functions for map elem
@@ -457,8 +455,7 @@ private:
     /// Recursive size counter, size is at tail
     template<int Count>
     struct sizeR                                                    : priv<isTail>::template sizeR<Count> {};
-
-    /** \endcond */
+    
 public:
     /// Check if key exists at compile-time
     template<class Key> struct hasKey_                              : mt::Value<bool, !std::is_same<typename findElem<Key>::type, MtMapTail>::value> {};

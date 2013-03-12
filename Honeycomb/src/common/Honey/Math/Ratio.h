@@ -88,8 +88,6 @@ public:
     };
 
 private:
-    // Doxygen can't parse this
-    /** \cond */
     template<class lhs, class rhs> struct lessCmpFrac;
     
     template<   class rhs,
@@ -150,7 +148,6 @@ private:
     /// Fractional recursion end, Num1 == 0, Num2 == 0
     template<int64 Den1, int64 Den2>
     struct lessCmpFrac<Ratio<0, Den1>, Ratio<0, Den2>>  : mt::Value<bool, false> {};
-    /** \endcond */
 };
 
 /// Ratio types

@@ -15,27 +15,9 @@ namespace honey
 /// Max args for range related variable argument functions
 #define RANGE_ARG_MAX 3
 
-/// Get range iterator begin type. \see elemtype()
-#define itertype(Range)                                             typename mt::removeConstRef<decltype(honey::begin(Range))>::type
-/// Get range iterator end type. \see elemtype()
-#define itertype_end(Range)                                         typename mt::removeConstRef<decltype(honey::end(Range))>::type
-/// Get range element type. \see itertype()
-#define elemtype(Range)                                             typename mt::removeRef<decltype(*honey::begin(Range))>::type
-
 namespace mt
 {
-    /** \cond */
-    namespace priv
-    {
-        mt_hasType(iterator_category)
-        template<class T> struct isIterator                         : Value<bool, isPtr<T>::value || mt_hasType_iterator_category<T>::value> {};
-    }
-    /** \endcond */
-    
-    /// Check if type is an iterator (has iterator category or is pointer) or a reference to one
-    template<class T> struct isIterator                             : priv::isIterator<typename removeRef<T>::type> {};
-
-    /// Check if type is a range (has std::begin) or a reference to one
+    /// Check if type is a range or a reference to one. A range is a type where std::begin(range) is a valid call.
     template<class T>
     class isRange
     {
@@ -44,6 +26,49 @@ namespace mt
     public:
         static const bool value = IsTrue<decltype(test<T>(nullptr))>::value;
     };
+    
+    /// Get range iterator begin type. \see elemOf
+    template<class Range> struct iterOf                             { typedef typename mt::removeConstRef<decltype(honey::begin(declval<Range>()))>::type type; };
+    /// iterOf for values
+    #define mt_iterOf(Range)                                        typename mt::removeConstRef<decltype(honey::begin(Range))>::type
+    
+    /// Get range iterator end type. \see elemOf
+    template<class Range> struct iter_endOf                         { typedef typename mt::removeConstRef<decltype(honey::end(declval<Range>()))>::type type; };
+    /// iter_endOf for values
+    #define mt_iter_endOf(Range)                                    typename mt::removeConstRef<decltype(honey::end(Range))>::type
+    
+    /// Get range element type. \see iterOf
+    template<class Range> struct elemOf                             { typedef typename mt::removeRef<decltype(*honey::begin(declval<Range>()))>::type type; };
+    /// elemOf for values
+    #define mt_elemOf(Range)                                        typename mt::removeRef<decltype(*honey::begin(Range))>::type
+    
+    /** \cond */
+    namespace priv
+    {
+        template<class Result, class T>
+        Result valAt(int cur, int end, T&& t)                       { assert(cur == end, "Index out of pack range"); return t; }
+        template<class Result, class T, class... Ts>
+        Result valAt(int cur, int end, T&& t, Ts&&... ts)           { return cur == end ? t : valAt<Result>(cur+1, end, forward<Ts>(ts)...); }
+        
+        template<class Val, class T>
+        int indexOf(int cur, Val&& val, T&& t)                      { return val == t ? cur : -1; }
+        template<class Val, class T, class... Ts>
+        int indexOf(int cur, Val&& val, T&& t, Ts&&... ts)          { return val == t ? cur : indexOf(cur+1, forward<Val>(val), forward<Ts>(ts)...); }
+    }
+    /** \endcond */
+    
+    /// Get value at index of parameter pack. All types must be convertible to `Result`, which defaults to the first type in `Ts`.
+    template<class Result = void, class... Ts>
+    typename std::conditional<std::is_same<Result, void>::value, typename mt::typeAt<0, Ts...>::type, Result>::type
+        valAt(int i, Ts&&... ts)
+    {
+        typedef typename std::conditional<std::is_same<Result, void>::value, typename mt::typeAt<0, Ts...>::type, Result>::type Result_;
+        return priv::valAt<Result_>(0, i, forward<Ts>(ts)...);
+    }
+    
+    /// Get index of value in parameter pack, returns -1 if not found
+    template<class Val, class... Ts>
+    int indexOf(Val&& val, Ts&&... ts)                              { return priv::indexOf(0, forward<Val>(val), forward<Ts>(ts)...); }
 }
 
 /// Convert a sequence to a forward iterator. Overload for iterator type. Returns the iterator itself.
@@ -55,7 +80,7 @@ auto seqToIter(Iter&& seq) -> typename std::enable_if<mt::isIterator<Iter>::valu
                                                                     { return forward<Iter>(seq); }
 /// Convert a sequence to a forward iterator. Overload for range type. Returns the range's begin iterator.
 template<class Range>
-auto seqToIter(Range&& seq) -> typename std::enable_if<mt::isRange<Range>::value, itertype(seq)>::type
+auto seqToIter(Range&& seq) -> typename std::enable_if<mt::isRange<Range>::value, mt_iterOf(seq)>::type
                                                                     { return begin(seq); }
 
 /// Iterator range. See range(Iter1&&, Iter2&&) to create.
@@ -104,9 +129,9 @@ Range_<T1,T2> range(const tuple<T1,T2>& t)                          { return Ran
 
 /// Reverse a range.  Begin/End iterators must be bidirectional.
 template<class Range>
-auto reversed(Range&& range) -> Range_<std::reverse_iterator<itertype(range)>, std::reverse_iterator<itertype_end(range)>>
+auto reversed(Range&& range) -> Range_<std::reverse_iterator<mt_iterOf(range)>, std::reverse_iterator<mt_iter_endOf(range)>>
 {
-    return honey::range(std::reverse_iterator<itertype(range)>(end(range)), std::reverse_iterator<itertype_end(range)>(begin(range)));
+    return honey::range(std::reverse_iterator<mt_iterOf(range)>(end(range)), std::reverse_iterator<mt_iter_endOf(range)>(begin(range)));
 }
 
 //====================================================
@@ -157,11 +182,10 @@ OutSeq&& map(Range&&, Seqs&&..., OutSeq&&, Func&&);
     template<class Range ITERATE_(1,It,PARAMT), class OutSeq, class Func>                                           \
     OutSeq&& map(Range&& range ITERATE_(1,It,PARAM), OutSeq&& out, Func&& f)                                        \
     {                                                                                                               \
-        return forward<OutSeq>(                                                                                     \
-            priv::map_impl##It< typename mt::removeConstRef<Range>::type ITERATE_(1,It,FORWARDT),                   \
-                                typename mt::removeConstRef<OutSeq>::type>                                          \
-                                ::func( forward<Range>(range) ITERATE_(1,It,FORWARD),                               \
-                                        forward<OutSeq>(out), forward<Func>(f)));                                   \
+        return priv::map_impl##It<  typename mt::removeConstRef<Range>::type ITERATE_(1,It,FORWARDT),               \
+                                    typename mt::removeConstRef<OutSeq>::type>                                      \
+                                    ::func( forward<Range>(range) ITERATE_(1,It,FORWARD),                           \
+                                            forward<OutSeq>(out), forward<Func>(f));                                \
     }                                                                                                               \
 
 ITERATE(0, RANGE_ARG_MAX, FUNC)
@@ -187,9 +211,9 @@ ITERATE(0, RANGE_ARG_MAX, FUNC)
   * Call function for each element in the range and any sequences, `f(accum, rangeElem, seq1Elem, seq2Elem...)`,
   * forwarding the result of each call into the next as `accum`.  Returns the accumulated value.
   *
-  * Reduce can be specialized through the function: `priv::reduce_implN<Range, Seqs...N>::%func(...)`
+  * Reduce can be specialized through the function: `priv::reduce_implN<Range, Seqs...N, Accum>::%func(...)`
   */
-Accum reduce(Range&&, Seqs&&..., const Accum& initVal, Func&&);
+Accum reduce(Range&&, Seqs&&..., Accum&& initVal, Func&&);
 #undef reduce
 #undef Accum
 /** \cond */
@@ -205,13 +229,13 @@ Accum reduce(Range&&, Seqs&&..., const Accum& initVal, Func&&);
 #define FUNC(It)                                                                                                    \
     namespace priv                                                                                                  \
     {                                                                                                               \
-    template<class Range_ ITERATE_(1,It,PARAMT_)>                                                                   \
+    template<class Range_ ITERATE_(1,It,PARAMT_), class Accum_>                                                     \
     struct reduce_impl##It                                                                                          \
     {                                                                                                               \
         template<class Range ITERATE_(1,It,PARAMT), class Accum, class Func>                                        \
-        static Accum func(Range&& range ITERATE_(1,It,PARAM), const Accum& initVal, Func&& f)                       \
+        static Accum_ func(Range&& range ITERATE_(1,It,PARAM), Accum&& initVal, Func&& f)                           \
         {                                                                                                           \
-            Accum a = initVal;                                                                                      \
+            Accum_ a(forward<Accum>(initVal));                                                                      \
             auto it = begin(range);                                                                                 \
             auto last = end(range);                                                                                 \
             ITERATE_(1,It,SEQTOITER)                                                                                \
@@ -222,12 +246,13 @@ Accum reduce(Range&&, Seqs&&..., const Accum& initVal, Func&&);
     };                                                                                                              \
     }                                                                                                               \
                                                                                                                     \
-    template<class Range ITERATE_(1,It,PARAMT), class Accum, class Func>                                            \
-    Accum reduce(Range&& range ITERATE_(1,It,PARAM), const Accum& initVal, Func&& f)                                \
+    template<   class Range ITERATE_(1,It,PARAMT), class Accum, class Func,                                         \
+                class Accum_ = typename std::decay<Accum>::type>                                                    \
+    Accum_ reduce(Range&& range ITERATE_(1,It,PARAM), Accum&& initVal, Func&& f)                                    \
     {                                                                                                               \
-        return priv::reduce_impl##It<typename mt::removeConstRef<Range>::type ITERATE_(1,It,FORWARDT)>              \
+        return priv::reduce_impl##It<typename mt::removeConstRef<Range>::type ITERATE_(1,It,FORWARDT), Accum_>      \
                                         ::func( forward<Range>(range) ITERATE_(1,It,FORWARD),                       \
-                                                initVal, forward<Func>(f));                                         \
+                                                forward<Accum>(initVal), forward<Func>(f));                         \
     }                                                                                                               \
 
 ITERATE(0, RANGE_ARG_MAX, FUNC)
@@ -266,7 +291,7 @@ Iter find(Range&&, Seqs&&..., Func&& pred);
 
 #define FUNC(It)                                                                                                    \
     template<class Range ITERATE_(1,It,PARAMT), class Func>                                                         \
-    auto find(Range&& range ITERATE_(1,It,PARAM), Func&& pred) -> itertype(range)                                   \
+    auto find(Range&& range ITERATE_(1,It,PARAM), Func&& pred) -> mt_iterOf(range)                                  \
     {                                                                                                               \
         auto it = begin(range);                                                                                     \
         auto last = end(range);                                                                                     \
@@ -314,8 +339,8 @@ Range_<FilterIter, FilterIter> filter(Range&&, Seqs&&..., Func&& pred);
     class FilterIter##It                                                                                                \
     {                                                                                                                   \
     public:                                                                                                             \
-        typedef itertype(declval<Range>()) Iter;                                                                        \
-        typedef itertype_end(declval<Range>()) IterEnd;                                                                 \
+        typedef typename mt::iterOf<Range>::type                      Iter;                                             \
+        typedef typename mt::iter_endOf<Range>::type                  IterEnd;                                          \
         typedef std::forward_iterator_tag                               iterator_category;                              \
         typedef typename std::iterator_traits<Iter>::value_type         value_type;                                     \
         typedef typename std::iterator_traits<Iter>::difference_type    difference_type;                                \
@@ -362,8 +387,8 @@ Range_<FilterIter, FilterIter> filter(Range&&, Seqs&&..., Func&& pred);
                 FilterIter##It<Range ITERATE_(1,It,SEQTOITER_PARAMT), Func>>                                            \
     {                                                                                                                   \
         typedef FilterIter##It<Range ITERATE_(1,It,SEQTOITER_PARAMT), Func> FilterIter;                                 \
-        return honey::range(FilterIter(begin(range), end(range) ITERATE_(1,It,SEQTOITER), forward<Func>(pred)),         \
-                            FilterIter(end(range), forward<Func>(pred)));                                               \
+        return honey::range(FilterIter(begin(range), end(range) ITERATE_(1,It,SEQTOITER), pred),                        \
+                            FilterIter(end(range), pred));                                                              \
     }                                                                                                                   \
 
 ITERATE(0, RANGE_ARG_MAX, FUNC)
@@ -380,13 +405,17 @@ ITERATE(0, RANGE_ARG_MAX, FUNC)
 /** \endcond */
 //====================================================
 
+/// Count number of elements in range
+template<class Range>
+int countOf(Range&& range)                                          { return reduce(range, 0, [](int a, mt_elemOf(range)&) { return ++a; }); }
+
 /// Delete all elements in range
 template<class Range>
-void deleteRange(Range&& range)                                     { for (auto& e : range) { delete_(e); } }
+void deleteRange(Range&& range)                                     { for (auto& e : range) delete_(e); }
 
 /// Delete all elements in range using allocator
 template<class Range, class Alloc>
-void deleteRange(Range&& range, Alloc&& alloc)                      { for (auto& e : range) { delete_(e, alloc); } }
+void deleteRange(Range&& range, Alloc&& alloc)                      { for (auto& e : range) delete_(e, alloc); }
 
 
 /// Incremental integer iterator (step size = 1). See range(int, int) to create.
@@ -642,8 +671,8 @@ template<class Range, class Iter>
 class RingIter
 {
 public:
-    typedef itertype(declval<Range>()) RangeIter;
-    typedef itertype_end(declval<Range>()) RangeIterEnd;
+    typedef typename mt::iterOf<Range>::type                        RangeIter;
+    typedef typename mt::iter_endOf<Range>::type                    RangeIterEnd;
     typedef std::bidirectional_iterator_tag                         iterator_category;
     typedef typename std::iterator_traits<Iter>::value_type         value_type;
     typedef typename std::iterator_traits<Iter>::difference_type    difference_type;

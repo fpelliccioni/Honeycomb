@@ -8,7 +8,7 @@ namespace honey
 
 /// Holds a slot that can receive signals
 /** \ingroup Signal */
-class Listener : public SharedObj, public SmallAllocatorObject, mt::NoCopy
+class Listener : public SharedObj, public SmallAllocatorObject
 {
 public:
     typedef SharedPtr<Listener> Ptr;
@@ -30,7 +30,7 @@ public:
 
 protected:
     Listener(SlotBase& slot, const void* obj, const Id& id) :
-        SharedObj([](void* p) { operator delete(p); }), //must delete using small allocator
+        SharedObj(SmallAllocator<Listener>()),
         _slot(&slot), _obj(obj), _id(id) {};
     
     UniquePtr<SlotBase> _slot;

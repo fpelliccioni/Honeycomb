@@ -75,7 +75,7 @@ public:
 
     /// Linearly blend a range of values by applying an associated weight to each value. If all weights are 0 then the first value is returned.
     template<class Range, class Seq>
-    static auto blend(Range&& vals, Seq&& weights_) -> elemtype(vals)
+    static auto blend(Range&& vals, Seq&& weights_) -> mt_elemOf(vals)
     {
         auto val = begin(vals), last = end(vals);
         auto weights = seqToIter(weights_);
@@ -83,7 +83,7 @@ public:
         for (; val != last && *weights == 0; ++val, ++weights);
         if (val == last) return *begin(vals);
         //Blend the values
-        elemtype(vals) ret(*val++);
+        mt_elemOf(vals) ret(*val++);
         Real weightAccum = *weights++;
         for (; val != last; ++val, ++weights)
         {

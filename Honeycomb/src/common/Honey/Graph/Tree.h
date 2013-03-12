@@ -215,34 +215,6 @@ public:
     }
     ChildIter childPos(const TreeNode& child)                   { auto ret = const_cast<const TreeNode*>(this)->childPos(child); return reinterpret_cast<ChildIter&>(ret); }
 
-    /// Get child at offset from another child.  Large offsets will be slow to process.
-    ChildConstIter childPos(ChildConstIter itBase, int offset) const
-    {
-        if (offset > 0)     for (; offset > 0 && itBase != _childList.end(); --offset, ++itBase);
-        else                for (; offset < 0 && itBase != _childList.begin(); ++offset, --itBase);
-        return itBase;
-    }
-    ChildIter childPos(ChildIter itBase, int offset)            { auto ret = const_cast<const TreeNode*>(this)->childPos(reinterpret_cast<ChildConstIter&>(itBase), offset); return reinterpret_cast<ChildIter&>(ret); }
-
-    /// Get offset of child `itPos` relative to another child `itBase`. Returns childCount() if not found.
-    int childOffset(ChildConstIter itBase, ChildConstIter itPos) const
-    {
-        auto itBaseR = itBase;
-        auto itBegin = _childList.begin();
-        auto itEnd = _childList.end();
-        //Check forward and backward at same time
-        int count = 0;
-        for (; itBase != itPos && itBaseR != itPos; ++count)
-        {
-            if (itBase == itEnd && itBaseR == itBegin) return childCount();
-            if (itBase != itEnd) ++itBase;
-            if (itBaseR != itBegin) --itBaseR;
-        }
-        return (itBase == itPos) ? count : -count;
-    }
-
-    int childOffset(ChildIter itBase, ChildIter itPos)          { return const_cast<const TreeNode*>(this)->childOffset(reinterpret_cast<ChildConstIter&>(itBase), reinterpret_cast<ChildConstIter&>(itPos)); }
-
     /// Get child in list. Returns first child found at key, or null if not found.
     const TreeNode* child(const Key& key) const
     {
@@ -287,14 +259,6 @@ public:
     bool sibHasNext() const                                     { return hasParent() ? next(_itSib) != _parent->_childList.end() : false; }
     /// Check if node has a previous sibling
     bool sibHasPrev() const                                     { return hasParent() ? ChildListIterR(_itSib) != _parent->_childList.rend() : false; }
-
-    /// Get sibling at offset from another sibling.  Large offsets will be slow to process.
-    ChildConstIter sibPos(ChildConstIter itBase, int offset) const      { return hasParent() ? _parent->childPos(itBase, offset) : _childList.end(); }
-    ChildIter sibPos(ChildIter itBase, int offset)                      { return hasParent() ? _parent->childPos(itBase, offset) : _childList.end(); }
-
-    /// Get offset of sibling `itPos` relative to another sibling `itBase`. Parent's childCount() is returned if position is not found.
-    int sibOffset(ChildConstIter itBase, ChildConstIter itPos) const    { return hasParent() ? _parent->childOffset(itBase, itPos) : 0; }
-    int sibOffset(ChildIter itBase, ChildIter itPos)                    { return hasParent() ? _parent->childOffset(itBase, itPos) : 0; }
 
     /// Get the root (top-most) node of the tree that contains this node
     const TreeNode& root() const
@@ -448,14 +412,11 @@ public:
     /// Get a reversed depth-first pre-order range
     Range_<PreOrdConstIterR, PreOrdConstIterR>  preOrdR() const { auto range_ = preOrd(); return range(PreOrdConstIterR(end(range_)), PreOrdConstIterR(begin(range_))); }
     Range_<PreOrdIterR, PreOrdIterR>            preOrdR()       { auto range_ = preOrd(); return range(PreOrdIterR(end(range_)), PreOrdIterR(begin(range_))); }
-
-    /// Get the number of nodes in the entire subtree (ie. this node and its children, and its children's children...)
-    int preOrdCount() const                                     { return reduce(preOrd(), 0, [](int a, const TreeNode&) { return ++a; }); }
     
     /// Get listener list
     ListenerList& listeners()                                   { return _listenerList(); }
+    
 private:
-
     void init()
     {
         _parent = nullptr;

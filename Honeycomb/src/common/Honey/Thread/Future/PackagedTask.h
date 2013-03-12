@@ -12,6 +12,8 @@ template<class Sig> class PackagedTask;
 template<class R, class... Param>
 class PackagedTask<R (Param...)> : mt::NoCopy
 {
+    template<class, class> friend class FutureCommon;
+    
 public:
     PackagedTask()                                  : _func(nullptr), _invoked(false) {}
     template<class F>
@@ -24,14 +26,14 @@ public:
 
     /// Get future from which delayed result can be retrieved
     /**
-      * \throws promise::FutureAlreadyRetrieved     if future() has been called more than once.
+      * \throws future::FutureAlreadyRetrieved      if future() has been called more than once.
       */
     Future<R> future()                              { return _promise.future(); }
 
     /// Invoke stored function to evaluate result for associated future.
     /**
-      * \throws promise::AlreadySatisfied   if the function has already been invoked
-      * \throws promise::NoState            if invalid
+      * \throws future::AlreadySatisfied    if the function has already been invoked
+      * \throws future::NoState             if invalid
       */
     template<class... Args>
     void operator()(Args&&... args)                 { invoke(true, forward<Args>(args)...); }
@@ -42,30 +44,34 @@ public:
     /// Signal to future that result is ready for retrieval.  This is only needed after a call to invoke_delayedReady().
     void setReady()
     {
-        if (!isValid()) throw_ promise::NoState();
+        if (!valid()) throw_ future::NoState();
         assert(_invoked && !_promise._state->ready);
         _promise._state->setReady();
     }
 
     /// Check if this instance has state and can be used.  State can be transferred out to another instance through move-assignment.
-    bool isValid() const                            { return _promise.isValid(); }
+    bool valid() const                              { return _promise.valid(); }
 
     /// Reset the function so it can be invoked again, a new future is created for the next result
     void reset()
     {
-        if (!isValid() || !_invoked) return;
+        if (!valid() || !_invoked) return;
         _promise = Promise<R>();
         _invoked = false;
     }
 
 private:
+    template<class F, class Alloc>
+    PackagedTask(F&& f, Alloc&& alloc, Promise<R>&& promise) :
+        _func(std::allocator_arg_t(), forward<Alloc>(alloc), forward<F>(f)), _promise(move(promise)), _invoked(false) {}
+    
     template<class... Args>
     void invoke(bool setReady, Args&&... args)
     {
-        if (!isValid()) throw_ promise::NoState();
-        if (_invoked) throw_ promise::AlreadySatisfied();
+        if (!valid()) throw_ future::NoState();
+        if (_invoked) throw_ future::AlreadySatisfied();
         _invoked = true;
-        promise::priv::invoke<R>()(*_promise._state, setReady, _func, forward<Args>(args)...);
+        future::priv::invoke<R>()(*_promise._state, setReady, _func, forward<Args>(args)...);
     }
 
     function<R (Param...)> _func;

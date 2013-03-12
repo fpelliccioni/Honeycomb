@@ -6,8 +6,6 @@
 namespace honey
 {
 
-#define LAZY_ARG_MAX 3
-
 /// Wraps a value so that it is calculated only when needed.  A lock synchronizes access.
 template<class T, class Eval = function<void(T&)>, class Pred = function<bool()>>
 class lazy
@@ -43,42 +41,22 @@ public:
     operator const T&() const                       { return get(); }
     operator T&()                                   { return get(); }
 
-    //===========================================
-    #define get(...) __get()
-    /// Evaluate the lazy value. Only evaluates if dirty. The args are forwarded to the predicate and eval function.
-    void get(Args...);
-    #undef get
-
-    #define PARAMT(It)      COMMA_IFNOT(It,1) class T##It
-    #define PARAM(It)       COMMA_IFNOT(It,1) T##It&& t##It
-    #define ARG(It)         COMMA_IFNOT(It,1) forward<T##It>(t##It)
-
-    #define FUNC(It)                                                                    \
-        IFEQUAL(It,0,,template<ITERATE_(1,It,PARAMT)>)                                  \
-        const T& get(ITERATE_(1,It,PARAM)) const                                        \
-        {                                                                               \
-            return const_cast<lazy*>(this)->get(ITERATE_(1,It,ARG));                    \
-        }                                                                               \
-                                                                                        \
-        IFEQUAL(It,0,,template<ITERATE_(1,It,PARAMT)>)                                  \
-        T& get(ITERATE_(1,It,PARAM))                                                    \
-        {                                                                               \
-            /** Check before lock for early return */                                   \
-            if (!(isDirty() || (_pred && _pred(ITERATE_(1,It,ARG))))) return _val;      \
-            SpinLock::Scoped _(_lock);                                                  \
-            /** Must check again after lock, another thread may have eval'd */          \
-            if (!(isDirty() || (_pred && _pred(ITERATE_(1,It,ARG))))) return _val;      \
-            _eval(_val IFEQUAL(It,0,,COMMA ITERATE_(1,It,ARG)));                        \
-            _dirty = false;                                                             \
-            return _val;                                                                \
-        }                                                                               \
-
-    ITERATE(0, LAZY_ARG_MAX, FUNC)
-    #undef PARAMT
-    #undef PARAM
-    #undef ARG
-    #undef FUNC
-    //===========================================
+    /// Evaluate the lazy value. Only evaluates if dirty. The args are passed to the predicate and eval function.
+    template<class... Args>
+    T& get(Args&&... args)
+    {
+        // Check before lock for early return
+        if (!(isDirty() || (_pred && _pred(args...)))) return _val;
+        SpinLock::Scoped _(_lock);
+        // Must check again after lock, another thread may have eval'd
+        if (!(isDirty() || (_pred && _pred(args...)))) return _val;
+        _eval(_val, args...);
+        _dirty = false;
+        return _val;
+    }
+    
+    template<class... Args>
+    const T& get(Args&&... args) const              { return const_cast<lazy*>(this)->get(forward<Args>(args)...); }
 
 private:
     T                   _val;

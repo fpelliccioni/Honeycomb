@@ -106,7 +106,7 @@ public:
         {
             //For an early out, start at deepest subtype
             auto range = reversed(_hierarchy);
-            return find(range, [&](elemtype(range)& e) { return *e == base; }) != range.end();
+            return find(range, [&](mt_elemOf(range)& e) { return *e == base; }) != range.end();
         }
 
         /// To string

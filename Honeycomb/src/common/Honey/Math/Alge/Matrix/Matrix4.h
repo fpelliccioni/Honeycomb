@@ -484,11 +484,11 @@ struct priv::map_impl1<Matrix<4,4,R,Opt>, Matrix<4,4,R,Opt>, Matrix<4,4,R,Opt>>
     }
 };
 
-template<class R, int O>
-struct priv::reduce_impl0<Matrix<4,4,R,O>>
+template<class R, int O, class Accum_>
+struct priv::reduce_impl0<Matrix<4,4,R,O>, Accum_>
 {
     template<class T, class Accum, class Func>
-    static Accum func(T&& m, const Accum& initVal, Func&& f)
+    static Accum_ func(T&& m, Accum&& initVal, Func&& f)
     {
         /*
         return 
@@ -501,7 +501,7 @@ struct priv::reduce_impl0<Matrix<4,4,R,O>>
         #undef FUNC
             ;
         */
-        return f(f(f(f(f(f(f(f(f(f(f(f(f(f(f(f(initVal,
+        return f(f(f(f(f(f(f(f(f(f(f(f(f(f(f(f(forward<Accum>(initVal),
                 m(0)),  m(1)),  m(2)),  m(3)),
                 m(4)),  m(5)),  m(6)),  m(7)),
                 m(8)),  m(9)),  m(10)), m(11)),
@@ -510,11 +510,11 @@ struct priv::reduce_impl0<Matrix<4,4,R,O>>
     }
 };
 
-template<class R, int O>
-struct priv::reduce_impl1<Matrix<4,4,R,O>, Matrix<4,4,R,O>>
+template<class R, int O, class Accum_>
+struct priv::reduce_impl1<Matrix<4,4,R,O>, Matrix<4,4,R,O>, Accum_>
 {
     template<class T, class T2, class Accum, class Func>
-    static Accum func(T&& m, T2&& rhs, const Accum& initVal, Func&& f)
+    static Accum_ func(T&& m, T2&& rhs, Accum&& initVal, Func&& f)
     {
         /*
         return
@@ -527,7 +527,7 @@ struct priv::reduce_impl1<Matrix<4,4,R,O>, Matrix<4,4,R,O>>
         #undef FUNC
             ;
         */
-        return f(f(f(f(f(f(f(f(f(f(f(f(f(f(f(f(initVal,
+        return f(f(f(f(f(f(f(f(f(f(f(f(f(f(f(f(forward<Accum>(initVal),
                 m(0),rhs(0)),   m(1),rhs(1)),   m(2),rhs(2)),   m(3),rhs(3)),
                 m(4),rhs(4)),   m(5),rhs(5)),   m(6),rhs(6)),   m(7),rhs(7)),
                 m(8),rhs(8)),   m(9),rhs(9)),   m(10),rhs(10)), m(11),rhs(11)),

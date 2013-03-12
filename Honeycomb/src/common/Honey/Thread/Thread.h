@@ -264,7 +264,7 @@ namespace thread
             store.reclaim = _id.reclaim;
             T* ptr = _init();
             store.ptr = ptr;
-            store.fin = bind(_fin, ptr);
+            store.fin = std::bind(_fin, ptr);
         }
         return *reinterpret_cast<T*>(store.ptr);
     }

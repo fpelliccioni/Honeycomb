@@ -94,26 +94,17 @@ namespace priv
   *
   * A shared object does not have to be assigned to a shared ptr to be destroyed properly, it has a normal life cycle.
   */
-class SharedObj
+class SharedObj : mt::NoCopy
 {
     template<class> friend class SharedPtr;
     template<class> friend class WeakPtr;
 
 public:
-    typedef function<void (void*)> Dealloc;
-
-    /**
-      * \param dealloc  Function called to deallocate this shared object when all references have been released.
-      *                 Uses `operator delete()` by default.
-      */
-    SharedObj(const Dealloc& dealloc = nullptr)         { init(dealloc); }
-    /// Init using rhs' deallocator
-    SharedObj(const SharedObj& rhs)                     { init(rhs._control->_dealloc); }
-
-    virtual ~SharedObj()                                {}
+    /// Construct with allocator that is called to deallocate this shared object when all references have been released.
+    template<class Alloc = std::allocator<SharedObj>, class Alloc_ = typename mt::removeRef<Alloc>::type::template rebind<SharedObj>::other>
+    SharedObj(Alloc&& a = Alloc())                      : _control(new (_controlMem) Control(this, Alloc_(forward<Alloc>(a)))) {}
     
-    /// Can't copy, silently does nothing
-    SharedObj& operator=(const SharedObj&)              { return *this; }
+    virtual ~SharedObj() {}
 
 protected:
     /// Destroys object. Called when strong reference count reaches 0.  May be overridden to prevent destruction.
@@ -126,23 +117,22 @@ private:
       */
     struct Control : priv::SharedControlBase
     {
-        Control(SharedObj* obj, const Dealloc& dealloc)     : _obj(obj), _dealloc(dealloc) {}
+        template<class Alloc>
+        Control(SharedObj* obj, Alloc&& a)              : _obj(obj), _dealloc([=](SharedObj* p) mutable { a.deallocate(p,1); }) {}
 
-        virtual void finalize()                             { _obj->finalize(); }
+        virtual void finalize()                         { _obj->finalize(); }
         
         virtual void destroy()
         {
-            void* p = _obj;
-            Dealloc dealloc = move(_dealloc);
+            SharedObj* p = _obj;
+            auto dealloc = move(_dealloc);
             this->~Control();
-            dealloc ? dealloc(p) : operator delete(p);
+            dealloc(p);
         }
 
         SharedObj* _obj;
-        Dealloc _dealloc;
+        function<void (SharedObj*)> _dealloc;
     };
-
-    void init(const Dealloc& dealloc)                   { _control = new (_controlMem) Control(this, dealloc); }
 
     uint8 _controlMem[sizeof(Control)];
     Control* _control;
@@ -171,22 +161,26 @@ class SharedPtr : private priv::SharedControlStorage<mt::is_base_of<SharedObj, T
     template<class T_, class U> friend SharedPtr<T_> dynamic_pointer_cast(const SharedPtr<U>&);
     template<class T_, class U> friend SharedPtr<T_> const_pointer_cast(const SharedPtr<U>&);
     
+    static const bool isIntrusive                                   = mt::is_base_of<SharedObj, T>::value;
+    
 public:
     SharedPtr()                                                     : _ptr(nullptr) {}
     SharedPtr(nullptr_t)                                            : _ptr(nullptr) {}
-    /// Reference an object. Uses default finalizer for object (deletes object), and default allocator for internal control block.
-    template<class U> SharedPtr(U* ptr)                             : _ptr(nullptr) { set(ptr); }
-    /// Reference an object. Finalizer is run when reference count reaches 0. Intrusive pointers ignore finalizer.
-    template<class U, class Fin> SharedPtr(U* ptr, Fin&& f)         : _ptr(nullptr) { set(ptr, forward<Fin>(f)); }
-    /// Reference an object. Allocator is used for the internal control block. Intrusive pointers ignore allocator.
-    template<class U, class Fin, class Alloc> SharedPtr(U* ptr, Fin&& f, Alloc&& a)
-                                                                    : _ptr(nullptr) { set(ptr, forward<Fin>(f), forward<Alloc>(a)); }
+    /// Reference an object. Non-intrusive pointers use default finalizer for object (deletes object), and default allocator for internal control block.
+    template<class U, typename std::enable_if<mt::True<U>::value && isIntrusive, int>::type=0>
+    SharedPtr(U* ptr)                                               : _ptr(nullptr) { set(ptr); }
+    /// Construct with finalizer/allocator. For non-intrusive pointers only.
+    /**
+      * Finalizer is run when reference count reaches 0.  Allocator is used for the internal control block. 
+      */
+    template<class U, class Fin = finalize<U>, class Alloc = std::allocator<U>, typename std::enable_if<mt::True<U>::value && !isIntrusive, int>::type=0>
+    SharedPtr(U* ptr, Fin&& f = Fin(), Alloc&& a = Alloc())         : _ptr(nullptr) { set(ptr, forward<Fin>(f), forward<Alloc>(a)); }
     /// Reference the object pointed to by another shared pointer
     SharedPtr(const SharedPtr& ptr)                                 : _ptr(nullptr) { set(ptr); }
     template<class U> SharedPtr(const SharedPtr<U>& ptr)            : _ptr(nullptr) { set(ptr); }
     /// Transfer ownership out of shared pointer, leaving it null
-    SharedPtr(SharedPtr&& ptr)                                                      { set(move(ptr)); }
-    template<class U> SharedPtr(SharedPtr<U>&& ptr)                                 { set(move(ptr)); }
+    SharedPtr(SharedPtr&& ptr)                                      { set(move(ptr)); }
+    template<class U> SharedPtr(SharedPtr<U>&& ptr)                 { set(move(ptr)); }
     /// Lock a weak pointer to get access to its object.  Shared ptr will be null if the object has already been destroyed.
     template<class U> SharedPtr(const WeakPtr<U>& ptr)              : _ptr(ptr._ptr) { this->_control(ptr._control()); if (_ptr && !getControl<>().refLock()) _ptr = nullptr; }
     /// Transfer ownership out of unique pointer, leaving it null
@@ -194,7 +188,7 @@ public:
 
     ~SharedPtr()                                                    { set(nullptr); }
 
-    /// Set the object referenced by this shared pointer. Uses default finalizer/allocator.
+    /// Set the object referenced by this shared pointer. Non-intrusive pointers use default finalizer/allocator.
     template<class U>
     SharedPtr& operator=(U* rhs)                                    { set(rhs); return *this; }
     SharedPtr& operator=(nullptr_t)                                 { set(nullptr); return *this; }
@@ -235,16 +229,18 @@ public:
     /// Get the raw pointer to the object
     T* get() const                                                  { return _ptr; }
 
-    /// Dereference the current object and reference a new object. Uses default finalizer/allocator.
-    template<class U> void set(U* ptr)                              { set(ptr, finalize<U>()); }
-    template<class U, class Fin> void set(U* ptr, Fin&& f)          { set(ptr, forward<Fin>(f), std::allocator<U>()); }
-
-    template<class U, class Fin, class Alloc>
-    void set(U* ptr, Fin&& f, Alloc&& a)
+    /// Dereference the current object and reference a new object. Non-intrusive pointers use default finalizer/allocator.
+    template<class U, typename std::enable_if<mt::True<U>::value && isIntrusive, int>::type=0>
+    void set(U* ptr)                                                { setControl(ptr, nullptr); }
+    /// Set with finalizer/allocator, for non-intrusive pointers only
+    template<class U, class Fin = finalize<U>, class Alloc = std::allocator<U>, typename std::enable_if<mt::True<U>::value && !isIntrusive, int>::type=0>
+    void set(U* ptr, Fin&& f = Fin(), Alloc&& a = Alloc())
     {
-        setControl(ptr, ptr ? createControl<U,Fin,Alloc>::func(*ptr, forward<Fin>(f), forward<Alloc>(a)) : nullptr);
+        typedef priv::SharedControl<U,Fin,Alloc> Control;
+        typedef typename Alloc::template rebind<Control>::other Alloc_;
+        Alloc_ a_ = forward<Alloc>(a);
+        setControl(ptr, ptr ? new (a_.allocate(1)) Control(ptr,forward<Fin>(f),a_) : nullptr);
     }
-
     void set(nullptr_t)                                             { set((T*)nullptr); }
 
     /// Get number of shared references to the object
@@ -254,23 +250,7 @@ public:
 
 private:
     typedef priv::SharedControlBase                                 Control;
-    static const bool isIntrusive                                   = mt::is_base_of<SharedObj, T>::value;
     typedef priv::SharedControlStorage<isIntrusive>                 Storage;
-    
-    template<class U, class Fin, class Alloc, bool isIntrusive = SharedPtr::isIntrusive>
-    struct createControl {};
-
-    template<class U, class Fin, class Alloc>
-    struct createControl<U,Fin,Alloc,true>
-    {   static void* func(U&, Fin&&, Alloc&&)                       { return nullptr; } };
-    
-    template<class U, class Fin, class Alloc_>
-    struct createControl<U,Fin,Alloc_,false>
-    {
-        typedef priv::SharedControl<U,Fin,Alloc_> Control;
-        typedef typename Alloc_::template rebind<Control>::other Alloc;
-        static Control* func(U& obj, Fin&& f, Alloc a)              { return new (a.allocate(1)) Control(&obj,forward<Fin>(f),a); }
-    };
 
     template<class U> void set(const SharedPtr<U>& rhs)             { setControl(rhs._ptr, rhs._control()); }
     template<class U>
@@ -279,7 +259,7 @@ private:
         _ptr = rhs._ptr; this->_control(rhs._control());
         rhs._ptr = nullptr; rhs._control(nullptr);
     }
-
+    
     template<class U>
     typename std::enable_if<mt::True<U>::value && isIntrusive>::type
         setControl(U* ptr, void*)

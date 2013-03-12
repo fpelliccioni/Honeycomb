@@ -6,8 +6,8 @@ Multi-threaded component-model Android / iOS 3D game engine.
 [Honeycomb Library Reference](http://kometes.github.com/Honeycomb/Doxygen/html/annotated.html)
 
 ## Roadmap
-### Modular Framework Phase
-The foundations and component-model framework is complete but the rest of the features are on indefinite hold.
+### Foundations and Modular Framework Phase
+The framework is complete and is being actively used/developed, but the features below are on indefinite hold.
     
 ### Editor Phase (on indefinite hold)
 - Move project and code over to QT Creator w/ GCC

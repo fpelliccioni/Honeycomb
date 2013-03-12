@@ -153,18 +153,18 @@ struct priv::map_impl1<Vec<2,R,Opt>, Vec<2,R,Opt>, Vec<2,R,Opt>>
     static O&& func(T&& v, T2&& rhs, O&& o, Func&& f)               { o.x = f(v.x,rhs.x); o.y = f(v.y,rhs.y); return forward<O>(o); }
 };
 
-template<class R, int O>
-struct priv::reduce_impl0<Vec<2,R,O>>
+template<class R, int O, class Accum_>
+struct priv::reduce_impl0<Vec<2,R,O>, Accum_>
 {
     template<class T, class Accum, class Func>
-    static Accum func(T&& v, const Accum& initVal, Func&& f)        { return f(f(initVal, v.x), v.y); }
+    static Accum_ func(T&& v, Accum&& initVal, Func&& f)            { return f(f(forward<Accum>(initVal), v.x), v.y); }
 };
 
-template<class R, int O>
-struct priv::reduce_impl1<Vec<2,R,O>, Vec<2,R,O>>
+template<class R, int O, class Accum_>
+struct priv::reduce_impl1<Vec<2,R,O>, Vec<2,R,O>, Accum_>
 {
     template<class T, class T2, class Accum, class Func>
-    static Accum func(T&& v, T2&& rhs, const Accum& initVal, Func&& f)  { return f(f(initVal, v.x, rhs.x), v.y, rhs.y); }
+    static Accum_ func(T&& v, T2&& rhs, Accum&& initVal, Func&& f)  { return f(f(forward<Accum>(initVal), v.x, rhs.x), v.y, rhs.y); }
 };
 /// @}
 /** \endcond */

@@ -122,32 +122,52 @@ void test()
     
     task::priv::test();
 
-    {
-        int aa = 1;
+    {        
         Promise<int> promise;
-        promise.setValue(aa);
         Future<int> future = promise.future();
-        auto blah = future.wait(Seconds(1));    mt_unused(blah);
+        verify(future.wait(Millisec(1)) == future::Status::timeout);
+        promise.setValue(1);
         
         Promise<int> promise2;
-        aa = 2;
-        promise2.setValue(aa);
+        promise2.setValue(2);
         Future<int> future2 = promise2.future();
 
         future::waitAll(future, future2);
-        int i = future::waitAny(future, future2);   mt_unused(i);
-
+        verify(future::waitAny(future, future2) == 0);
+        
         vector<Future<int>> futures;
         futures.push_back(move(future));
         futures.push_back(move(future2));
         future::waitAll(futures);
-        vector<Future<int>>::iterator it = future::waitAny(futures);    mt_unused(it);
+        verify(future::waitAny(futures) == futures.begin());
         
-        SharedFuture<int> shared = futures[0].share();
+        future::whenAll().get();
+        future::whenAll(FutureCreate(), FutureCreate()).get();
+        verify(future::whenAll(FutureCreate(1), FutureCreate(2)).get() == make_tuple(1, 2));
+        verify(future::whenAny(FutureCreate(), FutureCreate()).get() == 0);
+        verify(future::whenAny(FutureCreate(1), FutureCreate(2)).get() == make_tuple(0, 1));
+        
+        vector<Future<int>> futures2;
+        futures2.push_back(FutureCreate(1));
+        futures2.push_back(FutureCreate(2));
+        verify((future::whenAll(futures2).get() == vector<int>{1, 2}));
+        
+        Promise<int> promise3;
+        vector<Future<int>> futures3;
+        futures3.push_back(promise3.future());
+        futures3.push_back(FutureCreate(2));
+        verify(future::whenAny(futures3).get() == make_tuple(futures3.begin()+1, 2));
+        
+        Promise<void> promise4;
+        vector<Future<void>> futures4;
+        futures4.push_back(promise4.future());
+        futures4.push_back(FutureCreate());
+        verify(future::whenAny(futures4).get() == futures4.begin()+1);
+        
+        SharedFuture<int> shared = SharedFutureCreate(1);
         SharedFuture<int> shared2 = shared;
-        int bb = shared.get();
-        bb = shared2.get();
-        bb = futures[1].get();
+        verify(shared.get() == 1);
+        verify(shared2.get() == 1);
 
         PackagedTask<void (int)> task = [](int a) { !a ? throw_ Exception() << "test0" : throw std::runtime_error("test1"); };
         for (auto i : range(2))
@@ -157,9 +177,24 @@ void test()
             task.reset();
         }
 
-        PackagedTask<int& (int&)> task2([](int& a) -> int& { return a; }, std::allocator<int>());
-        task2(aa);
-        ++task2.future().get();
+        int a = 1;
+        PackagedTask<int& (int&)> task2([](int& a) -> int& { return a; });
+        task2(a);
+        verify((++task2.future().get(), a) == 2);
+        
+        auto outer = future::async([](int x) { return future::async([=] { return x+1; }); }, 1);
+        auto inner = outer.unwrap();
+        verify(inner.get() == 2);
+        auto outer_s = future::async([] { return future::async([] { return 3; }).share(); });
+        auto inner_s = outer_s.unwrap();
+        verify(inner_s.get() == 3);
+        auto s_outer = outer.share();
+        auto s_inner = s_outer.unwrap();
+        verify(s_inner.get() == 2);
+        
+        auto cont = future::async([] { return 1; }).then([](Future<int> f) { return String(sout() << f.get()+1); }).then(
+            [](Future<String> f) { return atoi(f.get().u8().c_str()); });
+        verify(cont.get() == 2);
     }
 
     {
@@ -799,9 +834,8 @@ void test()
     {
         struct A : public SharedObj, public SmallAllocatorObject
         {
-            A()                     : SharedObj(bind_fill(&A::dealloc, this)) {}
-            ~A()                    {}
-            void dealloc(void* p)   { operator delete(p); }
+            A()     : SharedObj(SmallAllocator<A>()) {}
+            ~A() {}
         };
 
         WeakPtr<A> weak;
@@ -834,10 +868,10 @@ void test()
         TransferLock<decltype(rlock), SharedMutex::SharedScoped> wlock(rlock);
     }
 
-    void* blah = SmallMemPool::inst().pool().alloc(10000);
-    debug::print(sout() << SmallMemPool::inst().pool().printStats());
-    SmallMemPool::inst().pool().free(blah);
-    SmallMemPool::inst().pool().validate();
+    void* blah = SmallAllocator<int>().pool().alloc(10000);
+    debug::print(sout() << SmallAllocator<int>().pool().printStats());
+    SmallAllocator<int>().pool().free(blah);
+    SmallAllocator<int>().pool().validate();
 
     debug::print(sout() << "Vec1:   "   << v1 << endl
                         << "Vec2:   "   << v2 << endl

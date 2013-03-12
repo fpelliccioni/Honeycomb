@@ -69,12 +69,8 @@ public:
 
     /// Get the derivative of a polynomial. Returns a polynomial with 1 degree less.
     template<class T>
-    static honey::Vec<  // Doxygen can't parse this
-                        /** \cond */
-                        (T::s_size == matrix::dynamic ? matrix::dynamic : T::s_size - 1),
-                        /** \endcond */
-                        Real>
-        derivative(const VecBase<T>& c)
+    static auto derivative(const VecBase<T>& c) ->
+        honey::Vec<(T::s_size == matrix::dynamic ? matrix::dynamic : T::s_size - 1), Real>
     {
         int degree = c.size()-1;
         honey::Vec<(T::s_size == matrix::dynamic ? matrix::dynamic : T::s_size - 1), Real> poly;

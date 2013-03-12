@@ -303,7 +303,7 @@ public:
         pointer operator->() const                          { return &operator*(); }
 
         /// Returns true if iterator points to valid element that has not been deleted
-        bool isValid() const                                { return !_cur->next.d(); }
+        bool valid() const                                  { return !_cur->next.d(); }
 
     private:
         List* _list;
@@ -349,7 +349,7 @@ public:
         reference operator*() const                         { return *_it; }
         pointer operator->() const                          { return _it.operator->(); }
 
-        bool isValid() const                                { return _it.isValid(); }
+        bool valid() const                                  { return _it.valid(); }
 
     private:
         Iter _it;
@@ -370,7 +370,7 @@ public:
     bool front(Data& data)
     {
         Iter it = begin();
-        if (it == end() || !it.isValid()) return false;
+        if (it == end() || !it.valid()) return false;
         data = *it;
         return true;
     }
@@ -379,7 +379,7 @@ public:
     bool back(Data& data)
     {
         IterR it = beginR();
-        if (it == endR() || !it.isValid()) return false;
+        if (it == endR() || !it.valid()) return false;
         data = *it;
         return true;
     }

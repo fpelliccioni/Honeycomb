@@ -55,7 +55,7 @@ public:
         auto slots = slotList(Signal::id());
         if (!slots) return;
         for (auto& e : *slots)
-            (static_cast<priv::SlotSignal<Signal,Signal::arity>&>(*e))(forward<Args>(args)...);
+            (static_cast<priv::SlotSignal<Signal,Signal::arity>&>(*e))(args...);
     }
 
     /// Set callback to handle events from this class

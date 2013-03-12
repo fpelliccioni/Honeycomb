@@ -1,24 +1,29 @@
 // Honeycomb, Copyright (C) 2013 Daniel Carter.  Distributed under the Boost Software License v1.0.
 #pragma once
 
-#include "Honey/Thread/Thread.h"
+#include "Honey/Thread/Pool.h"
 #include "Honey/Thread/Future/PackagedTask.h"
 #include "Honey/Graph/Dep.h"
 
 namespace honey
 {
 
+///Uncomment to debug task scheduler
+//#define Task_debug
+
 class Task;
 class TaskSched;
 /** \cond */
 //for weak ptr, is_base_of doesn't work when a class tests itself in the class definition
-namespace mt { template<> struct is_base_of<SharedObj, Task> : Value<bool, true>{}; }
+namespace mt { template<> struct is_base_of<SharedObj, Task> : std::true_type {}; }
 /** \endcond */
 
 /// Base class of `Task_`, can be added to scheduler.  Instances must be created through class `Task_`.
-class Task : public SharedObj, mt::NoCopy
+class Task : public SharedObj, thread::Pool::Task
 {
     friend class TaskSched;
+    friend struct mt::Funcptr<void ()>;
+    
 public:
     typedef SharedPtr<Task> Ptr;
     typedef function<void ()> Func;
@@ -44,15 +49,21 @@ public:
 
     /// Get the current task object. Must be called from a task functor.
     static Task& current();
-
+    
     #ifndef FINAL
         /// Log a message prepending current task info
         #define Task_log(msg)                       { Task::current().log(__FILE__, __LINE__, (msg)); }
-        void log(const String& file, int line, const String& msg);
     #else
         #define Task_log(...) {}
     #endif
-
+    virtual void log(const String& file, int line, const String& msg) const;
+    
+    #ifdef Task_debug
+        virtual bool logEnabled() const             { return true; }
+    #else
+        virtual bool logEnabled() const             { return false; }
+    #endif
+    
 protected:
     #define ENUM_LIST(e,_)      \
         e(_, idle)              \
@@ -73,11 +84,14 @@ protected:
     
     Task(const Id& id = idnull);
 
-    virtual void operator()() = 0;
+    virtual void exec() = 0;
     virtual void resetFunctor() = 0;
     
     void bindDirty();
-
+    void operator()();
+    /// Clean up task after execution
+    void finalize_();
+    
     State           _state;
     DepNode         _depNode;
     Mutex           _lock;
@@ -111,7 +125,7 @@ public:
 
     /// Get future from which delayed result can be retrieved.  The result pertains to a future enqueueing or currently active task.
     /**
-      * \throws promise::FutureAlreadyRetrieved     if future() has been called more than once per task execution.
+      * \throws future::FutureAlreadyRetrieved      if future() has been called more than once per task execution.
       */
     Future<Result> future()                         { Mutex::Scoped _(_lock); return _func.future(); }
 
@@ -123,7 +137,7 @@ public:
     void setFunctor(Func&& f)                       { _func = PackagedTask<Result ()>(forward<Func>(f)); }
 
 private:
-    virtual void operator()()                       { _func.invoke_delayedReady(); }
+    virtual void exec()                             { _func.invoke_delayedReady(); }
     //Called by finalizer, already has the lock
     virtual void resetFunctor()                     { _func.setReady(); _func.reset(); }
 
@@ -133,17 +147,22 @@ private:
 /// Task scheduler, serializes and parallelizes task execution, given a dependency graph of tasks and a pool of threads.
 /**
   * To run a task, first register it and any dependent tasks with TaskSched::reg(), then call TaskSched::enqueue(rootTask).
+  *
+  * To provide a custom global scheduler define `TaskSched_createSingleton` and implement TaskSched::createSingleton().
   */
 class TaskSched
 {
     friend class Task;
+    
 public:
+    /// Get singleton
+    static TaskSched& inst()                        { static UniquePtr<TaskSched> inst = &createSingleton(); return *inst; }
+
     /**
-      * \param workerCount      Number of workers
-      * \param workerTaskMax    Max size of per-worker task queue, overflow will be pushed onto scheduler queue
+      * \param workerCount      \see thread::Pool()
+      * \param workerTaskMax    \see thread::Pool()
       */
-    TaskSched(int workerCount = 3, int workerTaskMax = 5);
-    ~TaskSched();
+    TaskSched(int workerCount, int workerTaskMax);
     
     /// Register a task.  Task id must be unique.  Once registered, tasks are linked through the dependency graph by id.
     /**
@@ -171,49 +190,24 @@ public:
     bool enqueue(Task& task);
     
 private:
-    class Worker
-    {
-        friend class TaskSched;
-    public:
-        Worker(TaskSched& sched);
-        
-        /// Get the current worker, call from inside a task
-        static Worker& current()                    { assert(*_current); return **_current; }
-        /// Get the current task object. Returns null if worker has not been assigned a task.
-        Task* task() const                          { return _task; }
-        
-    private:
-        void start();
-        void join();
-        void run();
-        
-        /// Get next task
-        Task::Ptr next();
-        /// Clean up task after execution
-        void finalize(Task& task);
-        
-        TaskSched& _sched;
-        Thread _thread;
-        bool _active;
-        ConditionLock _cond;
-        bool _condWait;
-        deque<Task::Ptr> _tasks;
-        Task::Ptr _task;
-        static thread::Local<Worker*> _current;
-    };
+    static TaskSched& createSingleton();
     
     void bind(Task& root);
     String stackTrace();
     bool enqueue_priv(Task& task);
     
-    int                 _workerTaskMax;
+    thread::Pool        _pool;
     Mutex               _lock;
-    vector<UniquePtr<Worker>> _workers;
-    deque<Task::Ptr>    _tasks;
     vector<Task*>       _taskStack;
     Task::DepGraph      _depGraph;
     int                 _bindId;
 };
+
+#ifndef TaskSched_createSingleton
+    /// Default implementation
+    inline TaskSched& TaskSched::createSingleton()      { return *new TaskSched(2, 5); }
+#endif
+
 
 /** \cond */
 namespace task { namespace priv

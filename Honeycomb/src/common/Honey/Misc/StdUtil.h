@@ -21,31 +21,28 @@ int size(const StdContainer& cont)                              { return utos(co
 /** \cond */
 namespace priv
 {
-    template<class T, int I>
+    template<class T, int i, int size = std::tuple_size<typename mt::removeRef<T>::type>::value, bool end = i == size>
     struct tupleToString
     {
-        static void func(StringStream& os, const T& val)
+        static void func(StringStream& os, T&& t)
         {
-            os << ", " << get<std::tuple_size<T>::value - I + 1>(val);
-            tupleToString<T, I-1>::func(os, val);
+            os << get<i>(t) << (i < size-1 ? ", " : "");
+            tupleToString<T, i+1>::func(os, forward<T>(t));
         }
     };
-
-    template<class T>
-    struct tupleToString<T, 1>
-    {
-        static void func(StringStream&, const T&) {}
-    };
+    
+    template<class T, int i, int size>
+    struct tupleToString<T, i, size, true>                      { static void func(StringStream&, T&&) {} };
 };
 /** \endcond */
 
 /// Tuple to string
 template<class Tuple>
 typename std::enable_if<mt::isTuple<Tuple>::value, StringStream&>::type
-    operator<<(StringStream& os, const Tuple& val)
+    operator<<(StringStream& os, Tuple&& t)
 {
-    os << "(" << get<0>(val);
-    priv::tupleToString<Tuple, std::tuple_size<Tuple>::value>::func(os, val);
+    os << "(";
+    priv::tupleToString<Tuple, 0>::func(os, forward<Tuple>(t));
     return os << ")";
 }
 
@@ -54,24 +51,16 @@ namespace stdutil
 {
     /// Create a range over the keys of a map or map iterator range. \see values()
     template<class Range>
-    auto keys(Range&& range) ->
-        // Doxygen can't parse this
-        /** \cond */
-        Range_<TupleIter<itertype(range),0>, TupleIter<itertype(range),0>>
-        /** \endcond */
+    auto keys(Range&& range) -> Range_<TupleIter<mt_iterOf(range),0>, TupleIter<mt_iterOf(range),0>>
     {
-        return honey::range(TupleIter<itertype(range),0>(begin(range)), TupleIter<itertype(range),0>(end(range)));
+        return honey::range(TupleIter<mt_iterOf(range),0>(begin(range)), TupleIter<mt_iterOf(range),0>(end(range)));
     }
 
     /// Create a range over the values of a map or map iterator range. \see keys()
     template<class Range>
-    auto values(Range&& range) ->
-        // Doxygen can't parse this
-        /** \cond */
-        Range_<TupleIter<itertype(range),1>, TupleIter<itertype(range),1>>
-        /** \endcond */
+    auto values(Range&& range) -> Range_<TupleIter<mt_iterOf(range),1>, TupleIter<mt_iterOf(range),1>>
     {
-        return honey::range(TupleIter<itertype(range),1>(begin(range)), TupleIter<itertype(range),1>(end(range)));
+        return honey::range(TupleIter<mt_iterOf(range),1>(begin(range)), TupleIter<mt_iterOf(range),1>(end(range)));
     }
 
     /// Convert reverse iterator to forward iterator
@@ -110,9 +99,9 @@ namespace stdutil
 
     /// Get iterator to key with value.  Returns end if not found.
     template<class MultiMap, class Key, class Val>
-    auto find(MultiMap& map, const Key& key, const Val& val) -> itertype(map)
+    auto find(MultiMap& map, const Key& key, const Val& val) -> mt_iterOf(map)
     {
-        return honey::find(range(map.equal_range(key)), [&](elemtype(map)& e) { return e.second == val; });
+        return honey::find(range(map.equal_range(key)), [&](mt_elemOf(map)& e) { return e.second == val; });
     }
 }
 
@@ -132,11 +121,39 @@ struct UnorderedSet : mt::NoCopy
 { typedef unordered_set<Key, std::hash<Key>, std::equal_to<Key>, Alloc<Key>> type; };
 
 
-//====================================================
 /** \cond */
-#define bind_fill(...) __bind_fill()
-#define bind(...) void*
+namespace priv
+{
+    template<int Arity> struct bind_fill;
+
+    #define PARAMT(It)          , class T##It
+    #define PARAM(It)           , T##It&& a##It
+    #define ARG(It)             , forward<T##It>(a##It)
+    #define PLACE(It)           , _##It
+
+    #define OP(It, ItMax)                                                                               \
+        template<class Func ITERATE__(1,It,PARAMT)>                                                     \
+        auto operator()(Func&& f ITERATE__(1,It,PARAM)) ->                                              \
+            decltype(   bind(forward<Func>(f) ITERATE__(1,It,ARG)                                       \
+                            IFEQUAL(It,ItMax,,ITERATE__(1,PP_SUB(ItMax,It),PLACE))) )                   \
+        {                                                                                               \
+            return      bind(forward<Func>(f) ITERATE__(1,It,ARG)                                       \
+                            IFEQUAL(It,ItMax,,ITERATE__(1,PP_SUB(ItMax,It),PLACE)));                    \
+        }                                                                                               \
+    
+    #define STRUCT(It)                                                                                  \
+        template<> struct bind_fill<It>     { ITERATE1_(0, It, OP, It) };                               \
+
+    ITERATE(0, FUNCTRAITS_ARG_MAX, STRUCT)
+    #undef PARAMT
+    #undef PARAM
+    #undef ARG
+    #undef PLACE
+    #undef OP
+    #undef STRUCT
+}
 /** \endcond */
+
 /// Version of bind that automatically fills in placeholders for unspecified arguments.
 /**
   * ### Example
@@ -146,65 +163,12 @@ struct UnorderedSet : mt::NoCopy
   * \row `bind_fill` has a more convenient syntax:  \col `bind_fill(&Class::func, this);`    \endrow
   * \endtable
   */
-auto bind_fill(Func&&, Args&&...) -> bind(...);
-#undef bind_fill
-#undef bind
-/** \cond */
-#define BIND_FILL_ARG_MAX 9
-
-#define PARAMT(It)              , class T##It
-#define PARAM(It)               , T##It&& a##It
-#define ARG(It)                 , forward<T##It>(a##It)
-
-/** \cond */
-namespace priv
+template<class Func, class... Args>
+auto bind_fill(Func&& f, Args&&... args) ->
+    decltype(   priv::bind_fill<mt::funcTraits<typename mt::removeRef<Func>::type>::arity>()(forward<Func>(f), forward<Args>(args)...))
 {
-    template<int Arity> struct bind_fill;
-
-    #define PLACE(It)           , _##It
-
-    #define OP(It, ItMax)                                                                               \
-        template<class F ITERATE__(1,It,PARAMT)>                                                        \
-        auto operator()(const F& f ITERATE__(1,It,PARAM)) ->                                            \
-            decltype(   bind(f                                                                          \
-                            ITERATE__(1,It,ARG)                                                         \
-                            IFEQUAL(It,ItMax,,ITERATE__(1,PP_SUB(ItMax,It),PLACE))                      \
-                        ) )                                                                             \
-        {                                                                                               \
-            return      bind(f                                                                          \
-                            ITERATE__(1,It,ARG)                                                         \
-                            IFEQUAL(It,ItMax,,ITERATE__(1,PP_SUB(ItMax,It),PLACE))                      \
-                        );                                                                              \
-        }                                                                                               \
-    
-    #define STRUCT(It)                                                                                  \
-        template<> struct bind_fill<It>                                                                 \
-        {                                                                                               \
-            ITERATE1_(0, It, OP, It)                                                                    \
-        };                                                                                              \
-
-    ITERATE(0, BIND_FILL_ARG_MAX, STRUCT)
-    #undef PLACE
-    #undef OP
-    #undef STRUCT
+    return      priv::bind_fill<mt::funcTraits<typename mt::removeRef<Func>::type>::arity>()(forward<Func>(f), forward<Args>(args)...);
 }
-/** \endcond */
-
-#define FUNC(It)                                                                                        \
-    template<class F ITERATE_(1,It,PARAMT)>                                                             \
-    auto bind_fill(const F& f ITERATE_(1,It,PARAM)) ->                                                  \
-        decltype(   priv::bind_fill<mt::funcTraits<F>::arity>()(f ITERATE_(1,It,ARG)))                  \
-    {                                                                                                   \
-        return      priv::bind_fill<mt::funcTraits<F>::arity>()(f ITERATE_(1,It,ARG));                  \
-    }                                                                                                   \
-
-ITERATE(0, BIND_FILL_ARG_MAX, FUNC)
-#undef PARAMT
-#undef PARAM
-#undef ARG
-#undef FUNC
-/** \endcond */
-//====================================================
 
 /// @}
 

@@ -6,11 +6,8 @@
 namespace honey
 {
 
-///Uncomment to debug task scheduler
-//#define Task_debug
-
-#ifdef Task_debug
-    #define Task_log_(task, msg)    { (task).log(__FILE__, __LINE__, (msg)); }
+#ifndef FINAL
+    #define Task_log_(task, msg)    if ((task).logEnabled()) (task).log(__FILE__, __LINE__, (msg));
 #else
     #define Task_log_(...) {}
 #endif
@@ -32,7 +29,7 @@ Task::Task(const Id& id) :
 
 Task& Task::current()
 {
-    Task* task = TaskSched::Worker::current().task();
+    Task* task = static_cast<Task*>(thread::Pool::current());
     assert(task, "No active task in current thread, this method can only be called from a task functor");
     return *task;
 }
@@ -45,31 +42,102 @@ void Task::bindDirty()
         root->_bindDirty = true;
 }
 
-#ifndef FINAL
-    void Task::log(const String& file, int line, const String& msg)
-    {
-        int pos = file.find_last_of(String("\\/"));
-        String filename = pos != String::npos ? file.substr(pos+1) : file;
-        debug::print(sout() << "[Task: " << getId() << ":" << Thread::current().threadId() << ", "
-                            << filename << ":" << line << "] " << msg << endl);
-    }
-#endif
-
-TaskSched::TaskSched(int workerCount, int workerTaskMax) :
-    _workerTaskMax(workerTaskMax),
-    _bindId(0)
-{       
-    for (auto i: range(workerCount)) { _workers.push_back(new Worker(*this)); mt_unused(i); }
-    for (auto& e: _workers) e->start();
+void Task::log(const String& file, int line, const String& msg) const
+{
+    int pos = file.find_last_of(String("\\/"));
+    String filename = pos != String::npos ? file.substr(pos+1) : file;
+    debug::print(sout() << "[Task: " << getId() << ":" << Thread::current().threadId() << ", "
+                        << filename << ":" << line << "] " << msg << endl);
 }
 
-TaskSched::~TaskSched()
+void Task::operator()()
 {
-    for (auto& e: _workers) e->join();
+    //Enqueue upstream tasks
+    for (auto& vertex: _vertex->links())
+    {
+        if (!vertex->nodes().size()) continue;
+        _sched->enqueue_priv(****vertex->nodes().begin());
+    }
+    
+    {
+        Mutex::Scoped _(_lock);
+        //If there is an upstream task then we must wait to start
+        if (_depUpWait > 0)
+        {
+            _state = State::depUpWait;
+            Task_log_(*this, sout() << "Waiting for upstream. Wait task count: " << _depUpWait);
+            return;
+        }
+        assert(!_depUpWait, "Task state corrupt");
+        _state = State::exec;
+        Task_log_(*this, "Executing");
+    }
+    
+    exec();
+    
+    //Finalize any upstream tasks that are waiting
+    for (auto& vertex: _vertex->links())
+    {
+        if (!vertex->nodes().size()) continue;
+        Task& e = ****vertex->nodes().begin();
+        Mutex::Scoped _(e._lock);
+        if (--e._depDownWait > 0) continue;
+        e.finalize_();
+    }
+    
+    //Re-enqueue any downstream tasks that are waiting
+    for (auto& vertex: _vertex->links(DepNode::DepType::in))
+    {
+        if (!vertex->nodes().size()) continue;
+        Task& e = ****vertex->nodes().begin();
+        if (e._sched != _sched || e._bindId != _bindId) continue; //This task is not upstream of root
+        {
+            Mutex::Scoped _(e._lock);
+            if (--e._depUpWait > 0) continue;
+            if (e._state != State::depUpWait) continue;
+        }
+        _sched->enqueue_priv(e);
+    }
+    
+    {
+        Mutex::Scoped _(_lock);
+        //Root task must finalize itself
+        if (this == _root.lock())
+        {
+            --_depDownWait;
+            finalize_();
+            return;
+        }
+        //If we haven't been finalized yet then we must wait for downstream to finalize us
+        if (_state != State::idle)
+        {
+            _state = State::depDownWait;
+            Task_log_(*this, sout() << "Waiting for downstream. Wait task count: " << _depDownWait);
+            return;
+        }
+    }
+}
+
+void Task::finalize_()
+{
+    //Reset task to initial state
+    assert(!_depDownWait, "Task state corrupt");
+    _depUpWait = _depUpWaitInit;
+    _depDownWait = _depDownWaitInit;
+    _state = State::idle;
+    Task_log_(*this, "Finalized");
+    resetFunctor(); //makes future ready, so task may be destroyed beyond this point
+}
+
+TaskSched::TaskSched(int workerCount, int workerTaskMax) :
+    _pool(workerCount, workerTaskMax),
+    _bindId(0)
+{       
 }
 
 bool TaskSched::reg(Task& task)
 {
+    Mutex::Scoped _(_lock);
     if (_depGraph.vertex(task) || !_depGraph.add(task._depNode)) return false;
     ++task._regCount;
     //Structural change, must dirty newly linked tasks
@@ -89,6 +157,7 @@ bool TaskSched::reg(Task& task)
 
 bool TaskSched::unreg(Task& task)
 {
+    Mutex::Scoped _(_lock);
     if (!_depGraph.remove(task._depNode)) return false;
     --task._regCount;
     //Structural change, must dirty task root
@@ -215,242 +284,8 @@ bool TaskSched::enqueue_priv(Task& task)
         }
     }
     
-    //Find smallest worker queue
-    int minSize = _workerTaskMax;
-    int minIndex = -1;
-    for (auto i: range(size(_workers)))
-    {
-        auto& worker = *_workers[i];
-        if (size(worker._tasks) >= minSize) continue;
-        minSize = size(worker._tasks);
-        minIndex = i;
-    }
-    
-    bool added = false;
-    if (minIndex >= 0)
-    {
-        //Push to worker queue
-        do
-        {
-            Worker& worker = *_workers[minIndex];
-            ConditionLock::Scoped _(worker._cond);
-            if (size(worker._tasks) >= _workerTaskMax) break;
-            
-            added = true;
-            worker._tasks.push_back(&task);
-            Task_log_(task, sout()  << "Pushed to worker queue: " << worker._thread.threadId()
-                                    << "; Queue size: " << worker._tasks.size());
-        } while(false);
-    }
-    
-    if (!added)
-    {
-        //All worker queues full, push to scheduler queue
-        Mutex::Scoped _(_lock);
-        _tasks.push_back(&task);
-        Task_log_(task, sout() << "Pushed to scheduler queue. Queue size: " << _tasks.size());
-    }
-    
-    //Find a waiting worker and signal it, start search at min index
-    int first = minIndex >= 0 ? minIndex : 0;
-    for (auto i: range(size(_workers)))
-    {
-        Worker& worker = *_workers[(first + i) % size(_workers)];
-        ConditionLock::Scoped _(worker._cond);
-        if (!worker._condWait) continue;
-        worker._condWait = false;
-        worker._cond.signal();
-        break;
-    }
-    
+    _pool.enqueue(task);
     return true;
-}
-
-
-thread::Local<TaskSched::Worker*> TaskSched::Worker::_current;
-
-TaskSched::Worker::Worker(TaskSched& sched) :
-    _sched(sched),
-    _thread(honey::bind(&Worker::run, this)),
-    _active(false),
-    _condWait(false),
-    _task(nullptr)
-{
-}
-
-void TaskSched::Worker::start()
-{
-    _thread.start();
-    //Synchronize with thread
-    while (!_active) { ConditionLock::Scoped _(_cond); }
-}
-
-void TaskSched::Worker::join()
-{
-    {
-        ConditionLock::Scoped _(_cond);
-        _active = false;
-        _condWait = false;
-        _cond.signal();
-    }
-    _thread.join();
-}
-
-void TaskSched::Worker::run()
-{
-    {
-        ConditionLock::Scoped _(_cond);
-        _current = this;
-        _active = true;
-        _condWait = true;
-    }
-    
-    while (_active)
-    {
-        while ((_task = next()) != nullptr)
-        {            
-            //Enqueue upstream tasks
-            for (auto& vertex: _task->_vertex->links())
-            {
-                if (!vertex->nodes().size()) continue;
-                _sched.enqueue_priv(****vertex->nodes().begin());
-            }
-            
-            {
-                Mutex::Scoped _(_task->_lock);
-                //If there is an upstream task then we must wait to start
-                if (_task->_depUpWait > 0)
-                {
-                    _task->_state = Task::State::depUpWait;
-                    Task_log_(*_task, sout() << "Waiting for upstream. Wait task count: " << _task->_depUpWait);
-                    continue;
-                }
-                assert(!_task->_depUpWait, "Task state corrupt");
-                _task->_state = Task::State::exec;
-                Task_log_(*_task, "Executing");
-            }
-            
-            (*_task)();
-            
-            //Finalize any upstream tasks that are waiting
-            for (auto& vertex: _task->_vertex->links())
-            {
-                if (!vertex->nodes().size()) continue;
-                Task& e = ****vertex->nodes().begin();
-                Mutex::Scoped _(e._lock);
-                if (--e._depDownWait > 0) continue;
-                finalize(e);
-            }
-            
-            //Re-enqueue any downstream tasks that are waiting
-            for (auto& vertex: _task->_vertex->links(Task::DepNode::DepType::in))
-            {
-                if (!vertex->nodes().size()) continue;
-                Task& e = ****vertex->nodes().begin();
-                if (e._sched != _task->_sched || e._bindId != _task->_bindId) continue; //This task is not upstream of root
-                {
-                    Mutex::Scoped _(e._lock);
-                    if (--e._depUpWait > 0) continue;
-                    if (e._state != Task::State::depUpWait) continue;
-                }
-                _sched.enqueue_priv(e);
-            }
-            
-            {
-                Mutex::Scoped _(_task->_lock);
-                //Root task must finalize itself
-                if (_task == _task->_root.lock())
-                {
-                    --_task->_depDownWait;
-                    finalize(*_task);
-                    continue;
-                }
-                //If we haven't been finalized yet then we must wait for downstream to finalize us
-                if (_task->_state != Task::State::idle)
-                {
-                    _task->_state = Task::State::depDownWait;
-                    Task_log_(*_task, sout() << "Waiting for downstream. Wait task count: " << _task->_depDownWait);
-                    continue;
-                }
-            }
-        }
-        
-        //Wait for signal from sched that a task has been queued
-        ConditionLock::Scoped _(_cond);
-        while (_condWait) _cond.wait();
-        _condWait = true;
-    }
-}
-
-Task::Ptr TaskSched::Worker::next()
-{
-    //Try to pop from our queue
-    {
-        ConditionLock::Scoped _(_cond);
-        if (_tasks.size())
-        {
-            Task::Ptr task = move(_tasks.front());
-            _tasks.pop_front();
-            Task_log_(*task, sout() << "Popped from worker queue. Queue size: " << _tasks.size());
-            return task;
-        }
-    }
-    
-    //Find largest other worker queue
-    int maxSize = 0;
-    int maxIndex = -1;
-    for (auto i: range(size(_sched._workers)))
-    {
-        Worker& worker = *_sched._workers[i];
-        if (size(worker._tasks) <= maxSize) continue;
-        maxSize = size(worker._tasks);
-        maxIndex = i;
-    }
-    
-    if (maxIndex >= 0)
-    {
-        //Steal from other worker queue
-        do
-        {
-            Worker& worker = *_sched._workers[maxIndex];
-            ConditionLock::Scoped _(worker._cond);
-            if (!worker._tasks.size()) break;
-            
-            Task::Ptr task = move(worker._tasks.front());
-            worker._tasks.pop_front();
-            Task_log_(*task, sout() << "Stolen from worker queue: " << worker._thread.threadId()
-                                    << "; Queue size: " << worker._tasks.size());
-            return task;
-        } while(false);
-    }
-        
-    //Pop task from scheduler queue
-    if (_sched._tasks.size())
-    {
-        do
-        {
-            Mutex::Scoped _(_sched._lock);
-            if (!_sched._tasks.size()) break;
-        
-            Task::Ptr task = move(_sched._tasks.front());
-            _sched._tasks.pop_front();
-            Task_log_(*task, sout() << "Popped from scheduler queue. Queue size: " << _sched._tasks.size());
-            return task;
-        } while (false);
-    }
-    
-    return nullptr;
-}
-
-void TaskSched::Worker::finalize(Task& task)
-{
-    //Reset task to initial state
-    assert(!task._depDownWait, "Task state corrupt");
-    task._depUpWait = task._depUpWaitInit;
-    task._depDownWait = task._depDownWaitInit;
-    task._state = Task::State::idle;
-    task.resetFunctor();
-    Task_log_(task, "Finalized");
 }
 
 /** \cond */
@@ -476,7 +311,7 @@ namespace task { namespace priv
         tasks['c']->deps().add(*tasks['b']);
         tasks['b']->deps().add(*tasks['a']);
 
-        TaskSched sched;
+        TaskSched sched(3, 5);
         for (auto& e: stdutil::values(tasks)) sched.reg(*e);
 
         auto future = tasks['j']->future();

@@ -149,7 +149,7 @@ void ComObject::removeComs()
     vector<SlotMap::iterator, SmallAllocator<SlotMap::iterator>> slots;
     slots.reserve(_slotMap.size());
     for (auto it = _slotMap.begin(); it != _slotMap.end(); ++it) slots.push_back(it);
-    std::sort(slots.begin(), slots.end(), [](elemtype(slots)& e, elemtype(slots)& e2) { return e->second.type->depOrder() < e2->second.type->depOrder(); });
+    std::sort(slots.begin(), slots.end(), [](mt_elemOf(slots)& e, mt_elemOf(slots)& e2) { return e->second.type->depOrder() < e2->second.type->depOrder(); });
     for (auto& e : reversed(slots)) removeComsInSlot(e, false, false);
     _slotMap.clear();
 }

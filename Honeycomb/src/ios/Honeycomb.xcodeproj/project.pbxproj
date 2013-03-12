@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3722802A16D8C67900F6959E /* TimedMutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3722802916D8C67900F6959E /* TimedMutex.cpp */; };
+		37956D3216EEA64000FF887C /* Pool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37956D3016EEA63F00FF887C /* Pool.cpp */; };
 		37A4A49916D63BD9002B6539 /* Core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3719A6AB16D5DC2B00B09BDB /* Core.cpp */; };
 		37A4A49A16D63BD9002B6539 /* NspTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3719A6B216D5DC2B00B09BDB /* NspTree.cpp */; };
 		37A4A49B16D63BD9002B6539 /* Alge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3719A6B916D5DC2B00B09BDB /* Alge.cpp */; };
@@ -357,6 +358,8 @@
 		3722802816D8C65D00F6959E /* TimedMutex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimedMutex.h; sourceTree = "<group>"; };
 		3722802916D8C67900F6959E /* TimedMutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TimedMutex.cpp; sourceTree = "<group>"; };
 		37955F1016E5425500480966 /* Variant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Variant.h; sourceTree = "<group>"; };
+		37956D3016EEA63F00FF887C /* Pool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Pool.cpp; sourceTree = "<group>"; };
+		37956D3116EEA63F00FF887C /* Pool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pool.h; sourceTree = "<group>"; };
 		37A4A4EB16D63DBC002B6539 /* Honeycomb.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Honeycomb.pch; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -789,6 +792,8 @@
 				3719A79616D5DC2B00B09BDB /* Future */,
 				3719A79C16D5DC2C00B09BDB /* Lock */,
 				3719A7A616D5DC2C00B09BDB /* LockFree */,
+				37956D3016EEA63F00FF887C /* Pool.cpp */,
+				37956D3116EEA63F00FF887C /* Pool.h */,
 				3719A7AA16D5DC2C00B09BDB /* Task.cpp */,
 				3719A7AB16D5DC2C00B09BDB /* Task.h */,
 				3719A7AC16D5DC2C00B09BDB /* Thread.cpp */,
@@ -1088,6 +1093,7 @@
 				37A4A4E816D63BD9002B6539 /* Task.cpp in Sources */,
 				37A4A4E916D63BD9002B6539 /* Thread.cpp in Sources */,
 				3722802A16D8C67900F6959E /* TimedMutex.cpp in Sources */,
+				37956D3216EEA64000FF887C /* Pool.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

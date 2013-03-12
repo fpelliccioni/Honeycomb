@@ -402,13 +402,10 @@ public:
     Matrix<s_cols, T::s_rows, Real> transposeMulTranspose(const T& rhs) const   { return subc().transposeMulTranspose(rhs, Matrix<s_cols, T::s_rows, Real>()); }
 
     /// Returns a matrix without the selected row and column
-    Matrix< // Doxygen can't parse this
-            /** \cond */
-            (s_rows > 0) ? s_rows-1 : s_rows,
-            (s_cols > 0) ? s_cols-1 : s_cols,
-            /** \endcond */
-            Real>
-        minor(int row, int col) const
+    
+    auto minor(int row, int col) const ->
+        Matrix< (s_rows > 0) ? s_rows-1 : s_rows,
+                (s_cols > 0) ? s_cols-1 : s_cols, Real>
     {
         assertIndex(row, col);
         auto res = Matrix<  (s_rows > 0) ? s_rows-1 : s_rows,
