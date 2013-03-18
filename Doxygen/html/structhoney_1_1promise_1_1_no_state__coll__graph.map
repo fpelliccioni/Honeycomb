@@ -1,5 +1,6 @@
 <map id="honey::promise::NoState" name="honey::promise::NoState">
-<area shape="rect" id="node2" href="$classhoney_1_1_exception.html" title="Base exception class. Exceptions inherited from this class provide debug info and can be thrown polym..." alt="" coords="77,83,200,111"/>
-<area shape="rect" id="node3" href="$classhoney_1_1_shared_obj.html" title="Reference&#45;counted object for intrusive shared pointers." alt="" coords="5,6,133,34"/>
-<area shape="rect" id="node4" title="STL class." alt="" coords="158,6,260,34"/>
+<area shape="rect" id="node2" href="$classhoney_1_1_exception.html" title="Base exception class. Exceptions inherited from this class provide debug info and can be thrown polym..." alt="" coords="80,161,203,189"/>
+<area shape="rect" id="node3" href="$classhoney_1_1_shared_obj.html" title="Reference&#45;counted object for intrusive shared pointers." alt="" coords="8,83,136,111"/>
+<area shape="rect" id="node4" href="$structhoney_1_1mt_1_1_no_copy.html" title="Inherit to declare that class is not copyable." alt="" coords="4,6,139,34"/>
+<area shape="rect" id="node5" title="STL class." alt="" coords="160,83,263,111"/>
 </map>

@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structhoney_1_1_mt_pair.html" title="Key/value pair. A pair can be constructed with the syntax: (key() = value)" alt="" coords="6,5,144,49"/>
+<area shape="rect" id="node1" href="$structhoney_1_1mt_1_1_value.html" title="honey::mt::Value\&lt; int64,\l abs\&lt; a \&gt;::value \&gt;" alt="" coords="6,5,170,49"/>
+<area shape="rect" id="node2" href="$structhoney_1_1mt_1_1gcd_3_01a_00_010_01_4.html" title="honey::mt::gcd\&lt; a, 0 \&gt;" alt="" coords="219,13,373,41"/>
 </map>

@@ -1,4 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classhoney_1_1_nsp_tree.html" title="honey::NspTree\&lt; 1 \&gt;" alt="" coords="6,5,152,33"/>
-<area shape="rect" id="node2" href="$classhoney_1_1_bsp_tree.html" title="Tree structure that recursively divides 3D space into 2 lines at each depth level." alt="" coords="200,5,315,33"/>
+<area shape="rect" id="node1" href="$structhoney_1_1mt_1_1_value.html" title="honey::mt::Value\&lt; int64, f \&gt;" alt="" coords="6,13,189,41"/>
+<area shape="rect" id="node2" href="$structhoney_1_1mt_1_1conditional__int.html" title="Variant of std::conditional for integers, stores result in value" alt="" coords="238,5,389,49"/>
 </map>

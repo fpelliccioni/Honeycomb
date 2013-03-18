@@ -2,7 +2,6 @@ var searchData=
 [
   ['data',['Data',['../classhoney_1_1_dep_node.html#a2f1665adf6b605e0f13196e8e768b778',1,'honey::DepNode::Data()'],['../classhoney_1_1_tree_node.html#a966feab24513946fcd772bf356b4fc64',1,'honey::TreeNode::Data()'],['../classhoney_1_1lockfree_1_1_list.html#a220922bf773df482fa9bc47c98a96501',1,'honey::lockfree::List::Data()']]],
   ['days',['Days',['../namespacehoney.html#abff4784d23e06dcc82bd6f95938fca18',1,'honey']]],
-  ['dealloc',['Dealloc',['../classhoney_1_1_shared_obj.html#a10df5c0d21483f3e726ab8ab4bea7c9b',1,'honey::SharedObj']]],
   ['deca',['Deca',['../namespacehoney_1_1ratio.html#ad0207f331fdc1a2b5958d60cc3936b89',1,'honey::ratio']]],
   ['deci',['Deci',['../namespacehoney_1_1ratio.html#a3dbf621047bc8acd9a8c4e767400e603',1,'honey::ratio']]],
   ['depgraph',['DepGraph',['../classhoney_1_1_com_registry.html#ad7dfe297308be60cc5db3e5a06a3971f',1,'honey::ComRegistry::DepGraph()'],['../classhoney_1_1_task.html#ae2c69665f7090c94e7a46a25b5747642',1,'honey::Task::DepGraph()']]],

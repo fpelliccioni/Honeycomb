@@ -137,15 +137,6 @@ Macros</h2></td></tr>
 <tr class="memitem:ga1c1363163000ac7e7286ee537a198439"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___range.html#ga1c1363163000ac7e7286ee537a198439">RANGE_ARG_MAX</a>&#160;&#160;&#160;3</td></tr>
 <tr class="memdesc:ga1c1363163000ac7e7286ee537a198439"><td class="mdescLeft">&#160;</td><td class="mdescRight">Max args for range related variable argument functions.  <a href="#ga1c1363163000ac7e7286ee537a198439">More...</a><br/></td></tr>
 <tr class="separator:ga1c1363163000ac7e7286ee537a198439"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad50659fe4233a58cb3d486a93b5bd312"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___range.html#gad50659fe4233a58cb3d486a93b5bd312">itertype</a>(Range)&#160;&#160;&#160;typename mt::removeConstRef&lt;decltype(honey::begin(Range))&gt;::type</td></tr>
-<tr class="memdesc:gad50659fe4233a58cb3d486a93b5bd312"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get range iterator begin type.  <a href="#gad50659fe4233a58cb3d486a93b5bd312">More...</a><br/></td></tr>
-<tr class="separator:gad50659fe4233a58cb3d486a93b5bd312"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa66e11fd95b7d1d9d5339c74d08fc414"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___range.html#gaa66e11fd95b7d1d9d5339c74d08fc414">itertype_end</a>(Range)&#160;&#160;&#160;typename mt::removeConstRef&lt;decltype(honey::end(Range))&gt;::type</td></tr>
-<tr class="memdesc:gaa66e11fd95b7d1d9d5339c74d08fc414"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get range iterator end type.  <a href="#gaa66e11fd95b7d1d9d5339c74d08fc414">More...</a><br/></td></tr>
-<tr class="separator:gaa66e11fd95b7d1d9d5339c74d08fc414"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac1d261381bc9c063b6de370f3f24b43e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___range.html#gac1d261381bc9c063b6de370f3f24b43e">elemtype</a>(Range)&#160;&#160;&#160;typename mt::removeRef&lt;decltype(*honey::begin(Range))&gt;::type</td></tr>
-<tr class="memdesc:gac1d261381bc9c063b6de370f3f24b43e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get range element type.  <a href="#gac1d261381bc9c063b6de370f3f24b43e">More...</a><br/></td></tr>
-<tr class="separator:gac1d261381bc9c063b6de370f3f24b43e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -153,10 +144,10 @@ Functions</h2></td></tr>
 <tr class="memitem:gaaffb4cdfa3fc0e8b6f91bdc15f3799cf"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___range.html#gaaffb4cdfa3fc0e8b6f91bdc15f3799cf">honey::seqToIter</a> (<a class="el" href="_range_8h.html#a2d0a26e891e82b617cbec9f1ee8eb2ba">Iter</a> &amp;&amp;seq) -&gt; typename std::enable_if&lt; mt::isIterator&lt; <a class="el" href="_range_8h.html#a2d0a26e891e82b617cbec9f1ee8eb2ba">Iter</a> &gt;::value, <a class="el" href="_range_8h.html#a2d0a26e891e82b617cbec9f1ee8eb2ba">Iter</a> &amp;&amp; &gt;::type</td></tr>
 <tr class="memdesc:gaaffb4cdfa3fc0e8b6f91bdc15f3799cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a sequence to a forward iterator. Overload for iterator type. Returns the iterator itself.  <a href="#gaaffb4cdfa3fc0e8b6f91bdc15f3799cf">More...</a><br/></td></tr>
 <tr class="separator:gaaffb4cdfa3fc0e8b6f91bdc15f3799cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga968dd4ade7397d43798655b2cfa8c3e4"><td class="memTemplParams" colspan="2">template&lt;class Range &gt; </td></tr>
-<tr class="memitem:ga968dd4ade7397d43798655b2cfa8c3e4"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___range.html#ga968dd4ade7397d43798655b2cfa8c3e4">honey::seqToIter</a> (Range &amp;&amp;seq) -&gt; typename std::enable_if&lt; mt::isRange&lt; Range &gt;::value, <a class="el" href="group___range.html#gad50659fe4233a58cb3d486a93b5bd312">itertype</a>(seq)&gt;::type</td></tr>
-<tr class="memdesc:ga968dd4ade7397d43798655b2cfa8c3e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a sequence to a forward iterator. Overload for range type. Returns the range's begin iterator.  <a href="#ga968dd4ade7397d43798655b2cfa8c3e4">More...</a><br/></td></tr>
-<tr class="separator:ga968dd4ade7397d43798655b2cfa8c3e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4735bb584ec847386f2007260b74f27b"><td class="memTemplParams" colspan="2">template&lt;class Range &gt; </td></tr>
+<tr class="memitem:ga4735bb584ec847386f2007260b74f27b"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___range.html#ga4735bb584ec847386f2007260b74f27b">honey::seqToIter</a> (Range &amp;&amp;seq) -&gt; typename std::enable_if&lt; mt::isRange&lt; Range &gt;::value, <a class="el" href="_range_8h.html#a54f00d0be85c3f38f1b100991ab7f42e">mt_iterOf</a>(seq)&gt;::type</td></tr>
+<tr class="memdesc:ga4735bb584ec847386f2007260b74f27b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a sequence to a forward iterator. Overload for range type. Returns the range's begin iterator.  <a href="#ga4735bb584ec847386f2007260b74f27b">More...</a><br/></td></tr>
+<tr class="separator:ga4735bb584ec847386f2007260b74f27b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab4dc9eeb8ac97aba0f1ac47fc3963580"><td class="memTemplParams" colspan="2">template&lt;class Iter1 , class Iter2 &gt; </td></tr>
 <tr class="memitem:gab4dc9eeb8ac97aba0f1ac47fc3963580"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt; mt::isIterator<br class="typebreak"/>
 &lt; Iter1 &gt;::value, Range_<br class="typebreak"/>
@@ -177,22 +168,26 @@ Functions</h2></td></tr>
 <tr class="memitem:gaa8d38120ad8679807d06efe9a1d96acc"><td class="memTemplParams" colspan="2">template&lt;class T1 , class T2 &gt; </td></tr>
 <tr class="memitem:gaa8d38120ad8679807d06efe9a1d96acc"><td class="memTemplItemLeft" align="right" valign="top">Range_&lt; T1, T2 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___range.html#gaa8d38120ad8679807d06efe9a1d96acc">honey::range</a> (const tuple&lt; T1, T2 &gt; &amp;t)</td></tr>
 <tr class="separator:gaa8d38120ad8679807d06efe9a1d96acc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga14685bca126f91a53e35a1672623f8f7"><td class="memTemplParams" colspan="2">template&lt;class Range &gt; </td></tr>
-<tr class="memitem:ga14685bca126f91a53e35a1672623f8f7"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___range.html#ga14685bca126f91a53e35a1672623f8f7">honey::reversed</a> (Range &amp;&amp;range) -&gt; Range_&lt; std::reverse_iterator&lt; <a class="el" href="group___range.html#gad50659fe4233a58cb3d486a93b5bd312">itertype</a>(range)&gt;, std::reverse_iterator&lt; <a class="el" href="group___range.html#gaa66e11fd95b7d1d9d5339c74d08fc414">itertype_end</a>(range)&gt;&gt;</td></tr>
-<tr class="memdesc:ga14685bca126f91a53e35a1672623f8f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverse a range. Begin/End iterators must be bidirectional.  <a href="#ga14685bca126f91a53e35a1672623f8f7">More...</a><br/></td></tr>
-<tr class="separator:ga14685bca126f91a53e35a1672623f8f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8d2d812515679e26484f89af951e3fd9"><td class="memTemplParams" colspan="2">template&lt;class Range &gt; </td></tr>
+<tr class="memitem:ga8d2d812515679e26484f89af951e3fd9"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___range.html#ga8d2d812515679e26484f89af951e3fd9">honey::reversed</a> (Range &amp;&amp;range) -&gt; Range_&lt; std::reverse_iterator&lt; <a class="el" href="_range_8h.html#a54f00d0be85c3f38f1b100991ab7f42e">mt_iterOf</a>(range)&gt;, std::reverse_iterator&lt; <a class="el" href="_range_8h.html#aeca83cae95a69bda0bc13bd5ea618d2b">mt_iter_endOf</a>(range)&gt;&gt;</td></tr>
+<tr class="memdesc:ga8d2d812515679e26484f89af951e3fd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverse a range. Begin/End iterators must be bidirectional.  <a href="#ga8d2d812515679e26484f89af951e3fd9">More...</a><br/></td></tr>
+<tr class="separator:ga8d2d812515679e26484f89af951e3fd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae326e0e45ff05fd6a57d4deddc46a0ce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_range_8h.html#abd3211243d3ef59a2d17931089779462">OutSeq</a> &amp;&amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___range.html#gae326e0e45ff05fd6a57d4deddc46a0ce">honey::map</a> (Range &amp;&amp;, Seqs &amp;&amp;..., <a class="el" href="_range_8h.html#abd3211243d3ef59a2d17931089779462">OutSeq</a> &amp;&amp;, Func &amp;&amp;)</td></tr>
 <tr class="memdesc:gae326e0e45ff05fd6a57d4deddc46a0ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transform a series of sequences into an output.  <a href="#gae326e0e45ff05fd6a57d4deddc46a0ce">More...</a><br/></td></tr>
 <tr class="separator:gae326e0e45ff05fd6a57d4deddc46a0ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga142fbfd0c2cc30fcf5df7045f3e148e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_range_8h.html#a7cb87865877b91315750e32398853519">Accum</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___range.html#ga142fbfd0c2cc30fcf5df7045f3e148e8">honey::reduce</a> (Range &amp;&amp;, Seqs &amp;&amp;..., const <a class="el" href="_range_8h.html#a7cb87865877b91315750e32398853519">Accum</a> &amp;initVal, Func &amp;&amp;)</td></tr>
-<tr class="memdesc:ga142fbfd0c2cc30fcf5df7045f3e148e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accumulate a series of sequences into an output.  <a href="#ga142fbfd0c2cc30fcf5df7045f3e148e8">More...</a><br/></td></tr>
-<tr class="separator:ga142fbfd0c2cc30fcf5df7045f3e148e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3db86f18b612ba7a6577f3eb73e6ec20"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_range_8h.html#a7cb87865877b91315750e32398853519">Accum</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___range.html#ga3db86f18b612ba7a6577f3eb73e6ec20">honey::reduce</a> (Range &amp;&amp;, Seqs &amp;&amp;..., <a class="el" href="_range_8h.html#a7cb87865877b91315750e32398853519">Accum</a> &amp;&amp;initVal, Func &amp;&amp;)</td></tr>
+<tr class="memdesc:ga3db86f18b612ba7a6577f3eb73e6ec20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accumulate a series of sequences into an output.  <a href="#ga3db86f18b612ba7a6577f3eb73e6ec20">More...</a><br/></td></tr>
+<tr class="separator:ga3db86f18b612ba7a6577f3eb73e6ec20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacdd29d61d6f67dd3d700c370225a5467"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_range_8h.html#a2d0a26e891e82b617cbec9f1ee8eb2ba">Iter</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___range.html#gacdd29d61d6f67dd3d700c370225a5467">honey::find</a> (Range &amp;&amp;, Seqs &amp;&amp;..., Func &amp;&amp;pred)</td></tr>
 <tr class="memdesc:gacdd29d61d6f67dd3d700c370225a5467"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find an element in a series of sequences.  <a href="#gacdd29d61d6f67dd3d700c370225a5467">More...</a><br/></td></tr>
 <tr class="separator:gacdd29d61d6f67dd3d700c370225a5467"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadee4d1575c943eb55eef29c599c3d631"><td class="memItemLeft" align="right" valign="top">Range_&lt; <a class="el" href="_range_8h.html#a18b428764b7ee1f77ccc20cc51cad66c">FilterIter</a>, <a class="el" href="_range_8h.html#a18b428764b7ee1f77ccc20cc51cad66c">FilterIter</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___range.html#gadee4d1575c943eb55eef29c599c3d631">honey::filter</a> (Range &amp;&amp;, Seqs &amp;&amp;..., Func &amp;&amp;pred)</td></tr>
 <tr class="memdesc:gadee4d1575c943eb55eef29c599c3d631"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filter a range by ignoring undesired elements.  <a href="#gadee4d1575c943eb55eef29c599c3d631">More...</a><br/></td></tr>
 <tr class="separator:gadee4d1575c943eb55eef29c599c3d631"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga72a642e43bab1e711d7090e820aa00a9"><td class="memTemplParams" colspan="2">template&lt;class Range &gt; </td></tr>
+<tr class="memitem:ga72a642e43bab1e711d7090e820aa00a9"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___range.html#ga72a642e43bab1e711d7090e820aa00a9">honey::countOf</a> (Range &amp;&amp;range)</td></tr>
+<tr class="memdesc:ga72a642e43bab1e711d7090e820aa00a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count number of elements in range.  <a href="#ga72a642e43bab1e711d7090e820aa00a9">More...</a><br/></td></tr>
+<tr class="separator:ga72a642e43bab1e711d7090e820aa00a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaddb3f3259b6b185b618516f9ab85556f"><td class="memTemplParams" colspan="2">template&lt;class Range &gt; </td></tr>
 <tr class="memitem:gaddb3f3259b6b185b618516f9ab85556f"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___range.html#gaddb3f3259b6b185b618516f9ab85556f">honey::deleteRange</a> (Range &amp;&amp;range)</td></tr>
 <tr class="memdesc:gaddb3f3259b6b185b618516f9ab85556f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete all elements in range.  <a href="#gaddb3f3259b6b185b618516f9ab85556f">More...</a><br/></td></tr>
@@ -239,63 +234,6 @@ Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Methods that create and operate on ranges. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gac1d261381bc9c063b6de370f3f24b43e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define elemtype</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">Range</td><td>)</td>
-          <td>&#160;&#160;&#160;typename mt::removeRef&lt;decltype(*honey::begin(Range))&gt;::type</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get range element type. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="group___range.html#gad50659fe4233a58cb3d486a93b5bd312" title="Get range iterator begin type.">itertype()</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gad50659fe4233a58cb3d486a93b5bd312"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define itertype</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">Range</td><td>)</td>
-          <td>&#160;&#160;&#160;typename mt::removeConstRef&lt;decltype(honey::begin(Range))&gt;::type</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get range iterator begin type. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="group___range.html#gac1d261381bc9c063b6de370f3f24b43e" title="Get range element type.">elemtype()</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa66e11fd95b7d1d9d5339c74d08fc414"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define itertype_end</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">Range</td><td>)</td>
-          <td>&#160;&#160;&#160;typename mt::removeConstRef&lt;decltype(honey::end(Range))&gt;::type</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get range iterator end type. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="group___range.html#gac1d261381bc9c063b6de370f3f24b43e" title="Get range element type.">elemtype()</a> </dd></dl>
-
-</div>
-</div>
 <a class="anchor" id="ga1c1363163000ac7e7286ee537a198439"></a>
 <div class="memitem">
 <div class="memproto">
@@ -311,6 +249,26 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga72a642e43bab1e711d7090e820aa00a9"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class Range &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">int honey::countOf </td>
+          <td>(</td>
+          <td class="paramtype">Range &amp;&amp;&#160;</td>
+          <td class="paramname"><em>range</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Count number of elements in range. </p>
+
+</div>
+</div>
 <a class="anchor" id="gaddb3f3259b6b185b618516f9ab85556f"></a>
 <div class="memitem">
 <div class="memproto">
@@ -701,7 +659,7 @@ template&lt;class Real &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="ga142fbfd0c2cc30fcf5df7045f3e148e8"></a>
+<a class="anchor" id="ga3db86f18b612ba7a6577f3eb73e6ec20"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -720,7 +678,7 @@ template&lt;class Real &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="_range_8h.html#a7cb87865877b91315750e32398853519">Accum</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="_range_8h.html#a7cb87865877b91315750e32398853519">Accum</a> &amp;&amp;&#160;</td>
           <td class="paramname"><em>initVal</em>, </td>
         </tr>
         <tr>
@@ -739,11 +697,11 @@ template&lt;class Real &gt; </div>
 
 <p>Accumulate a series of sequences into an output. </p>
 <p>Call function for each element in the range and any sequences, <code>f(accum, rangeElem, seq1Elem, seq2Elem...)</code>, forwarding the result of each call into the next as <code>accum</code>. Returns the accumulated value.</p>
-<p>Reduce can be specialized through the function: <code>priv::reduce_implN&lt;Range, Seqs...N&gt;::func(...)</code> </p>
+<p>Reduce can be specialized through the function: <code>priv::reduce_implN&lt;Range, Seqs...N, Accum&gt;::func(...)</code> </p>
 
 </div>
 </div>
-<a class="anchor" id="ga14685bca126f91a53e35a1672623f8f7"></a>
+<a class="anchor" id="ga8d2d812515679e26484f89af951e3fd9"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -754,7 +712,7 @@ template&lt;class Range &gt; </div>
           <td>(</td>
           <td class="paramtype">Range &amp;&amp;&#160;</td>
           <td class="paramname"><em>range</em></td><td>)</td>
-          <td> -&gt; Range_&lt;std::reverse_iterator&lt;<a class="el" href="group___range.html#gad50659fe4233a58cb3d486a93b5bd312">itertype</a>(range)&gt;, std::reverse_iterator&lt;<a class="el" href="group___range.html#gaa66e11fd95b7d1d9d5339c74d08fc414">itertype_end</a>(range)&gt;&gt;
+          <td> -&gt; Range_&lt;std::reverse_iterator&lt;<a class="el" href="_range_8h.html#a54f00d0be85c3f38f1b100991ab7f42e">mt_iterOf</a>(range)&gt;, std::reverse_iterator&lt;<a class="el" href="_range_8h.html#aeca83cae95a69bda0bc13bd5ea618d2b">mt_iter_endOf</a>(range)&gt;&gt;
 </td>
         </tr>
       </table>
@@ -817,7 +775,7 @@ template&lt;class Iter &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="ga968dd4ade7397d43798655b2cfa8c3e4"></a>
+<a class="anchor" id="ga4735bb584ec847386f2007260b74f27b"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -828,7 +786,7 @@ template&lt;class Range &gt; </div>
           <td>(</td>
           <td class="paramtype">Range &amp;&amp;&#160;</td>
           <td class="paramname"><em>seq</em></td><td>)</td>
-          <td> -&gt; typename std::enable_if&lt;mt::isRange&lt;Range&gt;::value, <a class="el" href="group___range.html#gad50659fe4233a58cb3d486a93b5bd312">itertype</a>(seq)&gt;::type
+          <td> -&gt; typename std::enable_if&lt;mt::isRange&lt;Range&gt;::value, <a class="el" href="_range_8h.html#a54f00d0be85c3f38f1b100991ab7f42e">mt_iterOf</a>(seq)&gt;::type
                                                                     </td>
         </tr>
       </table>
@@ -841,7 +799,7 @@ template&lt;class Range &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 6 2013 23:41:21 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 18 2013 04:06:49 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

@@ -46,6 +46,6 @@
 <area shape="rect" id="node44" href="$_shared_mutex_8h.html" title="src/common/Honey/Thread\l/Lock/SharedMutex.h" alt="" coords="3366,1126,3548,1170"/>
 <area shape="rect" id="node45" href="$_backoff_8h.html" title="src/common/Honey/Thread\l/LockFree/Backoff.h" alt="" coords="2261,1126,2443,1170"/>
 <area shape="rect" id="node46" href="$_thread_2_lock_free_2_mem_8h.html" title="src/common/Honey/Thread\l/LockFree/Mem.h" alt="" coords="2468,1126,2649,1170"/>
-<area shape="rect" id="node47" href="$_task_8h.html" title="src/common/Honey/Thread\l/Task.h" alt="" coords="1805,1126,1987,1170"/>
+<area shape="rect" id="node47" href="$_thread_2_pool_8h.html" title="src/common/Honey/Thread\l/Pool.h" alt="" coords="1805,1126,1987,1170"/>
 <area shape="rect" id="node48" href="$_win_2_honey_2_thread_2platform_2_thread_8cpp.html" title="src/Win/Honey/Thread\l/platform/Thread.cpp" alt="" coords="3188,1126,3341,1170"/>
 </map>

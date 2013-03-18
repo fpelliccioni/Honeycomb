@@ -126,7 +126,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <a class="code" href="classhoney_1_1_tree_node.html#ae5421a794c49ebd11c8a96f5c9fcf0b0" title="Set the data that this node contains.">setData</a>(&amp;<a class="code" href="classhoney_1_1_scene_component.html#a91986fc3750fe2a6c7a450df07940aed">obj</a>());</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="comment">//Ignore null ids for performance</span></div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="classhoney_1_1_scene_component.html#a91986fc3750fe2a6c7a450df07940aed">obj</a>().<a class="code" href="classhoney_1_1_object.html#ae2c6af0a386542871e3a679dc551d94f">getInstId</a>() != <a class="code" href="group___id.html#ga4966cc00529fa34c85268e32beb417c9" title="Null id.">idnull</a>) setKey(<a class="code" href="classhoney_1_1_scene_component.html#a91986fc3750fe2a6c7a450df07940aed">obj</a>().<a class="code" href="classhoney_1_1_object.html#ae2c6af0a386542871e3a679dc551d94f">getInstId</a>());</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <a class="code" href="classhoney_1_1_scene_component.html#a91986fc3750fe2a6c7a450df07940aed">obj</a>().<a class="code" href="classhoney_1_1_com_object.html#a21610de4685aed1b59e08c87ea3c0ad6" title="Get listener list.">listeners</a>().<a class="code" href="classhoney_1_1_listener_list.html#aa2a813c8a1c63ab4f6c6e3f86e814e81" title="Add a listener shared reference.">add</a>(Listener::create&lt;SceneObject::sigSetInstId&gt;(<a class="code" href="_std_util_8h.html#af39289919acc655cc1f22004a0c11d6e">bind</a>(&amp;Tree::setKey,<span class="keyword">this</span>,_2), <span class="keyword">this</span>));</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <a class="code" href="classhoney_1_1_scene_component.html#a91986fc3750fe2a6c7a450df07940aed">obj</a>().<a class="code" href="classhoney_1_1_com_object.html#a21610de4685aed1b59e08c87ea3c0ad6" title="Get listener list.">listeners</a>().<a class="code" href="classhoney_1_1_listener_list.html#aa2a813c8a1c63ab4f6c6e3f86e814e81" title="Add a listener shared reference.">add</a>(Listener::create&lt;SceneObject::sigSetInstId&gt;(bind(&amp;Tree::setKey,<span class="keyword">this</span>,_2), <span class="keyword">this</span>));</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    }</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> onComRemove()</div>
@@ -145,7 +145,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 6 2013 23:41:16 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 18 2013 04:06:45 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

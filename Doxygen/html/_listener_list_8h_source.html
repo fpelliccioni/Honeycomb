@@ -134,7 +134,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keyword">auto</span> slots = <a class="code" href="classhoney_1_1_listener_list.html#aac49f0b933290755af21920fe38f6ba4" title="Get slots that receive signal. Returns null if none found.">slotList</a>(Signal::id());</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keywordflow">if</span> (!slots) <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; e : *slots)</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            (<span class="keyword">static_cast&lt;</span>priv::SlotSignal&lt;Signal,Signal::arity&gt;&amp;<span class="keyword">&gt;</span>(*e))(forward&lt;Args&gt;(args)...);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            (<span class="keyword">static_cast&lt;</span>priv::SlotSignal&lt;Signal,Signal::arity&gt;&amp;<span class="keyword">&gt;</span>(*e))(args...);</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    }</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
 <div class="line"><a name="l00062"></a><span class="lineno"><a class="code" href="classhoney_1_1_listener_list.html#a8b4ef337fedada73fe5ac78734d7d419">   62</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classhoney_1_1_listener_list.html#a8b4ef337fedada73fe5ac78734d7d419" title="Set callback to handle events from this class.">setCallback</a>(<a class="code" href="structhoney_1_1_listener_list_1_1_callback.html" title="Callback to handle events from this class.">Callback</a>* cb)                      { _cb = cb; }</div>
@@ -160,7 +160,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 6 2013 23:41:19 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 18 2013 04:06:48 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

@@ -1,7 +1,8 @@
 <map id="honey::Property&lt; vector&lt; T &gt; &gt;" name="honey::Property&lt; vector&lt; T &gt; &gt;">
-<area shape="rect" id="node2" title="STL class." alt="" coords="5,193,117,221"/>
-<area shape="rect" id="node4" href="$classhoney_1_1_property_base.html" title="Base class for all properties." alt="" coords="142,193,287,221"/>
-<area shape="rect" id="node5" href="$classhoney_1_1_object.html" title="Base class for objects." alt="" coords="134,99,236,127"/>
-<area shape="rect" id="node6" href="$classhoney_1_1_shared_obj.html" title="Reference&#45;counted object for intrusive shared pointers." alt="" coords="94,6,223,34"/>
-<area shape="rect" id="node7" href="$classhoney_1_1_id.html" title="Holds a string and its hashed value for fast comparison ops. See String Identifier." alt="" coords="247,6,323,34"/>
+<area shape="rect" id="node2" title="STL class." alt="" coords="5,273,117,301"/>
+<area shape="rect" id="node4" href="$classhoney_1_1_property_base.html" title="Base class for all properties." alt="" coords="142,273,287,301"/>
+<area shape="rect" id="node5" href="$classhoney_1_1_object.html" title="Base class for objects." alt="" coords="134,179,236,207"/>
+<area shape="rect" id="node6" href="$classhoney_1_1_shared_obj.html" title="Reference&#45;counted object for intrusive shared pointers." alt="" coords="94,86,223,114"/>
+<area shape="rect" id="node7" href="$structhoney_1_1mt_1_1_no_copy.html" title="Inherit to declare that class is not copyable." alt="" coords="91,6,225,34"/>
+<area shape="rect" id="node8" href="$classhoney_1_1_id.html" title="Holds a string and its hashed value for fast comparison ops. See String Identifier." alt="" coords="247,86,323,114"/>
 </map>

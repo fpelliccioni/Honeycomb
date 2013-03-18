@@ -378,18 +378,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;    <span class="keyword">static</span> O&amp;&amp; func(T&amp;&amp; v, T2&amp;&amp; rhs, O&amp;&amp; o, Func&amp;&amp; f)               { o.x = f(v.x,rhs.x); o.y = f(v.y,rhs.y); o.z = f(v.z,rhs.z); <span class="keywordflow">return</span> forward&lt;O&gt;(o); }</div>
 <div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;};</div>
 <div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> R, <span class="keywordtype">int</span> O&gt;</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;<span class="keyword">struct </span>priv::reduce_impl0&lt;Vec&lt;3,R,O&gt;&gt;</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> R, <span class="keywordtype">int</span> O, <span class="keyword">class</span> Accum_&gt;</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;<span class="keyword">struct </span>priv::reduce_impl0&lt;Vec&lt;3,R,O&gt;, Accum_&gt;</div>
 <div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;{</div>
 <div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">class</span> T, <span class="keyword">class</span> Accum, <span class="keyword">class</span> Func&gt;</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    <span class="keyword">static</span> <a class="code" href="_range_8h.html#a7cb87865877b91315750e32398853519">Accum</a> func(T&amp;&amp; v, <span class="keyword">const</span> Accum&amp; initVal, Func&amp;&amp; f)        { <span class="keywordflow">return</span> f(f(f(initVal, v.x), v.y), v.z); }</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    <span class="keyword">static</span> Accum_ func(T&amp;&amp; v, Accum&amp;&amp; initVal, Func&amp;&amp; f)            { <span class="keywordflow">return</span> f(f(f(forward&lt;Accum&gt;(initVal), v.x), v.y), v.z); }</div>
 <div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;};</div>
 <div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> R, <span class="keywordtype">int</span> O&gt;</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;<span class="keyword">struct </span>priv::reduce_impl1&lt;Vec&lt;3,R,O&gt;, Vec&lt;3,R,O&gt;&gt;</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> R, <span class="keywordtype">int</span> O, <span class="keyword">class</span> Accum_&gt;</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;<span class="keyword">struct </span>priv::reduce_impl1&lt;Vec&lt;3,R,O&gt;, Vec&lt;3,R,O&gt;, Accum_&gt;</div>
 <div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;{</div>
 <div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">class</span> T, <span class="keyword">class</span> T2, <span class="keyword">class</span> Accum, <span class="keyword">class</span> Func&gt;</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    <span class="keyword">static</span> <a class="code" href="_range_8h.html#a7cb87865877b91315750e32398853519">Accum</a> func(T&amp;&amp; v, T2&amp;&amp; rhs, <span class="keyword">const</span> Accum&amp; initVal, Func&amp;&amp; f)  { <span class="keywordflow">return</span> f(f(f(initVal, v.x, rhs.x), v.y, rhs.y), v.z, rhs.z); }</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    <span class="keyword">static</span> Accum_ func(T&amp;&amp; v, T2&amp;&amp; rhs, Accum&amp;&amp; initVal, Func&amp;&amp; f)  { <span class="keywordflow">return</span> f(f(f(forward&lt;Accum&gt;(initVal), v.x, rhs.x), v.y, rhs.y), v.z, rhs.z); }</div>
 <div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;};</div>
 <div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;</div>
 <div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;</div>
@@ -436,7 +436,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 6 2013 23:41:18 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 18 2013 04:06:46 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

@@ -22,7 +22,7 @@ var searchData=
   ['deque',['Deque',['../classhoney_1_1concur_1_1_deque.html#a4a816a790270edd40c7eb4f34069c5b3',1,'honey::concur::Deque']]],
   ['derefiter',['DerefIter',['../classhoney_1_1_deref_iter.html#a998fcd5943de3fe1c0e03493545b1af0',1,'honey::DerefIter::DerefIter()=default'],['../classhoney_1_1_deref_iter.html#a0bace8866dc251b44fc97c5d0675d315',1,'honey::DerefIter::DerefIter(const Iter &amp;i)']]],
   ['dereflink',['deRefLink',['../classhoney_1_1lockfree_1_1_mem.html#a2f5d7bbd74701e928d58e27af95df800',1,'honey::lockfree::Mem']]],
-  ['derivative',['derivative',['../classhoney_1_1_polynomial.html#ac4c484fe5a1fe8b759f01b53797c2015',1,'honey::Polynomial']]],
+  ['derivative',['derivative',['../classhoney_1_1_polynomial.html#ae9d8d5d232bec4e5d8479cd0cb2b6d9d',1,'honey::Polynomial']]],
   ['destroy',['destroy',['../classhoney_1_1_allocator.html#ae9addebead79529a557d4654c4bb9b6a',1,'honey::Allocator']]],
   ['determinant',['determinant',['../classhoney_1_1_matrix_base.html#a734bd9145ee6147f1ecd4d824f8cca02',1,'honey::MatrixBase::determinant()'],['../classhoney_1_1_matrix_3_014_00_014_00_01_real_00_01_options_01_4.html#a716e99677fb2c906b3bb65ab84a35fc7',1,'honey::Matrix&lt; 4, 4, Real, Options &gt;::determinant()']]],
   ['diff',['diff',['../classhoney_1_1_line__.html#a097d986e514ce8a0bc6974e6fce4135c',1,'honey::Line_']]],

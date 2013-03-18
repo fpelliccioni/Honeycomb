@@ -14,7 +14,6 @@ var searchData=
   ['mt',['mt',['../namespacehoney_1_1mt.html',1,'honey']]],
   ['priv',['priv',['../namespacehoney_1_1matrix_1_1priv.html',1,'honey::matrix']]],
   ['priv',['priv',['../namespacehoney_1_1vec_1_1priv.html',1,'honey::vec']]],
-  ['promise',['promise',['../namespacehoney_1_1promise.html',1,'honey']]],
   ['ratio',['ratio',['../namespacehoney_1_1ratio.html',1,'honey']]],
   ['stdutil',['stdutil',['../namespacehoney_1_1stdutil.html',1,'honey']]],
   ['thread',['thread',['../namespacehoney_1_1thread.html',1,'honey']]],

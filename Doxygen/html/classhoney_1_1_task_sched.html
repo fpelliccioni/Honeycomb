@@ -90,8 +90,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="classhoney_1_1_task_sched-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -106,10 +106,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a533b7bf506ad0e714f176a158775acf2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_task_sched.html#a533b7bf506ad0e714f176a158775acf2">TaskSched</a> (int workerCount=3, int workerTaskMax=5)</td></tr>
-<tr class="separator:a533b7bf506ad0e714f176a158775acf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a832822aefa31c8da45d0a135a9ff65c3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_task_sched.html#a832822aefa31c8da45d0a135a9ff65c3">~TaskSched</a> ()</td></tr>
-<tr class="separator:a832822aefa31c8da45d0a135a9ff65c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c5a23191170d7482ee2681470fbc9a6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_task_sched.html#a1c5a23191170d7482ee2681470fbc9a6">TaskSched</a> (int workerCount, int workerTaskMax)</td></tr>
+<tr class="separator:a1c5a23191170d7482ee2681470fbc9a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a454f969168c0b5210591fd7ace8382ab"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_task_sched.html#a454f969168c0b5210591fd7ace8382ab">reg</a> (<a class="el" href="classhoney_1_1_task.html">Task</a> &amp;task)</td></tr>
 <tr class="memdesc:a454f969168c0b5210591fd7ace8382ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register a task. <a class="el" href="classhoney_1_1_task.html" title="Base class of Task_, can be added to scheduler. Instances must be created through class Task_...">Task</a> id must be unique. Once registered, tasks are linked through the dependency graph by id.  <a href="#a454f969168c0b5210591fd7ace8382ab">More...</a><br/></td></tr>
 <tr class="separator:a454f969168c0b5210591fd7ace8382ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -120,6 +118,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:aacf84ca3442578e5b274ccf8e366715c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Schedule a task for execution. Returns false if task is already active.  <a href="#aacf84ca3442578e5b274ccf8e366715c">More...</a><br/></td></tr>
 <tr class="separator:aacf84ca3442578e5b274ccf8e366715c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a485e26221932e68ce6124b94047417be"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classhoney_1_1_task_sched.html">TaskSched</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_task_sched.html#a485e26221932e68ce6124b94047417be">inst</a> ()</td></tr>
+<tr class="memdesc:a485e26221932e68ce6124b94047417be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get singleton.  <a href="#a485e26221932e68ce6124b94047417be">More...</a><br/></td></tr>
+<tr class="separator:a485e26221932e68ce6124b94047417be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
 <tr class="memitem:aaa7728226b6ce66782e8816b1658dd9a"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_task_sched.html#aaa7728226b6ce66782e8816b1658dd9a">Task</a></td></tr>
@@ -127,9 +131,10 @@ Friends</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classhoney_1_1_task.html" title="Base class of Task_, can be added to scheduler. Instances must be created through class Task_...">Task</a> scheduler, serializes and parallelizes task execution, given a dependency graph of tasks and a pool of threads. </p>
-<p>To run a task, first register it and any dependent tasks with <a class="el" href="classhoney_1_1_task_sched.html#a454f969168c0b5210591fd7ace8382ab" title="Register a task. Task id must be unique. Once registered, tasks are linked through the dependency gra...">TaskSched::reg()</a>, then call TaskSched::enqueue(rootTask). </p>
+<p>To run a task, first register it and any dependent tasks with <a class="el" href="classhoney_1_1_task_sched.html#a454f969168c0b5210591fd7ace8382ab" title="Register a task. Task id must be unique. Once registered, tasks are linked through the dependency gra...">TaskSched::reg()</a>, then call TaskSched::enqueue(rootTask).</p>
+<p>To provide a custom global scheduler define <code>TaskSched_createSingleton</code> and implement TaskSched::createSingleton(). </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a533b7bf506ad0e714f176a158775acf2"></a>
+<a class="anchor" id="a1c5a23191170d7482ee2681470fbc9a6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -137,13 +142,13 @@ Friends</h2></td></tr>
           <td class="memname">honey::TaskSched::TaskSched </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>workerCount</em> = <code>3</code>, </td>
+          <td class="paramname"><em>workerCount</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>workerTaskMax</em> = <code>5</code>&#160;</td>
+          <td class="paramname"><em>workerTaskMax</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -154,26 +159,11 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">workerCount</td><td>Number of workers </td></tr>
-    <tr><td class="paramname">workerTaskMax</td><td>Max size of per-worker task queue, overflow will be pushed onto scheduler queue </td></tr>
+    <tr><td class="paramname">workerCount\see</td><td>thread::Pool() </td></tr>
+    <tr><td class="paramname">workerTaskMax\see</td><td>thread::Pool() </td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a class="anchor" id="a832822aefa31c8da45d0a135a9ff65c3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">honey::TaskSched::~TaskSched </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
 
 </div>
 </div>
@@ -198,13 +188,38 @@ Friends</h2></td></tr>
 <li>The enqueued task becomes a <code>root</code> task, and the entire subgraph of upstream tasks (dependencies) are bound to this root.</li>
 <li>The subgraph of tasks are bound to this scheduler</li>
 </ul>
-<p>A task can be enqueued again once it is complete. Wait for completion by calling Task::future().<a class="el" href="_lazy_8h.html#aa02ebcd8d33237a350a3327bc8a21d9f">get()</a> or Task::future().wait(). Be wary of enqueueing tasks that are upstream of other currently active tasks.</p>
+<p>A task can be enqueued again once it is complete. Wait for completion by calling Task::future().get() or Task::future().wait(). Be wary of enqueueing tasks that are upstream of other currently active tasks.</p>
 <p>This method will error if:</p>
 <ul>
 <li><code>task</code> is not registered</li>
 <li><code>task</code> or any upstream tasks are active</li>
 <li>a cyclic dependency is detected </li>
 </ul>
+
+</div>
+</div>
+<a class="anchor" id="a485e26221932e68ce6124b94047417be"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="classhoney_1_1_task_sched.html">TaskSched</a>&amp; honey::TaskSched::inst </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get singleton. </p>
 
 </div>
 </div>
@@ -274,7 +289,7 @@ Friends</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 6 2013 23:41:25 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 18 2013 04:06:53 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

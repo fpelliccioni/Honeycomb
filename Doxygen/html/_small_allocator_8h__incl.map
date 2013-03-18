@@ -1,5 +1,5 @@
 <map id="src/common/Honey/Memory/SmallAllocator.h" name="src/common/Honey/Memory/SmallAllocator.h">
-<area shape="rect" id="node2" href="$_pool_8h.html" title="Honey/Memory/Pool.h" alt="" coords="449,99,601,127"/>
+<area shape="rect" id="node2" href="$_memory_2_pool_8h.html" title="Honey/Memory/Pool.h" alt="" coords="449,99,601,127"/>
 <area shape="rect" id="node3" href="$_mt_map_8h.html" title="Honey/Misc/MtMap.h" alt="" coords="452,339,597,367"/>
 <area shape="rect" id="node31" href="$_std_util_8h.html" title="Honey/Misc/StdUtil.h" alt="" coords="231,254,376,282"/>
 <area shape="rect" id="node36" href="$_spin_8h.html" title="Honey/Thread/Lock/Spin.h" alt="" coords="880,177,1059,205"/>

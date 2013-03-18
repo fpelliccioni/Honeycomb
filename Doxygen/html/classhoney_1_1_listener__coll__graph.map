@@ -1,7 +1,7 @@
 <map id="honey::Listener" name="honey::Listener">
-<area shape="rect" id="node2" href="$classhoney_1_1_shared_obj.html" title="Reference&#45;counted object for intrusive shared pointers." alt="" coords="214,5,343,33"/>
-<area shape="rect" id="node3" href="$classhoney_1_1_allocator_object.html" title="Objects may inherit from this class to use a custom allocator for new/delete ops." alt="" coords="206,57,351,85"/>
-<area shape="rect" id="node4" href="$structhoney_1_1mt_1_1_no_copy.html" title="Inherit to declare that class is not copyable." alt="" coords="6,133,141,161"/>
-<area shape="rect" id="node5" href="$classhoney_1_1_unique_ptr.html" title="honey::UniquePtr\&lt; honey\l::SlotBase \&gt;" alt="" coords="193,161,365,205"/>
-<area shape="rect" id="node6" href="$classhoney_1_1_id.html" title="Holds a string and its hashed value for fast comparison ops. See String Identifier." alt="" coords="241,229,317,257"/>
+<area shape="rect" id="node2" href="$classhoney_1_1_shared_obj.html" title="Reference&#45;counted object for intrusive shared pointers." alt="" coords="5,94,133,122"/>
+<area shape="rect" id="node3" href="$structhoney_1_1mt_1_1_no_copy.html" title="Inherit to declare that class is not copyable." alt="" coords="106,6,240,34"/>
+<area shape="rect" id="node5" href="$classhoney_1_1_unique_ptr.html" title="honey::UniquePtr\&lt; honey\l::SlotBase \&gt;" alt="" coords="158,86,329,130"/>
+<area shape="rect" id="node4" href="$classhoney_1_1_allocator_object.html" title="Objects may inherit from this class to use a custom allocator for new/delete ops." alt="" coords="354,94,499,122"/>
+<area shape="rect" id="node6" href="$classhoney_1_1_id.html" title="Holds a string and its hashed value for fast comparison ops. See String Identifier." alt="" coords="523,94,599,122"/>
 </map>

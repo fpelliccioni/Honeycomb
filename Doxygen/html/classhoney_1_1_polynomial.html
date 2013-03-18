@@ -127,10 +127,10 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a0de167f17e1096b280d7a37fa55205e6"><td class="memTemplItemLeft" align="right" valign="top">static tuple&lt; T, int &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classhoney_1_1_polynomial.html#a0de167f17e1096b280d7a37fa55205e6">compress</a> (const <a class="el" href="classhoney_1_1_vec_base.html">VecBase</a>&lt; T &gt; &amp;c, <a class="el" href="namespacehoney.html#a795cebd5ef05e91e9d1ac79733f72d4a">Real</a> epsilon=Real_::epsilon)</td></tr>
 <tr class="memdesc:a0de167f17e1096b280d7a37fa55205e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reduce the degree by eliminating all near-zero leading coefficients and by making the leading coefficient one.  <a href="#a0de167f17e1096b280d7a37fa55205e6">More...</a><br/></td></tr>
 <tr class="separator:a0de167f17e1096b280d7a37fa55205e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac4c484fe5a1fe8b759f01b53797c2015"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:ac4c484fe5a1fe8b759f01b53797c2015"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="classhoney_1_1_vec.html">honey::Vec</a>&lt; <a class="el" href="namespacehoney.html#a795cebd5ef05e91e9d1ac79733f72d4a">Real</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classhoney_1_1_polynomial.html#ac4c484fe5a1fe8b759f01b53797c2015">derivative</a> (const <a class="el" href="classhoney_1_1_vec_base.html">VecBase</a>&lt; T &gt; &amp;c)</td></tr>
-<tr class="memdesc:ac4c484fe5a1fe8b759f01b53797c2015"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the derivative of a polynomial. Returns a polynomial with 1 degree less.  <a href="#ac4c484fe5a1fe8b759f01b53797c2015">More...</a><br/></td></tr>
-<tr class="separator:ac4c484fe5a1fe8b759f01b53797c2015"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9d8d5d232bec4e5d8479cd0cb2b6d9d"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:ae9d8d5d232bec4e5d8479cd0cb2b6d9d"><td class="memTemplItemLeft" align="right" valign="top">static auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classhoney_1_1_polynomial.html#ae9d8d5d232bec4e5d8479cd0cb2b6d9d">derivative</a> (const <a class="el" href="classhoney_1_1_vec_base.html">VecBase</a>&lt; T &gt; &amp;c) -&gt; <a class="el" href="classhoney_1_1_vec.html">honey::Vec</a>&lt;(T::s_size==<a class="el" href="namespacehoney_1_1matrix.html#aae196872da621dc26948c4b73bd35f4d">matrix::dynamic</a>?matrix::dynamic:T::s_size-1), <a class="el" href="namespacehoney.html#a795cebd5ef05e91e9d1ac79733f72d4a">Real</a> &gt;</td></tr>
+<tr class="memdesc:ae9d8d5d232bec4e5d8479cd0cb2b6d9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the derivative of a polynomial. Returns a polynomial with 1 degree less.  <a href="#ae9d8d5d232bec4e5d8479cd0cb2b6d9d">More...</a><br/></td></tr>
+<tr class="separator:ae9d8d5d232bec4e5d8479cd0cb2b6d9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3cc5f5c0a5a0948fe13aaf09caef98e0"><td class="memItemLeft" align="right" valign="top">static tuple&lt; <a class="el" href="namespacehoney.html#a795cebd5ef05e91e9d1ac79733f72d4a">Real</a>, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_polynomial.html#a3cc5f5c0a5a0948fe13aaf09caef98e0">roots</a> (const <a class="el" href="classhoney_1_1_polynomial.html#a1a6eca0dfd8e38e871d2813d754b66c5">Vec2</a> &amp;c, <a class="el" href="namespacehoney.html#a795cebd5ef05e91e9d1ac79733f72d4a">Real</a> epsilon=Real_::epsilon)</td></tr>
 <tr class="memdesc:a3cc5f5c0a5a0948fe13aaf09caef98e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find roots using an algebraic closed form expression. Solves the linear equation: <img class="formulaInl" alt="$ c_1 x + c_0 = 0 $" src="form_41.png"/>.  <a href="#a3cc5f5c0a5a0948fe13aaf09caef98e0">More...</a><br/></td></tr>
 <tr class="separator:a3cc5f5c0a5a0948fe13aaf09caef98e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -286,7 +286,7 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="ac4c484fe5a1fe8b759f01b53797c2015"></a>
+<a class="anchor" id="ae9d8d5d232bec4e5d8479cd0cb2b6d9d"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -298,11 +298,12 @@ template&lt;class T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="classhoney_1_1_vec.html">honey::Vec</a>&lt; <a class="el" href="namespacehoney.html#a795cebd5ef05e91e9d1ac79733f72d4a">Real</a>&gt; <a class="el" href="classhoney_1_1_polynomial.html">honey::Polynomial</a>&lt; <a class="el" href="namespacehoney.html#a795cebd5ef05e91e9d1ac79733f72d4a">Real</a> &gt;::derivative </td>
+          <td class="memname">static auto <a class="el" href="classhoney_1_1_polynomial.html">honey::Polynomial</a>&lt; <a class="el" href="namespacehoney.html#a795cebd5ef05e91e9d1ac79733f72d4a">Real</a> &gt;::derivative </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classhoney_1_1_vec_base.html">VecBase</a>&lt; T &gt; &amp;&#160;</td>
           <td class="paramname"><em>c</em></td><td>)</td>
-          <td></td>
+          <td> -&gt; <a class="el" href="classhoney_1_1_vec.html">honey::Vec</a>&lt;(T::s_size == <a class="el" href="namespacehoney_1_1matrix.html#aae196872da621dc26948c4b73bd35f4d">matrix::dynamic</a> ? <a class="el" href="namespacehoney_1_1matrix.html#aae196872da621dc26948c4b73bd35f4d">matrix::dynamic</a> : T::s_size - 1), <a class="el" href="namespacehoney.html#a795cebd5ef05e91e9d1ac79733f72d4a">Real</a>&gt;
+    </td>
         </tr>
       </table>
   </td>
@@ -663,7 +664,7 @@ template&lt;class Real &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 6 2013 23:41:23 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 18 2013 04:06:52 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

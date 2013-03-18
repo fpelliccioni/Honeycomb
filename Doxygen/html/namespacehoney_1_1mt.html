@@ -88,7 +88,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">honey::mt Namespace Reference<div class="ingroups"><a class="el" href="group___meta.html">Meta-programming</a> &#124; <a class="el" href="group___range.html">Range Util</a></div></div>  </div>
 </div><!--header-->
@@ -118,7 +119,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Special void type, use where void is intended but implicit members are required (default ctor, copyable, etc.)  <a href="structhoney_1_1mt_1_1_void.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1tag.html">tag</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use to differentiate an overloaded function by type. Accepts parameter default value: <code>func(tag&lt;0&gt; _ = 0)</code>  <a href="structhoney_1_1mt_1_1tag.html#details">More...</a><br/></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use to differentiate an overloaded function by type. Accepts dummy parameter default value: <code>func(tag&lt;0&gt; = 0)</code>  <a href="structhoney_1_1mt_1_1tag.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1add_ref.html">addRef</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add reference to type.  <a href="structhoney_1_1mt_1_1add_ref.html#details">More...</a><br/></td></tr>
@@ -150,29 +151,65 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1is_ptr.html">isPtr</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if type is a pointer.  <a href="structhoney_1_1mt_1_1is_ptr.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1mt_1_1is_tuple.html">isTuple</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if type is a tuple.  <a href="classhoney_1_1mt_1_1is_tuple.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1disable__if.html">disable_if</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opposite of std::enable_if.  <a href="structhoney_1_1mt_1_1disable__if.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1conditional__int.html">conditional_int</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variant of std::conditional for integers, stores result in <code>value</code>  <a href="structhoney_1_1mt_1_1conditional__int.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1conditional__int_3_01true_00_01t_00_01f_01_4.html">conditional_int&lt; true, t, f &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1is__base__of.html">is_base_of</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version of std::is_base_of that removes reference qualifiers before testing.  <a href="structhoney_1_1mt_1_1is__base__of.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1is_specialization_of.html">isSpecializationOf</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if T is a specialization of Template.  <a href="structhoney_1_1mt_1_1is_specialization_of.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1is_specialization_of_3_01_template_3_01_param_8_8_8_4_00_01_template_01_4.html">isSpecializationOf&lt; Template&lt; Param...&gt;, Template &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1is_tuple.html">isTuple</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if type is a tuple or a reference to one.  <a href="structhoney_1_1mt_1_1is_tuple.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1mt_1_1is_callable.html">isCallable</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if functor is callable with arguments.  <a href="classhoney_1_1mt_1_1is_callable.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1type_at.html">typeAt</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get type at index of parameter pack.  <a href="structhoney_1_1mt_1_1type_at.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1is_iterator.html">isIterator</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if type is an iterator or a reference to one. An iterator is a type that has member iterator_category or is a pointer.  <a href="structhoney_1_1mt_1_1is_iterator.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1func_traits.html">funcTraits</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get function type traits.  <a href="structhoney_1_1mt_1_1func_traits.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1_funcptr_base.html">FuncptrBase</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inherit to enable non-virtual functor calling.  <a href="structhoney_1_1mt_1_1_funcptr_base.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1mt_1_1_funcptr.html">Funcptr</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1_funcptr_3_01_r_07_args_8_8_8_08_4.html">Funcptr&lt; R(Args...)&gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds a function pointer so that a functor can be called non-virtually. The functor must inherit from <a class="el" href="structhoney_1_1mt_1_1_funcptr_base.html" title="Inherit to enable non-virtual functor calling.">FuncptrBase</a>.  <a href="structhoney_1_1mt_1_1_funcptr_3_01_r_07_args_8_8_8_08_4.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1_funcptr_3_01void_07_args_8_8_8_08_4.html">Funcptr&lt; void(Args...)&gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization for void return type.  <a href="structhoney_1_1mt_1_1_funcptr_3_01void_07_args_8_8_8_08_4.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1_no_copy.html">NoCopy</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inherit to declare that class is not copyable.  <a href="structhoney_1_1mt_1_1_no_copy.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1_int_seq.html">IntSeq</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Integer sequence.  <a href="structhoney_1_1mt_1_1_int_seq.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1_int_seq_gen.html">IntSeqGen</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate an integer sequence from 0 to N, can be used to unpack the values in a tuple.  <a href="structhoney_1_1mt_1_1_int_seq_gen.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1_int_seq_gen_3_010_00_01_ns_8_8_8_4.html">IntSeqGen&lt; 0, Ns...&gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1max.html">max</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get maximum of all arguments.  <a href="structhoney_1_1mt_1_1max.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1max_3_01val_00_01vals_8_8_8_4.html">max&lt; val, vals...&gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1max_3_01val_01_4.html">max&lt; val &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1abs.html">abs</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the absolute value of a number.  <a href="structhoney_1_1mt_1_1abs.html#details">More...</a><br/></td></tr>
@@ -183,22 +220,117 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1log2_floor.html">log2Floor</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calc the floor of the base 2 log of x.  <a href="structhoney_1_1mt_1_1log2_floor.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1log2_floor_3_010_01_4.html">log2Floor&lt; 0 &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1gcd.html">gcd</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calc the greatest common divisor of a and b.  <a href="structhoney_1_1mt_1_1gcd.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1is_iterator.html">isIterator</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if type is an iterator (has iterator category or is pointer) or a reference to one.  <a href="structhoney_1_1mt_1_1is_iterator.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1gcd_3_01a_00_010_01_4.html">gcd&lt; a, 0 &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1gcd_3_010_00_01b_01_4.html">gcd&lt; 0, b &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1mt_1_1is_range.html">isRange</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if type is a range (has std::begin) or a reference to one.  <a href="classhoney_1_1mt_1_1is_range.html#details">More...</a><br/></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if type is a range or a reference to one. A range is a type where std::begin(range) is a valid call.  <a href="classhoney_1_1mt_1_1is_range.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1iter_of.html">iterOf</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get range iterator begin type.  <a href="structhoney_1_1mt_1_1iter_of.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1iter__end_of.html">iter_endOf</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get range iterator end type.  <a href="structhoney_1_1mt_1_1iter__end_of.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1elem_of.html">elemOf</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get range element type.  <a href="structhoney_1_1mt_1_1elem_of.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga5f98aa18991afe3341276630bb2e9b3e"><td class="memTemplParams" colspan="2">template&lt;class... Args&gt; </td></tr>
+<tr class="memitem:ga5f98aa18991afe3341276630bb2e9b3e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___meta.html#ga5f98aa18991afe3341276630bb2e9b3e">pass</a> (Args...)</td></tr>
+<tr class="memdesc:ga5f98aa18991afe3341276630bb2e9b3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do nothing, can be used to evaluate an unpack expression.  <a href="group___meta.html#ga5f98aa18991afe3341276630bb2e9b3e">More...</a><br/></td></tr>
+<tr class="separator:ga5f98aa18991afe3341276630bb2e9b3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabb5056e014fbef8208f463291f83a558"><td class="memTemplParams" colspan="2">template&lt;class F , class Sig  = typename funcTraits&lt;typename removeRef&lt;F&gt;::type&gt;::Sig&gt; </td></tr>
+<tr class="memitem:gabb5056e014fbef8208f463291f83a558"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classhoney_1_1mt_1_1_funcptr.html">Funcptr</a>&lt; Sig &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___meta.html#gabb5056e014fbef8208f463291f83a558">FuncptrCreate</a> (F &amp;&amp;f)</td></tr>
+<tr class="memdesc:gabb5056e014fbef8208f463291f83a558"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenient method to create a <a class="el" href="classhoney_1_1mt_1_1_funcptr.html">Funcptr</a> from a functor that inherits from <a class="el" href="structhoney_1_1mt_1_1_funcptr_base.html" title="Inherit to enable non-virtual functor calling.">FuncptrBase</a>.  <a href="group___meta.html#gabb5056e014fbef8208f463291f83a558">More...</a><br/></td></tr>
+<tr class="separator:gabb5056e014fbef8208f463291f83a558"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a719dab7fa0eb281c93a8871360daa1c5"><td class="memTemplParams" colspan="2">template&lt;class Result  = void, class... Ts&gt; </td></tr>
+<tr class="memitem:a719dab7fa0eb281c93a8871360daa1c5"><td class="memTemplItemLeft" align="right" valign="top">std::conditional&lt; std::is_same<br class="typebreak"/>
+&lt; Result, void &gt;::value, <br class="typebreak"/>
+typename <a class="el" href="structhoney_1_1mt_1_1type_at.html">mt::typeAt</a>&lt; 0, Ts...&gt;<br class="typebreak"/>
+::type, Result &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacehoney_1_1mt.html#a719dab7fa0eb281c93a8871360daa1c5">valAt</a> (int i, Ts &amp;&amp;...ts)</td></tr>
+<tr class="memdesc:a719dab7fa0eb281c93a8871360daa1c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value at index of parameter pack. All types must be convertible to <code>Result</code>, which defaults to the first type in <code>Ts</code>.  <a href="#a719dab7fa0eb281c93a8871360daa1c5">More...</a><br/></td></tr>
+<tr class="separator:a719dab7fa0eb281c93a8871360daa1c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72065eb8cfe8d9efecea57e5a31740e8"><td class="memTemplParams" colspan="2">template&lt;class Val , class... Ts&gt; </td></tr>
+<tr class="memitem:a72065eb8cfe8d9efecea57e5a31740e8"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacehoney_1_1mt.html#a72065eb8cfe8d9efecea57e5a31740e8">indexOf</a> (Val &amp;&amp;val, Ts &amp;&amp;...ts)</td></tr>
+<tr class="memdesc:a72065eb8cfe8d9efecea57e5a31740e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get index of value in parameter pack, returns -1 if not found.  <a href="#a72065eb8cfe8d9efecea57e5a31740e8">More...</a><br/></td></tr>
+<tr class="separator:a72065eb8cfe8d9efecea57e5a31740e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Meta-programming and compile-time util. </p>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a72065eb8cfe8d9efecea57e5a31740e8"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class Val , class... Ts&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">int honey::mt::indexOf </td>
+          <td>(</td>
+          <td class="paramtype">Val &amp;&amp;&#160;</td>
+          <td class="paramname"><em>val</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Ts &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>ts</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get index of value in parameter pack, returns -1 if not found. </p>
+
+</div>
+</div>
+<a class="anchor" id="a719dab7fa0eb281c93a8871360daa1c5"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class Result  = void, class... Ts&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::conditional&lt;std::is_same&lt;Result, void&gt;::value, typename <a class="el" href="structhoney_1_1mt_1_1type_at.html">mt::typeAt</a>&lt;0, Ts...&gt;::type, Result&gt;::type honey::mt::valAt </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Ts &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>ts</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get value at index of parameter pack. All types must be convertible to <code>Result</code>, which defaults to the first type in <code>Ts</code>. </p>
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 6 2013 23:41:25 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 18 2013 04:06:53 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

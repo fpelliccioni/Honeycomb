@@ -1,5 +1,6 @@
 <map id="honey::ComObject" name="honey::ComObject">
-<area shape="rect" id="node4" href="$classhoney_1_1_scene_object.html" title="Consists of SceneComponent objects." alt="" coords="5,238,147,266"/>
-<area shape="rect" id="node2" href="$classhoney_1_1_object.html" title="Base class for objects." alt="" coords="24,83,127,111"/>
-<area shape="rect" id="node3" href="$classhoney_1_1_shared_obj.html" title="Reference&#45;counted object for intrusive shared pointers." alt="" coords="12,6,140,34"/>
+<area shape="rect" id="node5" href="$classhoney_1_1_scene_object.html" title="Consists of SceneComponent objects." alt="" coords="5,315,147,343"/>
+<area shape="rect" id="node2" href="$classhoney_1_1_object.html" title="Base class for objects." alt="" coords="24,161,127,189"/>
+<area shape="rect" id="node3" href="$classhoney_1_1_shared_obj.html" title="Reference&#45;counted object for intrusive shared pointers." alt="" coords="12,83,140,111"/>
+<area shape="rect" id="node4" href="$structhoney_1_1mt_1_1_no_copy.html" title="Inherit to declare that class is not copyable." alt="" coords="8,6,143,34"/>
 </map>

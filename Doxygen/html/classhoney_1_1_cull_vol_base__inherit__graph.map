@@ -1,10 +1,11 @@
 <map id="honey::CullVolBase" name="honey::CullVolBase">
-<area shape="rect" id="node7" href="$classhoney_1_1_cull_vol.html" title="honey::CullVol\&lt; Box \&gt;" alt="" coords="5,470,157,498"/>
-<area shape="rect" id="node9" href="$classhoney_1_1_cull_vol.html" title="Generic volume for culling." alt="" coords="181,470,349,498"/>
-<area shape="rect" id="node2" href="$classhoney_1_1_scene_component.html" title="Scene component. Component that can be added to a scene object." alt="" coords="87,315,259,343"/>
-<area shape="rect" id="node3" href="$classhoney_1_1_component.html" title="Base class for components. Components can only be attached to one ComObject at a time." alt="" coords="106,238,240,266"/>
-<area shape="rect" id="node4" href="$classhoney_1_1_property_object.html" title="Object that contains properties." alt="" coords="96,161,249,189"/>
-<area shape="rect" id="node5" href="$classhoney_1_1_object.html" title="Base class for objects." alt="" coords="122,83,224,111"/>
-<area shape="rect" id="node6" href="$classhoney_1_1_shared_obj.html" title="Reference&#45;counted object for intrusive shared pointers." alt="" coords="109,6,237,34"/>
-<area shape="rect" id="node8" href="$classhoney_1_1_cull_box_gen.html" title="Generated box for culling." alt="" coords="13,547,149,575"/>
+<area shape="rect" id="node8" href="$classhoney_1_1_cull_vol.html" title="honey::CullVol\&lt; Box \&gt;" alt="" coords="5,547,157,575"/>
+<area shape="rect" id="node10" href="$classhoney_1_1_cull_vol.html" title="Generic volume for culling." alt="" coords="181,547,349,575"/>
+<area shape="rect" id="node2" href="$classhoney_1_1_scene_component.html" title="Scene component. Component that can be added to a scene object." alt="" coords="87,393,259,421"/>
+<area shape="rect" id="node3" href="$classhoney_1_1_component.html" title="Base class for components. Components can only be attached to one ComObject at a time." alt="" coords="106,315,240,343"/>
+<area shape="rect" id="node4" href="$classhoney_1_1_property_object.html" title="Object that contains properties." alt="" coords="96,238,249,266"/>
+<area shape="rect" id="node5" href="$classhoney_1_1_object.html" title="Base class for objects." alt="" coords="122,161,224,189"/>
+<area shape="rect" id="node6" href="$classhoney_1_1_shared_obj.html" title="Reference&#45;counted object for intrusive shared pointers." alt="" coords="109,83,237,111"/>
+<area shape="rect" id="node7" href="$structhoney_1_1mt_1_1_no_copy.html" title="Inherit to declare that class is not copyable." alt="" coords="106,6,240,34"/>
+<area shape="rect" id="node9" href="$classhoney_1_1_cull_box_gen.html" title="Generated box for culling." alt="" coords="13,625,149,653"/>
 </map>

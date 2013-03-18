@@ -90,7 +90,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="classhoney_1_1_shared_ptr-members.html">List of all members</a>  </div>
@@ -107,15 +106,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Inheritance diagram for honey::SharedPtr&lt; T &gt;:</div>
 <div class="dyncontent">
 <div class="center"><img src="classhoney_1_1_shared_ptr__inherit__graph.png" border="0" usemap="#honey_1_1_shared_ptr_3_01_t_01_4_inherit__map" alt="Inheritance graph"/></div>
-<map name="honey_1_1_shared_ptr_3_01_t_01_4_inherit__map" id="honey_1_1_shared_ptr_3_01_t_01_4_inherit__map">
-</map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for honey::SharedPtr&lt; T &gt;:</div>
 <div class="dyncontent">
 <div class="center"><img src="classhoney_1_1_shared_ptr__coll__graph.png" border="0" usemap="#honey_1_1_shared_ptr_3_01_t_01_4_coll__map" alt="Collaboration graph"/></div>
-<map name="honey_1_1_shared_ptr_3_01_t_01_4_coll__map" id="honey_1_1_shared_ptr_3_01_t_01_4_coll__map">
-</map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -124,18 +119,14 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:adfe6f225b1ae2605e7c9517293aea059"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a368e3b60c0e648ad236762fbbd53f7da"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_shared_ptr.html#a368e3b60c0e648ad236762fbbd53f7da">SharedPtr</a> (nullptr_t)</td></tr>
 <tr class="separator:a368e3b60c0e648ad236762fbbd53f7da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2995e71e42d9d0bb2e552486359dfc16"><td class="memTemplParams" colspan="2">template&lt;class U &gt; </td></tr>
-<tr class="memitem:a2995e71e42d9d0bb2e552486359dfc16"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classhoney_1_1_shared_ptr.html#a2995e71e42d9d0bb2e552486359dfc16">SharedPtr</a> (U *ptr)</td></tr>
-<tr class="memdesc:a2995e71e42d9d0bb2e552486359dfc16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reference an object. Uses default finalizer for object (deletes object), and default allocator for internal control block.  <a href="#a2995e71e42d9d0bb2e552486359dfc16">More...</a><br/></td></tr>
-<tr class="separator:a2995e71e42d9d0bb2e552486359dfc16"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28452bb98c1d8953ac37cb0b228fa3d2"><td class="memTemplParams" colspan="2">template&lt;class U , class Fin &gt; </td></tr>
-<tr class="memitem:a28452bb98c1d8953ac37cb0b228fa3d2"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classhoney_1_1_shared_ptr.html#a28452bb98c1d8953ac37cb0b228fa3d2">SharedPtr</a> (U *ptr, Fin &amp;&amp;f)</td></tr>
-<tr class="memdesc:a28452bb98c1d8953ac37cb0b228fa3d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reference an object. Finalizer is run when reference count reaches 0. Intrusive pointers ignore finalizer.  <a href="#a28452bb98c1d8953ac37cb0b228fa3d2">More...</a><br/></td></tr>
-<tr class="separator:a28452bb98c1d8953ac37cb0b228fa3d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a7f12cf4a2a4af523e57469cd4bbac5"><td class="memTemplParams" colspan="2">template&lt;class U , class Fin , class Alloc &gt; </td></tr>
-<tr class="memitem:a9a7f12cf4a2a4af523e57469cd4bbac5"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classhoney_1_1_shared_ptr.html#a9a7f12cf4a2a4af523e57469cd4bbac5">SharedPtr</a> (U *ptr, Fin &amp;&amp;f, Alloc &amp;&amp;a)</td></tr>
-<tr class="memdesc:a9a7f12cf4a2a4af523e57469cd4bbac5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reference an object. <a class="el" href="classhoney_1_1_allocator.html" title="std::allocator compatible allocator. Subclass must define std::allocator constructors and alloc()/fre...">Allocator</a> is used for the internal control block. Intrusive pointers ignore allocator.  <a href="#a9a7f12cf4a2a4af523e57469cd4bbac5">More...</a><br/></td></tr>
-<tr class="separator:a9a7f12cf4a2a4af523e57469cd4bbac5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac22d9bdc04da39d8442ed074135b5f49"><td class="memTemplParams" colspan="2">template&lt;class U , typename std::enable_if&lt; mt::True&lt; U &gt;::value &amp;&amp;isIntrusive, int &gt;::type  = 0&gt; </td></tr>
+<tr class="memitem:ac22d9bdc04da39d8442ed074135b5f49"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classhoney_1_1_shared_ptr.html#ac22d9bdc04da39d8442ed074135b5f49">SharedPtr</a> (U *ptr)</td></tr>
+<tr class="memdesc:ac22d9bdc04da39d8442ed074135b5f49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reference an object. Non-intrusive pointers use default finalizer for object (deletes object), and default allocator for internal control block.  <a href="#ac22d9bdc04da39d8442ed074135b5f49">More...</a><br/></td></tr>
+<tr class="separator:ac22d9bdc04da39d8442ed074135b5f49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d4fd580efca4ee1178d2f768cdb3fd0"><td class="memTemplParams" colspan="2">template&lt;class U , class Fin  = finalize&lt;U&gt;, class Alloc  = std::allocator&lt;U&gt;, typename std::enable_if&lt; mt::True&lt; U &gt;::value &amp;&amp;!isIntrusive, int &gt;::type  = 0&gt; </td></tr>
+<tr class="memitem:a5d4fd580efca4ee1178d2f768cdb3fd0"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classhoney_1_1_shared_ptr.html#a5d4fd580efca4ee1178d2f768cdb3fd0">SharedPtr</a> (U *ptr, Fin &amp;&amp;f=Fin(), Alloc &amp;&amp;a=Alloc())</td></tr>
+<tr class="memdesc:a5d4fd580efca4ee1178d2f768cdb3fd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct with finalizer/allocator. For non-intrusive pointers only.  <a href="#a5d4fd580efca4ee1178d2f768cdb3fd0">More...</a><br/></td></tr>
+<tr class="separator:a5d4fd580efca4ee1178d2f768cdb3fd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a171cd208b303442ca973ec51bc6ac825"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_shared_ptr.html#a171cd208b303442ca973ec51bc6ac825">SharedPtr</a> (const <a class="el" href="classhoney_1_1_shared_ptr.html">SharedPtr</a> &amp;ptr)</td></tr>
 <tr class="memdesc:a171cd208b303442ca973ec51bc6ac825"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reference the object pointed to by another shared pointer.  <a href="#a171cd208b303442ca973ec51bc6ac825">More...</a><br/></td></tr>
 <tr class="separator:a171cd208b303442ca973ec51bc6ac825"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -160,7 +151,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:adb353c354682ed39eb88f347aad95bba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1388a76bf75fe653ee19e2b0f7dd3c23"><td class="memTemplParams" colspan="2">template&lt;class U &gt; </td></tr>
 <tr class="memitem:a1388a76bf75fe653ee19e2b0f7dd3c23"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classhoney_1_1_shared_ptr.html">SharedPtr</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classhoney_1_1_shared_ptr.html#a1388a76bf75fe653ee19e2b0f7dd3c23">operator=</a> (U *rhs)</td></tr>
-<tr class="memdesc:a1388a76bf75fe653ee19e2b0f7dd3c23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the object referenced by this shared pointer. Uses default finalizer/allocator.  <a href="#a1388a76bf75fe653ee19e2b0f7dd3c23">More...</a><br/></td></tr>
+<tr class="memdesc:a1388a76bf75fe653ee19e2b0f7dd3c23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the object referenced by this shared pointer. Non-intrusive pointers use default finalizer/allocator.  <a href="#a1388a76bf75fe653ee19e2b0f7dd3c23">More...</a><br/></td></tr>
 <tr class="separator:a1388a76bf75fe653ee19e2b0f7dd3c23"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaad9209be9ede089a8199291da7616bb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classhoney_1_1_shared_ptr.html">SharedPtr</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_shared_ptr.html#aaad9209be9ede089a8199291da7616bb">operator=</a> (nullptr_t)</td></tr>
 <tr class="separator:aaad9209be9ede089a8199291da7616bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -208,16 +199,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a86b28c3e7382972314bd09ecfc1cd426"><td class="memItemLeft" align="right" valign="top">T *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_shared_ptr.html#a86b28c3e7382972314bd09ecfc1cd426">get</a> () const </td></tr>
 <tr class="memdesc:a86b28c3e7382972314bd09ecfc1cd426"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the raw pointer to the object.  <a href="#a86b28c3e7382972314bd09ecfc1cd426">More...</a><br/></td></tr>
 <tr class="separator:a86b28c3e7382972314bd09ecfc1cd426"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59d8900662a8dada5bf997cbe4349d81"><td class="memTemplParams" colspan="2">template&lt;class U &gt; </td></tr>
-<tr class="memitem:a59d8900662a8dada5bf997cbe4349d81"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classhoney_1_1_shared_ptr.html#a59d8900662a8dada5bf997cbe4349d81">set</a> (U *ptr)</td></tr>
-<tr class="memdesc:a59d8900662a8dada5bf997cbe4349d81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dereference the current object and reference a new object. Uses default finalizer/allocator.  <a href="#a59d8900662a8dada5bf997cbe4349d81">More...</a><br/></td></tr>
-<tr class="separator:a59d8900662a8dada5bf997cbe4349d81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2671597d16be870a3cd35db3ae6f3e44"><td class="memTemplParams" colspan="2">template&lt;class U , class Fin &gt; </td></tr>
-<tr class="memitem:a2671597d16be870a3cd35db3ae6f3e44"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classhoney_1_1_shared_ptr.html#a2671597d16be870a3cd35db3ae6f3e44">set</a> (U *ptr, Fin &amp;&amp;f)</td></tr>
-<tr class="separator:a2671597d16be870a3cd35db3ae6f3e44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad5cc54fb349be0d60328f96918173f1f"><td class="memTemplParams" colspan="2">template&lt;class U , class Fin , class Alloc &gt; </td></tr>
-<tr class="memitem:ad5cc54fb349be0d60328f96918173f1f"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classhoney_1_1_shared_ptr.html#ad5cc54fb349be0d60328f96918173f1f">set</a> (U *ptr, Fin &amp;&amp;f, Alloc &amp;&amp;a)</td></tr>
-<tr class="separator:ad5cc54fb349be0d60328f96918173f1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69926e2536904545901c76cf39959774"><td class="memTemplParams" colspan="2">template&lt;class U , typename std::enable_if&lt; mt::True&lt; U &gt;::value &amp;&amp;isIntrusive, int &gt;::type  = 0&gt; </td></tr>
+<tr class="memitem:a69926e2536904545901c76cf39959774"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classhoney_1_1_shared_ptr.html#a69926e2536904545901c76cf39959774">set</a> (U *ptr)</td></tr>
+<tr class="memdesc:a69926e2536904545901c76cf39959774"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dereference the current object and reference a new object. Non-intrusive pointers use default finalizer/allocator.  <a href="#a69926e2536904545901c76cf39959774">More...</a><br/></td></tr>
+<tr class="separator:a69926e2536904545901c76cf39959774"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad04f3f64640ac333cb4b235d0a6eb51d"><td class="memTemplParams" colspan="2">template&lt;class U , class Fin  = finalize&lt;U&gt;, class Alloc  = std::allocator&lt;U&gt;, typename std::enable_if&lt; mt::True&lt; U &gt;::value &amp;&amp;!isIntrusive, int &gt;::type  = 0&gt; </td></tr>
+<tr class="memitem:ad04f3f64640ac333cb4b235d0a6eb51d"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classhoney_1_1_shared_ptr.html#ad04f3f64640ac333cb4b235d0a6eb51d">set</a> (U *ptr, Fin &amp;&amp;f=Fin(), Alloc &amp;&amp;a=Alloc())</td></tr>
+<tr class="memdesc:ad04f3f64640ac333cb4b235d0a6eb51d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set with finalizer/allocator, for non-intrusive pointers only.  <a href="#ad04f3f64640ac333cb4b235d0a6eb51d">More...</a><br/></td></tr>
+<tr class="separator:ad04f3f64640ac333cb4b235d0a6eb51d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a59599f35490c44b2ada5086407f85dbb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_shared_ptr.html#a59599f35490c44b2ada5086407f85dbb">set</a> (nullptr_t)</td></tr>
 <tr class="separator:a59599f35490c44b2ada5086407f85dbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab59600e519410683c18598efffd9fb80"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_shared_ptr.html#ab59600e519410683c18598efffd9fb80">refCount</a> () const </td></tr>
@@ -322,13 +311,13 @@ template&lt;class T&gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a2995e71e42d9d0bb2e552486359dfc16"></a>
+<a class="anchor" id="ac22d9bdc04da39d8442ed074135b5f49"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class T&gt; </div>
 <div class="memtemplate">
-template&lt;class U &gt; </div>
+template&lt;class U , typename std::enable_if&lt; mt::True&lt; U &gt;::value &amp;&amp;isIntrusive, int &gt;::type  = 0&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -348,17 +337,17 @@ template&lt;class U &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Reference an object. Uses default finalizer for object (deletes object), and default allocator for internal control block. </p>
+<p>Reference an object. Non-intrusive pointers use default finalizer for object (deletes object), and default allocator for internal control block. </p>
 
 </div>
 </div>
-<a class="anchor" id="a28452bb98c1d8953ac37cb0b228fa3d2"></a>
+<a class="anchor" id="a5d4fd580efca4ee1178d2f768cdb3fd0"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class T&gt; </div>
 <div class="memtemplate">
-template&lt;class U , class Fin &gt; </div>
+template&lt;class U , class Fin  = finalize&lt;U&gt;, class Alloc  = std::allocator&lt;U&gt;, typename std::enable_if&lt; mt::True&lt; U &gt;::value &amp;&amp;!isIntrusive, int &gt;::type  = 0&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -373,53 +362,13 @@ template&lt;class U , class Fin &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">Fin &amp;&amp;&#160;</td>
-          <td class="paramname"><em>f</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Reference an object. Finalizer is run when reference count reaches 0. Intrusive pointers ignore finalizer. </p>
-
-</div>
-</div>
-<a class="anchor" id="a9a7f12cf4a2a4af523e57469cd4bbac5"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class T&gt; </div>
-<div class="memtemplate">
-template&lt;class U , class Fin , class Alloc &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classhoney_1_1_shared_ptr.html">honey::SharedPtr</a>&lt; T &gt;::<a class="el" href="classhoney_1_1_shared_ptr.html">SharedPtr</a> </td>
-          <td>(</td>
-          <td class="paramtype">U *&#160;</td>
-          <td class="paramname"><em>ptr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Fin &amp;&amp;&#160;</td>
-          <td class="paramname"><em>f</em>, </td>
+          <td class="paramname"><em>f</em> = <code>Fin()</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">Alloc &amp;&amp;&#160;</td>
-          <td class="paramname"><em>a</em>&#160;</td>
+          <td class="paramname"><em>a</em> = <code>Alloc()</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -434,7 +383,8 @@ template&lt;class U , class Fin , class Alloc &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Reference an object. <a class="el" href="classhoney_1_1_allocator.html" title="std::allocator compatible allocator. Subclass must define std::allocator constructors and alloc()/fre...">Allocator</a> is used for the internal control block. Intrusive pointers ignore allocator. </p>
+<p>Construct with finalizer/allocator. For non-intrusive pointers only. </p>
+<p>Finalizer is run when reference count reaches 0. <a class="el" href="classhoney_1_1_allocator.html" title="std::allocator compatible allocator. Subclass must define std::allocator constructors and alloc()/fre...">Allocator</a> is used for the internal control block. </p>
 
 </div>
 </div>
@@ -874,7 +824,7 @@ template&lt;class U &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Set the object referenced by this shared pointer. Uses default finalizer/allocator. </p>
+<p>Set the object referenced by this shared pointer. Non-intrusive pointers use default finalizer/allocator. </p>
 
 </div>
 </div>
@@ -1177,13 +1127,13 @@ template&lt;class T&gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a59d8900662a8dada5bf997cbe4349d81"></a>
+<a class="anchor" id="a69926e2536904545901c76cf39959774"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class T&gt; </div>
 <div class="memtemplate">
-template&lt;class U &gt; </div>
+template&lt;class U , typename std::enable_if&lt; mt::True&lt; U &gt;::value &amp;&amp;isIntrusive, int &gt;::type  = 0&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1203,17 +1153,17 @@ template&lt;class U &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Dereference the current object and reference a new object. Uses default finalizer/allocator. </p>
+<p>Dereference the current object and reference a new object. Non-intrusive pointers use default finalizer/allocator. </p>
 
 </div>
 </div>
-<a class="anchor" id="a2671597d16be870a3cd35db3ae6f3e44"></a>
+<a class="anchor" id="ad04f3f64640ac333cb4b235d0a6eb51d"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class T&gt; </div>
 <div class="memtemplate">
-template&lt;class U , class Fin &gt; </div>
+template&lt;class U , class Fin  = finalize&lt;U&gt;, class Alloc  = std::allocator&lt;U&gt;, typename std::enable_if&lt; mt::True&lt; U &gt;::value &amp;&amp;!isIntrusive, int &gt;::type  = 0&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1228,51 +1178,13 @@ template&lt;class U , class Fin &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">Fin &amp;&amp;&#160;</td>
-          <td class="paramname"><em>f</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ad5cc54fb349be0d60328f96918173f1f"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class T&gt; </div>
-<div class="memtemplate">
-template&lt;class U , class Fin , class Alloc &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="classhoney_1_1_shared_ptr.html">honey::SharedPtr</a>&lt; T &gt;::set </td>
-          <td>(</td>
-          <td class="paramtype">U *&#160;</td>
-          <td class="paramname"><em>ptr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Fin &amp;&amp;&#160;</td>
-          <td class="paramname"><em>f</em>, </td>
+          <td class="paramname"><em>f</em> = <code>Fin()</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">Alloc &amp;&amp;&#160;</td>
-          <td class="paramname"><em>a</em>&#160;</td>
+          <td class="paramname"><em>a</em> = <code>Alloc()</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1286,6 +1198,8 @@ template&lt;class U , class Fin , class Alloc &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Set with finalizer/allocator, for non-intrusive pointers only. </p>
 
 </div>
 </div>
@@ -1629,7 +1543,7 @@ template&lt;class T_ &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 6 2013 23:41:24 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 18 2013 04:06:52 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

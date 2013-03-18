@@ -233,7 +233,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;        _threshScan(Config::tlrefMax*2 &lt; _threshClean ? Config::tlrefMax*2 : _threshClean),</div>
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        _threadDataList(new ThreadData*[_threadMax]),</div>
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;        _threadDataCount(0),</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        _threadData(<a class="code" href="_std_util_8h.html#af39289919acc655cc1f22004a0c11d6e">bind</a>(&amp;<a class="code" href="classhoney_1_1lockfree_1_1_mem.html" title="Lock-free memory manager for concurrent algorithms.">Mem</a>::initThreadData, this)),</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        _threadData(bind(&amp;<a class="code" href="classhoney_1_1lockfree_1_1_mem.html" title="Lock-free memory manager for concurrent algorithms.">Mem</a>::initThreadData, this)),</div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;        _nodeId(0)</div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    {</div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;        std::fill(_threadDataList, _threadDataList + _threadMax, <span class="keyword">nullptr</span>);</div>
@@ -561,7 +561,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 6 2013 23:41:16 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 18 2013 04:06:45 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

@@ -27,6 +27,8 @@ var searchData=
   ['matrixbase_3c_20vec_3c_20dim_2c_20real_2c_20options_2c_20alloc_20_3e_20_3e',['MatrixBase&lt; Vec&lt; Dim, Real, Options, Alloc &gt; &gt;',['../classhoney_1_1_matrix_base.html',1,'honey']]],
   ['matrixbase_3c_20vec_3c_20dim_2c_20real_2c_20options_2c_20alloc_5f_20_3e_20_3e',['MatrixBase&lt; Vec&lt; Dim, Real, Options, Alloc_ &gt; &gt;',['../classhoney_1_1_matrix_base.html',1,'honey']]],
   ['max',['max',['../structhoney_1_1mt_1_1max.html',1,'honey::mt']]],
+  ['max_3c_20val_20_3e',['max&lt; val &gt;',['../structhoney_1_1mt_1_1max_3_01val_01_4.html',1,'honey::mt']]],
+  ['max_3c_20val_2c_20vals_2e_2e_2e_3e',['max&lt; val, vals...&gt;',['../structhoney_1_1mt_1_1max_3_01val_00_01vals_8_8_8_4.html',1,'honey::mt']]],
   ['meanfunc',['meanFunc',['../structhoney_1_1_bootstrap_1_1mean_func.html',1,'honey::Bootstrap']]],
   ['mem',['Mem',['../classhoney_1_1lockfree_1_1_mem.html',1,'honey::lockfree']]],
   ['mem_3c_20honey_3a_3alockfree_3a_3alist_20_3e',['Mem&lt; honey::lockfree::List &gt;',['../classhoney_1_1lockfree_1_1_mem.html',1,'honey::lockfree']]],

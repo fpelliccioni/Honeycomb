@@ -1,9 +1,10 @@
 <map id="honey::NspTreeSpace&lt; NspTree &gt;" name="honey::NspTreeSpace&lt; NspTree &gt;">
-<area shape="rect" id="node2" href="$classhoney_1_1_tree_space.html" title="Space that is ordered by a hierarchy of bounding volumes." alt="" coords="26,470,155,498"/>
-<area shape="rect" id="node3" href="$classhoney_1_1_scene_space.html" title="Base class for space components." alt="" coords="20,393,160,421"/>
-<area shape="rect" id="node4" href="$classhoney_1_1_scene_component.html" title="Scene component. Component that can be added to a scene object." alt="" coords="5,315,176,343"/>
-<area shape="rect" id="node5" href="$classhoney_1_1_component.html" title="Base class for components. Components can only be attached to one ComObject at a time." alt="" coords="24,238,157,266"/>
-<area shape="rect" id="node6" href="$classhoney_1_1_property_object.html" title="Object that contains properties." alt="" coords="14,161,167,189"/>
-<area shape="rect" id="node7" href="$classhoney_1_1_object.html" title="Base class for objects." alt="" coords="39,83,141,111"/>
-<area shape="rect" id="node8" href="$classhoney_1_1_shared_obj.html" title="Reference&#45;counted object for intrusive shared pointers." alt="" coords="26,6,155,34"/>
+<area shape="rect" id="node2" href="$classhoney_1_1_tree_space.html" title="Space that is ordered by a hierarchy of bounding volumes." alt="" coords="26,547,155,575"/>
+<area shape="rect" id="node3" href="$classhoney_1_1_scene_space.html" title="Base class for space components." alt="" coords="20,470,160,498"/>
+<area shape="rect" id="node4" href="$classhoney_1_1_scene_component.html" title="Scene component. Component that can be added to a scene object." alt="" coords="5,393,176,421"/>
+<area shape="rect" id="node5" href="$classhoney_1_1_component.html" title="Base class for components. Components can only be attached to one ComObject at a time." alt="" coords="24,315,157,343"/>
+<area shape="rect" id="node6" href="$classhoney_1_1_property_object.html" title="Object that contains properties." alt="" coords="14,238,167,266"/>
+<area shape="rect" id="node7" href="$classhoney_1_1_object.html" title="Base class for objects." alt="" coords="39,161,141,189"/>
+<area shape="rect" id="node8" href="$classhoney_1_1_shared_obj.html" title="Reference&#45;counted object for intrusive shared pointers." alt="" coords="26,83,155,111"/>
+<area shape="rect" id="node9" href="$structhoney_1_1mt_1_1_no_copy.html" title="Inherit to declare that class is not copyable." alt="" coords="23,6,157,34"/>
 </map>

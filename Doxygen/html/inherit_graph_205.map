@@ -1,7 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node2" href="$classhoney_1_1_shared_ptr.html" title="Combined intrusive/non&#45;intrusive smart pointer. Can reference and share any object automatically..." alt="" coords="219,5,375,33"/>
-<area shape="rect" id="node3" href="$classhoney_1_1_weak_ptr.html" title="Point to a shared object without holding a reference. The object is accessible through a lock..." alt="" coords="224,57,371,85"/>
-<area shape="rect" id="node4" href="$classhoney_1_1_shared_ptr.html" title="honey::SharedPtr\&lt; State \&gt;" alt="" coords="208,109,387,137"/>
-<area shape="rect" id="node5" href="$classhoney_1_1_shared_ptr.html" title="honey::SharedPtr\&lt; Task \&gt;" alt="" coords="210,161,385,189"/>
-<area shape="rect" id="node6" href="$classhoney_1_1_weak_ptr.html" title="honey::WeakPtr\&lt; honey\l::Task \&gt;" alt="" coords="215,213,379,257"/>
+<area shape="rect" id="node1" href="$classhoney_1_1_polynomial.html" title="Polynomial algorithms." alt="" coords="6,5,144,49"/>
 </map>

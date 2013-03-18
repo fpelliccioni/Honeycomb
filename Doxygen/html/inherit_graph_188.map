@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structhoney_1_1_ratio.html" title="Class to hold compile&#45;time finite rational numbers, ie. the fraction num / den." alt="" coords="6,5,146,49"/>
+<area shape="rect" id="node1" href="$classhoney_1_1_nsp_tree.html" title="honey::NspTree\&lt; 2 \&gt;" alt="" coords="6,5,152,33"/>
+<area shape="rect" id="node2" href="$classhoney_1_1_quad_tree.html" title="Tree structure that recursively divides 3D space into 4 rectangles at each depth level." alt="" coords="200,5,325,33"/>
 </map>

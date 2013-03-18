@@ -1,4 +1,5 @@
 <map id="src/common/Honey/Thread/Task.h" name="src/common/Honey/Thread/Task.h">
 <area shape="rect" id="node2" href="$_honeycomb_8h.html" title="src/common/Honey/Honeycomb.h" alt="" coords="5,107,227,135"/>
-<area shape="rect" id="node3" href="$_task_8cpp.html" title="src/common/Honey/Thread\l/Task.cpp" alt="" coords="252,99,433,143"/>
+<area shape="rect" id="node3" href="$_thread_2_pool_8cpp.html" title="src/common/Honey/Thread\l/Pool.cpp" alt="" coords="252,99,433,143"/>
+<area shape="rect" id="node4" href="$_task_8cpp.html" title="src/common/Honey/Thread\l/Task.cpp" alt="" coords="458,99,640,143"/>
 </map>

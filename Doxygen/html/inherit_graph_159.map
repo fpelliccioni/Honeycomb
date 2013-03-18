@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structhoney_1_1_mt_pair.html" title="honey::MtPair\&lt; typename\l Elem::Key, typename std\l::conditional\&lt; std::is_const\l\&lt; Head \&gt;::value, const Val\l &amp;, Val &amp; \&gt;::type \&gt;" alt="" coords="6,5,184,97"/>
+<area shape="rect" id="node1" href="$structhoney_1_1mt_1_1_value.html" title="honey::mt::Value\&lt; int64,\l abs\&lt; b \&gt;::value \&gt;" alt="" coords="6,5,170,49"/>
+<area shape="rect" id="node2" href="$structhoney_1_1mt_1_1gcd_3_010_00_01b_01_4.html" title="honey::mt::gcd\&lt; 0, b \&gt;" alt="" coords="219,13,373,41"/>
 </map>

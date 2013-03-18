@@ -1,6 +1,8 @@
 var searchData=
 [
   ['_5f_5ffunc_5f_5f',['__FUNC__',['../ios_2_honey_2_core_2platform_2_core_8h.html#a4e14578a41d311e647f3aee2b628d3dd',1,'__FUNC__():&#160;Core.h'],['../_win_2_honey_2_core_2platform_2_core_8h.html#a4e14578a41d311e647f3aee2b628d3dd',1,'__FUNC__():&#160;Core.h']]],
+  ['_5f_5fstate',['__state',['../classhoney_1_1_future.html#a9c07d75a0e9f772dab0e2369df38014a',1,'honey::Future::__state()'],['../classhoney_1_1_promise.html#a93e9d3b52edb85f87bbff7cbc40d5611',1,'honey::Promise::__state()'],['../classhoney_1_1_shared_future.html#af1f5816b1ba71dde139f82e963b85270',1,'honey::SharedFuture::__state()']]],
+  ['_5f_5fstatebase',['__stateBase',['../classhoney_1_1_future_base.html#a48a1cfca724b2c7631cbb9a164592b53',1,'honey::FutureBase']]],
   ['_5fadd_5f0',['_ADD_0',['../_preprocessor_8h.html#ab9119ebc79a0cb53af272d0387e964b0',1,'Preprocessor.h']]],
   ['_5fadd_5f1',['_ADD_1',['../_preprocessor_8h.html#a99923f3836ef9472accceeae6dd2ae00',1,'Preprocessor.h']]],
   ['_5fadd_5f10',['_ADD_10',['../_preprocessor_8h.html#ac394de02a986d249411221a0ecd92bea',1,'Preprocessor.h']]],
@@ -77,7 +79,7 @@ var searchData=
   ['_5ffrustumworld',['_frustumWorld',['../classhoney_1_1_camera_ortho.html#aef37892404d5ab8d5cfdf7f697c0de09',1,'honey::CameraOrtho::_frustumWorld()'],['../classhoney_1_1_camera_persp.html#a709a489745b593d158c63ceba7ed1b59',1,'honey::CameraPersp::_frustumWorld()']]],
   ['_5fhascomma',['_HASCOMMA',['../_preprocessor_8h.html#a74e85a0c69726473420f403aa0ef9fc8',1,'Preprocessor.h']]],
   ['_5fi',['_i',['../classhoney_1_1_tuple_iter_3_01_iter_00_01_i_00_01std_1_1forward__iterator__tag_01_4.html#a281a8f68b98ec2a91a5e544ed790ce2b',1,'honey::TupleIter&lt; Iter, I, std::forward_iterator_tag &gt;']]],
-  ['_5fid',['_id',['../classhoney_1_1_listener.html#a5b856b789d553349718ff2cb59a57df4',1,'honey::Listener::_id()'],['../classhoney_1_1_property_base.html#ae1a79f57dfeba8efbf6888a08685f683',1,'honey::PropertyBase::_id()'],['../classhoney_1_1_listener.html#a60225ca933d1bc16566294e3f7d8364f',1,'honey::Listener::_id()']]],
+  ['_5fid',['_id',['../classhoney_1_1_listener.html#a5b856b789d553349718ff2cb59a57df4',1,'honey::Listener::_id()'],['../classhoney_1_1_property_base.html#ae1a79f57dfeba8efbf6888a08685f683',1,'honey::PropertyBase::_id()']]],
   ['_5fifempty_5fcase_5f0',['_IFEMPTY_CASE_0',['../_preprocessor_8h.html#a0108843fcd372c6de31205945a838a41',1,'Preprocessor.h']]],
   ['_5fifempty_5fcase_5f1',['_IFEMPTY_CASE_1',['../_preprocessor_8h.html#acbba74a9817592fee9687f3d6b20d6f6',1,'Preprocessor.h']]],
   ['_5finc_5f0',['_INC_0',['../_preprocessor_8h.html#ae0247615b481c2a5b42420e5eaf24bc0',1,'Preprocessor.h']]],
@@ -215,7 +217,7 @@ var searchData=
   ['_5fnear',['_near',['../classhoney_1_1_frustum_persp__.html#a5daa2c8f4c87a7c980dca84e288764c1',1,'honey::FrustumPersp_']]],
   ['_5fnumargs',['_NUMARGS',['../_preprocessor_8h.html#a146a5d55bed5b4d1bd5f8909d78bb634',1,'Preprocessor.h']]],
   ['_5fnumargs_5ffunc',['_NUMARGS_FUNC',['../_preprocessor_8h.html#abbbad5d5729b957e4a2963625232d417',1,'Preprocessor.h']]],
-  ['_5fobj',['_obj',['../classhoney_1_1_listener.html#a11ab009484ae6aea681f686bf7eb282c',1,'honey::Listener::_obj()'],['../classhoney_1_1_listener.html#a330d7bb3546128133db362ccfff84eb8',1,'honey::Listener::_obj(obj)']]],
+  ['_5fobj',['_obj',['../classhoney_1_1_listener.html#a11ab009484ae6aea681f686bf7eb282c',1,'honey::Listener']]],
   ['_5fonstack',['_onStack',['../classhoney_1_1_task.html#ae81433c333d4583b795fd7b69a52ef92',1,'honey::Task']]],
   ['_5ford',['_ORD',['../common_2_honey_2_math_2_alge_2_quat_8h.html#ad67d9192412b7dfe8a3c987f6623acd6',1,'Quat.h']]],
   ['_5forientation',['_orientation',['../classhoney_1_1_frustum__.html#ad301140f55d8a51baf4e08c8d89602d2',1,'honey::Frustum_']]],

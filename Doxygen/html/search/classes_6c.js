@@ -26,5 +26,6 @@ var searchData=
   ['local_3c_20local_20_3e',['Local&lt; Local &gt;',['../classhoney_1_1thread_1_1_local.html',1,'honey::thread']]],
   ['local_3c_20threaddataptr_20_3e',['Local&lt; ThreadDataPtr &gt;',['../classhoney_1_1thread_1_1_local.html',1,'honey::thread']]],
   ['local_3c_20worker_20_2a_20_3e',['Local&lt; Worker * &gt;',['../classhoney_1_1thread_1_1_local.html',1,'honey::thread']]],
-  ['log2floor',['log2Floor',['../structhoney_1_1mt_1_1log2_floor.html',1,'honey::mt']]]
+  ['log2floor',['log2Floor',['../structhoney_1_1mt_1_1log2_floor.html',1,'honey::mt']]],
+  ['log2floor_3c_200_20_3e',['log2Floor&lt; 0 &gt;',['../structhoney_1_1mt_1_1log2_floor_3_010_01_4.html',1,'honey::mt']]]
 ];

@@ -6,7 +6,6 @@ var searchData=
   ['uniqueptr_3c_20block_2c_20honey_3a_3afinalize_3c_20block_2c_20alloc_20_3e_20_3e',['UniquePtr&lt; Block, honey::finalize&lt; Block, Alloc &gt; &gt;',['../classhoney_1_1_unique_ptr.html',1,'honey']]],
   ['uniqueptr_3c_20data_2c_20honey_3a_3afinalize_3c_20data_2c_20alloc_20_3e_20_3e',['UniquePtr&lt; Data, honey::finalize&lt; Data, Alloc &gt; &gt;',['../classhoney_1_1_unique_ptr.html',1,'honey']]],
   ['uniqueptr_3c_20honey_3a_3aconditionlock_20_3e',['UniquePtr&lt; honey::ConditionLock &gt;',['../classhoney_1_1_unique_ptr.html',1,'honey']]],
-  ['uniqueptr_3c_20honey_3a_3amempool_20_3e',['UniquePtr&lt; honey::MemPool &gt;',['../classhoney_1_1_unique_ptr.html',1,'honey']]],
   ['uniqueptr_3c_20honey_3a_3aslotbase_20_3e',['UniquePtr&lt; honey::SlotBase &gt;',['../classhoney_1_1_unique_ptr.html',1,'honey']]],
   ['uniqueptr_3c_20honey_3a_3aspinlock_20_3e',['UniquePtr&lt; honey::SpinLock &gt;',['../classhoney_1_1_unique_ptr.html',1,'honey']]],
   ['uniqueptr_3c_20honey_3a_3astring_20_3e',['UniquePtr&lt; honey::String &gt;',['../classhoney_1_1_unique_ptr.html',1,'honey']]],

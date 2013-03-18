@@ -31,7 +31,7 @@ var searchData=
   ['boundvolany',['BoundVolAny',['../classhoney_1_1_bound_vol_any.html',1,'honey']]],
   ['boundvolbase',['BoundVolBase',['../classhoney_1_1_bound_vol_base.html',1,'honey']]],
   ['box_5f',['Box_',['../classhoney_1_1_box__.html',1,'honey']]],
-  ['broken',['Broken',['../structhoney_1_1promise_1_1_broken.html',1,'honey::promise']]],
+  ['broken',['Broken',['../structhoney_1_1future_1_1_broken.html',1,'honey::future']]],
   ['bsptree',['BspTree',['../classhoney_1_1_bsp_tree.html',1,'honey']]],
   ['bsptreespace',['BspTreeSpace',['../classhoney_1_1_bsp_tree_space.html',1,'honey']]],
   ['builder',['Builder',['../classhoney_1_1matrix_1_1_builder.html',1,'honey::matrix']]]

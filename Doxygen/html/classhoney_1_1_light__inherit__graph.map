@@ -1,10 +1,11 @@
 <map id="honey::Light" name="honey::Light">
-<area shape="rect" id="node7" href="$classhoney_1_1_light_dir.html" title="Directional light (ex. sunlight)" alt="" coords="4,470,115,498"/>
-<area shape="rect" id="node8" href="$classhoney_1_1_light_omni.html" title="Omni directional (spherical) light." alt="" coords="140,470,265,498"/>
-<area shape="rect" id="node2" href="$classhoney_1_1_scene_component.html" title="Scene component. Component that can be added to a scene object." alt="" coords="45,315,216,343"/>
-<area shape="rect" id="node3" href="$classhoney_1_1_component.html" title="Base class for components. Components can only be attached to one ComObject at a time." alt="" coords="64,238,197,266"/>
-<area shape="rect" id="node4" href="$classhoney_1_1_property_object.html" title="Object that contains properties." alt="" coords="54,161,207,189"/>
-<area shape="rect" id="node5" href="$classhoney_1_1_object.html" title="Base class for objects." alt="" coords="79,83,181,111"/>
-<area shape="rect" id="node6" href="$classhoney_1_1_shared_obj.html" title="Reference&#45;counted object for intrusive shared pointers." alt="" coords="66,6,195,34"/>
-<area shape="rect" id="node9" href="$classhoney_1_1_light_spot.html" title="Spot light." alt="" coords="142,547,263,575"/>
+<area shape="rect" id="node8" href="$classhoney_1_1_light_dir.html" title="Directional light (ex. sunlight)" alt="" coords="4,547,115,575"/>
+<area shape="rect" id="node9" href="$classhoney_1_1_light_omni.html" title="Omni directional (spherical) light." alt="" coords="140,547,265,575"/>
+<area shape="rect" id="node2" href="$classhoney_1_1_scene_component.html" title="Scene component. Component that can be added to a scene object." alt="" coords="45,393,216,421"/>
+<area shape="rect" id="node3" href="$classhoney_1_1_component.html" title="Base class for components. Components can only be attached to one ComObject at a time." alt="" coords="64,315,197,343"/>
+<area shape="rect" id="node4" href="$classhoney_1_1_property_object.html" title="Object that contains properties." alt="" coords="54,238,207,266"/>
+<area shape="rect" id="node5" href="$classhoney_1_1_object.html" title="Base class for objects." alt="" coords="79,161,181,189"/>
+<area shape="rect" id="node6" href="$classhoney_1_1_shared_obj.html" title="Reference&#45;counted object for intrusive shared pointers." alt="" coords="66,83,195,111"/>
+<area shape="rect" id="node7" href="$structhoney_1_1mt_1_1_no_copy.html" title="Inherit to declare that class is not copyable." alt="" coords="63,6,197,34"/>
+<area shape="rect" id="node10" href="$classhoney_1_1_light_spot.html" title="Spot light." alt="" coords="142,625,263,653"/>
 </map>

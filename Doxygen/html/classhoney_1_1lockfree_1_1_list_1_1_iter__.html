@@ -147,9 +147,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a91c5e86de476949f90277350af8cea97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae85edf40f15e3c82397c3512cb39f75e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classhoney_1_1lockfree_1_1_list_1_1_iter__.html#ac33100802afc2e66c15f516d884de9d7">pointer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1lockfree_1_1_list_1_1_iter__.html#ae85edf40f15e3c82397c3512cb39f75e">operator-&gt;</a> () const </td></tr>
 <tr class="separator:ae85edf40f15e3c82397c3512cb39f75e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae3a8fc3442b854e20b207720163e92b2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1lockfree_1_1_list_1_1_iter__.html#ae3a8fc3442b854e20b207720163e92b2">isValid</a> () const </td></tr>
-<tr class="memdesc:ae3a8fc3442b854e20b207720163e92b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if iterator points to valid element that has not been deleted.  <a href="#ae3a8fc3442b854e20b207720163e92b2">More...</a><br/></td></tr>
-<tr class="separator:ae3a8fc3442b854e20b207720163e92b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae57c81f7560248a6a4cca14aa0fdb981"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1lockfree_1_1_list_1_1_iter__.html#ae57c81f7560248a6a4cca14aa0fdb981">valid</a> () const </td></tr>
+<tr class="memdesc:ae57c81f7560248a6a4cca14aa0fdb981"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if iterator points to valid element that has not been deleted.  <a href="#ae57c81f7560248a6a4cca14aa0fdb981">More...</a><br/></td></tr>
+<tr class="separator:ae57c81f7560248a6a4cca14aa0fdb981"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
@@ -367,35 +367,6 @@ template&lt;class Data &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="ae3a8fc3442b854e20b207720163e92b2"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class Data_ , class Alloc_  = std::allocator&lt;Data_&gt;, class Backoff  = Backoff, int iterMax = 2&gt; </div>
-<div class="memtemplate">
-template&lt;class Data &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool <a class="el" href="classhoney_1_1lockfree_1_1_list.html">honey::lockfree::List</a>&lt; Data_, Alloc_, <a class="el" href="classhoney_1_1lockfree_1_1_backoff.html">Backoff</a>, iterMax &gt;::<a class="el" href="classhoney_1_1lockfree_1_1_list_1_1_iter__.html">Iter_</a>&lt; <a class="el" href="classhoney_1_1lockfree_1_1_list.html#a220922bf773df482fa9bc47c98a96501">Data</a> &gt;::isValid </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Returns true if iterator points to valid element that has not been deleted. </p>
-
-</div>
-</div>
 <a class="anchor" id="a6be0bdf3e9eba5f8d1dcdbb001af92b8"></a>
 <div class="memitem">
 <div class="memproto">
@@ -646,6 +617,35 @@ template&lt;class Data &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="ae57c81f7560248a6a4cca14aa0fdb981"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class Data_ , class Alloc_  = std::allocator&lt;Data_&gt;, class Backoff  = Backoff, int iterMax = 2&gt; </div>
+<div class="memtemplate">
+template&lt;class Data &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classhoney_1_1lockfree_1_1_list.html">honey::lockfree::List</a>&lt; Data_, Alloc_, <a class="el" href="classhoney_1_1lockfree_1_1_backoff.html">Backoff</a>, iterMax &gt;::<a class="el" href="classhoney_1_1lockfree_1_1_list_1_1_iter__.html">Iter_</a>&lt; <a class="el" href="classhoney_1_1lockfree_1_1_list.html#a220922bf773df482fa9bc47c98a96501">Data</a> &gt;::valid </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns true if iterator points to valid element that has not been deleted. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Friends And Related Function Documentation</h2>
 <a class="anchor" id="a8cee552d09eaeb60a09d95309a87b498"></a>
 <div class="memitem">
@@ -677,7 +677,7 @@ template&lt;class Data &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 6 2013 23:41:25 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 18 2013 04:06:53 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

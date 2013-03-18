@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structhoney_1_1_mt_map.html" title="honey::MtMap\&lt; int,\l align \&gt;" alt="" coords="6,5,141,49"/>
+<area shape="rect" id="node1" href="$structhoney_1_1mt_1_1_value.html" title="honey::mt::Value\&lt; bool,\l std::is_reference\&lt; T\l \&gt;::value \&gt;" alt="" coords="6,5,167,65"/>
+<area shape="rect" id="node2" href="$structhoney_1_1mt_1_1is_ref.html" title="Check if type is a reference." alt="" coords="217,21,365,49"/>
 </map>

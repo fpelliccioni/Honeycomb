@@ -8,6 +8,7 @@ var searchData=
   ['plane_5f',['Plane_',['../classhoney_1_1_plane__.html',1,'honey']]],
   ['poisson_5f',['Poisson_',['../classhoney_1_1_poisson__.html',1,'honey']]],
   ['polynomial',['Polynomial',['../classhoney_1_1_polynomial.html',1,'honey']]],
+  ['pool',['Pool',['../classhoney_1_1thread_1_1_pool.html',1,'honey::thread']]],
   ['pooledstats',['PooledStats',['../structhoney_1_1_student_t___1_1_pooled_stats.html',1,'honey::StudentT_']]],
   ['preorditer_5f',['PreOrdIter_',['../classhoney_1_1_tree_node_1_1_pre_ord_iter__.html',1,'honey::TreeNode']]],
   ['promise',['Promise',['../classhoney_1_1_promise.html',1,'honey']]],

@@ -118,7 +118,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keyword">struct </span>Store</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        {</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            Store()                                 : ptr(nullptr), reclaim(-1), fin(<a class="code" href="_std_util_8h.html#af39289919acc655cc1f22004a0c11d6e">bind</a>(finalize&lt;void&gt;(), ptr)) {}</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            Store()                                 : ptr(nullptr), reclaim(-1), fin(bind(finalize&lt;void&gt;(), ptr)) {}</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            <span class="keywordtype">void</span>* ptr;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            <span class="keywordtype">int</span> reclaim;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            function&lt;void ()&gt; fin;</div>
@@ -301,7 +301,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;            store.reclaim = _id.reclaim;</div>
 <div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;            T* ptr = _init();</div>
 <div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;            store.ptr = ptr;</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;            store.fin = <a class="code" href="_std_util_8h.html#af39289919acc655cc1f22004a0c11d6e">bind</a>(_fin, ptr);</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;            store.fin = std::bind(_fin, ptr);</div>
 <div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;        }</div>
 <div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">reinterpret_cast&lt;</span>T*<span class="keyword">&gt;</span>(store.ptr);</div>
 <div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    }</div>
@@ -311,7 +311,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 6 2013 23:41:19 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 18 2013 04:06:48 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

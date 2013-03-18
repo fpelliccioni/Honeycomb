@@ -2,6 +2,7 @@ var searchData=
 [
   ['tag',['tag',['../structhoney_1_1mt_1_1tag.html',1,'honey::mt']]],
   ['task',['Task',['../classhoney_1_1_task.html',1,'honey']]],
+  ['task',['Task',['../structhoney_1_1thread_1_1_pool_1_1_task.html',1,'honey::thread::Pool']]],
   ['task_5f',['Task_',['../classhoney_1_1_task__.html',1,'honey']]],
   ['tasksched',['TaskSched',['../classhoney_1_1_task_sched.html',1,'honey']]],
   ['thread',['Thread',['../classhoney_1_1_thread.html',1,'honey']]],
@@ -46,5 +47,6 @@ var searchData=
   ['tupleiter_3c_20iter_2c_20i_2c_20std_3a_3abidirectional_5fiterator_5ftag_20_3e',['TupleIter&lt; Iter, I, std::bidirectional_iterator_tag &gt;',['../classhoney_1_1_tuple_iter_3_01_iter_00_01_i_00_01std_1_1bidirectional__iterator__tag_01_4.html',1,'honey']]],
   ['tupleiter_3c_20iter_2c_20i_2c_20std_3a_3aforward_5fiterator_5ftag_20_3e',['TupleIter&lt; Iter, I, std::forward_iterator_tag &gt;',['../classhoney_1_1_tuple_iter_3_01_iter_00_01_i_00_01std_1_1forward__iterator__tag_01_4.html',1,'honey']]],
   ['type',['Type',['../structhoney_1_1variant_1_1_type.html',1,'honey::variant']]],
-  ['type',['Type',['../classhoney_1_1_com_registry_1_1_type.html',1,'honey::ComRegistry']]]
+  ['type',['Type',['../classhoney_1_1_com_registry_1_1_type.html',1,'honey::ComRegistry']]],
+  ['typeat',['typeAt',['../structhoney_1_1mt_1_1type_at.html',1,'honey::mt']]]
 ];

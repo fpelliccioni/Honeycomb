@@ -134,9 +134,13 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a0f9d1d7f1d2f58128330569fd1595cbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a5454ed24cd2e1e60b2909497cfcef6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1lazy.html#a5a5454ed24cd2e1e60b2909497cfcef6">operator T &amp;</a> ()</td></tr>
 <tr class="separator:a5a5454ed24cd2e1e60b2909497cfcef6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a82ebb04f0023c35d6726a403f690835a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1lazy.html#a82ebb04f0023c35d6726a403f690835a">get</a> (Args...)</td></tr>
-<tr class="memdesc:a82ebb04f0023c35d6726a403f690835a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the lazy value. Only evaluates if dirty. The args are forwarded to the predicate and eval function.  <a href="#a82ebb04f0023c35d6726a403f690835a">More...</a><br/></td></tr>
-<tr class="separator:a82ebb04f0023c35d6726a403f690835a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c7818005a891ae397ebc4ccd38f1f3a"><td class="memTemplParams" colspan="2">template&lt;class... Args&gt; </td></tr>
+<tr class="memitem:a2c7818005a891ae397ebc4ccd38f1f3a"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classhoney_1_1lazy.html#a2c7818005a891ae397ebc4ccd38f1f3a">get</a> (Args &amp;&amp;...args)</td></tr>
+<tr class="memdesc:a2c7818005a891ae397ebc4ccd38f1f3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the lazy value. Only evaluates if dirty. The args are passed to the predicate and eval function.  <a href="#a2c7818005a891ae397ebc4ccd38f1f3a">More...</a><br/></td></tr>
+<tr class="separator:a2c7818005a891ae397ebc4ccd38f1f3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35ae3ac16f4eadf38c2f4a472e7039a9"><td class="memTemplParams" colspan="2">template&lt;class... Args&gt; </td></tr>
+<tr class="memitem:a35ae3ac16f4eadf38c2f4a472e7039a9"><td class="memTemplItemLeft" align="right" valign="top">const T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classhoney_1_1lazy.html#a35ae3ac16f4eadf38c2f4a472e7039a9">get</a> (Args &amp;&amp;...args) const </td></tr>
+<tr class="separator:a35ae3ac16f4eadf38c2f4a472e7039a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="related"></a>
 Related Functions</h2></td></tr>
@@ -197,23 +201,61 @@ template&lt;class T, class Eval = function&lt;void(T&amp;)&gt;, class Pred = fun
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a82ebb04f0023c35d6726a403f690835a"></a>
+<a class="anchor" id="a2c7818005a891ae397ebc4ccd38f1f3a"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class T, class Eval = function&lt;void(T&amp;)&gt;, class Pred = function&lt;bool()&gt;&gt; </div>
+<div class="memtemplate">
+template&lt;class... Args&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="classhoney_1_1lazy.html">honey::lazy</a>&lt; T, Eval, Pred &gt;::get </td>
+          <td class="memname">T&amp; <a class="el" href="classhoney_1_1lazy.html">honey::lazy</a>&lt; T, Eval, Pred &gt;::get </td>
           <td>(</td>
-          <td class="paramtype">Args...&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">Args &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>args</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p>Evaluate the lazy value. Only evaluates if dirty. The args are forwarded to the predicate and eval function. </p>
+<p>Evaluate the lazy value. Only evaluates if dirty. The args are passed to the predicate and eval function. </p>
+
+</div>
+</div>
+<a class="anchor" id="a35ae3ac16f4eadf38c2f4a472e7039a9"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T, class Eval = function&lt;void(T&amp;)&gt;, class Pred = function&lt;bool()&gt;&gt; </div>
+<div class="memtemplate">
+template&lt;class... Args&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const T&amp; <a class="el" href="classhoney_1_1lazy.html">honey::lazy</a>&lt; T, Eval, Pred &gt;::get </td>
+          <td>(</td>
+          <td class="paramtype">Args &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>args</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -562,7 +604,7 @@ template&lt;class Eval &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 6 2013 23:41:24 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 18 2013 04:06:52 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

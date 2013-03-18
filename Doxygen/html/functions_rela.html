@@ -179,10 +179,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="classhoney_1_1_mem_pool.html#a328c093d609680cca505905c6d49901a">honey::MemPool</a>
 </li>
 <li>Future
-: <a class="el" href="classhoney_1_1_promise.html#ab033f7626ddfc7f1d62cb3d3952d166e">honey::Promise&lt; R &gt;</a>
+: <a class="el" href="classhoney_1_1_future.html#ab033f7626ddfc7f1d62cb3d3952d166e">honey::Future&lt; R &gt;</a>
+, <a class="el" href="classhoney_1_1_shared_future.html#ab033f7626ddfc7f1d62cb3d3952d166e">honey::SharedFuture&lt; R &gt;</a>
+, <a class="el" href="classhoney_1_1_promise.html#ab033f7626ddfc7f1d62cb3d3952d166e">honey::Promise&lt; R &gt;</a>
 </li>
-<li>future::priv::AnyWaiter
-: <a class="el" href="classhoney_1_1_future_base.html#a95c8bf00b2b409c26ac696b50f0573c9">honey::FutureBase</a>
+<li>FutureCommon
+: <a class="el" href="classhoney_1_1_shared_future.html#afd725b919f590898408938020b8e3a80">honey::SharedFuture&lt; R &gt;</a>
+, <a class="el" href="classhoney_1_1_future.html#afd725b919f590898408938020b8e3a80">honey::Future&lt; R &gt;</a>
+, <a class="el" href="classhoney_1_1_packaged_task_3_01_r_07_param_8_8_8_08_4.html#afd725b919f590898408938020b8e3a80">honey::PackagedTask&lt; R(Param...)&gt;</a>
 </li>
 </ul>
 
@@ -212,6 +216,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>MemPool
 : <a class="el" href="classhoney_1_1_mem_pool_1_1_factory.html#ab817cfb82d730261fe8fe6f8d8613acf">honey::MemPool::Factory</a>
 </li>
+<li>mt::Funcptr&lt; void()&gt;
+: <a class="el" href="classhoney_1_1_task.html#ab55747963c1614747865dca0ddc3abe9">honey::Task</a>
+</li>
 <li>MtMapCommon
 : <a class="el" href="classhoney_1_1_mt_map_common.html#a9da95d2536ddc25a2f590d9e3ae8b8c8">honey::MtMapCommon&lt; Subclass, Key_, Val_, List_ &gt;</a>
 , <a class="el" href="classhoney_1_1_mt_map_elem.html#a9da95d2536ddc25a2f590d9e3ae8b8c8">honey::MtMapElem&lt; Key_, Val_, List_ &gt;</a>
@@ -221,8 +228,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>MtMapIter
 : <a class="el" href="classhoney_1_1_mt_map_elem.html#a0b5dbc888db8aad59129b7211914c739">honey::MtMapElem&lt; Key_, Val_, List_ &gt;</a>
-, <a class="el" href="classhoney_1_1_mt_map_iter.html#a66db224bfd5e004a262c5a88ba11a3e3">honey::MtMapIter&lt; Head, Elem &gt;</a>
 , <a class="el" href="classhoney_1_1_mt_map_common.html#a0b5dbc888db8aad59129b7211914c739">honey::MtMapCommon&lt; Subclass, Key_, Val_, List_ &gt;</a>
+, <a class="el" href="classhoney_1_1_mt_map_iter.html#a66db224bfd5e004a262c5a88ba11a3e3">honey::MtMapIter&lt; Head, Elem &gt;</a>
 </li>
 </ul>
 
@@ -359,11 +366,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>SharedFuture
 : <a class="el" href="classhoney_1_1_future.html#ac5155f6a8efebbaa9b6f1b7d11d927a0">honey::Future&lt; R &gt;</a>
+, <a class="el" href="classhoney_1_1_shared_future.html#ac5155f6a8efebbaa9b6f1b7d11d927a0">honey::SharedFuture&lt; R &gt;</a>
 </li>
 <li>SharedPtr
-: <a class="el" href="classhoney_1_1_shared_ptr.html#a7b184280ea61fd355b10dc6b007eabbe">honey::SharedPtr&lt; T &gt;</a>
+: <a class="el" href="classhoney_1_1_shared_obj.html#adf66bfb5d9f0f374ec092232e6b43eb3">honey::SharedObj</a>
+, <a class="el" href="classhoney_1_1_shared_ptr.html#a7b184280ea61fd355b10dc6b007eabbe">honey::SharedPtr&lt; T &gt;</a>
 , <a class="el" href="classhoney_1_1_weak_ptr.html#adf66bfb5d9f0f374ec092232e6b43eb3">honey::WeakPtr&lt; T &gt;</a>
-, <a class="el" href="classhoney_1_1_shared_obj.html#adf66bfb5d9f0f374ec092232e6b43eb3">honey::SharedObj</a>
 </li>
 <li>static_pointer_cast
 : <a class="el" href="classhoney_1_1_shared_ptr.html#a7cc0fbc35df5da110763ec1597130858">honey::SharedPtr&lt; T &gt;</a>
@@ -434,7 +442,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 6 2013 23:41:40 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 18 2013 04:06:54 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

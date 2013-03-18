@@ -80,7 +80,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#define-members">Macros</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Meta-programming</div>  </div>
 </div><!--header-->
@@ -124,7 +125,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Special void type, use where void is intended but implicit members are required (default ctor, copyable, etc.)  <a href="structhoney_1_1mt_1_1_void.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1tag.html">honey::mt::tag&lt; int &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use to differentiate an overloaded function by type. Accepts parameter default value: <code>func(tag&lt;0&gt; _ = 0)</code>  <a href="structhoney_1_1mt_1_1tag.html#details">More...</a><br/></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use to differentiate an overloaded function by type. Accepts dummy parameter default value: <code>func(tag&lt;0&gt; = 0)</code>  <a href="structhoney_1_1mt_1_1tag.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1add_ref.html">honey::mt::addRef&lt; T &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add reference to type.  <a href="structhoney_1_1mt_1_1add_ref.html#details">More...</a><br/></td></tr>
@@ -156,29 +157,65 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1is_ptr.html">honey::mt::isPtr&lt; T &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if type is a pointer.  <a href="structhoney_1_1mt_1_1is_ptr.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1mt_1_1is_tuple.html">honey::mt::isTuple&lt; T &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if type is a tuple.  <a href="classhoney_1_1mt_1_1is_tuple.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1disable__if.html">honey::mt::disable_if&lt; b, T &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opposite of std::enable_if.  <a href="structhoney_1_1mt_1_1disable__if.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1conditional__int.html">honey::mt::conditional_int&lt; b, t, f &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variant of std::conditional for integers, stores result in <code>value</code>  <a href="structhoney_1_1mt_1_1conditional__int.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1conditional__int_3_01true_00_01t_00_01f_01_4.html">honey::mt::conditional_int&lt; true, t, f &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1is__base__of.html">honey::mt::is_base_of&lt; Base, Derived &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version of std::is_base_of that removes reference qualifiers before testing.  <a href="structhoney_1_1mt_1_1is__base__of.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1is_specialization_of.html">honey::mt::isSpecializationOf&lt; T, Template &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if T is a specialization of Template.  <a href="structhoney_1_1mt_1_1is_specialization_of.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1is_specialization_of_3_01_template_3_01_param_8_8_8_4_00_01_template_01_4.html">honey::mt::isSpecializationOf&lt; Template&lt; Param...&gt;, Template &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1is_tuple.html">honey::mt::isTuple&lt; T &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if type is a tuple or a reference to one.  <a href="structhoney_1_1mt_1_1is_tuple.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1mt_1_1is_callable.html">honey::mt::isCallable&lt; Func, Args &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if functor is callable with arguments.  <a href="classhoney_1_1mt_1_1is_callable.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1type_at.html">honey::mt::typeAt&lt; I, Ts &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get type at index of parameter pack.  <a href="structhoney_1_1mt_1_1type_at.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1is_iterator.html">honey::mt::isIterator&lt; T &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if type is an iterator or a reference to one. An iterator is a type that has member iterator_category or is a pointer.  <a href="structhoney_1_1mt_1_1is_iterator.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1func_traits.html">honey::mt::funcTraits&lt; T &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get function type traits.  <a href="structhoney_1_1mt_1_1func_traits.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1_funcptr_base.html">honey::mt::FuncptrBase</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inherit to enable non-virtual functor calling.  <a href="structhoney_1_1mt_1_1_funcptr_base.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1mt_1_1_funcptr.html">honey::mt::Funcptr&lt; Sig &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1_funcptr_3_01_r_07_args_8_8_8_08_4.html">honey::mt::Funcptr&lt; R(Args...)&gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds a function pointer so that a functor can be called non-virtually. The functor must inherit from <a class="el" href="structhoney_1_1mt_1_1_funcptr_base.html" title="Inherit to enable non-virtual functor calling.">FuncptrBase</a>.  <a href="structhoney_1_1mt_1_1_funcptr_3_01_r_07_args_8_8_8_08_4.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1_funcptr_3_01void_07_args_8_8_8_08_4.html">honey::mt::Funcptr&lt; void(Args...)&gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization for void return type.  <a href="structhoney_1_1mt_1_1_funcptr_3_01void_07_args_8_8_8_08_4.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1_no_copy.html">honey::mt::NoCopy</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inherit to declare that class is not copyable.  <a href="structhoney_1_1mt_1_1_no_copy.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1_int_seq.html">honey::mt::IntSeq&lt;&gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Integer sequence.  <a href="structhoney_1_1mt_1_1_int_seq.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1_int_seq_gen.html">honey::mt::IntSeqGen&lt; N, Ns &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate an integer sequence from 0 to N, can be used to unpack the values in a tuple.  <a href="structhoney_1_1mt_1_1_int_seq_gen.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1_int_seq_gen_3_010_00_01_ns_8_8_8_4.html">honey::mt::IntSeqGen&lt; 0, Ns...&gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1max.html">honey::mt::max&lt; vals &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get maximum of all arguments.  <a href="structhoney_1_1mt_1_1max.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1max_3_01val_00_01vals_8_8_8_4.html">honey::mt::max&lt; val, vals...&gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1max_3_01val_01_4.html">honey::mt::max&lt; val &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1abs.html">honey::mt::abs&lt; val &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the absolute value of a number.  <a href="structhoney_1_1mt_1_1abs.html#details">More...</a><br/></td></tr>
@@ -189,8 +226,14 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1log2_floor.html">honey::mt::log2Floor&lt; x &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calc the floor of the base 2 log of x.  <a href="structhoney_1_1mt_1_1log2_floor.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1log2_floor_3_010_01_4.html">honey::mt::log2Floor&lt; 0 &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1gcd.html">honey::mt::gcd&lt; a, b &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calc the greatest common divisor of a and b.  <a href="structhoney_1_1mt_1_1gcd.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1gcd_3_01a_00_010_01_4.html">honey::mt::gcd&lt; a, 0 &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1mt_1_1gcd_3_010_00_01b_01_4.html">honey::mt::gcd&lt; 0, b &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
@@ -198,15 +241,18 @@ Macros</h2></td></tr>
 <tr class="memitem:ga27ee6ead2459ec60e1f23efc15a758c4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___meta.html#ga27ee6ead2459ec60e1f23efc15a758c4">mt_unused</a>(Param)&#160;&#160;&#160;(void)Param;</td></tr>
 <tr class="memdesc:ga27ee6ead2459ec60e1f23efc15a758c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove the unused parameter warning.  <a href="#ga27ee6ead2459ec60e1f23efc15a758c4">More...</a><br/></td></tr>
 <tr class="separator:ga27ee6ead2459ec60e1f23efc15a758c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4771df2d43b9fd81be1688aebf45f98c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___meta.html#ga4771df2d43b9fd81be1688aebf45f98c">mt_hasMember</a>(MemberName)&#160;&#160;&#160;<a class="el" href="_meta_8h.html#abdd631b72ce3d939e645c7728bff9fad">mt_priv_hasMember</a>(MemberName, MemberName)</td></tr>
+<tr class="memitem:ga63687517fb7320f50088c4b4b8f14b79"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___meta.html#ga63687517fb7320f50088c4b4b8f14b79">mt_unpackEval</a>(...)&#160;&#160;&#160;mt::pass(((__VA_ARGS__), 0)...)</td></tr>
+<tr class="memdesc:ga63687517fb7320f50088c4b4b8f14b79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unpack and evaluate a parameter pack expression. Ex. <code>void foo(Args... args) { mt_unpackEval(func(args)); }</code>  <a href="#ga63687517fb7320f50088c4b4b8f14b79">More...</a><br/></td></tr>
+<tr class="separator:ga63687517fb7320f50088c4b4b8f14b79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4771df2d43b9fd81be1688aebf45f98c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___meta.html#ga4771df2d43b9fd81be1688aebf45f98c">mt_hasMember</a>(MemberName)&#160;&#160;&#160;<a class="el" href="group___meta.html#ga6c964473380e47bad19992fa56ca4b13">mt_hasMember2</a>(MemberName, MemberName)</td></tr>
 <tr class="memdesc:ga4771df2d43b9fd81be1688aebf45f98c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a method to check if a class has a member with matching name and type.  <a href="#ga4771df2d43b9fd81be1688aebf45f98c">More...</a><br/></td></tr>
 <tr class="separator:ga4771df2d43b9fd81be1688aebf45f98c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6c964473380e47bad19992fa56ca4b13"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___meta.html#ga6c964473380e47bad19992fa56ca4b13">mt_hasMember2</a>(MemberName, TestName)&#160;&#160;&#160;<a class="el" href="_meta_8h.html#abdd631b72ce3d939e645c7728bff9fad">mt_priv_hasMember</a>(MemberName, TestName)</td></tr>
+<tr class="memitem:ga6c964473380e47bad19992fa56ca4b13"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___meta.html#ga6c964473380e47bad19992fa56ca4b13">mt_hasMember2</a>(MemberName, TestName)</td></tr>
 <tr class="separator:ga6c964473380e47bad19992fa56ca4b13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gade1de88a8c7ffc3605896e16edcdee01"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___meta.html#gade1de88a8c7ffc3605896e16edcdee01">mt_hasType</a>(TypeName)&#160;&#160;&#160;<a class="el" href="_meta_8h.html#ae68ab96c777650a7c8d77702df468ae1">mt_priv_hasType</a>(TypeName, TypeName)</td></tr>
+<tr class="memitem:gade1de88a8c7ffc3605896e16edcdee01"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___meta.html#gade1de88a8c7ffc3605896e16edcdee01">mt_hasType</a>(TypeName)&#160;&#160;&#160;<a class="el" href="group___meta.html#gad912a36e112616f79dc28798f5366536">mt_hasType2</a>(TypeName, TypeName)</td></tr>
 <tr class="memdesc:gade1de88a8c7ffc3605896e16edcdee01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a method to check if a class has a nested type/class.  <a href="#gade1de88a8c7ffc3605896e16edcdee01">More...</a><br/></td></tr>
 <tr class="separator:gade1de88a8c7ffc3605896e16edcdee01"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad912a36e112616f79dc28798f5366536"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___meta.html#gad912a36e112616f79dc28798f5366536">mt_hasType2</a>(TypeName, TestName)&#160;&#160;&#160;<a class="el" href="_meta_8h.html#ae68ab96c777650a7c8d77702df468ae1">mt_priv_hasType</a>(TypeName, TestName)</td></tr>
+<tr class="memitem:gad912a36e112616f79dc28798f5366536"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___meta.html#gad912a36e112616f79dc28798f5366536">mt_hasType2</a>(TypeName, TestName)</td></tr>
 <tr class="separator:gad912a36e112616f79dc28798f5366536"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga27082f16bcbc2baf37351ffefa89a117"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___meta.html#ga27082f16bcbc2baf37351ffefa89a117">mt_staticObj</a>(Class, Func, Ctor)&#160;&#160;&#160;static inline <a class="el" href="group___preprocessor.html#gaa446b8f94f12ee6cb07e6da5d9cfe80e">UNBRACKET</a>(Class)&amp; Func()  { static <a class="el" href="group___preprocessor.html#gaa446b8f94f12ee6cb07e6da5d9cfe80e">UNBRACKET</a>(Class) _obj Ctor; return _obj; }</td></tr>
 <tr class="memdesc:ga27082f16bcbc2baf37351ffefa89a117"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an object that can be retrieved safely from a static context.  <a href="#ga27082f16bcbc2baf37351ffefa89a117">More...</a><br/></td></tr>
@@ -217,6 +263,17 @@ Macros</h2></td></tr>
 <tr class="memitem:ga34789ee608b424fcc22a968dc3323a0d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___meta.html#ga34789ee608b424fcc22a968dc3323a0d">mt_staticInit_impl</a>(id)&#160;&#160;&#160;mt::Void __init_##id() { return mt::Void(); }</td></tr>
 <tr class="memdesc:ga34789ee608b424fcc22a968dc3323a0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solves static init order, call in source with matching header id.  <a href="#ga34789ee608b424fcc22a968dc3323a0d">More...</a><br/></td></tr>
 <tr class="separator:ga34789ee608b424fcc22a968dc3323a0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga5f98aa18991afe3341276630bb2e9b3e"><td class="memTemplParams" colspan="2">template&lt;class... Args&gt; </td></tr>
+<tr class="memitem:ga5f98aa18991afe3341276630bb2e9b3e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___meta.html#ga5f98aa18991afe3341276630bb2e9b3e">honey::mt::pass</a> (Args...)</td></tr>
+<tr class="memdesc:ga5f98aa18991afe3341276630bb2e9b3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do nothing, can be used to evaluate an unpack expression.  <a href="#ga5f98aa18991afe3341276630bb2e9b3e">More...</a><br/></td></tr>
+<tr class="separator:ga5f98aa18991afe3341276630bb2e9b3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabb5056e014fbef8208f463291f83a558"><td class="memTemplParams" colspan="2">template&lt;class F , class Sig  = typename funcTraits&lt;typename removeRef&lt;F&gt;::type&gt;::Sig&gt; </td></tr>
+<tr class="memitem:gabb5056e014fbef8208f463291f83a558"><td class="memTemplItemLeft" align="right" valign="top">Funcptr&lt; Sig &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___meta.html#gabb5056e014fbef8208f463291f83a558">honey::mt::FuncptrCreate</a> (F &amp;&amp;f)</td></tr>
+<tr class="memdesc:gabb5056e014fbef8208f463291f83a558"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenient method to create a <a class="el" href="classhoney_1_1mt_1_1_funcptr.html">Funcptr</a> from a functor that inherits from <a class="el" href="structhoney_1_1mt_1_1_funcptr_base.html" title="Inherit to enable non-virtual functor calling.">FuncptrBase</a>.  <a href="#gabb5056e014fbef8208f463291f83a558">More...</a><br/></td></tr>
+<tr class="separator:gabb5056e014fbef8208f463291f83a558"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Meta-programming and compile-time util. </p>
@@ -230,7 +287,7 @@ Macros</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">MemberName</td><td>)</td>
-          <td>&#160;&#160;&#160;<a class="el" href="_meta_8h.html#abdd631b72ce3d939e645c7728bff9fad">mt_priv_hasMember</a>(MemberName, MemberName)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="group___meta.html#ga6c964473380e47bad19992fa56ca4b13">mt_hasMember2</a>(MemberName, MemberName)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -264,11 +321,21 @@ struct A { int Bar;         };  =&gt;  mt_hasMember(Foo);  -&gt;  mt_HasMember_F
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;<a class="el" href="_meta_8h.html#abdd631b72ce3d939e645c7728bff9fad">mt_priv_hasMember</a>(MemberName, TestName)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> Class, <span class="keyword">class</span> MemberType&gt;                                                                                     \</div>
+<div class="line">    class mt_hasMember_##TestName                                                                                               \</div>
+<div class="line">    {                                                                                                                           \</div>
+<div class="line">        template&lt;class T, T&gt;                        <span class="keyword">struct </span>matchType;                                                           \</div>
+<div class="line">        template&lt;class T&gt; <span class="keyword">static</span> <span class="keyword">auto</span>               memberMatch(<span class="keywordtype">void</span>*) -&gt; decltype(declval&lt;matchType&lt;MemberType, &amp;T::MemberName&gt;&gt;(), std::true_type()); \</div>
+<div class="line">        template&lt;class T&gt; <span class="keyword">static</span> std::false_type    memberMatch(...);                                                           \</div>
+<div class="line">    public:                                                                                                                     \</div>
+<div class="line">        static <span class="keyword">const</span> <span class="keywordtype">bool</span> value = mt::IsTrue&lt;decltype(memberMatch&lt;Class&gt;(<span class="keyword">nullptr</span>))&gt;::value;                                     \</div>
+<div class="line">        typedef <span class="keyword">typename</span> std::conditional&lt;value, MemberType, mt::Void&gt;::type type;                                              \</div>
+<div class="line">    };</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="gade1de88a8c7ffc3605896e16edcdee01"></a>
@@ -280,7 +347,7 @@ struct A { int Bar;         };  =&gt;  mt_hasMember(Foo);  -&gt;  mt_HasMember_F
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">TypeName</td><td>)</td>
-          <td>&#160;&#160;&#160;<a class="el" href="_meta_8h.html#ae68ab96c777650a7c8d77702df468ae1">mt_priv_hasType</a>(TypeName, TypeName)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="group___meta.html#gad912a36e112616f79dc28798f5366536">mt_hasType2</a>(TypeName, TypeName)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -314,11 +381,25 @@ struct A { typedef int Bar; };              =&gt;  mt_hasType(Foo);            -
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;<a class="el" href="_meta_8h.html#ae68ab96c777650a7c8d77702df468ae1">mt_priv_hasType</a>(TypeName, TestName)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> Class&gt;                                                                                                       \</div>
+<div class="line">    class mt_hasType_##TestName                                                                                                 \</div>
+<div class="line">    {                                                                                                                           \</div>
+<div class="line">        template&lt;class T&gt; <span class="keyword">static</span> <span class="keyword">auto</span>               test(<span class="keywordtype">void</span>*) -&gt; decltype(declval&lt;typename T::TypeName&gt;(), std::true_type()); \</div>
+<div class="line">        template&lt;class T&gt; <span class="keyword">static</span> std::false_type    test(...);                                                                  \</div>
+<div class="line">                                                                                                                                \</div>
+<div class="line">        template&lt;bool Res, class Enable = void&gt;                                                                                 \</div>
+<div class="line">        struct testType                                             { <span class="keyword">typedef</span> mt::Void type; };                                 \</div>
+<div class="line">        template&lt;bool Res&gt;                                                                                                      \</div>
+<div class="line">        struct testType&lt;Res, typename std::enable_if&lt;Res&gt;::type&gt;    { <span class="keyword">typedef</span> <span class="keyword">typename</span> Class::TypeName type; };                 \</div>
+<div class="line">    public:                                                                                                                     \</div>
+<div class="line">        static <span class="keyword">const</span> <span class="keywordtype">bool</span> value = mt::IsTrue&lt;decltype(test&lt;Class&gt;(<span class="keyword">nullptr</span>))&gt;::value;                                            \</div>
+<div class="line">        typedef <span class="keyword">typename</span> testType&lt;value&gt;::type type;                                                                            \</div>
+<div class="line">    };</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ga22d8a3c817d2849e35de3aff29a2474b"></a>
@@ -391,6 +472,24 @@ struct A { typedef int Bar; };              =&gt;  mt_hasType(Foo);            -
 
 </div>
 </div>
+<a class="anchor" id="ga63687517fb7320f50088c4b4b8f14b79"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define mt_unpackEval</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em></td><td>)</td>
+          <td>&#160;&#160;&#160;mt::pass(((__VA_ARGS__), 0)...)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Unpack and evaluate a parameter pack expression. Ex. <code>void foo(Args... args) { mt_unpackEval(func(args)); }</code> </p>
+
+</div>
+</div>
 <a class="anchor" id="ga27ee6ead2459ec60e1f23efc15a758c4"></a>
 <div class="memitem">
 <div class="memproto">
@@ -409,10 +508,52 @@ struct A { typedef int Bar; };              =&gt;  mt_hasType(Foo);            -
 
 </div>
 </div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="gabb5056e014fbef8208f463291f83a558"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class F , class Sig  = typename funcTraits&lt;typename removeRef&lt;F&gt;::type&gt;::Sig&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">Funcptr&lt;Sig&gt; honey::mt::FuncptrCreate </td>
+          <td>(</td>
+          <td class="paramtype">F &amp;&amp;&#160;</td>
+          <td class="paramname"><em>f</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Convenient method to create a <a class="el" href="classhoney_1_1mt_1_1_funcptr.html">Funcptr</a> from a functor that inherits from <a class="el" href="structhoney_1_1mt_1_1_funcptr_base.html" title="Inherit to enable non-virtual functor calling.">FuncptrBase</a>. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classhoney_1_1mt_1_1_funcptr.html">Funcptr</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga5f98aa18991afe3341276630bb2e9b3e"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class... Args&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void honey::mt::pass </td>
+          <td>(</td>
+          <td class="paramtype">Args...&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Do nothing, can be used to evaluate an unpack expression. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 6 2013 23:41:21 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 18 2013 04:06:49 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

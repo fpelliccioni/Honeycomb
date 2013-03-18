@@ -1,0 +1,4 @@
+<map id="honey::future::AsyncSched" name="honey::future::AsyncSched">
+<area shape="rect" id="node2" href="$classhoney_1_1thread_1_1_pool.html" title="Thread pool, spreads task execution across a pool of re&#45;usable threads. Uses a work&#45;stealing queue to..." alt="" coords="5,6,141,34"/>
+<area shape="rect" id="node3" href="$structhoney_1_1future_1_1_async_sched__tag.html" title="honey::future::AsyncSched_tag" alt="" coords="166,6,372,34"/>
+</map>

@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['funcptr_3c_20void_28_29_3e',['Funcptr&lt; void()&gt;',['../classhoney_1_1_task.html#ab55747963c1614747865dca0ddc3abe9',1,'honey::Task']]],
   ['matrixbase',['MatrixBase',['../classhoney_1_1_matrix_3_014_00_014_00_01_real_00_01_options_01_4.html#aac5a505939dcffdeeb425c75ce80d519',1,'honey::Matrix&lt; 4, 4, Real, Options &gt;']]],
   ['mem',['Mem',['../classhoney_1_1lockfree_1_1_list.html#a485e5cb96dfbfa4b6ddf80a7d87d420e',1,'honey::lockfree::List']]],
   ['mempool',['MemPool',['../classhoney_1_1_mem_pool_1_1_factory.html#ab817cfb82d730261fe8fe6f8d8613acf',1,'honey::MemPool::Factory']]],

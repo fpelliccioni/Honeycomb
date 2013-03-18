@@ -7,7 +7,7 @@ var searchData=
   ['next_5f',['next_',['../structhoney_1_1_mem_pool_1_1_heap_1_1_block_header.html#a5df2ae60b7baace75097025be4d07f4c',1,'honey::MemPool::Heap::BlockHeader']]],
   ['nextint',['nextInt',['../classhoney_1_1_discrete__.html#a7df610e32ba186f08e6d3570859301e9',1,'honey::Discrete_']]],
   ['nextstd',['nextStd',['../classhoney_1_1_discrete__.html#a6c84a962880cde7d67b21da4032824fb',1,'honey::Discrete_::nextStd()'],['../classhoney_1_1_uniform__.html#aa9b58e28837055619795d471f7ed5208',1,'honey::Uniform_::nextStd()']]],
-  ['nocopy',['NoCopy',['../structhoney_1_1mt_1_1_no_copy.html#a1c2588862f826fe727e0a3062ce31f2b',1,'honey::mt::NoCopy']]],
+  ['nocopy',['NoCopy',['../structhoney_1_1mt_1_1_no_copy.html#ac165380baa6f7b99ce12c8674cb5253b',1,'honey::mt::NoCopy::NoCopy(const NoCopy &amp;)=delete'],['../structhoney_1_1mt_1_1_no_copy.html#ac73f1b9fae6cde2da303e59680bbbc4d',1,'honey::mt::NoCopy::NoCopy()=default']]],
   ['node',['Node',['../classhoney_1_1_nsp_tree_1_1_node.html#a12df166200951a4f5ef4573a0ba58834',1,'honey::NspTree::Node']]],
   ['nodeiter_5f',['NodeIter_',['../classhoney_1_1_dep_graph_1_1_node_iter__.html#acea7e5c49a6aa6151ceaa343476f25c0',1,'honey::DepGraph::NodeIter_::NodeIter_()'],['../classhoney_1_1_dep_graph_1_1_node_iter__.html#a65e18af11797b15c939c3464a5ff6a4f',1,'honey::DepGraph::NodeIter_::NodeIter_(Iter &amp;&amp;it)']]],
   ['nodes',['nodes',['../classhoney_1_1_dep_graph_1_1_vertex.html#a01fbfcbab8bf2db8d80c1743b669fa75',1,'honey::DepGraph::Vertex::nodes()'],['../classhoney_1_1_dep_graph_1_1_vertex.html#a2e4fe7571fed0ac37c346343f3de7ade',1,'honey::DepGraph::Vertex::nodes() const ']]],

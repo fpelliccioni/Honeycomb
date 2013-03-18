@@ -1,7 +1,8 @@
 <map id="honey::SceneComponent" name="honey::SceneComponent">
-<area shape="rect" id="node2" href="$classhoney_1_1_component.html" title="Base class for components. Components can only be attached to one ComObject at a time." alt="" coords="65,259,199,287"/>
-<area shape="rect" id="node3" href="$classhoney_1_1_property_object.html" title="Object that contains properties." alt="" coords="55,179,208,207"/>
-<area shape="rect" id="node4" href="$classhoney_1_1_object.html" title="Base class for objects." alt="" coords="80,99,183,127"/>
-<area shape="rect" id="node5" href="$classhoney_1_1_shared_obj.html" title="Reference&#45;counted object for intrusive shared pointers." alt="" coords="5,6,133,34"/>
-<area shape="rect" id="node6" href="$classhoney_1_1_id.html" title="Holds a string and its hashed value for fast comparison ops. See String Identifier." alt="" coords="158,6,233,34"/>
+<area shape="rect" id="node2" href="$classhoney_1_1_component.html" title="Base class for components. Components can only be attached to one ComObject at a time." alt="" coords="100,339,233,367"/>
+<area shape="rect" id="node3" href="$classhoney_1_1_property_object.html" title="Object that contains properties." alt="" coords="90,259,243,287"/>
+<area shape="rect" id="node4" href="$classhoney_1_1_object.html" title="Base class for objects." alt="" coords="115,179,217,207"/>
+<area shape="rect" id="node5" href="$classhoney_1_1_shared_obj.html" title="Reference&#45;counted object for intrusive shared pointers." alt="" coords="8,86,136,114"/>
+<area shape="rect" id="node6" href="$structhoney_1_1mt_1_1_no_copy.html" title="Inherit to declare that class is not copyable." alt="" coords="4,6,139,34"/>
+<area shape="rect" id="node7" href="$classhoney_1_1_id.html" title="Holds a string and its hashed value for fast comparison ops. See String Identifier." alt="" coords="161,86,236,114"/>
 </map>

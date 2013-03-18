@@ -22,7 +22,7 @@
 <area shape="rect" id="node27" href="$_enum_8h.html" title="Honey/Misc/Enum.h" alt="" coords="1157,881,1297,909"/>
 <area shape="rect" id="node30" href="$_real_8h.html" title="Honey/Math/Real.h" alt="" coords="896,881,1030,909"/>
 <area shape="rect" id="node28" href="$common_2_honey_2_math_2_numeral_8h.html" title="Honey/Math/Numeral.h" alt="" coords="1042,966,1200,994"/>
-<area shape="rect" id="node32" href="$_pool_8h.html" title="Honey/Memory/Pool.h" alt="" coords="892,641,1045,669"/>
+<area shape="rect" id="node32" href="$_memory_2_pool_8h.html" title="Honey/Memory/Pool.h" alt="" coords="892,641,1045,669"/>
 <area shape="rect" id="node33" href="$_mt_map_8h.html" title="Honey/Misc/MtMap.h" alt="" coords="1337,718,1482,746"/>
 <area shape="rect" id="node35" href="$_std_util_8h.html" title="Honey/Misc/StdUtil.h" alt="" coords="1046,718,1190,746"/>
 <area shape="rect" id="node37" href="$_spin_8h.html" title="Honey/Thread/Lock/Spin.h" alt="" coords="431,718,610,746"/>

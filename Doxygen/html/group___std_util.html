@@ -113,39 +113,43 @@ Functions</h2></td></tr>
 <tr class="memitem:gaae4ff9ba85d75e38782944a6b256c4f3"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___std_util.html#gaae4ff9ba85d75e38782944a6b256c4f3">honey::size</a> (const StdContainer &amp;cont)</td></tr>
 <tr class="memdesc:gaae4ff9ba85d75e38782944a6b256c4f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Safely get the size of a std container as a signed integer. The <a class="el" href="group___std_util.html#gaae4ff9ba85d75e38782944a6b256c4f3" title="Safely get the size of a std container as a signed integer. The size() member method returns unsigned...">size()</a> member method returns unsigned which results in a conversion warning.  <a href="#gaae4ff9ba85d75e38782944a6b256c4f3">More...</a><br/></td></tr>
 <tr class="separator:gaae4ff9ba85d75e38782944a6b256c4f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaef2d27d119911dc58845dc43fc9fb02f"><td class="memTemplParams" colspan="2">template&lt;class Tuple &gt; </td></tr>
-<tr class="memitem:gaef2d27d119911dc58845dc43fc9fb02f"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt; mt::isTuple<br class="typebreak"/>
+<tr class="memitem:ga37680c5c2571bfd57f2f3112c3ce2189"><td class="memTemplParams" colspan="2">template&lt;class Tuple &gt; </td></tr>
+<tr class="memitem:ga37680c5c2571bfd57f2f3112c3ce2189"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt; mt::isTuple<br class="typebreak"/>
 &lt; Tuple &gt;::value, StringStream &amp; &gt;<br class="typebreak"/>
-::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___std_util.html#gaef2d27d119911dc58845dc43fc9fb02f">honey::operator&lt;&lt;</a> (StringStream &amp;os, const Tuple &amp;val)</td></tr>
-<tr class="memdesc:gaef2d27d119911dc58845dc43fc9fb02f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tuple to string.  <a href="#gaef2d27d119911dc58845dc43fc9fb02f">More...</a><br/></td></tr>
-<tr class="separator:gaef2d27d119911dc58845dc43fc9fb02f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga235a6c780e04d507b77ff93573928e39"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___std_util.html#ga235a6c780e04d507b77ff93573928e39">honey::bind_fill</a> (Func &amp;&amp;, Args &amp;&amp;...) -&gt; <a class="el" href="_std_util_8h.html#af39289919acc655cc1f22004a0c11d6e">bind</a>(...)</td></tr>
-<tr class="memdesc:ga235a6c780e04d507b77ff93573928e39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version of bind that automatically fills in placeholders for unspecified arguments.  <a href="#ga235a6c780e04d507b77ff93573928e39">More...</a><br/></td></tr>
-<tr class="separator:ga235a6c780e04d507b77ff93573928e39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___std_util.html#ga37680c5c2571bfd57f2f3112c3ce2189">honey::operator&lt;&lt;</a> (StringStream &amp;os, Tuple &amp;&amp;t)</td></tr>
+<tr class="memdesc:ga37680c5c2571bfd57f2f3112c3ce2189"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tuple to string.  <a href="#ga37680c5c2571bfd57f2f3112c3ce2189">More...</a><br/></td></tr>
+<tr class="separator:ga37680c5c2571bfd57f2f3112c3ce2189"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8bb4f8b9b850e84b57db033c496da910"><td class="memTemplParams" colspan="2">template&lt;class Func , class... Args&gt; </td></tr>
+<tr class="memitem:ga8bb4f8b9b850e84b57db033c496da910"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___std_util.html#ga8bb4f8b9b850e84b57db033c496da910">honey::bind_fill</a> (Func &amp;&amp;f, Args &amp;&amp;...args) -&gt; decltype(priv::bind_fill&lt; mt::funcTraits&lt; typename mt::removeRef&lt; Func &gt;::type &gt;::arity &gt;()(forward&lt; Func &gt;(f), forward&lt; Args &gt;(args)...))</td></tr>
+<tr class="memdesc:ga8bb4f8b9b850e84b57db033c496da910"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version of bind that automatically fills in placeholders for unspecified arguments.  <a href="#ga8bb4f8b9b850e84b57db033c496da910">More...</a><br/></td></tr>
+<tr class="separator:ga8bb4f8b9b850e84b57db033c496da910"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Methods that extend the functionality of the standard library. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga235a6c780e04d507b77ff93573928e39"></a>
+<a class="anchor" id="ga8bb4f8b9b850e84b57db033c496da910"></a>
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Func , class... Args&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">auto honey::bind_fill </td>
           <td>(</td>
           <td class="paramtype">Func &amp;&amp;&#160;</td>
-          <td class="paramname">, </td>
+          <td class="paramname"><em>f</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Args &amp;&amp;&#160;</td>
-          <td class="paramname"><em>...</em>&#160;</td>
+          <td class="paramtype">Args &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td> -&gt;  <a class="el" href="_std_util_8h.html#af39289919acc655cc1f22004a0c11d6e">bind</a>(...)</td>
+          <td></td><td> -&gt; decltype(   priv::bind_fill&lt;mt::funcTraits&lt;typename mt::removeRef&lt;Func&gt;::type&gt;::arity&gt;()(forward&lt;Func&gt;(f), forward&lt;Args&gt;(args)...))
+</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -155,14 +159,14 @@ Functions</h2></td></tr>
 <p>To bind the <code>this</code> pointer for a member function: <code>void Class::func(int, int)</code> </p>
 <table  border="0">
 <tr>
-<td>The standard bind method is: </td><td><code><a class="el" href="_std_util_8h.html#af39289919acc655cc1f22004a0c11d6e">bind(&amp;Class::func, this, _1, _2)</a>;</code>  </td></tr>
+<td>The standard bind method is: </td><td><code>bind(&amp;Class::func, this, _1, _2);</code>  </td></tr>
 <tr>
-<td><code>bind_fill</code> has a more convenient syntax: </td><td><code><a class="el" href="_std_util_8h.html#aca460413958a6edafe80a7f1277f02c4">bind_fill(&amp;Class::func, this)</a>;</code>  </td></tr>
+<td><code>bind_fill</code> has a more convenient syntax: </td><td><code>bind_fill(&amp;Class::func, this);</code>  </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gaef2d27d119911dc58845dc43fc9fb02f"></a>
+<a class="anchor" id="ga37680c5c2571bfd57f2f3112c3ce2189"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -177,8 +181,8 @@ template&lt;class Tuple &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const Tuple &amp;&#160;</td>
-          <td class="paramname"><em>val</em>&#160;</td>
+          <td class="paramtype">Tuple &amp;&amp;&#160;</td>
+          <td class="paramname"><em>t</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -215,7 +219,7 @@ template&lt;class StdContainer &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 6 2013 23:41:21 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 18 2013 04:06:49 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

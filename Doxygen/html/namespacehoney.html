@@ -128,9 +128,6 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacehoney_1_1mt"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney_1_1mt.html">mt</a></td></tr>
 <tr class="memdesc:namespacehoney_1_1mt"><td class="mdescLeft">&#160;</td><td class="mdescRight">Meta-programming and compile-time util. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacehoney_1_1promise"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney_1_1promise.html">promise</a></td></tr>
-<tr class="memdesc:namespacehoney_1_1promise"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classhoney_1_1_promise.html" title="Container to hold a delayed function result.">Promise</a> util. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacehoney_1_1ratio"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney_1_1ratio.html">ratio</a></td></tr>
 <tr class="memdesc:namespacehoney_1_1ratio"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structhoney_1_1_ratio.html" title="Class to hold compile-time finite rational numbers, ie. the fraction num / den.">Ratio</a> types. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -465,11 +462,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_shared_ptr.html">SharedPtr</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Combined intrusive/non-intrusive smart pointer. Can reference and share any object automatically.  <a href="classhoney_1_1_shared_ptr.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_small_mem_pool.html">SmallMemPool</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Memory pool tailored for small block allocation.  <a href="classhoney_1_1_small_mem_pool.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_small_allocator.html">SmallAllocator</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classhoney_1_1_small_mem_pool.html" title="Memory pool tailored for small block allocation.">SmallMemPool</a> allocator.  <a href="classhoney_1_1_small_allocator.html#details">More...</a><br/></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global allocator for small memory blocks. To provide a custom pool define <code>SmallAllocator_createSingleton_</code> and implement <a class="el" href="namespacehoney.html#a3275ca81895270163e1dd0d903640342" title="Default implementation.">SmallAllocator_createSingleton()</a>.  <a href="classhoney_1_1_small_allocator.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_bit_op_common.html">BitOpCommon</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bit util common to any endian type. Use through class <a class="el" href="classhoney_1_1_bit_op.html" title="Provides methods for manipulating bits.">BitOp</a>.  <a href="classhoney_1_1_bit_op_common.html#details">More...</a><br/></td></tr>
@@ -720,11 +714,14 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_future_base.html">FutureBase</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class for <a class="el" href="classhoney_1_1_future.html" title="Unique future, guarantees sole access to a future function result.">Future</a> types.  <a href="classhoney_1_1_future_base.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_future.html">Future</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unique future, guarantees sole access to a future function result.  <a href="classhoney_1_1_future.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_shared_future.html">SharedFuture</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shared future, allows multiple access to a future function result.  <a href="classhoney_1_1_shared_future.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_future.html">Future</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unique future, guarantees sole access to a future function result.  <a href="classhoney_1_1_future.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_future_common.html">FutureCommon</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mixin for common future methods.  <a href="classhoney_1_1_future_common.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_packaged_task.html">PackagedTask</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A container that wraps a function so that its result is stored in a future when invoked.  <a href="classhoney_1_1_packaged_task.html#details">More...</a><br/></td></tr>
@@ -1245,6 +1242,9 @@ Functions</h2></td></tr>
 <tr class="memitem:acff4991c4e80c114e75588805f320538"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classhoney_1_1_numeral.html">Numeral</a>&lt; Signed &gt;::Unsigned&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacehoney.html#acff4991c4e80c114e75588805f320538">stou</a> (Signed s)</td></tr>
 <tr class="memdesc:acff4991c4e80c114e75588805f320538"><td class="mdescLeft">&#160;</td><td class="mdescRight">Safe conversion from a signed type to an unsigned type.  <a href="#acff4991c4e80c114e75588805f320538">More...</a><br/></td></tr>
 <tr class="separator:acff4991c4e80c114e75588805f320538"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3275ca81895270163e1dd0d903640342"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classhoney_1_1_mem_pool.html">MemPool</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney.html#a3275ca81895270163e1dd0d903640342">SmallAllocator_createSingleton</a> ()</td></tr>
+<tr class="memdesc:a3275ca81895270163e1dd0d903640342"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default implementation.  <a href="#a3275ca81895270163e1dd0d903640342">More...</a><br/></td></tr>
+<tr class="separator:a3275ca81895270163e1dd0d903640342"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga431cdc6f3ed8738d0b2aba5e88b65106"><td class="memTemplParams" colspan="2">template&lt;class Iter1 , class Iter2 , class Func &gt; </td></tr>
 <tr class="memitem:ga431cdc6f3ed8738d0b2aba5e88b65106"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___mt_map.html#ga431cdc6f3ed8738d0b2aba5e88b65106">for_each_mtmap</a> (Iter1 itBegin, Iter2 itEnd, Func &amp;&amp;func) -&gt; typename std::enable_if&lt;!std::is_same&lt; typename Iter1::Pair::Key, typename Iter2::Pair::Key &gt;::value &gt;::type</td></tr>
 <tr class="memdesc:ga431cdc6f3ed8738d0b2aba5e88b65106"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over map calling functor (visitor) for each key/value pair.  <a href="group___mt_map.html#ga431cdc6f3ed8738d0b2aba5e88b65106">More...</a><br/></td></tr>
@@ -1256,10 +1256,10 @@ Functions</h2></td></tr>
 <tr class="memitem:gaaffb4cdfa3fc0e8b6f91bdc15f3799cf"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___range.html#gaaffb4cdfa3fc0e8b6f91bdc15f3799cf">seqToIter</a> (<a class="el" href="_range_8h.html#a2d0a26e891e82b617cbec9f1ee8eb2ba">Iter</a> &amp;&amp;seq) -&gt; typename std::enable_if&lt; <a class="el" href="structhoney_1_1mt_1_1is_iterator.html">mt::isIterator</a>&lt; <a class="el" href="_range_8h.html#a2d0a26e891e82b617cbec9f1ee8eb2ba">Iter</a> &gt;::value, <a class="el" href="_range_8h.html#a2d0a26e891e82b617cbec9f1ee8eb2ba">Iter</a> &amp;&amp; &gt;::type</td></tr>
 <tr class="memdesc:gaaffb4cdfa3fc0e8b6f91bdc15f3799cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a sequence to a forward iterator. Overload for iterator type. Returns the iterator itself.  <a href="group___range.html#gaaffb4cdfa3fc0e8b6f91bdc15f3799cf">More...</a><br/></td></tr>
 <tr class="separator:gaaffb4cdfa3fc0e8b6f91bdc15f3799cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga968dd4ade7397d43798655b2cfa8c3e4"><td class="memTemplParams" colspan="2">template&lt;class Range &gt; </td></tr>
-<tr class="memitem:ga968dd4ade7397d43798655b2cfa8c3e4"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___range.html#ga968dd4ade7397d43798655b2cfa8c3e4">seqToIter</a> (Range &amp;&amp;seq) -&gt; typename std::enable_if&lt; <a class="el" href="classhoney_1_1mt_1_1is_range.html">mt::isRange</a>&lt; Range &gt;::value, <a class="el" href="group___range.html#gad50659fe4233a58cb3d486a93b5bd312">itertype</a>(seq)&gt;::type</td></tr>
-<tr class="memdesc:ga968dd4ade7397d43798655b2cfa8c3e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a sequence to a forward iterator. Overload for range type. Returns the range's begin iterator.  <a href="group___range.html#ga968dd4ade7397d43798655b2cfa8c3e4">More...</a><br/></td></tr>
-<tr class="separator:ga968dd4ade7397d43798655b2cfa8c3e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4735bb584ec847386f2007260b74f27b"><td class="memTemplParams" colspan="2">template&lt;class Range &gt; </td></tr>
+<tr class="memitem:ga4735bb584ec847386f2007260b74f27b"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___range.html#ga4735bb584ec847386f2007260b74f27b">seqToIter</a> (Range &amp;&amp;seq) -&gt; typename std::enable_if&lt; <a class="el" href="classhoney_1_1mt_1_1is_range.html">mt::isRange</a>&lt; Range &gt;::value, <a class="el" href="_range_8h.html#a54f00d0be85c3f38f1b100991ab7f42e">mt_iterOf</a>(seq)&gt;::type</td></tr>
+<tr class="memdesc:ga4735bb584ec847386f2007260b74f27b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a sequence to a forward iterator. Overload for range type. Returns the range's begin iterator.  <a href="group___range.html#ga4735bb584ec847386f2007260b74f27b">More...</a><br/></td></tr>
+<tr class="separator:ga4735bb584ec847386f2007260b74f27b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab4dc9eeb8ac97aba0f1ac47fc3963580"><td class="memTemplParams" colspan="2">template&lt;class Iter1 , class Iter2 &gt; </td></tr>
 <tr class="memitem:gab4dc9eeb8ac97aba0f1ac47fc3963580"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt; <a class="el" href="structhoney_1_1mt_1_1is_iterator.html">mt::isIterator</a><br class="typebreak"/>
 &lt; Iter1 &gt;::value, <a class="el" href="classhoney_1_1_range__.html">Range_</a><br class="typebreak"/>
@@ -1280,22 +1280,26 @@ Functions</h2></td></tr>
 <tr class="memitem:gaa8d38120ad8679807d06efe9a1d96acc"><td class="memTemplParams" colspan="2">template&lt;class T1 , class T2 &gt; </td></tr>
 <tr class="memitem:gaa8d38120ad8679807d06efe9a1d96acc"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classhoney_1_1_range__.html">Range_</a>&lt; T1, T2 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___range.html#gaa8d38120ad8679807d06efe9a1d96acc">range</a> (const tuple&lt; T1, T2 &gt; &amp;t)</td></tr>
 <tr class="separator:gaa8d38120ad8679807d06efe9a1d96acc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga14685bca126f91a53e35a1672623f8f7"><td class="memTemplParams" colspan="2">template&lt;class Range &gt; </td></tr>
-<tr class="memitem:ga14685bca126f91a53e35a1672623f8f7"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___range.html#ga14685bca126f91a53e35a1672623f8f7">reversed</a> (Range &amp;&amp;<a class="el" href="group___range.html#gab4dc9eeb8ac97aba0f1ac47fc3963580">range</a>) -&gt; <a class="el" href="classhoney_1_1_range__.html">Range_</a>&lt; std::reverse_iterator&lt; <a class="el" href="group___range.html#gad50659fe4233a58cb3d486a93b5bd312">itertype</a>(<a class="el" href="group___range.html#gab4dc9eeb8ac97aba0f1ac47fc3963580">range</a>)&gt;, std::reverse_iterator&lt; <a class="el" href="group___range.html#gaa66e11fd95b7d1d9d5339c74d08fc414">itertype_end</a>(<a class="el" href="group___range.html#gab4dc9eeb8ac97aba0f1ac47fc3963580">range</a>)&gt;&gt;</td></tr>
-<tr class="memdesc:ga14685bca126f91a53e35a1672623f8f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverse a range. Begin/End iterators must be bidirectional.  <a href="group___range.html#ga14685bca126f91a53e35a1672623f8f7">More...</a><br/></td></tr>
-<tr class="separator:ga14685bca126f91a53e35a1672623f8f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8d2d812515679e26484f89af951e3fd9"><td class="memTemplParams" colspan="2">template&lt;class Range &gt; </td></tr>
+<tr class="memitem:ga8d2d812515679e26484f89af951e3fd9"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___range.html#ga8d2d812515679e26484f89af951e3fd9">reversed</a> (Range &amp;&amp;<a class="el" href="group___range.html#gab4dc9eeb8ac97aba0f1ac47fc3963580">range</a>) -&gt; <a class="el" href="classhoney_1_1_range__.html">Range_</a>&lt; std::reverse_iterator&lt; <a class="el" href="_range_8h.html#a54f00d0be85c3f38f1b100991ab7f42e">mt_iterOf</a>(<a class="el" href="group___range.html#gab4dc9eeb8ac97aba0f1ac47fc3963580">range</a>)&gt;, std::reverse_iterator&lt; <a class="el" href="_range_8h.html#aeca83cae95a69bda0bc13bd5ea618d2b">mt_iter_endOf</a>(<a class="el" href="group___range.html#gab4dc9eeb8ac97aba0f1ac47fc3963580">range</a>)&gt;&gt;</td></tr>
+<tr class="memdesc:ga8d2d812515679e26484f89af951e3fd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverse a range. Begin/End iterators must be bidirectional.  <a href="group___range.html#ga8d2d812515679e26484f89af951e3fd9">More...</a><br/></td></tr>
+<tr class="separator:ga8d2d812515679e26484f89af951e3fd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae326e0e45ff05fd6a57d4deddc46a0ce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_range_8h.html#abd3211243d3ef59a2d17931089779462">OutSeq</a> &amp;&amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___range.html#gae326e0e45ff05fd6a57d4deddc46a0ce">map</a> (Range &amp;&amp;, Seqs &amp;&amp;..., <a class="el" href="_range_8h.html#abd3211243d3ef59a2d17931089779462">OutSeq</a> &amp;&amp;, Func &amp;&amp;)</td></tr>
 <tr class="memdesc:gae326e0e45ff05fd6a57d4deddc46a0ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transform a series of sequences into an output.  <a href="group___range.html#gae326e0e45ff05fd6a57d4deddc46a0ce">More...</a><br/></td></tr>
 <tr class="separator:gae326e0e45ff05fd6a57d4deddc46a0ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga142fbfd0c2cc30fcf5df7045f3e148e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_range_8h.html#a7cb87865877b91315750e32398853519">Accum</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___range.html#ga142fbfd0c2cc30fcf5df7045f3e148e8">reduce</a> (Range &amp;&amp;, Seqs &amp;&amp;..., const <a class="el" href="_range_8h.html#a7cb87865877b91315750e32398853519">Accum</a> &amp;initVal, Func &amp;&amp;)</td></tr>
-<tr class="memdesc:ga142fbfd0c2cc30fcf5df7045f3e148e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accumulate a series of sequences into an output.  <a href="group___range.html#ga142fbfd0c2cc30fcf5df7045f3e148e8">More...</a><br/></td></tr>
-<tr class="separator:ga142fbfd0c2cc30fcf5df7045f3e148e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3db86f18b612ba7a6577f3eb73e6ec20"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_range_8h.html#a7cb87865877b91315750e32398853519">Accum</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___range.html#ga3db86f18b612ba7a6577f3eb73e6ec20">reduce</a> (Range &amp;&amp;, Seqs &amp;&amp;..., <a class="el" href="_range_8h.html#a7cb87865877b91315750e32398853519">Accum</a> &amp;&amp;initVal, Func &amp;&amp;)</td></tr>
+<tr class="memdesc:ga3db86f18b612ba7a6577f3eb73e6ec20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accumulate a series of sequences into an output.  <a href="group___range.html#ga3db86f18b612ba7a6577f3eb73e6ec20">More...</a><br/></td></tr>
+<tr class="separator:ga3db86f18b612ba7a6577f3eb73e6ec20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacdd29d61d6f67dd3d700c370225a5467"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_range_8h.html#a2d0a26e891e82b617cbec9f1ee8eb2ba">Iter</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___range.html#gacdd29d61d6f67dd3d700c370225a5467">find</a> (Range &amp;&amp;, Seqs &amp;&amp;..., Func &amp;&amp;pred)</td></tr>
 <tr class="memdesc:gacdd29d61d6f67dd3d700c370225a5467"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find an element in a series of sequences.  <a href="group___range.html#gacdd29d61d6f67dd3d700c370225a5467">More...</a><br/></td></tr>
 <tr class="separator:gacdd29d61d6f67dd3d700c370225a5467"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadee4d1575c943eb55eef29c599c3d631"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classhoney_1_1_range__.html">Range_</a>&lt; <a class="el" href="_range_8h.html#a18b428764b7ee1f77ccc20cc51cad66c">FilterIter</a>, <a class="el" href="_range_8h.html#a18b428764b7ee1f77ccc20cc51cad66c">FilterIter</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___range.html#gadee4d1575c943eb55eef29c599c3d631">filter</a> (Range &amp;&amp;, Seqs &amp;&amp;..., Func &amp;&amp;pred)</td></tr>
 <tr class="memdesc:gadee4d1575c943eb55eef29c599c3d631"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filter a range by ignoring undesired elements.  <a href="group___range.html#gadee4d1575c943eb55eef29c599c3d631">More...</a><br/></td></tr>
 <tr class="separator:gadee4d1575c943eb55eef29c599c3d631"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga72a642e43bab1e711d7090e820aa00a9"><td class="memTemplParams" colspan="2">template&lt;class Range &gt; </td></tr>
+<tr class="memitem:ga72a642e43bab1e711d7090e820aa00a9"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___range.html#ga72a642e43bab1e711d7090e820aa00a9">countOf</a> (Range &amp;&amp;<a class="el" href="group___range.html#gab4dc9eeb8ac97aba0f1ac47fc3963580">range</a>)</td></tr>
+<tr class="memdesc:ga72a642e43bab1e711d7090e820aa00a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count number of elements in range.  <a href="group___range.html#ga72a642e43bab1e711d7090e820aa00a9">More...</a><br/></td></tr>
+<tr class="separator:ga72a642e43bab1e711d7090e820aa00a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaddb3f3259b6b185b618516f9ab85556f"><td class="memTemplParams" colspan="2">template&lt;class Range &gt; </td></tr>
 <tr class="memitem:gaddb3f3259b6b185b618516f9ab85556f"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___range.html#gaddb3f3259b6b185b618516f9ab85556f">deleteRange</a> (Range &amp;&amp;<a class="el" href="group___range.html#gab4dc9eeb8ac97aba0f1ac47fc3963580">range</a>)</td></tr>
 <tr class="memdesc:gaddb3f3259b6b185b618516f9ab85556f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete all elements in range.  <a href="group___range.html#gaddb3f3259b6b185b618516f9ab85556f">More...</a><br/></td></tr>
@@ -1342,18 +1346,31 @@ Functions</h2></td></tr>
 <tr class="memitem:gaae4ff9ba85d75e38782944a6b256c4f3"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___std_util.html#gaae4ff9ba85d75e38782944a6b256c4f3">size</a> (const StdContainer &amp;cont)</td></tr>
 <tr class="memdesc:gaae4ff9ba85d75e38782944a6b256c4f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Safely get the size of a std container as a signed integer. The <a class="el" href="group___std_util.html#gaae4ff9ba85d75e38782944a6b256c4f3" title="Safely get the size of a std container as a signed integer. The size() member method returns unsigned...">size()</a> member method returns unsigned which results in a conversion warning.  <a href="group___std_util.html#gaae4ff9ba85d75e38782944a6b256c4f3">More...</a><br/></td></tr>
 <tr class="separator:gaae4ff9ba85d75e38782944a6b256c4f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaef2d27d119911dc58845dc43fc9fb02f"><td class="memTemplParams" colspan="2">template&lt;class Tuple &gt; </td></tr>
-<tr class="memitem:gaef2d27d119911dc58845dc43fc9fb02f"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt; <a class="el" href="classhoney_1_1mt_1_1is_tuple.html">mt::isTuple</a><br class="typebreak"/>
+<tr class="memitem:ga37680c5c2571bfd57f2f3112c3ce2189"><td class="memTemplParams" colspan="2">template&lt;class Tuple &gt; </td></tr>
+<tr class="memitem:ga37680c5c2571bfd57f2f3112c3ce2189"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt; <a class="el" href="structhoney_1_1mt_1_1is_tuple.html">mt::isTuple</a><br class="typebreak"/>
 &lt; Tuple &gt;::value, <a class="el" href="classhoney_1_1_string_stream.html">StringStream</a> &amp; &gt;<br class="typebreak"/>
-::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___std_util.html#gaef2d27d119911dc58845dc43fc9fb02f">operator&lt;&lt;</a> (<a class="el" href="classhoney_1_1_string_stream.html">StringStream</a> &amp;os, const Tuple &amp;val)</td></tr>
-<tr class="memdesc:gaef2d27d119911dc58845dc43fc9fb02f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tuple to string.  <a href="group___std_util.html#gaef2d27d119911dc58845dc43fc9fb02f">More...</a><br/></td></tr>
-<tr class="separator:gaef2d27d119911dc58845dc43fc9fb02f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga235a6c780e04d507b77ff93573928e39"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___std_util.html#ga235a6c780e04d507b77ff93573928e39">bind_fill</a> (Func &amp;&amp;, Args &amp;&amp;...) -&gt; <a class="el" href="_std_util_8h.html#af39289919acc655cc1f22004a0c11d6e">bind</a>(...)</td></tr>
-<tr class="memdesc:ga235a6c780e04d507b77ff93573928e39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version of bind that automatically fills in placeholders for unspecified arguments.  <a href="group___std_util.html#ga235a6c780e04d507b77ff93573928e39">More...</a><br/></td></tr>
-<tr class="separator:ga235a6c780e04d507b77ff93573928e39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___std_util.html#ga37680c5c2571bfd57f2f3112c3ce2189">operator&lt;&lt;</a> (<a class="el" href="classhoney_1_1_string_stream.html">StringStream</a> &amp;os, Tuple &amp;&amp;t)</td></tr>
+<tr class="memdesc:ga37680c5c2571bfd57f2f3112c3ce2189"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tuple to string.  <a href="group___std_util.html#ga37680c5c2571bfd57f2f3112c3ce2189">More...</a><br/></td></tr>
+<tr class="separator:ga37680c5c2571bfd57f2f3112c3ce2189"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8bb4f8b9b850e84b57db033c496da910"><td class="memTemplParams" colspan="2">template&lt;class Func , class... Args&gt; </td></tr>
+<tr class="memitem:ga8bb4f8b9b850e84b57db033c496da910"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___std_util.html#ga8bb4f8b9b850e84b57db033c496da910">bind_fill</a> (Func &amp;&amp;f, Args &amp;&amp;...args) -&gt; decltype(priv::bind_fill&lt; <a class="el" href="structhoney_1_1mt_1_1func_traits.html">mt::funcTraits</a>&lt; typename <a class="el" href="structhoney_1_1mt_1_1remove_ref.html">mt::removeRef</a>&lt; Func &gt;::type &gt;::arity &gt;()(forward&lt; Func &gt;(f), forward&lt; Args &gt;(args)...))</td></tr>
+<tr class="memdesc:ga8bb4f8b9b850e84b57db033c496da910"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version of bind that automatically fills in placeholders for unspecified arguments.  <a href="group___std_util.html#ga8bb4f8b9b850e84b57db033c496da910">More...</a><br/></td></tr>
+<tr class="separator:ga8bb4f8b9b850e84b57db033c496da910"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4d190bfa6abb98bb8d8b8b61d32c77a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classhoney_1_1_string_stream.html">StringStream</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney.html#af4d190bfa6abb98bb8d8b8b61d32c77a">sout</a> ()</td></tr>
 <tr class="memdesc:af4d190bfa6abb98bb8d8b8b61d32c77a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shorthand to create string stream.  <a href="#af4d190bfa6abb98bb8d8b8b61d32c77a">More...</a><br/></td></tr>
 <tr class="separator:af4d190bfa6abb98bb8d8b8b61d32c77a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4bc5f81912f3e67754995e02dcdb2dc4"><td class="memTemplParams" colspan="2">template&lt;class T , class R  = typename std::decay&lt;T&gt;::type&gt; </td></tr>
+<tr class="memitem:a4bc5f81912f3e67754995e02dcdb2dc4"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classhoney_1_1_future.html">Future</a>&lt; R &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacehoney.html#a4bc5f81912f3e67754995e02dcdb2dc4">FutureCreate</a> (T &amp;&amp;val)</td></tr>
+<tr class="memdesc:a4bc5f81912f3e67754995e02dcdb2dc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a future that is immediately ready with the value.  <a href="#a4bc5f81912f3e67754995e02dcdb2dc4">More...</a><br/></td></tr>
+<tr class="separator:a4bc5f81912f3e67754995e02dcdb2dc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add602b3ee07f71797e6d708e5f733334"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classhoney_1_1_future.html">Future</a>&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney.html#add602b3ee07f71797e6d708e5f733334">FutureCreate</a> ()</td></tr>
+<tr class="separator:add602b3ee07f71797e6d708e5f733334"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a574aa92914f3f1cc94e23f3a414b4b87"><td class="memTemplParams" colspan="2">template&lt;class T , class R  = typename std::decay&lt;T&gt;::type&gt; </td></tr>
+<tr class="memitem:a574aa92914f3f1cc94e23f3a414b4b87"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classhoney_1_1_shared_future.html">SharedFuture</a>&lt; R &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacehoney.html#a574aa92914f3f1cc94e23f3a414b4b87">SharedFutureCreate</a> (T &amp;&amp;val)</td></tr>
+<tr class="memdesc:a574aa92914f3f1cc94e23f3a414b4b87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a shared future that is immediately ready with the value.  <a href="#a574aa92914f3f1cc94e23f3a414b4b87">More...</a><br/></td></tr>
+<tr class="separator:a574aa92914f3f1cc94e23f3a414b4b87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3aadd6872e9b54cb0ed9d12a517a62e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classhoney_1_1_shared_future.html">SharedFuture</a>&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney.html#a3aadd6872e9b54cb0ed9d12a517a62e4">SharedFutureCreate</a> ()</td></tr>
+<tr class="separator:a3aadd6872e9b54cb0ed9d12a517a62e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Global Honeycomb namespace. </p>
@@ -3843,6 +3860,49 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="a4bc5f81912f3e67754995e02dcdb2dc4"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class R  = typename std::decay&lt;T&gt;::type&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classhoney_1_1_future.html">Future</a>&lt;R&gt; honey::FutureCreate </td>
+          <td>(</td>
+          <td class="paramtype">T &amp;&amp;&#160;</td>
+          <td class="paramname"><em>val</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create a future that is immediately ready with the value. </p>
+
+</div>
+</div>
+<a class="anchor" id="add602b3ee07f71797e6d708e5f733334"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classhoney_1_1_future.html">Future</a>&lt;void&gt; honey::FutureCreate </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a900b28682edadda100bfea071b52acbc"></a>
 <div class="memitem">
 <div class="memproto">
@@ -3879,6 +3939,74 @@ template&lt;class T &gt; </div>
 </div><div class="memdoc">
 
 <p>Get numeric type info using type deduction. </p>
+
+</div>
+</div>
+<a class="anchor" id="a574aa92914f3f1cc94e23f3a414b4b87"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class R  = typename std::decay&lt;T&gt;::type&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classhoney_1_1_shared_future.html">SharedFuture</a>&lt;R&gt; honey::SharedFutureCreate </td>
+          <td>(</td>
+          <td class="paramtype">T &amp;&amp;&#160;</td>
+          <td class="paramname"><em>val</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create a shared future that is immediately ready with the value. </p>
+
+</div>
+</div>
+<a class="anchor" id="a3aadd6872e9b54cb0ed9d12a517a62e4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classhoney_1_1_shared_future.html">SharedFuture</a>&lt;void&gt; honey::SharedFutureCreate </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a3275ca81895270163e1dd0d903640342"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classhoney_1_1_mem_pool.html">MemPool</a> &amp; honey::SmallAllocator_createSingleton </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Default implementation. </p>
 
 </div>
 </div>
@@ -3950,7 +4078,7 @@ template&lt;class Unsigned &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 6 2013 23:41:21 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 18 2013 04:06:49 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

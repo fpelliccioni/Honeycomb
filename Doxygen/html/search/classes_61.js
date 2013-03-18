@@ -12,6 +12,8 @@ var searchData=
   ['allocator',['Allocator',['../structhoney_1_1_allocator_object_1_1_allocator.html',1,'honey::AllocatorObject']]],
   ['allocator_3c_20smallallocator_2c_20t_20_3e',['Allocator&lt; SmallAllocator, T &gt;',['../classhoney_1_1_allocator.html',1,'honey']]],
   ['allocatorobject',['AllocatorObject',['../classhoney_1_1_allocator_object.html',1,'honey']]],
-  ['alreadysatisfied',['AlreadySatisfied',['../structhoney_1_1promise_1_1_already_satisfied.html',1,'honey::promise']]],
-  ['assertionfailure',['AssertionFailure',['../structhoney_1_1debug_1_1_assertion_failure.html',1,'honey::debug']]]
+  ['alreadysatisfied',['AlreadySatisfied',['../structhoney_1_1future_1_1_already_satisfied.html',1,'honey::future']]],
+  ['assertionfailure',['AssertionFailure',['../structhoney_1_1debug_1_1_assertion_failure.html',1,'honey::debug']]],
+  ['asyncsched',['AsyncSched',['../structhoney_1_1future_1_1_async_sched.html',1,'honey::future']]],
+  ['asyncsched_5ftag',['AsyncSched_tag',['../structhoney_1_1future_1_1_async_sched__tag.html',1,'honey::future']]]
 ];
