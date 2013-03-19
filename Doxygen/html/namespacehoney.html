@@ -573,6 +573,13 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1variant.html">variant</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multi-typed value. A variant is a value of any type from a fixed set of bounded types, the active bounded type may be changed dynamically.  <a href="classhoney_1_1variant.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1overload__.html">overload_</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1overload___3_01_func_00_01_funcs_8_8_8_4.html">overload_&lt; Func, Funcs...&gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">An overloaded visitor functor.  <a href="structhoney_1_1overload___3_01_func_00_01_funcs_8_8_8_4.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1overload___3_4.html">overload_&lt;&gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_com_object.html">ComObject</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classhoney_1_1_component.html" title="Base class for components. Components can only be attached to one ComObject at a time.">Component</a> object. <a class="el" href="classhoney_1_1_object.html" title="Base class for objects.">Object</a> that consists of a collection of components.  <a href="classhoney_1_1_com_object.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1356,6 +1363,10 @@ Functions</h2></td></tr>
 <tr class="memitem:ga8bb4f8b9b850e84b57db033c496da910"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___std_util.html#ga8bb4f8b9b850e84b57db033c496da910">bind_fill</a> (Func &amp;&amp;f, Args &amp;&amp;...args) -&gt; decltype(priv::bind_fill&lt; <a class="el" href="structhoney_1_1mt_1_1func_traits.html">mt::funcTraits</a>&lt; typename <a class="el" href="structhoney_1_1mt_1_1remove_ref.html">mt::removeRef</a>&lt; Func &gt;::type &gt;::arity &gt;()(forward&lt; Func &gt;(f), forward&lt; Args &gt;(args)...))</td></tr>
 <tr class="memdesc:ga8bb4f8b9b850e84b57db033c496da910"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version of bind that automatically fills in placeholders for unspecified arguments.  <a href="group___std_util.html#ga8bb4f8b9b850e84b57db033c496da910">More...</a><br/></td></tr>
 <tr class="separator:ga8bb4f8b9b850e84b57db033c496da910"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af605d6aa34b1ad0e9c994c37d3bfa3b6"><td class="memTemplParams" colspan="2">template&lt;class... Funcs&gt; </td></tr>
+<tr class="memitem:af605d6aa34b1ad0e9c994c37d3bfa3b6"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structhoney_1_1overload__.html">overload_</a>&lt; Funcs...&gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacehoney.html#af605d6aa34b1ad0e9c994c37d3bfa3b6">overload</a> (Funcs &amp;&amp;...fs)</td></tr>
+<tr class="memdesc:af605d6aa34b1ad0e9c994c37d3bfa3b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an overloaded visitor functor.  <a href="#af605d6aa34b1ad0e9c994c37d3bfa3b6">More...</a><br/></td></tr>
+<tr class="separator:af605d6aa34b1ad0e9c994c37d3bfa3b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4d190bfa6abb98bb8d8b8b61d32c77a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classhoney_1_1_string_stream.html">StringStream</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney.html#af4d190bfa6abb98bb8d8b8b61d32c77a">sout</a> ()</td></tr>
 <tr class="memdesc:af4d190bfa6abb98bb8d8b8b61d32c77a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shorthand to create string stream.  <a href="#af4d190bfa6abb98bb8d8b8b61d32c77a">More...</a><br/></td></tr>
 <tr class="separator:af4d190bfa6abb98bb8d8b8b61d32c77a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -3942,6 +3953,26 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="af605d6aa34b1ad0e9c994c37d3bfa3b6"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class... Funcs&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structhoney_1_1overload__.html">overload_</a>&lt;Funcs...&gt; honey::overload </td>
+          <td>(</td>
+          <td class="paramtype">Funcs &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>fs</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create an overloaded visitor functor. </p>
+
+</div>
+</div>
 <a class="anchor" id="a574aa92914f3f1cc94e23f3a414b4b87"></a>
 <div class="memitem">
 <div class="memproto">
@@ -4078,7 +4109,7 @@ template&lt;class Unsigned &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Mar 18 2013 04:28:13 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Mar 19 2013 06:43:58 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

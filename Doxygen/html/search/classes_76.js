@@ -49,7 +49,7 @@ var searchData=
   ['vec_3c_203_2c_20real_20_3e',['Vec&lt; 3, Real &gt;',['../classhoney_1_1_vec.html',1,'honey']]],
   ['vec_3c_203_2c_20real_2c_20options_20_3e',['Vec&lt; 3, Real, Options &gt;',['../classhoney_1_1_vec_3_013_00_01_real_00_01_options_01_4.html',1,'honey']]],
   ['vec_3c_204_2c_20real_2c_20options_20_3e',['Vec&lt; 4, Real, Options &gt;',['../classhoney_1_1_vec_3_014_00_01_real_00_01_options_01_4.html',1,'honey']]],
-  ['vec_3c_20dim_2c_20real_20_3e',['Vec&lt; dim, Real &gt;',['../classhoney_1_1_vec.html',1,'honey::Vec&lt; dim, Real &gt;'],['../classhoney_1_1_vec.html',1,'honey::Vec&lt; Dim, Real &gt;']]],
+  ['vec_3c_20dim_2c_20real_20_3e',['Vec&lt; Dim, Real &gt;',['../classhoney_1_1_vec.html',1,'honey::Vec&lt; Dim, Real &gt;'],['../classhoney_1_1_vec.html',1,'honey::Vec&lt; dim, Real &gt;']]],
   ['vec_3c_20dim_2c_20real_20_3e_3c_20dim_2c_20real_20_3e',['Vec&lt; dim, Real &gt;&lt; dim, Real &gt;',['../classhoney_1_1_vec.html',1,'honey']]],
   ['vec_3c_20dim_2c_20real_2c_20options_2c_20alloc_5f_20_3e',['Vec&lt; Dim, Real, Options, Alloc_ &gt;',['../classhoney_1_1_vec.html',1,'honey']]],
   ['vec_3c_20dim_2c_20real_2c_20options_7cmatrix_3a_3aoption_3a_3avecrow_2c_20alloc_5f_20_3e',['Vec&lt; Dim, Real, Options|matrix::Option::vecRow, Alloc_ &gt;',['../classhoney_1_1_vec.html',1,'honey']]],
