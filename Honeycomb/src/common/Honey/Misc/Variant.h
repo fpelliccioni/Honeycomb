@@ -59,22 +59,22 @@ namespace priv
         template<int _> struct Type_<id, _>                 { typedef Type type; };
         
         template<class R, class Func, class... Args, typename std::enable_if<mt::isCallable<Func, Type&, Args...>::value, int>::type=0>
-        R visit(Func&& f, Args&&... args)                   { return _id() == id ? f(_val(), forward<Args>(args)...) : Super::template visit<R>(forward<Func>(f), forward<Args>(args)...); }
+        R visit(Func&& f, Args&&... args)                   { if (_id() == id) return f(_val(), forward<Args>(args)...); else return Super::template visit<R>(forward<Func>(f), forward<Args>(args)...); }
         template<class R, class Func, class... Args, typename mt::disable_if<mt::isCallable<Func, Type&, Args...>::value, int>::type=0>
         R visit(Func&& f, Args&&... args)                   { return Super::template visit<R>(forward<Func>(f), forward<Args>(args)...); }
         
         template<class R, class Func, class... Args, typename std::enable_if<mt::isCallable<Func, const Type&, Args...>::value, int>::type=0>
-        R visit(Func&& f, Args&&... args) const             { return _id() == id ? f(_val(), forward<Args>(args)...) : Super::template visit<R>(forward<Func>(f), forward<Args>(args)...); }
+        R visit(Func&& f, Args&&... args) const             { if (_id() == id) return f(_val(), forward<Args>(args)...); else return Super::template visit<R>(forward<Func>(f), forward<Args>(args)...); }
         template<class R, class Func, class... Args, typename mt::disable_if<mt::isCallable<Func, const Type&, Args...>::value, int>::type=0>
         R visit(Func&& f, Args&&... args) const             { return Super::template visit<R>(forward<Func>(f), forward<Args>(args)...); }
         
         template<class Func, class... Args, typename std::enable_if<mt::isCallable<Func, Type&, Args...>::value, int>::type=0>
-        void visit(Func&& f, Args&&... args)                { _id() == id ? f(_val(), forward<Args>(args)...) : Super::visit(forward<Func>(f), forward<Args>(args)...); }
+        void visit(Func&& f, Args&&... args)                { if (_id() == id) f(_val(), forward<Args>(args)...); else Super::visit(forward<Func>(f), forward<Args>(args)...); }
         template<class Func, class... Args, typename mt::disable_if<mt::isCallable<Func, Type&, Args...>::value, int>::type=0>
         void visit(Func&& f, Args&&... args)                { Super::visit(forward<Func>(f), forward<Args>(args)...); }
         
         template<class Func, class... Args, typename std::enable_if<mt::isCallable<Func, const Type&, Args...>::value, int>::type=0>
-        void visit(Func&& f, Args&&... args) const          { _id() == id ? f(_val(), forward<Args>(args)...) : Super::visit(forward<Func>(f), forward<Args>(args)...); }
+        void visit(Func&& f, Args&&... args) const          { if (_id() == id) f(_val(), forward<Args>(args)...); else Super::visit(forward<Func>(f), forward<Args>(args)...); }
         template<class Func, class... Args, typename mt::disable_if<mt::isCallable<Func, const Type&, Args...>::value, int>::type=0>
         void visit(Func&& f, Args&&... args) const          { Super::visit(forward<Func>(f), forward<Args>(args)...); }
         
@@ -148,22 +148,22 @@ namespace priv
         template<int _> struct Type_<id, _>                 { typedef Type& type; };
         
         template<class R, class Func, class... Args, typename std::enable_if<mt::isCallable<Func, Type&, Args...>::value, int>::type=0>
-        R visit(Func&& f, Args&&... args)                   { return _id() == id ? f(_val(), forward<Args>(args)...) : Super::template visit<R>(forward<Func>(f), forward<Args>(args)...); }
+        R visit(Func&& f, Args&&... args)                   { if (_id() == id) return f(_val(), forward<Args>(args)...); else return Super::template visit<R>(forward<Func>(f), forward<Args>(args)...); }
         template<class R, class Func, class... Args, typename mt::disable_if<mt::isCallable<Func, Type&, Args...>::value, int>::type=0>
         R visit(Func&& f, Args&&... args)                   { return Super::template visit<R>(forward<Func>(f), forward<Args>(args)...); }
         
         template<class R, class Func, class... Args, typename std::enable_if<mt::isCallable<Func, const Type&, Args...>::value, int>::type=0>
-        R visit(Func&& f, Args&&... args) const             { return _id() == id ? f(_val(), forward<Args>(args)...) : Super::template visit<R>(forward<Func>(f), forward<Args>(args)...); }
+        R visit(Func&& f, Args&&... args) const             { if (_id() == id) return f(_val(), forward<Args>(args)...); else return Super::template visit<R>(forward<Func>(f), forward<Args>(args)...); }
         template<class R, class Func, class... Args, typename mt::disable_if<mt::isCallable<Func, const Type&, Args...>::value, int>::type=0>
         R visit(Func&& f, Args&&... args) const             { return Super::template visit<R>(forward<Func>(f), forward<Args>(args)...); }
         
         template<class Func, class... Args, typename std::enable_if<mt::isCallable<Func, Type&, Args...>::value, int>::type=0>
-        void visit(Func&& f, Args&&... args)                { _id() == id ? f(_val(), forward<Args>(args)...) : Super::visit(forward<Func>(f), forward<Args>(args)...); }
+        void visit(Func&& f, Args&&... args)                { if (_id() == id) f(_val(), forward<Args>(args)...); else Super::visit(forward<Func>(f), forward<Args>(args)...); }
         template<class Func, class... Args, typename mt::disable_if<mt::isCallable<Func, Type&, Args...>::value, int>::type=0>
         void visit(Func&& f, Args&&... args)                { Super::visit(forward<Func>(f), forward<Args>(args)...); }
         
         template<class Func, class... Args, typename std::enable_if<mt::isCallable<Func, const Type&, Args...>::value, int>::type=0>
-        void visit(Func&& f, Args&&... args) const          { _id() == id ? f(_val(), forward<Args>(args)...) : Super::visit(forward<Func>(f), forward<Args>(args)...); }
+        void visit(Func&& f, Args&&... args) const          { if (_id() == id) f(_val(), forward<Args>(args)...); else Super::visit(forward<Func>(f), forward<Args>(args)...); }
         template<class Func, class... Args, typename mt::disable_if<mt::isCallable<Func, const Type&, Args...>::value, int>::type=0>
         void visit(Func&& f, Args&&... args) const          { Super::visit(forward<Func>(f), forward<Args>(args)...); }
         
@@ -317,6 +317,33 @@ private:
     int _id;
     Storage _storage;
 };
+
+
+
+template<class... Funcs> struct overload_;
+
+/// An overloaded visitor functor.  \see overload() to create.
+/**
+  * Example:
+  *
+  *     int res = variant.visit<int>(overload
+  *     (
+  *         [](char) { return 0; },
+  *         [](String) { return 1; }
+  *     ));
+  */
+template<class Func, class... Funcs>
+struct overload_<Func, Funcs...> : Func, overload_<Funcs...>
+{
+    typedef overload_<Funcs...> Super;
+    overload_(Func&& f, Funcs&&... fs)                      : Func(forward<Func>(f)), Super(forward<Funcs>(fs)...) {}
+};
+
+template<> struct overload_<> {};
+
+/// Create an overloaded visitor functor
+template<class... Funcs>
+overload_<Funcs...> overload(Funcs&&... fs)                 { return overload_<Funcs...>(forward<Funcs>(fs)...); }
 
 }
 
