@@ -90,8 +90,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">Unique.h File Reference</div>  </div>
 </div><!--header-->
@@ -135,15 +134,17 @@ Namespaces</h2></td></tr>
 <tr class="memdesc:namespacehoney_1_1lock"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classhoney_1_1_mutex.html" title="A thread lock where the lock is acquired by suspending thread execution until it becomes available...">Mutex</a> lock util. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a91ccb9a393b06c166e8bb30d10fab307"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_unique_8h.html#a91ccb9a393b06c166e8bb30d10fab307">ENUM_LIST</a>(e, _)</td></tr>
-<tr class="separator:a91ccb9a393b06c166e8bb30d10fab307"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:a6c229f8768feb7141eef947567b33a35"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney_1_1lock.html#a6c229f8768feb7141eef947567b33a35">honey::lock::Op</a> { <a class="el" href="namespacehoney_1_1lock.html#a6c229f8768feb7141eef947567b33a35adce7c4174ce9323904a934a486c41288">honey::lock::lock</a>, 
+<a class="el" href="namespacehoney_1_1lock.html#a6c229f8768feb7141eef947567b33a35af717e3880f691b798a63312525898eaa">honey::lock::tryLock</a>, 
+<a class="el" href="namespacehoney_1_1lock.html#a6c229f8768feb7141eef947567b33a35a8d0b67176348f44964d3344848c95208">honey::lock::adopt</a>, 
+<a class="el" href="namespacehoney_1_1lock.html#a6c229f8768feb7141eef947567b33a35ac9df09b4610bb43e290507a37c658ae8">honey::lock::defer</a>
+ }</td></tr>
+<tr class="separator:a6c229f8768feb7141eef947567b33a35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aca037a6f2cfcc43b7b189678b3795c6f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney_1_1lock.html#aca037a6f2cfcc43b7b189678b3795c6f">honey::lock::ENUM</a> (, Op)</td></tr>
-<tr class="separator:aca037a6f2cfcc43b7b189678b3795c6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">ScopeGuard functors</div></td></tr>
 <tr class="memitem:a4c234fe2800610bb4373be16c252f5d9"><td class="memTemplParams" colspan="2">template&lt;class Lock &gt; </td></tr>
 <tr class="memitem:a4c234fe2800610bb4373be16c252f5d9"><td class="memTemplItemLeft" align="right" valign="top">function&lt; void()&gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacehoney_1_1lock.html#a4c234fe2800610bb4373be16c252f5d9">honey::lock::lockGuard</a> (Lock &amp;<a class="el" href="_lock_2_util_8h.html#a1f1defcfd331be9902edab2eb8faf21d">lock</a>)</td></tr>
@@ -155,41 +156,10 @@ Functions</h2></td></tr>
 <tr class="memitem:aa612caf92fa10c74bed9513a45f25124"><td class="memTemplItemLeft" align="right" valign="top">function&lt; void()&gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacehoney_1_1lock.html#aa612caf92fa10c74bed9513a45f25124">honey::lock::releaseGuard</a> (Lock &amp;<a class="el" href="_lock_2_util_8h.html#a1f1defcfd331be9902edab2eb8faf21d">lock</a>)</td></tr>
 <tr class="separator:aa612caf92fa10c74bed9513a45f25124"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="a91ccb9a393b06c166e8bb30d10fab307"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ENUM_LIST</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">e, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">_&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">e(_, <a class="code" href="_lock_2_util_8h.html#a1f1defcfd331be9902edab2eb8faf21d">lock</a>)          \</div>
-<div class="line">        e(_, <a class="code" href="namespacehoney_1_1lock.html#a2d25938d550d731e76d43f9c190eb48f">tryLock</a>)       \</div>
-<div class="line">        e(_, adopt)         \</div>
-<div class="line">        e(_, defer)         \</div>
-</div><!-- fragment -->
-</div>
-</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 21 2013 03:38:21 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 21 2013 10:29:10 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

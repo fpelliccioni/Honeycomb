@@ -88,6 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">honey::lock Namespace Reference</div>  </div>
@@ -97,10 +98,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p><a class="el" href="classhoney_1_1_mutex.html" title="A thread lock where the lock is acquired by suspending thread execution until it becomes available...">Mutex</a> lock util.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:a6c229f8768feb7141eef947567b33a35"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney_1_1lock.html#a6c229f8768feb7141eef947567b33a35">Op</a> { <a class="el" href="namespacehoney_1_1lock.html#a6c229f8768feb7141eef947567b33a35adce7c4174ce9323904a934a486c41288">lock</a>, 
+<a class="el" href="namespacehoney_1_1lock.html#a6c229f8768feb7141eef947567b33a35af717e3880f691b798a63312525898eaa">tryLock</a>, 
+<a class="el" href="namespacehoney_1_1lock.html#a6c229f8768feb7141eef947567b33a35a8d0b67176348f44964d3344848c95208">adopt</a>, 
+<a class="el" href="namespacehoney_1_1lock.html#a6c229f8768feb7141eef947567b33a35ac9df09b4610bb43e290507a37c658ae8">defer</a>
+ }</td></tr>
+<tr class="separator:a6c229f8768feb7141eef947567b33a35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aca037a6f2cfcc43b7b189678b3795c6f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney_1_1lock.html#aca037a6f2cfcc43b7b189678b3795c6f">ENUM</a> (, Op)</td></tr>
-<tr class="separator:aca037a6f2cfcc43b7b189678b3795c6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d25938d550d731e76d43f9c190eb48f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney_1_1lock.html#a2d25938d550d731e76d43f9c190eb48f">tryLock</a> ()</td></tr>
 <tr class="separator:a2d25938d550d731e76d43f9c190eb48f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd388085c431880bd9b5e2a0d172fe87"><td class="memTemplParams" colspan="2">template&lt;class Lock , class... Locks, typename mt::disable_if&lt; mt::isRange&lt; Lock &gt;::value, int &gt;::type  = 0&gt; </td></tr>
@@ -132,32 +140,34 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classhoney_1_1_mutex.html" title="A thread lock where the lock is acquired by suspending thread execution until it becomes available...">Mutex</a> lock util. </p>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="aca037a6f2cfcc43b7b189678b3795c6f"></a>
+</div><h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="a6c229f8768feb7141eef947567b33a35"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">honey::lock::ENUM </td>
-          <td>(</td>
-          <td class="paramtype">Op&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td class="memname">enum <a class="el" href="namespacehoney_1_1lock.html#a6c229f8768feb7141eef947567b33a35">honey::lock::Op</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">lock</td><td>Lock (blocking) </td></tr>
-    <tr><td class="paramname">tryLock</td><td>Try to lock (non-blocking) </td></tr>
-    <tr><td class="paramname">adopt</td><td>Already locked </td></tr>
-    <tr><td class="paramname">defer</td><td>Not yet locked, will lock manually </td></tr>
-  </table>
-  </dd>
-</dl>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="a6c229f8768feb7141eef947567b33a35adce7c4174ce9323904a934a486c41288"></a>lock</em>&nbsp;</td><td class="fielddoc">
+<p>Lock (blocking) </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="a6c229f8768feb7141eef947567b33a35af717e3880f691b798a63312525898eaa"></a>tryLock</em>&nbsp;</td><td class="fielddoc">
+<p>Try to lock (non-blocking) </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="a6c229f8768feb7141eef947567b33a35a8d0b67176348f44964d3344848c95208"></a>adopt</em>&nbsp;</td><td class="fielddoc">
+<p>Already locked. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="a6c229f8768feb7141eef947567b33a35ac9df09b4610bb43e290507a37c658ae8"></a>defer</em>&nbsp;</td><td class="fielddoc">
+<p>Not yet locked, will lock manually. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
+<h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="a6c9733181b037fc3e6f20587b479b754"></a>
 <div class="memitem">
 <div class="memproto">
@@ -331,7 +341,7 @@ template&lt;class Lock &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 21 2013 03:38:32 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 21 2013 10:29:14 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

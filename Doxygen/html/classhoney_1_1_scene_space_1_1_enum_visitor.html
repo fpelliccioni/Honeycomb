@@ -90,6 +90,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classhoney_1_1_scene_space_1_1_enum_visitor-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -102,10 +103,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p><code>#include &lt;<a class="el" href="_space_8h_source.html">Space.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:ac9368bd3e075fafd058896f71046b436"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_scene_space_1_1_enum_visitor.html#ac9368bd3e075fafd058896f71046b436">State</a> { <a class="el" href="classhoney_1_1_scene_space_1_1_enum_visitor.html#ac9368bd3e075fafd058896f71046b436a568d8e07bbe5575518d5005e559743c3">cont</a>, 
+<a class="el" href="classhoney_1_1_scene_space_1_1_enum_visitor.html#ac9368bd3e075fafd058896f71046b436aef399b2d446bb37b7c32ad2cc1b6045b">stop</a>, 
+<a class="el" href="classhoney_1_1_scene_space_1_1_enum_visitor.html#ac9368bd3e075fafd058896f71046b436aa0666a7e7b97d574956a37ef88323213">skipChildren</a>
+ }</td></tr>
+<tr class="separator:ac9368bd3e075fafd058896f71046b436"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac2cbe911af47eab31e4e7df3ea8ef96b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_scene_space_1_1_enum_visitor.html#ac2cbe911af47eab31e4e7df3ea8ef96b">ENUM</a> (<a class="el" href="classhoney_1_1_scene_space_1_1_enum_visitor.html">SceneSpace::EnumVisitor</a>, State)</td></tr>
-<tr class="separator:ac2cbe911af47eab31e4e7df3ea8ef96b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac7a4287983517f4b26a3b889355c772"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_scene_space_1_1_enum_visitor.html#aac7a4287983517f4b26a3b889355c772">EnumVisitor</a> ()</td></tr>
 <tr class="separator:aac7a4287983517f4b26a3b889355c772"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af07255ec904bcf6e794fc97d72b2316e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_scene_space_1_1_enum_visitor.html#af07255ec904bcf6e794fc97d72b2316e">operator()</a> (const <a class="el" href="classhoney_1_1_scene_space.html">SceneSpace</a> &amp;space, <a class="el" href="classhoney_1_1_scene_object.html">SceneObject</a> &amp;<a class="el" href="classhoney_1_1_scene_component.html#a91986fc3750fe2a6c7a450df07940aed">obj</a>)=0</td></tr>
@@ -116,15 +123,39 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af207eda8d27932d518fd0505192ccbbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a138388437dcef31a28d1e8dcd5d5ca"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classhoney_1_1_bound_vol_base.html">BoundVolBase</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_scene_space_1_1_enum_visitor.html#a8a138388437dcef31a28d1e8dcd5d5ca">getBv</a> () const </td></tr>
 <tr class="separator:a8a138388437dcef31a28d1e8dcd5d5ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a05c321f676649f9932b7e2804ce477e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_scene_space_1_1_enum_visitor.html#a05c321f676649f9932b7e2804ce477e3">setState</a> (State state)</td></tr>
+<tr class="memitem:a05c321f676649f9932b7e2804ce477e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_scene_space_1_1_enum_visitor.html#a05c321f676649f9932b7e2804ce477e3">setState</a> (<a class="el" href="classhoney_1_1_scene_space_1_1_enum_visitor.html#ac9368bd3e075fafd058896f71046b436">State</a> state)</td></tr>
 <tr class="memdesc:a05c321f676649f9932b7e2804ce477e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set state of enumeration (continue/stop enumerating)  <a href="#a05c321f676649f9932b7e2804ce477e3">More...</a><br/></td></tr>
 <tr class="separator:a05c321f676649f9932b7e2804ce477e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3a0ea7d1a1e66bd11ee470d1e37d8fc5"><td class="memItemLeft" align="right" valign="top">State&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_scene_space_1_1_enum_visitor.html#a3a0ea7d1a1e66bd11ee470d1e37d8fc5">getState</a> () const </td></tr>
+<tr class="memitem:a3a0ea7d1a1e66bd11ee470d1e37d8fc5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classhoney_1_1_scene_space_1_1_enum_visitor.html#ac9368bd3e075fafd058896f71046b436">State</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_scene_space_1_1_enum_visitor.html#a3a0ea7d1a1e66bd11ee470d1e37d8fc5">getState</a> () const </td></tr>
 <tr class="separator:a3a0ea7d1a1e66bd11ee470d1e37d8fc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Visitor functor for enum function. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a class="anchor" id="ac9368bd3e075fafd058896f71046b436"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classhoney_1_1_scene_space_1_1_enum_visitor.html#ac9368bd3e075fafd058896f71046b436">honey::SceneSpace::EnumVisitor::State</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ac9368bd3e075fafd058896f71046b436a568d8e07bbe5575518d5005e559743c3"></a>cont</em>&nbsp;</td><td class="fielddoc">
+<p>continue enumeration </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ac9368bd3e075fafd058896f71046b436aef399b2d446bb37b7c32ad2cc1b6045b"></a>stop</em>&nbsp;</td><td class="fielddoc">
+<p>stop enumeration </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ac9368bd3e075fafd058896f71046b436aa0666a7e7b97d574956a37ef88323213"></a>skipChildren</em>&nbsp;</td><td class="fielddoc">
+<p>skip enumeration of children </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="aac7a4287983517f4b26a3b889355c772"></a>
 <div class="memitem">
 <div class="memproto">
@@ -149,40 +180,6 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="ac2cbe911af47eab31e4e7df3ea8ef96b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">honey::SceneSpace::EnumVisitor::ENUM </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classhoney_1_1_scene_space_1_1_enum_visitor.html">SceneSpace::EnumVisitor</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">State&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">cont</td><td>continue enumeration </td></tr>
-    <tr><td class="paramname">stop</td><td>stop enumeration </td></tr>
-    <tr><td class="paramname">skipChildren</td><td>skip enumeration of children </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a class="anchor" id="a8a138388437dcef31a28d1e8dcd5d5ca"></a>
 <div class="memitem">
 <div class="memproto">
@@ -214,7 +211,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">State honey::SceneSpace::EnumVisitor::getState </td>
+          <td class="memname"><a class="el" href="classhoney_1_1_scene_space_1_1_enum_visitor.html#ac9368bd3e075fafd058896f71046b436">State</a> honey::SceneSpace::EnumVisitor::getState </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -301,7 +298,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void honey::SceneSpace::EnumVisitor::setState </td>
           <td>(</td>
-          <td class="paramtype">State&#160;</td>
+          <td class="paramtype"><a class="el" href="classhoney_1_1_scene_space_1_1_enum_visitor.html#ac9368bd3e075fafd058896f71046b436">State</a>&#160;</td>
           <td class="paramname"><em>state</em></td><td>)</td>
           <td></td>
         </tr>
@@ -323,7 +320,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 21 2013 03:38:31 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 21 2013 10:29:14 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

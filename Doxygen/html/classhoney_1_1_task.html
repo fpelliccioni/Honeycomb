@@ -93,6 +93,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pro-types">Protected Types</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="#friends">Friends</a> &#124;
@@ -166,10 +167,21 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memdesc:aefc0a330c5e2aa73e52ea059774b53be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current task object. Must be called from a task functor.  <a href="#aefc0a330c5e2aa73e52ea059774b53be">More...</a><br/></td></tr>
 <tr class="separator:aefc0a330c5e2aa73e52ea059774b53be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-types"></a>
+Protected Types</h2></td></tr>
+<tr class="memitem:ac823799263b8689913f847936b44a7b9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_task.html#ac823799263b8689913f847936b44a7b9">State</a> { <br/>
+&#160;&#160;<a class="el" href="classhoney_1_1_task.html#ac823799263b8689913f847936b44a7b9aec2f993aec2c27fc750119ab17b16cdb">idle</a>, 
+<a class="el" href="classhoney_1_1_task.html#ac823799263b8689913f847936b44a7b9a84fbe0280a6e0c725f00f8847aa6be49">queued</a>, 
+<a class="el" href="classhoney_1_1_task.html#ac823799263b8689913f847936b44a7b9a109deeecfadcfce6db1c495662284f7f">depUpWait</a>, 
+<a class="el" href="classhoney_1_1_task.html#ac823799263b8689913f847936b44a7b9a52fb3679b07eb74d90784e612ca5cb30">exec</a>, 
+<br/>
+&#160;&#160;<a class="el" href="classhoney_1_1_task.html#ac823799263b8689913f847936b44a7b9ae37d0689343d0f0a0d7cd9f1f82d71d0">depDownWait</a>
+<br/>
+ }</td></tr>
+<tr class="separator:ac823799263b8689913f847936b44a7b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:acaf38dbb8d6647cfecaa5ebf35a0bd0f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_task.html#acaf38dbb8d6647cfecaa5ebf35a0bd0f">ENUM</a> (<a class="el" href="classhoney_1_1_task.html">Task</a>, State)</td></tr>
-<tr class="separator:acaf38dbb8d6647cfecaa5ebf35a0bd0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad6b38e2b276b74cbf255d80d8e54e7c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_task.html#aad6b38e2b276b74cbf255d80d8e54e7c">Task</a> (const <a class="el" href="classhoney_1_1_id.html">Id</a> &amp;id=<a class="el" href="group___id.html#ga4966cc00529fa34c85268e32beb417c9">idnull</a>)</td></tr>
 <tr class="separator:aad6b38e2b276b74cbf255d80d8e54e7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa9ad2140b5afaae51681e19d042cd036"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_task.html#aa9ad2140b5afaae51681e19d042cd036">exec</a> ()=0</td></tr>
@@ -190,7 +202,7 @@ Protected Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a14c3f108f22efd401deed858a0546444"><td class="memItemLeft" align="right" valign="top">State&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_task.html#a14c3f108f22efd401deed858a0546444">_state</a></td></tr>
+<tr class="memitem:a14c3f108f22efd401deed858a0546444"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classhoney_1_1_task.html#ac823799263b8689913f847936b44a7b9">State</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_task.html#a14c3f108f22efd401deed858a0546444">_state</a></td></tr>
 <tr class="separator:a14c3f108f22efd401deed858a0546444"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af23506adf62f9897da457ae4a7d09f59"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classhoney_1_1_task.html#ad31fab63454f65c3fc2ec2bf69452333">DepNode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_task.html#af23506adf62f9897da457ae4a7d09f59">_depNode</a></td></tr>
 <tr class="separator:af23506adf62f9897da457ae4a7d09f59"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -274,6 +286,44 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Enumeration Documentation</h2>
+<a class="anchor" id="ac823799263b8689913f847936b44a7b9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classhoney_1_1_task.html#ac823799263b8689913f847936b44a7b9">honey::Task::State</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ac823799263b8689913f847936b44a7b9aec2f993aec2c27fc750119ab17b16cdb"></a>idle</em>&nbsp;</td><td class="fielddoc">
+<p>Not active. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ac823799263b8689913f847936b44a7b9a84fbe0280a6e0c725f00f8847aa6be49"></a>queued</em>&nbsp;</td><td class="fielddoc">
+<p>Queued for execution. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ac823799263b8689913f847936b44a7b9a109deeecfadcfce6db1c495662284f7f"></a>depUpWait</em>&nbsp;</td><td class="fielddoc">
+<p>Waiting for upstream tasks (dependency subgraph) to complete. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ac823799263b8689913f847936b44a7b9a52fb3679b07eb74d90784e612ca5cb30"></a>exec</em>&nbsp;</td><td class="fielddoc">
+<p>Executing functor. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ac823799263b8689913f847936b44a7b9ae37d0689343d0f0a0d7cd9f1f82d71d0"></a>depDownWait</em>&nbsp;</td><td class="fielddoc">
+<p>Waiting for downsteam tasks (immediate dependees) to complete. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
@@ -399,50 +449,6 @@ Friends</h2></td></tr>
 
 <p>Get dependency node. Upstream and downstream tasks can be specified through the node. </p>
 <p>Out links are 'upstream' tasks that will be completed before this one. In links are 'downstream' tasks that will be completed after this one. </p>
-
-</div>
-</div>
-<a class="anchor" id="acaf38dbb8d6647cfecaa5ebf35a0bd0f"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">honey::Task::ENUM </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classhoney_1_1_task.html">Task</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">State&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">idle</td><td>Not active </td></tr>
-    <tr><td class="paramname">queued</td><td>Queued for execution </td></tr>
-    <tr><td class="paramname">depUpWait</td><td>Waiting for upstream tasks (dependency subgraph) to complete </td></tr>
-    <tr><td class="paramname">exec</td><td>Executing functor </td></tr>
-    <tr><td class="paramname">depDownWait</td><td>Waiting for downsteam tasks (immediate dependees) to complete </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
@@ -971,7 +977,7 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">State honey::Task::_state</td>
+          <td class="memname"><a class="el" href="classhoney_1_1_task.html#ac823799263b8689913f847936b44a7b9">State</a> honey::Task::_state</td>
         </tr>
       </table>
   </td>
@@ -1010,7 +1016,7 @@ Friends</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 21 2013 03:38:31 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 21 2013 10:29:14 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

@@ -90,7 +90,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#define-members">Macros</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Future.h File Reference</div>  </div>
@@ -142,15 +142,15 @@ Namespaces</h2></td></tr>
 <tr class="memdesc:namespacehoney_1_1future"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classhoney_1_1_future.html" title="Unique future, guarantees sole access to a future function result.">Future</a> util. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a91ccb9a393b06c166e8bb30d10fab307"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_future_8h.html#a91ccb9a393b06c166e8bb30d10fab307">ENUM_LIST</a>(e, _)</td></tr>
-<tr class="separator:a91ccb9a393b06c166e8bb30d10fab307"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:a2c368e812511bddf2cbdf56ad94c33c6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney_1_1future.html#a2c368e812511bddf2cbdf56ad94c33c6">honey::future::Status</a> { <a class="el" href="namespacehoney_1_1future.html#a2c368e812511bddf2cbdf56ad94c33c6ab2fdab230a2c39f3595a947861863cb7">honey::future::ready</a>, 
+<a class="el" href="namespacehoney_1_1future.html#a2c368e812511bddf2cbdf56ad94c33c6a90272dda245ae1fb3cf197e91a8689dc">honey::future::timeout</a>
+ }</td></tr>
+<tr class="separator:a2c368e812511bddf2cbdf56ad94c33c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a2ec02f0eed5e6646cac32a9e71babb33"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney_1_1future.html#a2ec02f0eed5e6646cac32a9e71babb33">honey::future::ENUM</a> (, Status)</td></tr>
-<tr class="separator:a2ec02f0eed5e6646cac32a9e71babb33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4bc5f81912f3e67754995e02dcdb2dc4"><td class="memTemplParams" colspan="2">template&lt;class T , class R  = typename std::decay&lt;T&gt;::type&gt; </td></tr>
 <tr class="memitem:a4bc5f81912f3e67754995e02dcdb2dc4"><td class="memTemplItemLeft" align="right" valign="top">Future&lt; R &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacehoney.html#a4bc5f81912f3e67754995e02dcdb2dc4">honey::FutureCreate</a> (T &amp;&amp;val)</td></tr>
 <tr class="memdesc:a4bc5f81912f3e67754995e02dcdb2dc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a future that is immediately ready with the value.  <a href="#a4bc5f81912f3e67754995e02dcdb2dc4">More...</a><br/></td></tr>
@@ -158,39 +158,10 @@ Functions</h2></td></tr>
 <tr class="memitem:add602b3ee07f71797e6d708e5f733334"><td class="memItemLeft" align="right" valign="top">Future&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney.html#add602b3ee07f71797e6d708e5f733334">honey::FutureCreate</a> ()</td></tr>
 <tr class="separator:add602b3ee07f71797e6d708e5f733334"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="a91ccb9a393b06c166e8bb30d10fab307"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ENUM_LIST</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">e, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">_&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">e(_, ready)         \</div>
-<div class="line">        e(_, timeout)       \</div>
-</div><!-- fragment -->
-</div>
-</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 21 2013 03:38:21 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 21 2013 10:29:10 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>
