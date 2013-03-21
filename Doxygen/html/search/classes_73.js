@@ -8,7 +8,7 @@ var searchData=
   ['sceneobject',['SceneObject',['../classhoney_1_1_scene_object.html',1,'honey']]],
   ['scenespace',['SceneSpace',['../classhoney_1_1_scene_space.html',1,'honey']]],
   ['scopeguard_5f',['ScopeGuard_',['../classhoney_1_1_scope_guard__.html',1,'honey']]],
-  ['securedata',['SecureData',['../structhoney_1_1_hash_1_1_secure_data.html',1,'honey::Hash']]],
+  ['securedata',['SecureData',['../structhoney_1_1hash_1_1_secure_data.html',1,'honey::hash']]],
   ['seed',['Seed',['../structhoney_1_1_salsa_1_1_seed.html',1,'honey::Salsa']]],
   ['segment',['Segment',['../structhoney_1_1vec_1_1priv_1_1_segment.html',1,'honey::vec::priv']]],
   ['setalign',['setAlign',['../structhoney_1_1matrix_1_1_option_1_1set_align.html',1,'honey::matrix::Option']]],

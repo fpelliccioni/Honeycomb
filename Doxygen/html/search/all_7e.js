@@ -54,6 +54,7 @@ var searchData=
   ['_7etreeclone',['~TreeClone',['../classhoney_1_1_tree_clone.html#a410f7385d1ff33c3a85f51e28c30d3b1',1,'honey::TreeClone']]],
   ['_7etreenode',['~TreeNode',['../classhoney_1_1_tree_node.html#a34534becd0f609684b091741805aa2fc',1,'honey::TreeNode']]],
   ['_7etriangle_5f',['~Triangle_',['../classhoney_1_1_triangle__.html#a7cee2466586dc352528ce540582b7526',1,'honey::Triangle_']]],
+  ['_7etypeinfo',['~TypeInfo',['../classhoney_1_1_object_1_1_type_info.html#af8f0dc6e944322ce58d564759f135b69',1,'honey::Object::TypeInfo']]],
   ['_7euniquelock',['~UniqueLock',['../classhoney_1_1_unique_lock.html#aa73304044cbd787cabf9e7b4eba0bc01',1,'honey::UniqueLock']]],
   ['_7euniqueptr',['~UniquePtr',['../classhoney_1_1_unique_ptr.html#ac00364e4729d9ae8abc4a557ab9a1514',1,'honey::UniquePtr']]],
   ['_7evariant',['~variant',['../classhoney_1_1variant.html#adf2f19f2dd2cd592c53db3961a49960f',1,'honey::variant']]],

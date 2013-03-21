@@ -155,7 +155,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
 <div class="line"><a name="l00075"></a><span class="lineno"><a class="code" href="classhoney_1_1_orient_box__.html#a37b8cb3c79c4c36087f990acaa81a398">   75</a></span>&#160;    <a class="code" href="classhoney_1_1_vec.html">Vec3</a> <a class="code" href="classhoney_1_1_orient_box__.html#a37b8cb3c79c4c36087f990acaa81a398" title="Get one of 8 corner vertices of box.">vertex</a>(<span class="keywordtype">int</span> index)<span class="keyword"> const</span></div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(index&lt;<a class="code" href="classhoney_1_1_orient_box__.html#a64cdbd0bd7cadcf65396aca396855658" title="Number of vertices (constant)">vertexCount</a>);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(index&lt;<a class="code" href="classhoney_1_1_orient_box__.html#a64cdbd0bd7cadcf65396aca396855658" title="Number of vertices (constant)">vertexCount</a>);</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <a class="code" href="classhoney_1_1_vec.html">Vec3</a> extX = <a class="code" href="classhoney_1_1_orient_box__.html#a5840932ad890b8b5878c00977a99c980">axis</a>[0]*<a class="code" href="classhoney_1_1_orient_box__.html#aeeb8dbeaa6fda979077c3aa7ab93e3de">extent</a>.x;</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <a class="code" href="classhoney_1_1_vec.html">Vec3</a> extY = <a class="code" href="classhoney_1_1_orient_box__.html#a5840932ad890b8b5878c00977a99c980">axis</a>[1]*<a class="code" href="classhoney_1_1_orient_box__.html#aeeb8dbeaa6fda979077c3aa7ab93e3de">extent</a>.y;</div>
@@ -188,7 +188,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
 <div class="line"><a name="l00115"></a><span class="lineno"><a class="code" href="classhoney_1_1_orient_box__.html#a1648a4a2838ed5dd1680c98d35d4585e">  115</a></span>&#160;    <a class="code" href="classhoney_1_1_line__.html" title="3D line segment geometry class">Line</a> <a class="code" href="classhoney_1_1_orient_box__.html#a1648a4a2838ed5dd1680c98d35d4585e" title="Get one of 12 edges of box.">edge</a>(<span class="keywordtype">int</span> index)<span class="keyword"> const</span></div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(index&lt;<a class="code" href="classhoney_1_1_orient_box__.html#a7837d0c261122de7faa55334773f4c33" title="Number of vertices (constant)">edgeCount</a>);</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(index&lt;<a class="code" href="classhoney_1_1_orient_box__.html#a7837d0c261122de7faa55334773f4c33" title="Number of vertices (constant)">edgeCount</a>);</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        <span class="keywordflow">switch</span> (index)</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        {</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        <span class="keywordflow">case</span> 0:</div>
@@ -223,7 +223,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;</div>
 <div class="line"><a name="l00152"></a><span class="lineno"><a class="code" href="classhoney_1_1_orient_box__.html#a2a7f35c84cd26d51c3d3e3a8edcc4b63">  152</a></span>&#160;    <a class="code" href="classhoney_1_1_plane__.html" title="3D plane geometry class">Plane</a> <a class="code" href="classhoney_1_1_orient_box__.html#a2a7f35c84cd26d51c3d3e3a8edcc4b63" title="Get one of 6 box planes.">plane</a>(<span class="keywordtype">int</span> index)<span class="keyword"> const</span></div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(index&lt;<a class="code" href="classhoney_1_1_orient_box__.html#a10b11b3677ed4be0df6867b63c216e87" title="Number of planes (constant)">planeCount</a>);</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(index&lt;<a class="code" href="classhoney_1_1_orient_box__.html#a10b11b3677ed4be0df6867b63c216e87" title="Number of planes (constant)">planeCount</a>);</div>
 <div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;        <span class="keywordflow">switch</span> (index)</div>
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;        {</div>
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        <span class="keywordflow">case</span> Planes::x:</div>
@@ -289,7 +289,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 19 2013 06:43:54 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 20 2013 17:11:22 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

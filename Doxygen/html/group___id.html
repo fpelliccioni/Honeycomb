@@ -79,7 +79,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#define-members">Macros</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">String Identifier</div>  </div>
 </div><!--header-->
@@ -93,96 +94,38 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_id.html">honey::Id</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds a string and its hashed value for fast comparison ops. See <a class="el" href="group___id.html">String Identifier</a>.  <a href="classhoney_1_1_id.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_id_constexpr.html">honey::IdConstexpr</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classhoney_1_1_id.html" title="Holds a string and its hashed value for fast comparison ops. See String Identifier.">Id</a> created from a string literal at compile time.  <a href="classhoney_1_1_id_constexpr.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga9aef71591de3d778e8e5c2987055f79b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___id.html#ga9aef71591de3d778e8e5c2987055f79b">IdStatic</a>(Func, IdString)&#160;&#160;&#160;<a class="el" href="group___meta.html#ga27082f16bcbc2baf37351ffefa89a117">mt_staticObj</a>(const Id, Func, (IdString))</td></tr>
 <tr class="memdesc:ga9aef71591de3d778e8e5c2987055f79b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an Id that can be retrieved safely from a static context.  <a href="#ga9aef71591de3d778e8e5c2987055f79b">More...</a><br/></td></tr>
 <tr class="separator:ga9aef71591de3d778e8e5c2987055f79b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4966cc00529fa34c85268e32beb417c9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___id.html#ga4966cc00529fa34c85268e32beb417c9">idnull</a>&#160;&#160;&#160;_idnull()</td></tr>
+<tr class="memitem:ga4966cc00529fa34c85268e32beb417c9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___id.html#ga4966cc00529fa34c85268e32beb417c9">idnull</a>&#160;&#160;&#160;IdConstexpr()</td></tr>
 <tr class="memdesc:ga4966cc00529fa34c85268e32beb417c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Null id.  <a href="#ga4966cc00529fa34c85268e32beb417c9">More...</a><br/></td></tr>
 <tr class="separator:ga4966cc00529fa34c85268e32beb417c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8790f65e6f89d21bcf77862e787f71bc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___id.html#ga8790f65e6f89d21bcf77862e787f71bc">IDSWITCH</a>(id)</td></tr>
-<tr class="memdesc:ga8790f65e6f89d21bcf77862e787f71bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="group___id.html">String Identifier</a>.  <a href="#ga8790f65e6f89d21bcf77862e787f71bc">More...</a><br/></td></tr>
-<tr class="separator:ga8790f65e6f89d21bcf77862e787f71bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac954d7929088f00024db74519da65d94"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___id.html#gac954d7929088f00024db74519da65d94">IDCASE</a>(name)&#160;&#160;&#160;case _IdSwitchEnum_##name</td></tr>
-<tr class="memdesc:gac954d7929088f00024db74519da65d94"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="group___id.html">String Identifier</a>.  <a href="#gac954d7929088f00024db74519da65d94">More...</a><br/></td></tr>
-<tr class="separator:gac954d7929088f00024db74519da65d94"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4bd7445c5ebf6f433e046dab2759ab3b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___id.html#ga4bd7445c5ebf6f433e046dab2759ab3b">IDSWITCH_END</a>&#160;&#160;&#160;}</td></tr>
-<tr class="memdesc:ga4bd7445c5ebf6f433e046dab2759ab3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="group___id.html">String Identifier</a>.  <a href="#ga4bd7445c5ebf6f433e046dab2759ab3b">More...</a><br/></td></tr>
-<tr class="separator:ga4bd7445c5ebf6f433e046dab2759ab3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga77ceac8d6af195fe72f95f6afd87c45e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___id.html#ga77ceac8d6af195fe72f95f6afd87c45e">ID</a>&#160;&#160;&#160;priv::IdCache::inst() &lt;&lt;</td></tr>
-<tr class="memdesc:ga77ceac8d6af195fe72f95f6afd87c45e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create id from string literal using cache.  <a href="#ga77ceac8d6af195fe72f95f6afd87c45e">More...</a><br/></td></tr>
-<tr class="separator:ga77ceac8d6af195fe72f95f6afd87c45e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga28e90d1b2c7b790c4415e6c6fcd4cabe"><td class="memItemLeft" align="right" valign="top">constexpr IdConstexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___id.html#ga28e90d1b2c7b790c4415e6c6fcd4cabe">honey::operator&quot;&quot;_id</a> (const char *str, size_t len)</td></tr>
+<tr class="memdesc:ga28e90d1b2c7b790c4415e6c6fcd4cabe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an id from a string literal at compile time. Can be used as a case expression in a switch block (ex. case "foo"_id: ).  <a href="#ga28e90d1b2c7b790c4415e6c6fcd4cabe">More...</a><br/></td></tr>
+<tr class="separator:ga28e90d1b2c7b790c4415e6c6fcd4cabe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Methods to create and operate on string ids. </p>
 <p><a class="el" href="classhoney_1_1_string.html" title="Unicode UTF-16 string class, wrapper around std::u16string.">String</a> ids provide a fast way to compare strings. <br/>
- An <a class="el" href="classhoney_1_1_id.html" title="Holds a string and its hashed value for fast comparison ops. See String Identifier.">Id</a> is composed of a string and its hashed integer value. The strings are hashed using <a class="el" href="classhoney_1_1_hash.html#ac94a0b8f033a740fa0ba6442f842b7f2" title="Quickly generate a small hash value. Each seed value produces a unique hash from the same data...">Hash::fast()</a>.</p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="group___id.html#ga77ceac8d6af195fe72f95f6afd87c45e" title="Create id from string literal using cache.">ID</a> to fetch cached ids from string literals on the fly.</dd></dl>
-<p>Ids are switchable. The cases must be defined in IDSWITCH_LIST. If no match is found then <code>default</code> will be chosen as expected.</p>
-<p>An example that switches on the string "foo": </p>
-<pre class="fragment">Id id = "foo";
-
-#define IDSWITCH_LIST(c) c(foo) c(bar) c(eggs, "eggz") c(spam)
-IDSWITCH(id)
-#undef IDSWITCH_LIST
-{
-IDCASE(bar):
-    break;
-IDCASE(foo):
-IDCASE(eggs):       //This block will be chosen by "foo" or "eggz"
-    break;
-IDCASE(default):
-    break;
-}
-IDSWITCH_END</pre><h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga77ceac8d6af195fe72f95f6afd87c45e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ID&#160;&#160;&#160;priv::IdCache::inst() &lt;&lt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Create id from string literal using cache. </p>
-<p>Every translation unit (cpp file) that calls ID will have its own per-thread cache.</p>
-<p>Example: </p>
-<pre class="fragment">//Update is called repeatedly, it would be slow to hash the string every call.
-//We can either create an id statically or fetch the id from a local cache.
-void update()
-{
-    static Id s_id = "my long string";  //Create statically
-    Id id = ID"my long string";         //Fetch from cache
-</pre> 
-</div>
-</div>
-<a class="anchor" id="gac954d7929088f00024db74519da65d94"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define IDCASE</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">name</td><td>)</td>
-          <td>&#160;&#160;&#160;case _IdSwitchEnum_##name</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>See <a class="el" href="group___id.html">String Identifier</a>. </p>
-
-</div>
-</div>
+ An <a class="el" href="classhoney_1_1_id.html" title="Holds a string and its hashed value for fast comparison ops. See String Identifier.">Id</a> is composed of a string and its hashed integer value. The strings are hashed using <a class="el" href="namespacehoney_1_1hash.html#a39d9f6a5348f13cc48d4183db01448ae" title="Quickly generate a small hash value. Each seed value produces a unique hash from the same data...">hash::fast()</a>. <br/>
+ In final mode an <a class="el" href="classhoney_1_1_id.html" title="Holds a string and its hashed value for fast comparison ops. See String Identifier.">Id</a> only holds the hash, name() and <a class="el" href="group___std_util.html#ga37680c5c2571bfd57f2f3112c3ce2189" title="Tuple to string.">operator&lt;&lt;()</a> are not available.</p>
+<dl class="section see"><dt>See Also</dt><dd>string literal operator <code>_id</code> to create ids at compile-time. </dd></dl>
+<h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="ga4966cc00529fa34c85268e32beb417c9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define idnull&#160;&#160;&#160;_idnull()</td>
+          <td class="memname">#define idnull&#160;&#160;&#160;IdConstexpr()</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -219,52 +162,39 @@ void update()
 
 </div>
 </div>
-<a class="anchor" id="ga8790f65e6f89d21bcf77862e787f71bc"></a>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga28e90d1b2c7b790c4415e6c6fcd4cabe"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define IDSWITCH</td>
+          <td class="memname">constexpr IdConstexpr honey::operator&quot;&quot;_id </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">id</td><td>)</td>
-          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>str</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">{                                                                                                                                           \</div>
-<div class="line">        enum                                                                                                                                    \</div>
-<div class="line">        {                                                                                                                                       \</div>
-<div class="line">            _IdSwitchEnum_default = -1,                                                                                                         \</div>
-<div class="line">            IDSWITCH_LIST(IDSWITCH_ENUMELEM)                                                                                                    \</div>
-<div class="line">            __IdSwitchEnum_Count                                                                                                                \</div>
-<div class="line">        };                                                                                                                                      \</div>
-<div class="line">        static <span class="keyword">const</span> unordered_map&lt;Id, int&gt; _IdSwitchMap = priv::IdSwitchMapFactory() IDSWITCH_LIST(IDSWITCH_MAPELEM);                          \</div>
-<div class="line">        unordered_map&lt;Id, <span class="keywordtype">int</span>&gt;::const_iterator _IdSwitchMapIt = _IdSwitchMap.find(<span class="keywordtype">id</span>);                                                          \</div>
-<div class="line">        switch(_IdSwitchMapIt != _IdSwitchMap.end() ? _IdSwitchMapIt-&gt;second : -1)                                                              \</div>
-</div><!-- fragment -->
-<p>See <a class="el" href="group___id.html">String Identifier</a>. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga4bd7445c5ebf6f433e046dab2759ab3b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">#define IDSWITCH_END&#160;&#160;&#160;}</td>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>See <a class="el" href="group___id.html">String Identifier</a>. </p>
+<p>Create an id from a string literal at compile time. Can be used as a case expression in a switch block (ex. case "foo"_id: ). </p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 19 2013 06:43:58 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 20 2013 17:11:26 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

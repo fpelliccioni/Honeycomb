@@ -153,40 +153,40 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
 <div class="line"><a name="l00066"></a><span class="lineno"><a class="code" href="classhoney_1_1_shared_lock.html#af751aabb4184ad9febd0f80c4d82c6ca">   66</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classhoney_1_1_shared_lock.html#af751aabb4184ad9febd0f80c4d82c6ca">lock</a>()</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    {</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(_lock, <span class="stringliteral">&quot;Lock has been released&quot;</span>);</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(!_owns, <span class="stringliteral">&quot;Lock already held&quot;</span>);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(_lock, <span class="stringliteral">&quot;Lock has been released&quot;</span>);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(!_owns, <span class="stringliteral">&quot;Lock already held&quot;</span>);</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        _lock-&gt;lockShared();</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        _owns = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    }</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
 <div class="line"><a name="l00074"></a><span class="lineno"><a class="code" href="classhoney_1_1_shared_lock.html#ac64a892c57f75f5cf519a672de7671d8">   74</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classhoney_1_1_shared_lock.html#ac64a892c57f75f5cf519a672de7671d8">unlock</a>()</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    {</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(_lock, <span class="stringliteral">&quot;Lock has been released&quot;</span>);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(_owns, <span class="stringliteral">&quot;Lock not held&quot;</span>);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(_lock, <span class="stringliteral">&quot;Lock has been released&quot;</span>);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(_owns, <span class="stringliteral">&quot;Lock not held&quot;</span>);</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        _lock-&gt;unlockShared();</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        _owns = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    }</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
 <div class="line"><a name="l00082"></a><span class="lineno"><a class="code" href="classhoney_1_1_shared_lock.html#a5bb803de079796488a9f4ac53977fc24">   82</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classhoney_1_1_shared_lock.html#a5bb803de079796488a9f4ac53977fc24">tryLock</a>()</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    {</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(_lock, <span class="stringliteral">&quot;Lock has been released&quot;</span>);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(!_owns, <span class="stringliteral">&quot;Lock already held&quot;</span>);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(_lock, <span class="stringliteral">&quot;Lock has been released&quot;</span>);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(!_owns, <span class="stringliteral">&quot;Lock already held&quot;</span>);</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <span class="keywordflow">return</span> _owns = _lock-&gt;tryLockShared();</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    }</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">class</span> Rep, <span class="keyword">class</span> Period&gt;</div>
 <div class="line"><a name="l00090"></a><span class="lineno"><a class="code" href="classhoney_1_1_shared_lock.html#a74e24fe6af8e8d683862e4e5f9c794c0">   90</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classhoney_1_1_shared_lock.html#a5bb803de079796488a9f4ac53977fc24">tryLock</a>(<a class="code" href="classhoney_1_1_duration.html" title="Duration represented by repetitions of a period. The period must be a ratio.">Duration&lt;Rep,Period&gt;</a> time)</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    {</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(_lock, <span class="stringliteral">&quot;Lock has been released&quot;</span>);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(!_owns, <span class="stringliteral">&quot;Lock already held&quot;</span>);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(_lock, <span class="stringliteral">&quot;Lock has been released&quot;</span>);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(!_owns, <span class="stringliteral">&quot;Lock already held&quot;</span>);</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="keywordflow">return</span> _owns = _lock-&gt;tryLockShared(time);</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    }</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">class</span> Clock, <span class="keyword">class</span> Dur&gt;</div>
 <div class="line"><a name="l00098"></a><span class="lineno"><a class="code" href="classhoney_1_1_shared_lock.html#a069f3b1a6c87745acb6b7e6d1b9eb02d">   98</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classhoney_1_1_shared_lock.html#a5bb803de079796488a9f4ac53977fc24">tryLock</a>(<a class="code" href="classhoney_1_1_time_point.html" title="TimePoint represented by a duration since a clock&#39;s epoch time.">TimePoint&lt;Clock,Dur&gt;</a> time)</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    {</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(_lock, <span class="stringliteral">&quot;Lock has been released&quot;</span>);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(!_owns, <span class="stringliteral">&quot;Lock already held&quot;</span>);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(_lock, <span class="stringliteral">&quot;Lock has been released&quot;</span>);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(!_owns, <span class="stringliteral">&quot;Lock already held&quot;</span>);</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <span class="keywordflow">return</span> _owns = _lock-&gt;tryLockShared(time);</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    }</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
@@ -194,7 +194,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
 <div class="line"><a name="l00107"></a><span class="lineno"><a class="code" href="classhoney_1_1_shared_lock.html#a99f0357c71fef5ce5c2c0c029f057a33">  107</a></span>&#160;    <a class="code" href="classhoney_1_1_shared_lock.html#a9d882f2ae2a6e71e93a82d99518ede41">Lockable</a>&amp; <a class="code" href="classhoney_1_1_shared_lock.html#a99f0357c71fef5ce5c2c0c029f057a33">mutex</a>()</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    {</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(_lock, <span class="stringliteral">&quot;Lock has been released&quot;</span>);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(_lock, <span class="stringliteral">&quot;Lock has been released&quot;</span>);</div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <span class="keywordflow">return</span> *_lock;</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    }</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
@@ -216,7 +216,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 19 2013 06:43:56 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 20 2013 17:11:24 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

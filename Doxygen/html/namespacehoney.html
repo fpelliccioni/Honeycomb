@@ -111,10 +111,13 @@ Namespaces</h2></td></tr>
 <tr class="memdesc:namespacehoney_1_1concur"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concurrent methods and containers. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacehoney_1_1debug"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney_1_1debug.html">debug</a></td></tr>
-<tr class="memdesc:namespacehoney_1_1debug"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug mode functions. <br/></td></tr>
+<tr class="memdesc:namespacehoney_1_1debug"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="group___debug.html">Debug Mode Functions</a> <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacehoney_1_1future"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney_1_1future.html">future</a></td></tr>
 <tr class="memdesc:namespacehoney_1_1future"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classhoney_1_1_future.html" title="Unique future, guarantees sole access to a future function result.">Future</a> util. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacehoney_1_1hash"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney_1_1hash.html">hash</a></td></tr>
+<tr class="memdesc:namespacehoney_1_1hash"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data hashing functions. Produce a small fingerprint from a larger data set. Two data sets may 'collide', producing the same fingerprint. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacehoney_1_1lock"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney_1_1lock.html">lock</a></td></tr>
 <tr class="memdesc:namespacehoney_1_1lock"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classhoney_1_1_mutex.html" title="A thread lock where the lock is acquired by suspending thread execution until it becomes available...">Mutex</a> lock util. <br/></td></tr>
@@ -492,8 +495,10 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1_mono_clock.html">MonoClock</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">System-wide monotonic clock. High-resolution and steady-rate time since application start, can't go backwards.  <a href="structhoney_1_1_mono_clock.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_enum_elem_base.html">EnumElemBase</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class of all generated enum classes. A single element in the enumeration. See <a class="el" href="group___enum.html">Enumeration Classes</a>.  <a href="classhoney_1_1_enum_elem_base.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1_enum_exception.html">EnumException</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_enum_elem.html">EnumElem</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class of all generated enum classes. A single element in the enumeration. See <a class="el" href="group___enum.html">Enumeration Classes</a>.  <a href="classhoney_1_1_enum_elem.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_enum_info__.html">EnumInfo_</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run-time info about an enum class. Contains a list of elements and maps for element lookups. See <a class="el" href="group___enum.html">Enumeration Classes</a> for more info and examples.  <a href="classhoney_1_1_enum_info__.html#details">More...</a><br/></td></tr>
@@ -697,11 +702,11 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_viewport.html">Viewport</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classhoney_1_1_viewport.html" title="Viewport rectangle for rendering. Viewport space coordinates are (0,0) at top-left, (1,1) at bottom-right.">Viewport</a> rectangle for rendering. <a class="el" href="classhoney_1_1_viewport.html" title="Viewport rectangle for rendering. Viewport space coordinates are (0,0) at top-left, (1,1) at bottom-right.">Viewport</a> space coordinates are (0,0) at top-left, (1,1) at bottom-right.  <a href="classhoney_1_1_viewport.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_hash.html">Hash</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data hashing functions. Produce a small unique fingerprint from a larger data set.  <a href="classhoney_1_1_hash.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_id.html">Id</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds a string and its hashed value for fast comparison ops. See <a class="el" href="group___id.html">String Identifier</a>.  <a href="classhoney_1_1_id.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_id_constexpr.html">IdConstexpr</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classhoney_1_1_id.html" title="Holds a string and its hashed value for fast comparison ops. See String Identifier.">Id</a> created from a string literal at compile time.  <a href="classhoney_1_1_id_constexpr.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_string_stream.html">StringStream</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class to format a string for output or use as input.  <a href="classhoney_1_1_string_stream.html#details">More...</a><br/></td></tr>
@@ -1233,6 +1238,10 @@ Functions</h2></td></tr>
 <tr class="memitem:a332015ae3309190ba919823073e00505"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
 <tr class="memitem:a332015ae3309190ba919823073e00505"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacehoney.html#a332015ae3309190ba919823073e00505">deleteArray</a> (T *const &amp;p)</td></tr>
 <tr class="separator:a332015ae3309190ba919823073e00505"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5014baf79224974213c77dfa7c0c7c34"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney.html#a5014baf79224974213c77dfa7c0c7c34">mt_staticInit_impl</a> (<a class="el" href="namespacehoney.html#a2c919ee97bb88ebcd15d58a0e4ee691d">Double</a>)</td></tr>
+<tr class="separator:a5014baf79224974213c77dfa7c0c7c34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b207d1974a68928d5c98001b1b5a15a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney.html#a3b207d1974a68928d5c98001b1b5a15a">mt_staticInit_impl</a> (<a class="el" href="namespacehoney.html#a92c104ecfd2ad95bdf438833a1d0293b">Float</a>)</td></tr>
+<tr class="separator:a3b207d1974a68928d5c98001b1b5a15a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a900b28682edadda100bfea071b52acbc"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
 <tr class="memitem:a900b28682edadda100bfea071b52acbc"><td class="memTemplItemLeft" align="right" valign="top">const <a class="el" href="classhoney_1_1_numeral.html">Numeral</a>&lt; T &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacehoney.html#a900b28682edadda100bfea071b52acbc">numeral</a> ()</td></tr>
 <tr class="memdesc:a900b28682edadda100bfea071b52acbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get numeric type info safely from a static context.  <a href="#a900b28682edadda100bfea071b52acbc">More...</a><br/></td></tr>
@@ -1249,6 +1258,8 @@ Functions</h2></td></tr>
 <tr class="memitem:acff4991c4e80c114e75588805f320538"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classhoney_1_1_numeral.html">Numeral</a>&lt; Signed &gt;::Unsigned&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacehoney.html#acff4991c4e80c114e75588805f320538">stou</a> (Signed s)</td></tr>
 <tr class="memdesc:acff4991c4e80c114e75588805f320538"><td class="mdescLeft">&#160;</td><td class="mdescRight">Safe conversion from a signed type to an unsigned type.  <a href="#acff4991c4e80c114e75588805f320538">More...</a><br/></td></tr>
 <tr class="separator:acff4991c4e80c114e75588805f320538"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b78fc58212ea371b847d290c5c3af1f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney.html#a2b78fc58212ea371b847d290c5c3af1f">mt_staticInit_impl</a> (<a class="el" href="namespacehoney.html#ae495e91ec58674e76bad5c220de514bb">Quad</a>)</td></tr>
+<tr class="separator:a2b78fc58212ea371b847d290c5c3af1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3275ca81895270163e1dd0d903640342"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classhoney_1_1_mem_pool.html">MemPool</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney.html#a3275ca81895270163e1dd0d903640342">SmallAllocator_createSingleton</a> ()</td></tr>
 <tr class="memdesc:a3275ca81895270163e1dd0d903640342"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default implementation.  <a href="#a3275ca81895270163e1dd0d903640342">More...</a><br/></td></tr>
 <tr class="separator:a3275ca81895270163e1dd0d903640342"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1367,6 +1378,9 @@ Functions</h2></td></tr>
 <tr class="memitem:af605d6aa34b1ad0e9c994c37d3bfa3b6"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structhoney_1_1overload__.html">overload_</a>&lt; Funcs...&gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacehoney.html#af605d6aa34b1ad0e9c994c37d3bfa3b6">overload</a> (Funcs &amp;&amp;...fs)</td></tr>
 <tr class="memdesc:af605d6aa34b1ad0e9c994c37d3bfa3b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an overloaded visitor functor.  <a href="#af605d6aa34b1ad0e9c994c37d3bfa3b6">More...</a><br/></td></tr>
 <tr class="separator:af605d6aa34b1ad0e9c994c37d3bfa3b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga28e90d1b2c7b790c4415e6c6fcd4cabe"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="classhoney_1_1_id_constexpr.html">IdConstexpr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___id.html#ga28e90d1b2c7b790c4415e6c6fcd4cabe">operator&quot;&quot;_id</a> (const char *str, size_t len)</td></tr>
+<tr class="memdesc:ga28e90d1b2c7b790c4415e6c6fcd4cabe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an id from a string literal at compile time. Can be used as a case expression in a switch block (ex. case "foo"_id: ).  <a href="group___id.html#ga28e90d1b2c7b790c4415e6c6fcd4cabe">More...</a><br/></td></tr>
+<tr class="separator:ga28e90d1b2c7b790c4415e6c6fcd4cabe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4d190bfa6abb98bb8d8b8b61d32c77a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classhoney_1_1_string_stream.html">StringStream</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney.html#af4d190bfa6abb98bb8d8b8b61d32c77a">sout</a> ()</td></tr>
 <tr class="memdesc:af4d190bfa6abb98bb8d8b8b61d32c77a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shorthand to create string stream.  <a href="#af4d190bfa6abb98bb8d8b8b61d32c77a">More...</a><br/></td></tr>
 <tr class="separator:af4d190bfa6abb98bb8d8b8b61d32c77a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -3914,6 +3928,54 @@ template&lt;class T , class R  = typename std::decay&lt;T&gt;::type&gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="a5014baf79224974213c77dfa7c0c7c34"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">honey::mt_staticInit_impl </td>
+          <td>(</td>
+          <td class="paramtype">Double&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a3b207d1974a68928d5c98001b1b5a15a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">honey::mt_staticInit_impl </td>
+          <td>(</td>
+          <td class="paramtype">Float&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a2b78fc58212ea371b847d290c5c3af1f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">honey::mt_staticInit_impl </td>
+          <td>(</td>
+          <td class="paramtype">Quad&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a900b28682edadda100bfea071b52acbc"></a>
 <div class="memitem">
 <div class="memproto">
@@ -4109,7 +4171,7 @@ template&lt;class Unsigned &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 19 2013 06:43:58 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 20 2013 17:11:26 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

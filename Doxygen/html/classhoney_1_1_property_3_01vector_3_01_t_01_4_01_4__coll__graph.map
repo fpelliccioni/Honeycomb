@@ -1,8 +1,10 @@
 <map id="honey::Property&lt; vector&lt; T &gt; &gt;" name="honey::Property&lt; vector&lt; T &gt; &gt;">
-<area shape="rect" id="node2" title="STL class." alt="" coords="5,273,117,301"/>
-<area shape="rect" id="node4" href="$classhoney_1_1_property_base.html" title="Base class for all properties." alt="" coords="142,273,287,301"/>
-<area shape="rect" id="node5" href="$classhoney_1_1_object.html" title="Base class for objects." alt="" coords="134,179,236,207"/>
-<area shape="rect" id="node6" href="$classhoney_1_1_shared_obj.html" title="Reference&#45;counted object for intrusive shared pointers." alt="" coords="94,86,223,114"/>
-<area shape="rect" id="node7" href="$structhoney_1_1mt_1_1_no_copy.html" title="Inherit to declare that class is not copyable." alt="" coords="91,6,225,34"/>
-<area shape="rect" id="node8" href="$classhoney_1_1_id.html" title="Holds a string and its hashed value for fast comparison ops. See String Identifier." alt="" coords="247,86,323,114"/>
+<area shape="rect" id="node2" title="STL class." alt="" coords="5,289,117,317"/>
+<area shape="rect" id="node4" href="$classhoney_1_1_property_base.html" title="Base class for all properties." alt="" coords="152,289,297,317"/>
+<area shape="rect" id="node5" href="$classhoney_1_1_object.html" title="Base class for objects." alt="" coords="84,195,187,223"/>
+<area shape="rect" id="node6" href="$classhoney_1_1_shared_obj.html" title="Reference&#45;counted object for intrusive shared pointers." alt="" coords="34,94,163,122"/>
+<area shape="rect" id="node7" href="$structhoney_1_1mt_1_1_no_copy.html" title="Inherit to declare that class is not copyable." alt="" coords="31,6,165,34"/>
+<area shape="rect" id="node8" href="$classhoney_1_1_id.html" title="Holds a string and its hashed value for fast comparison ops. See String Identifier." alt="" coords="187,94,263,122"/>
+<area shape="rect" id="node9" href="$classhoney_1_1_string.html" title="Unicode UTF&#45;16 string class, wrapper around std::u16string." alt="" coords="294,195,393,223"/>
+<area shape="rect" id="node10" title="STL class." alt="" coords="288,86,413,130"/>
 </map>

@@ -132,12 +132,13 @@ Public Member Functions</h2></td></tr>
 struct honey::overload_&lt; Func, Funcs...&gt;</h3>
 
 <p>An overloaded visitor functor. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="namespacehoney.html#af605d6aa34b1ad0e9c994c37d3bfa3b6" title="Create an overloaded visitor functor.">overload()</a> to create. Example: <pre class="fragment">int res = variant.visit&lt;int&gt;(overload
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="namespacehoney.html#af605d6aa34b1ad0e9c994c37d3bfa3b6" title="Create an overloaded visitor functor.">overload()</a> to create.</dd></dl>
+<p>Example: </p>
+<pre class="fragment">int res = variant.visit&lt;int&gt;(overload
 (
     [](char) { return 0; },
     [](String) { return 1; }
-));</pre> </dd></dl>
-</div><h2 class="groupheader">Member Typedef Documentation</h2>
+));</pre> </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a class="anchor" id="ac4bcd60be5876ecfe3e5ea25a7708e1e"></a>
 <div class="memitem">
 <div class="memproto">
@@ -195,7 +196,7 @@ template&lt;class Func , class... Funcs&gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 19 2013 06:44:02 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 20 2013 17:11:30 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

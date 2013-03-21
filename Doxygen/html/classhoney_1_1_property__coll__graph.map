@@ -1,7 +1,9 @@
 <map id="honey::Property&lt; T &gt;" name="honey::Property&lt; T &gt;">
-<area shape="rect" id="node2" href="$classhoney_1_1_property_base.html" title="Base class for all properties." alt="" coords="100,259,245,287"/>
-<area shape="rect" id="node3" href="$classhoney_1_1_object.html" title="Base class for objects." alt="" coords="47,179,149,207"/>
-<area shape="rect" id="node4" href="$classhoney_1_1_shared_obj.html" title="Reference&#45;counted object for intrusive shared pointers." alt="" coords="8,86,136,114"/>
+<area shape="rect" id="node2" href="$classhoney_1_1_property_base.html" title="Base class for all properties." alt="" coords="140,289,285,317"/>
+<area shape="rect" id="node3" href="$classhoney_1_1_object.html" title="Base class for objects." alt="" coords="62,195,164,223"/>
+<area shape="rect" id="node4" href="$classhoney_1_1_shared_obj.html" title="Reference&#45;counted object for intrusive shared pointers." alt="" coords="8,94,136,122"/>
 <area shape="rect" id="node5" href="$structhoney_1_1mt_1_1_no_copy.html" title="Inherit to declare that class is not copyable." alt="" coords="4,6,139,34"/>
-<area shape="rect" id="node6" href="$classhoney_1_1_id.html" title="Holds a string and its hashed value for fast comparison ops. See String Identifier." alt="" coords="161,86,236,114"/>
+<area shape="rect" id="node6" href="$classhoney_1_1_id.html" title="Holds a string and its hashed value for fast comparison ops. See String Identifier." alt="" coords="161,94,236,122"/>
+<area shape="rect" id="node7" href="$classhoney_1_1_string.html" title="Unicode UTF&#45;16 string class, wrapper around std::u16string." alt="" coords="267,195,367,223"/>
+<area shape="rect" id="node8" title="STL class." alt="" coords="261,86,387,130"/>
 </map>

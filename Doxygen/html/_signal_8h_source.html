@@ -105,7 +105,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
 <div class="line"><a name="l00020"></a><span class="lineno"><a class="code" href="group___signal.html#ga509fbfc60275d7f1a651ece5c18e98b2">   20</a></span>&#160;<span class="preprocessor">#define SIGNAL_DECL(BaseClass) \</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">    IdStatic(_signalBase, #BaseClass)</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">    mt_staticObj(const String, _signalBase, (#BaseClass))</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00024"></a><span class="lineno"><a class="code" href="group___signal.html#gafbc90edb51e3583b105ae32a147c7cea">   24</a></span>&#160;<span class="preprocessor">#define SIGNAL(Name, Param) \</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">    struct Name                                 : Signal&lt;void Param&gt; { IdStatic(id, sout() &lt;&lt; _signalBase() &lt;&lt; &quot;::&quot;#Name) };</span></div>
@@ -175,7 +175,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 19 2013 06:43:55 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 20 2013 17:11:23 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

@@ -88,7 +88,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#namespaces">Namespaces</a>  </div>
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Hash.cpp File Reference</div>  </div>
 </div><!--header-->
@@ -109,11 +110,30 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacehoney"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney.html">honey</a></td></tr>
 <tr class="memdesc:namespacehoney"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global Honeycomb namespace. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacehoney_1_1hash"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney_1_1hash.html">honey::hash</a></td></tr>
+<tr class="memdesc:namespacehoney_1_1hash"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data hashing functions. Produce a small fingerprint from a larger data set. Two data sets may 'collide', producing the same fingerprint. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a39d9f6a5348f13cc48d4183db01448ae"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney_1_1hash.html#a39d9f6a5348f13cc48d4183db01448ae">honey::hash::fast</a> (const uint8 *data, int len, int seed=0)</td></tr>
+<tr class="memdesc:a39d9f6a5348f13cc48d4183db01448ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Quickly generate a small hash value. Each seed value produces a unique hash from the same data.  <a href="#a39d9f6a5348f13cc48d4183db01448ae">More...</a><br/></td></tr>
+<tr class="separator:a39d9f6a5348f13cc48d4183db01448ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11af965f5ba4bfc8b28f3cf44f62c801"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney_1_1hash.html#a11af965f5ba4bfc8b28f3cf44f62c801">honey::hash::fast</a> (const String &amp;str, int seed)</td></tr>
+<tr class="separator:a11af965f5ba4bfc8b28f3cf44f62c801"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a348298efed81675f22febc8b113fa393"><td class="memItemLeft" align="right" valign="top">String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney_1_1hash.html#a348298efed81675f22febc8b113fa393">honey::hash::toString</a> (int hash)</td></tr>
+<tr class="memdesc:a348298efed81675f22febc8b113fa393"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert hash value to string, produces hex code independent of platform endian.  <a href="#a348298efed81675f22febc8b113fa393">More...</a><br/></td></tr>
+<tr class="separator:a348298efed81675f22febc8b113fa393"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7147e45f1ccc05dccc075f15fad6a9a2"><td class="memItemLeft" align="right" valign="top">SecureData&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney_1_1hash.html#a7147e45f1ccc05dccc075f15fad6a9a2">honey::hash::secure</a> (const uint8 *data, int len, int seed=0)</td></tr>
+<tr class="memdesc:a7147e45f1ccc05dccc075f15fad6a9a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a large secure hash value.  <a href="#a7147e45f1ccc05dccc075f15fad6a9a2">More...</a><br/></td></tr>
+<tr class="separator:a7147e45f1ccc05dccc075f15fad6a9a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc29d1b204866a9deb5ccb8869148c63"><td class="memItemLeft" align="right" valign="top">SecureData&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehoney_1_1hash.html#acc29d1b204866a9deb5ccb8869148c63">honey::hash::secure</a> (const String &amp;str, int seed)</td></tr>
+<tr class="separator:acc29d1b204866a9deb5ccb8869148c63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 19 2013 06:43:57 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 20 2013 17:11:25 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

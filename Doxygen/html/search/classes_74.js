@@ -48,5 +48,6 @@ var searchData=
   ['tupleiter_3c_20iter_2c_20i_2c_20std_3a_3aforward_5fiterator_5ftag_20_3e',['TupleIter&lt; Iter, I, std::forward_iterator_tag &gt;',['../classhoney_1_1_tuple_iter_3_01_iter_00_01_i_00_01std_1_1forward__iterator__tag_01_4.html',1,'honey']]],
   ['type',['Type',['../structhoney_1_1variant_1_1_type.html',1,'honey::variant']]],
   ['type',['Type',['../classhoney_1_1_com_registry_1_1_type.html',1,'honey::ComRegistry']]],
-  ['typeat',['typeAt',['../structhoney_1_1mt_1_1type_at.html',1,'honey::mt']]]
+  ['typeat',['typeAt',['../structhoney_1_1mt_1_1type_at.html',1,'honey::mt']]],
+  ['typeinfo',['TypeInfo',['../classhoney_1_1_object_1_1_type_info.html',1,'honey::Object']]]
 ];

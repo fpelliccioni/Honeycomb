@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structhoney_1_1lockfree_1_1_mem_1_1_thread_data_1_1_recycle.html" title="Lock&#45;free list of recycled free nodes." alt="" coords="6,5,167,65"/>
+<area shape="rect" id="node1" href="$structhoney_1_1lockfree_1_1_mem_link.html" title="Base link class, contains a generic Cas&#45;able data chunk. The data chunk contains a pointer to a MemNo..." alt="" coords="5,13,179,57"/>
+<area shape="rect" id="node2" href="$structhoney_1_1lockfree_1_1_list_1_1_node_1_1_link.html" title="Combines node pointer and delete mark in one Cas&#45;able integer." alt="" coords="227,5,394,65"/>
 </map>

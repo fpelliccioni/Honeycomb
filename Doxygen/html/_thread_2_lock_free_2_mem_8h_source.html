@@ -284,7 +284,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;        node.trace = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;</div>
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;        <span class="comment">//Get free del node</span></div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;        <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(td.delNodeFreeList.size() &gt; 0, <span class="stringliteral">&quot;Not enough del nodes, algorithm problem&quot;</span>);</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;        <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(td.delNodeFreeList.size() &gt; 0, <span class="stringliteral">&quot;Not enough del nodes, algorithm problem&quot;</span>);</div>
 <div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;        <span class="keyword">auto</span>&amp; delNode = *td.delNodeFreeList.back();</div>
 <div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;        td.delNodeFreeList.pop_back();</div>
 <div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;        <span class="comment">//Init del node tlref lookup</span></div>
@@ -309,7 +309,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    {</div>
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;        ThreadData&amp; td = threadData();</div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;        <span class="comment">//Get free tlref index</span></div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;        <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(td.tlrefFreeList.size() &gt; 0, <span class="stringliteral">&quot;Not enough thread-local node references&quot;</span>);</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;        <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(td.tlrefFreeList.size() &gt; 0, <span class="stringliteral">&quot;Not enough thread-local node references&quot;</span>);</div>
 <div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;        <span class="keywordtype">int</span> index = td.tlrefFreeList.back();</div>
 <div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;</div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;        <a class="code" href="classhoney_1_1lockfree_1_1_mem.html#a90bdbf62404090e4133191d1b673f5da">Node</a>* node = <span class="keyword">nullptr</span>;</div>
@@ -346,7 +346,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;</div>
 <div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;        ThreadData&amp; td = threadData();</div>
 <div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;        <span class="comment">//Get free tlref index</span></div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;        <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(td.tlrefFreeList.size() &gt; 0, <span class="stringliteral">&quot;Not enough thread-local node references&quot;</span>);</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;        <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(td.tlrefFreeList.size() &gt; 0, <span class="stringliteral">&quot;Not enough thread-local node references&quot;</span>);</div>
 <div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;        <span class="keywordtype">int</span> index = td.tlrefFreeList.back();</div>
 <div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;        td.tlrefFreeList.pop_back();</div>
 <div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;        <span class="comment">//Set up tlref</span></div>
@@ -359,7 +359,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;        <span class="keyword">auto</span>&amp; tlref = *node.tlref;</div>
 <div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;        <span class="comment">//Only release if this thread has no more references</span></div>
 <div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;        <span class="keywordflow">if</span> (--tlref.ref &gt; 0) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;        <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(tlref.ref == 0, <span class="stringliteral">&quot;Thread-local node reference already released&quot;</span>);</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;        <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(tlref.ref == 0, <span class="stringliteral">&quot;Thread-local node reference already released&quot;</span>);</div>
 <div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;</div>
 <div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;        ThreadData&amp; td = threadData();</div>
 <div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;        <span class="comment">//Return tlref index to free list</span></div>
@@ -405,7 +405,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    {</div>
 <div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;        <a class="code" href="classhoney_1_1_spin_lock.html#af46a14c52f72368cc6c3dd220c4c24bc">SpinLock::Scoped</a> _(_threadDataLock);</div>
 <div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;        <span class="comment">//Increase thread count</span></div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;        <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(_threadDataCount &lt; _threadMax, <span class="stringliteral">&quot;Too many threads accessing memory manager&quot;</span>);</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;        <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(_threadDataCount &lt; _threadMax, <span class="stringliteral">&quot;Too many threads accessing memory manager&quot;</span>);</div>
 <div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;        <span class="comment">//Create new data and add to list</span></div>
 <div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;        ThreadData* threadData = <span class="keyword">new</span> ThreadData(*<span class="keyword">this</span>, _threadDataCount);</div>
 <div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;        _threadDataList[_threadDataCount] = threadData;</div>
@@ -561,7 +561,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 19 2013 06:43:52 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 20 2013 17:11:20 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

@@ -187,8 +187,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classhoney_1_1_mem_pool.html#a0774bc8c7a9946c64b3095b7ab945454" title="Ensure that all used/free blocks are valid (check signatures)">validate</a>(<span class="keywordtype">int</span> sig)</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;            {</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;                <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(debug.sig == sigFree || debug.sig == sigUsed, <span class="stringliteral">&quot;Error: invalid block signature. Block header overwritten.&quot;</span>);</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;                <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(debug.sig == sig, <span class="stringliteral">&quot;Error: invalid block signature. Block not in expected state (ex. block freed twice).&quot;</span>);</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;                <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(debug.sig == sigFree || debug.sig == sigUsed, <span class="stringliteral">&quot;Error: invalid block signature. Block header overwritten.&quot;</span>);</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;                <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(debug.sig == sig, <span class="stringliteral">&quot;Error: invalid block signature. Block not in expected state (ex. block freed twice).&quot;</span>);</div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;            }</div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="preprocessor">        #else</span></div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="preprocessor"></span>            <span class="keywordtype">void</span> <a class="code" href="classhoney_1_1_mem_pool.html#a0774bc8c7a9946c64b3095b7ab945454" title="Ensure that all used/free blocks are valid (check signatures)">validate</a>(<span class="keywordtype">int</span>) {}</div>
@@ -339,7 +339,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 19 2013 06:43:55 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 20 2013 17:11:23 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

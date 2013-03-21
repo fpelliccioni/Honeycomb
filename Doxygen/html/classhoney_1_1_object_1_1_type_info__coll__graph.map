@@ -1,0 +1,5 @@
+<map id="honey::Object::TypeInfo" name="honey::Object::TypeInfo">
+<area shape="rect" id="node2" href="$classhoney_1_1_id.html" title="Holds a string and its hashed value for fast comparison ops. See String Identifier." alt="" coords="7,102,83,130"/>
+<area shape="rect" id="node3" href="$classhoney_1_1_string.html" title="Unicode UTF&#45;16 string class, wrapper around std::u16string." alt="" coords="107,102,207,130"/>
+<area shape="rect" id="node4" title="STL class." alt="" coords="95,6,220,50"/>
+</map>

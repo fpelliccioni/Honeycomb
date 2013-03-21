@@ -170,9 +170,9 @@ Functions</h2></td></tr>
 <div class="line">    foo[key_int()] = 2;                                 <span class="comment">//Set</span></div>
 <div class="line">    foo[key_id()] = <span class="stringliteral">&quot;foo2&quot;</span>;</div>
 <div class="line">                                                                        </div>
-<div class="line">    <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(foo.hasKey(key_id()) &amp;&amp; FooMap::hasKey_&lt;key_id&gt;::value);         <span class="comment">//Check if has key at run/compile-time</span></div>
-<div class="line">    <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(( std::is_same&lt; FooMap::getResult&lt;key_id&gt;::type, Id &gt;::value )); <span class="comment">//The result type of get(key_id) is Id </span></div>
-<div class="line">    <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(foo.size() == 2 &amp;&amp; FooMap::size_::value == 2);                   <span class="comment">//Get number of keys at run/compile-time</span></div>
+<div class="line">    <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(foo.hasKey(key_id()) &amp;&amp; FooMap::hasKey_&lt;key_id&gt;::value);         <span class="comment">//Check if has key at run/compile-time</span></div>
+<div class="line">    <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(( std::is_same&lt; FooMap::getResult&lt;key_id&gt;::type, Id &gt;::value )); <span class="comment">//The result type of get(key_id) is Id </span></div>
+<div class="line">    <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(foo.size() == 2 &amp;&amp; FooMap::size_::value == 2);                   <span class="comment">//Get number of keys at run/compile-time</span></div>
 <div class="line"></div>
 <div class="line">    x = foo.get(key_int());                             <span class="comment">//Get at key</span></div>
 <div class="line">    foo.set(key_id() = <span class="stringliteral">&quot;foo3&quot;</span>);                         <span class="comment">//Set accepts any type, converts using operator=.  Returns true.</span></div>
@@ -198,7 +198,7 @@ Functions</h2></td></tr>
 <div class="line">    <span class="keyword">auto</span> fooErase = fooInsert.erase(key_id(), key_int());</div>
 <div class="line"></div>
 <div class="line">    <span class="keyword">auto</span> empty = foo.clear();                           <span class="comment">//Clear map of keys, returns MtMap&lt;&gt;::type</span></div>
-<div class="line">    <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(empty.empty());                              <span class="comment">//Test if empty at run-time</span></div>
+<div class="line">    <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(empty.empty());                              <span class="comment">//Test if empty at run-time</span></div>
 <div class="line"></div>
 <div class="line">    mt::Void empty_val = empty[key_string()];           <span class="comment">//Key doesn&#39;t exist, returns mt::Void</span></div>
 <div class="line">    <a class="code" href="group___meta.html#ga27ee6ead2459ec60e1f23efc15a758c4" title="Remove the unused parameter warning.">mt_unused</a>(empty_val);</div>
@@ -219,13 +219,13 @@ Functions</h2></td></tr>
 <div class="line">    <span class="keywordtype">void</span> operator()(Key key, <span class="keyword">const</span> Val&amp; val)</div>
 <div class="line">    {</div>
 <div class="line">        <a class="code" href="group___meta.html#ga27ee6ead2459ec60e1f23efc15a758c4" title="Remove the unused parameter warning.">mt_unused</a>(key);</div>
-<div class="line">        <a class="code" href="namespacehoney_1_1debug.html#ae472c9a2582401774c9e0d396f7b19a5" title="Print string to debug output window. Does nothing in final mode.">debug::print</a>(<a class="code" href="namespacehoney.html#af4d190bfa6abb98bb8d8b8b61d32c77a" title="Shorthand to create string stream.">sout</a>() &lt;&lt; <span class="stringliteral">&quot;Key: &quot;</span> &lt;&lt; key.id() &lt;&lt; <span class="stringliteral">&quot; ; Value: &quot;</span> &lt;&lt; val &lt;&lt; endl);</div>
+<div class="line">        <a class="code" href="group___debug.html#gac9e7326b4569847122754061b96c42d0" title="Print string to debug output window. Does nothing in final mode.">debug_print</a>(<a class="code" href="namespacehoney.html#af4d190bfa6abb98bb8d8b8b61d32c77a" title="Shorthand to create string stream.">sout</a>() &lt;&lt; <span class="stringliteral">&quot;Key: &quot;</span> &lt;&lt; key.id() &lt;&lt; <span class="stringliteral">&quot; ; Value: &quot;</span> &lt;&lt; val &lt;&lt; endl);</div>
 <div class="line">    }</div>
 <div class="line">                                                        <span class="comment">//Overload for specific key/value pair</span></div>
 <div class="line">    <span class="keywordtype">void</span> operator()(key_int key, <span class="keywordtype">int</span>&amp; val)</div>
 <div class="line">    {</div>
 <div class="line">        <a class="code" href="group___meta.html#ga27ee6ead2459ec60e1f23efc15a758c4" title="Remove the unused parameter warning.">mt_unused</a>(key);</div>
-<div class="line">        <a class="code" href="namespacehoney_1_1debug.html#ae472c9a2582401774c9e0d396f7b19a5" title="Print string to debug output window. Does nothing in final mode.">debug::print</a>(<a class="code" href="namespacehoney.html#af4d190bfa6abb98bb8d8b8b61d32c77a" title="Shorthand to create string stream.">sout</a>() &lt;&lt; <span class="stringliteral">&quot;key: &quot;</span> &lt;&lt; key.id() &lt;&lt; <span class="stringliteral">&quot; ; value: &quot;</span> &lt;&lt; val &lt;&lt; endl);</div>
+<div class="line">        <a class="code" href="group___debug.html#gac9e7326b4569847122754061b96c42d0" title="Print string to debug output window. Does nothing in final mode.">debug_print</a>(<a class="code" href="namespacehoney.html#af4d190bfa6abb98bb8d8b8b61d32c77a" title="Shorthand to create string stream.">sout</a>() &lt;&lt; <span class="stringliteral">&quot;key: &quot;</span> &lt;&lt; key.id() &lt;&lt; <span class="stringliteral">&quot; ; value: &quot;</span> &lt;&lt; val &lt;&lt; endl);</div>
 <div class="line"></div>
 <div class="line">        val = -1;                                       <span class="comment">//Modify value in map</span></div>
 <div class="line">    }</div>
@@ -235,11 +235,11 @@ Functions</h2></td></tr>
 <div class="line"><span class="keywordtype">void</span> iterTest(T&amp; fooInsert)</div>
 <div class="line">{</div>
 <div class="line">                                                        <span class="comment">//Use Begin/End and functor to print contents of map</span></div>
-<div class="line">    <a class="code" href="namespacehoney_1_1debug.html#ae472c9a2582401774c9e0d396f7b19a5" title="Print string to debug output window. Does nothing in final mode.">debug::print</a>(<a class="code" href="namespacehoney.html#af4d190bfa6abb98bb8d8b8b61d32c77a" title="Shorthand to create string stream.">sout</a>() &lt;&lt; <span class="stringliteral">&quot;--fooInsert--&quot;</span> &lt;&lt; endl);</div>
+<div class="line">    <a class="code" href="group___debug.html#gac9e7326b4569847122754061b96c42d0" title="Print string to debug output window. Does nothing in final mode.">debug_print</a>(<a class="code" href="namespacehoney.html#af4d190bfa6abb98bb8d8b8b61d32c77a" title="Shorthand to create string stream.">sout</a>() &lt;&lt; <span class="stringliteral">&quot;--fooInsert--&quot;</span> &lt;&lt; endl);</div>
 <div class="line">    <a class="code" href="group___mt_map.html#ga431cdc6f3ed8738d0b2aba5e88b65106" title="Iterate over map calling functor (visitor) for each key/value pair.">for_each_mtmap</a>(fooInsert.begin(), fooInsert.end(), Functor());</div>
 <div class="line"></div>
 <div class="line">                                                        <span class="comment">//Use iter() to get an iterator by key</span></div>
-<div class="line">    <a class="code" href="namespacehoney_1_1debug.html#ae472c9a2582401774c9e0d396f7b19a5" title="Print string to debug output window. Does nothing in final mode.">debug::print</a>(<a class="code" href="namespacehoney.html#af4d190bfa6abb98bb8d8b8b61d32c77a" title="Shorthand to create string stream.">sout</a>() &lt;&lt; <span class="stringliteral">&quot;--fooInsert[key_int, end]--&quot;</span> &lt;&lt; endl);</div>
+<div class="line">    <a class="code" href="group___debug.html#gac9e7326b4569847122754061b96c42d0" title="Print string to debug output window. Does nothing in final mode.">debug_print</a>(<a class="code" href="namespacehoney.html#af4d190bfa6abb98bb8d8b8b61d32c77a" title="Shorthand to create string stream.">sout</a>() &lt;&lt; <span class="stringliteral">&quot;--fooInsert[key_int, end]--&quot;</span> &lt;&lt; endl);</div>
 <div class="line">    <a class="code" href="group___mt_map.html#ga431cdc6f3ed8738d0b2aba5e88b65106" title="Iterate over map calling functor (visitor) for each key/value pair.">for_each_mtmap</a>(fooInsert.iter(key_int()), fooInsert.end(), Functor());</div>
 <div class="line">}</div>
 <div class="line"></div>
@@ -249,7 +249,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="keywordtype">void</span> keywordFunc(<a class="code" href="_mt_map_8h.html#a1bc2d32685359ad856d94102e13a2986">MtMap</a>&lt;<a class="code" href="namespacehoney.html#a69d96431bd36629dee74ae9b231c67e7">int8</a>, key_char, <span class="keywordtype">int</span>, key_int, option&lt;Id&gt;, key_id&gt;::type _)</div>
 <div class="line">{</div>
 <div class="line">    _.setDefaults(<a class="code" href="group___mt_map.html#gae7a917974861c94ba0306872990e0860" title="mtmap(MtPair&amp;&amp;...) Construct a map from (key() = value) pairs">mtmap</a>(key_id() = []{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;default&quot;</span>; }));</div>
-<div class="line">    <a class="code" href="namespacehoney_1_1debug.html#ae472c9a2582401774c9e0d396f7b19a5" title="Print string to debug output window. Does nothing in final mode.">debug::print</a>(<a class="code" href="namespacehoney.html#af4d190bfa6abb98bb8d8b8b61d32c77a" title="Shorthand to create string stream.">sout</a>() &lt;&lt; <span class="stringliteral">&quot;Keyword Args: &quot;</span> &lt;&lt; _ &lt;&lt; endl);</div>
+<div class="line">    <a class="code" href="group___debug.html#gac9e7326b4569847122754061b96c42d0" title="Print string to debug output window. Does nothing in final mode.">debug_print</a>(<a class="code" href="namespacehoney.html#af4d190bfa6abb98bb8d8b8b61d32c77a" title="Shorthand to create string stream.">sout</a>() &lt;&lt; <span class="stringliteral">&quot;Keyword Args: &quot;</span> &lt;&lt; _ &lt;&lt; endl);</div>
 <div class="line">}</div>
 <div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> keywordTest()</div>
@@ -400,7 +400,7 @@ template&lt;class Iter1 , class Iter2 , class Func &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 19 2013 06:43:58 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 20 2013 17:11:26 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

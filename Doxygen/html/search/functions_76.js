@@ -1,7 +1,7 @@
 var searchData=
 [
   ['v',['v',['../classhoney_1_1_eigen.html#a67d3dfb0f438f28b084e7c1532b1d87d',1,'honey::Eigen']]],
-  ['val',['val',['../classhoney_1_1_enum_elem_base.html#a3ca35711252a85c727184f85fac2e3af',1,'honey::EnumElemBase']]],
+  ['val',['val',['../classhoney_1_1_enum_elem.html#ad6606106617c2bc58a9b47a68a20f722',1,'honey::EnumElem']]],
   ['valat',['valAt',['../namespacehoney_1_1mt.html#a719dab7fa0eb281c93a8871360daa1c5',1,'honey::mt']]],
   ['valid',['valid',['../classhoney_1_1_future_base.html#a0410c99295054f5badd31e1d96ca9cbb',1,'honey::FutureBase::valid()'],['../classhoney_1_1_packaged_task_3_01_r_07_param_8_8_8_08_4.html#a3871d0dffcc2df699c2f746aeeaf4c4f',1,'honey::PackagedTask&lt; R(Param...)&gt;::valid()'],['../classhoney_1_1_promise.html#a9936f3124693faa6489a8ba1142ab296',1,'honey::Promise::valid()'],['../classhoney_1_1lockfree_1_1_list_1_1_iter__.html#ae57c81f7560248a6a4cca14aa0fdb981',1,'honey::lockfree::List::Iter_::valid()'],['../classhoney_1_1lockfree_1_1_list_1_1_iter_r__.html#aebb4b3f9cb835731f36ebc45c8468fdc',1,'honey::lockfree::List::IterR_::valid()']]],
   ['validate',['validate',['../classhoney_1_1_mem_pool.html#a0774bc8c7a9946c64b3095b7ab945454',1,'honey::MemPool']]],

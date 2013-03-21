@@ -111,7 +111,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
 <div class="line"><a name="l00023"></a><span class="lineno"><a class="code" href="classhoney_1_1_scene_list.html#a409ca1525dad8f79a0fbe14e90b46137">   23</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classhoney_1_1_scene_list.html#a409ca1525dad8f79a0fbe14e90b46137" title="Insert scene into index.">insert</a>(<a class="code" href="classhoney_1_1_scene.html" title="Provides high-level scene control.">Scene</a>&amp; scene, <span class="keyword">const</span> <a class="code" href="classhoney_1_1_id.html" title="Holds a string and its hashed value for fast comparison ops. See String Identifier.">Id</a>&amp; <span class="keywordtype">id</span>, <span class="keywordtype">int</span> index)</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    {</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(!<a class="code" href="classhoney_1_1_scene_list.html#af96fbf59ffdb54493b1cd8d534ac8f89" title="Check if list has scene.">contains</a>(<span class="keywordtype">id</span>));</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(!<a class="code" href="classhoney_1_1_scene_list.html#af96fbf59ffdb54493b1cd8d534ac8f89" title="Check if list has scene.">contains</a>(<span class="keywordtype">id</span>));</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        scene.<a class="code" href="classhoney_1_1_scene.html#ae3f2df6ac3d5fdeec5a531d3946291b3" title="Override from object, updates scene manager map.">setInstId</a>(<span class="keywordtype">id</span>);</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        _list.insert(_list.begin() + index, &amp;scene);</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        _map[scene.<a class="code" href="classhoney_1_1_object.html#ae2c6af0a386542871e3a679dc551d94f">getInstId</a>()] = &amp;scene;</div>
@@ -132,7 +132,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00047"></a><span class="lineno"><a class="code" href="classhoney_1_1_scene_list.html#aca6fa709a0b9166dbffe254e3bc86947">   47</a></span>&#160;    <a class="code" href="classhoney_1_1_scene.html" title="Provides high-level scene control.">Scene</a>&amp; <span class="keyword">get</span>(<span class="keyword">const</span> <a class="code" href="classhoney_1_1_id.html" title="Holds a string and its hashed value for fast comparison ops. See String Identifier.">Id</a>&amp; id)</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    {</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        Map::iterator it = _map.find(<span class="keywordtype">id</span>);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(it != _map.end(), <a class="code" href="namespacehoney.html#af4d190bfa6abb98bb8d8b8b61d32c77a" title="Shorthand to create string stream.">sout</a>() &lt;&lt; <span class="stringliteral">&quot;Scene not found: &quot;</span> &lt;&lt; id);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(it != _map.end(), <a class="code" href="namespacehoney.html#af4d190bfa6abb98bb8d8b8b61d32c77a" title="Shorthand to create string stream.">sout</a>() &lt;&lt; <span class="stringliteral">&quot;Scene not found: &quot;</span> &lt;&lt; id);</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keywordflow">return</span> *it-&gt;second;</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    }</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
@@ -160,7 +160,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 19 2013 06:43:55 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 20 2013 17:11:24 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

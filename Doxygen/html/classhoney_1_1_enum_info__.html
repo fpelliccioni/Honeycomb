@@ -121,18 +121,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a010bfa23760e9f28c5c6acda4cf456c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all elements.  <a href="#a010bfa23760e9f28c5c6acda4cf456c1">More...</a><br/></td></tr>
 <tr class="separator:a010bfa23760e9f28c5c6acda4cf456c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad50365b85db45aac1f90772401f93957"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structhoney_1_1_enum_info___1_1_elem.html">Elem</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_enum_info__.html#ad50365b85db45aac1f90772401f93957">elem</a> (const <a class="el" href="classhoney_1_1_id.html">Id</a> &amp;id) const </td></tr>
-<tr class="memdesc:ad50365b85db45aac1f90772401f93957"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get element by id, returns null element if not found.  <a href="#ad50365b85db45aac1f90772401f93957">More...</a><br/></td></tr>
+<tr class="memdesc:ad50365b85db45aac1f90772401f93957"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get element by id, throws <a class="el" href="structhoney_1_1_enum_exception.html">EnumException</a> if not found.  <a href="#ad50365b85db45aac1f90772401f93957">More...</a><br/></td></tr>
 <tr class="separator:ad50365b85db45aac1f90772401f93957"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5568a4fa9578d7ffe0fa6a87e3ac124b"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structhoney_1_1_enum_info___1_1_elem.html">Elem</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_enum_info__.html#a5568a4fa9578d7ffe0fa6a87e3ac124b">elem</a> (int val) const </td></tr>
-<tr class="memdesc:a5568a4fa9578d7ffe0fa6a87e3ac124b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get element by value, returns null element if not found.  <a href="#a5568a4fa9578d7ffe0fa6a87e3ac124b">More...</a><br/></td></tr>
+<tr class="memdesc:a5568a4fa9578d7ffe0fa6a87e3ac124b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get element by value, throws <a class="el" href="structhoney_1_1_enum_exception.html">EnumException</a> if not found.  <a href="#a5568a4fa9578d7ffe0fa6a87e3ac124b">More...</a><br/></td></tr>
 <tr class="separator:a5568a4fa9578d7ffe0fa6a87e3ac124b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a8ff888958fb5d911848a5cc5e0a4131f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_enum_info__.html#a8ff888958fb5d911848a5cc5e0a4131f">EnumInfo_</a> ()</td></tr>
 <tr class="separator:a8ff888958fb5d911848a5cc5e0a4131f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af5774828f916a767b95672166b48c146"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_enum_info__.html#af5774828f916a767b95672166b48c146">addElem</a> (const <a class="el" href="classhoney_1_1_id.html">Id</a> &amp;classId, const <a class="el" href="classhoney_1_1_id.html">Id</a> &amp;id, int val)</td></tr>
-<tr class="separator:af5774828f916a767b95672166b48c146"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af06ee3d2cb3fee14ddd00750c734a2fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_enum_info__.html#af06ee3d2cb3fee14ddd00750c734a2fc">addElem</a> (const <a class="el" href="classhoney_1_1_string.html">String</a> &amp;className, const <a class="el" href="classhoney_1_1_string.html">String</a> &amp;name, int val)</td></tr>
+<tr class="separator:af06ee3d2cb3fee14ddd00750c734a2fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a97b7c3c3be6c54d3053ebb8c6d350735"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_enum_info__.html#a97b7c3c3be6c54d3053ebb8c6d350735">setup</a> ()</td></tr>
 <tr class="separator:a97b7c3c3be6c54d3053ebb8c6d350735"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -183,7 +183,7 @@ template&lt;class EnumType &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="af5774828f916a767b95672166b48c146"></a>
+<a class="anchor" id="af06ee3d2cb3fee14ddd00750c734a2fc"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -195,14 +195,14 @@ template&lt;class EnumType &gt; </div>
         <tr>
           <td class="memname">void <a class="el" href="classhoney_1_1_enum_info__.html">honey::EnumInfo_</a>&lt; EnumType &gt;::addElem </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classhoney_1_1_id.html">Id</a> &amp;&#160;</td>
-          <td class="paramname"><em>classId</em>, </td>
+          <td class="paramtype">const <a class="el" href="classhoney_1_1_string.html">String</a> &amp;&#160;</td>
+          <td class="paramname"><em>className</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classhoney_1_1_id.html">Id</a> &amp;&#160;</td>
-          <td class="paramname"><em>id</em>, </td>
+          <td class="paramtype">const <a class="el" href="classhoney_1_1_string.html">String</a> &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -249,7 +249,7 @@ template&lt;class EnumType &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Get element by id, returns null element if not found. </p>
+<p>Get element by id, throws <a class="el" href="structhoney_1_1_enum_exception.html">EnumException</a> if not found. </p>
 
 </div>
 </div>
@@ -277,7 +277,7 @@ template&lt;class EnumType &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Get element by value, returns null element if not found. </p>
+<p>Get element by value, throws <a class="el" href="structhoney_1_1_enum_exception.html">EnumException</a> if not found. </p>
 
 </div>
 </div>
@@ -339,7 +339,7 @@ template&lt;class EnumType &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 19 2013 06:44:02 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 20 2013 17:11:29 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

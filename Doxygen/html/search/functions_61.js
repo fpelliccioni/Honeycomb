@@ -7,7 +7,7 @@ var searchData=
   ['addbucket',['addBucket',['../classhoney_1_1_mem_pool_1_1_factory.html#a553ec52e354384d9d701a24bd987fa6b',1,'honey::MemPool::Factory']]],
   ['addchild',['addChild',['../classhoney_1_1_tree_node.html#a3ecf86e688e85ed29b4a4962956ef13a',1,'honey::TreeNode']]],
   ['addcom',['addCom',['../classhoney_1_1_com_object.html#ada45c0f5b060a49912a4b5d3f1128586',1,'honey::ComObject::addCom(Component &amp;com, bool createDeps=false)'],['../classhoney_1_1_com_object.html#aaf048094c67f00b2d57ba2898516fde7',1,'honey::ComObject::addCom(Component *com, bool createDeps=false)']]],
-  ['addelem',['addElem',['../classhoney_1_1_enum_info__.html#af5774828f916a767b95672166b48c146',1,'honey::EnumInfo_']]],
+  ['addelem',['addElem',['../classhoney_1_1_enum_info__.html#af06ee3d2cb3fee14ddd00750c734a2fc',1,'honey::EnumInfo_']]],
   ['addprop',['addProp',['../classhoney_1_1_property_object.html#aa2a03fe07d90cb1ad289d85bc4a9e844',1,'honey::PropertyObject::addProp(PropertyBase &amp;prop)'],['../classhoney_1_1_property_object.html#a0241e958c4fac02363869931d3314a5e',1,'honey::PropertyObject::addProp(PropertyBase *prop)']]],
   ['address',['address',['../classhoney_1_1_allocator.html#ae61e62bc8b7fde2ea605aaed75409a80',1,'honey::Allocator::address(reference x) const '],['../classhoney_1_1_allocator.html#a6a3a44d3321849e6f72b67015e723a47',1,'honey::Allocator::address(const_reference x) const ']]],
   ['adjugate',['adjugate',['../classhoney_1_1_matrix_3_014_00_014_00_01_real_00_01_options_01_4.html#aee5c77f0d61fec23c2dfff7ba735b611',1,'honey::Matrix&lt; 4, 4, Real, Options &gt;']]],

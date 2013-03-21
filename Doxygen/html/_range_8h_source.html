@@ -127,7 +127,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">namespace </span>priv</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    {</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">class</span> Result, <span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        Result <a class="code" href="namespacehoney_1_1mt.html#a719dab7fa0eb281c93a8871360daa1c5" title="Get value at index of parameter pack. All types must be convertible to Result, which defaults to the ...">valAt</a>(<span class="keywordtype">int</span> cur, <span class="keywordtype">int</span> end, T&amp;&amp; t)                       { <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(cur == end, <span class="stringliteral">&quot;Index out of pack range&quot;</span>); <span class="keywordflow">return</span> t; }</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        Result <a class="code" href="namespacehoney_1_1mt.html#a719dab7fa0eb281c93a8871360daa1c5" title="Get value at index of parameter pack. All types must be convertible to Result, which defaults to the ...">valAt</a>(<span class="keywordtype">int</span> cur, <span class="keywordtype">int</span> end, T&amp;&amp; t)                       { <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(cur == end, <span class="stringliteral">&quot;Index out of pack range&quot;</span>); <span class="keywordflow">return</span> t; }</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">class </span>Result, <span class="keyword">class </span>T, <span class="keyword">class</span>... Ts&gt;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        Result <a class="code" href="namespacehoney_1_1mt.html#a719dab7fa0eb281c93a8871360daa1c5" title="Get value at index of parameter pack. All types must be convertible to Result, which defaults to the ...">valAt</a>(<span class="keywordtype">int</span> cur, <span class="keywordtype">int</span> end, T&amp;&amp; t, Ts&amp;&amp;... ts)           { <span class="keywordflow">return</span> cur == end ? t : valAt&lt;Result&gt;(cur+1, end, forward&lt;Ts&gt;(ts)...); }</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        </div>
@@ -557,7 +557,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;<span class="keyword">typename</span> std::enable_if&lt;std::is_integral&lt;Int&gt;::value, Range_&lt;IntStepIter&lt;Int&gt;, IntStepIter&lt;Int&gt;&gt;&gt;::type</div>
 <div class="line"><a name="l00517"></a><span class="lineno"><a class="code" href="group___range.html#ga9b2449a6a7ac03cfe704dd3f87fe82f1">  517</a></span>&#160;    <a class="code" href="group___range.html#gab4dc9eeb8ac97aba0f1ac47fc3963580" title="Range from iterators [first, last)">range</a>(Int begin, Int end, Int step)</div>
 <div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;{</div>
-<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;    <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(step != 0);</div>
+<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;    <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(step != 0);</div>
 <div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;    <span class="comment">// Make sure begin comes before end</span></div>
 <div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;    <span class="keywordflow">if</span> (step &gt; 0)</div>
 <div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;    {</div>
@@ -613,7 +613,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;<span class="keyword">typename</span> std::enable_if&lt;std::is_floating_point&lt;Real&gt;::value, Range_&lt;RealIter&lt;Real&gt;, RealIter&lt;Real&gt;&gt;&gt;::type</div>
 <div class="line"><a name="l00575"></a><span class="lineno"><a class="code" href="group___range.html#gaac9cf685630e0bbea4cd029d1c05be2f">  575</a></span>&#160;    <a class="code" href="group___range.html#gab4dc9eeb8ac97aba0f1ac47fc3963580" title="Range from iterators [first, last)">range</a>(<a class="code" href="namespacehoney.html#a795cebd5ef05e91e9d1ac79733f72d4a" title="Real number type. See Real_ for real number operations and constants.">Real</a> begin, <a class="code" href="namespacehoney.html#a795cebd5ef05e91e9d1ac79733f72d4a" title="Real number type. See Real_ for real number operations and constants.">Real</a> end, <a class="code" href="namespacehoney.html#a795cebd5ef05e91e9d1ac79733f72d4a" title="Real number type. See Real_ for real number operations and constants.">Real</a> step = 1)</div>
 <div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;{</div>
-<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;    <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(step != 0);</div>
+<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;    <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(step != 0);</div>
 <div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;    <span class="comment">// Make sure begin comes before end</span></div>
 <div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;    <span class="keywordflow">if</span> (step &gt; 0)</div>
 <div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;    {</div>
@@ -719,12 +719,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;        _begin(begin), _end(end), _curBegin(cur), _cur(cur), _bEnd(bEnd)</div>
 <div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;    {</div>
 <div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;        <span class="keywordflow">if</span> (!_bEnd) _bEnd = _begin == _end;</div>
-<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;        <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(_bEnd || _cur != _end);</div>
+<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;        <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(_bEnd || _cur != _end);</div>
 <div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;    }</div>
 <div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;</div>
 <div class="line"><a name="l00689"></a><span class="lineno"><a class="code" href="classhoney_1_1_ring_iter.html#a0bd9741bfb0881f7ed9d568d06861f46">  689</a></span>&#160;    <a class="code" href="classhoney_1_1_ring_iter.html" title="Ring iterator. See ringRange() to create.">RingIter</a>&amp; <a class="code" href="classhoney_1_1_ring_iter.html#a0bd9741bfb0881f7ed9d568d06861f46">operator++</a>()</div>
 <div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;    {</div>
-<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;        <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(!_bEnd);</div>
+<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;        <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(!_bEnd);</div>
 <div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;        ++_cur;</div>
 <div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;        <span class="keywordflow">if</span> (_cur == _end) _cur = _begin;</div>
 <div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;        <span class="keywordflow">if</span> (_cur == _curBegin) _bEnd = <span class="keyword">true</span>;</div>
@@ -733,8 +733,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;</div>
 <div class="line"><a name="l00698"></a><span class="lineno"><a class="code" href="classhoney_1_1_ring_iter.html#aff8f413f7c7ca0dcbce08be64b7723cc">  698</a></span>&#160;    <a class="code" href="classhoney_1_1_ring_iter.html" title="Ring iterator. See ringRange() to create.">RingIter</a>&amp; <a class="code" href="classhoney_1_1_ring_iter.html#aff8f413f7c7ca0dcbce08be64b7723cc">operator--</a>()</div>
 <div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;    {</div>
-<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;        <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(_begin != _end);</div>
-<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;        <a class="code" href="common_2_honey_2_misc_2_debug_8h.html#a3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(_bEnd || _cur != _curBegin);</div>
+<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;        <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(_begin != _end);</div>
+<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;        <a class="code" href="group___debug.html#ga3d4ae9c092e117c836f52dc7d7cee574" title="Forwards to assert_#args. See assert_1(), assert_2().">assert</a>(_bEnd || _cur != _curBegin);</div>
 <div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;        <span class="keywordflow">if</span> (_bEnd) _bEnd = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;        <span class="keywordflow">if</span> (_cur == _begin) _cur = _end;</div>
 <div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;        --_cur;</div>
@@ -774,7 +774,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 19 2013 06:43:55 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 20 2013 17:11:23 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

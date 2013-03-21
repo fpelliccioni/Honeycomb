@@ -90,8 +90,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_enum_elem_base.html">honey::EnumElemBase</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class of all generated enum classes. A single element in the enumeration. See <a class="el" href="group___enum.html">Enumeration Classes</a>.  <a href="classhoney_1_1_enum_elem_base.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhoney_1_1_enum_exception.html">honey::EnumException</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_enum_elem.html">honey::EnumElem</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class of all generated enum classes. A single element in the enumeration. See <a class="el" href="group___enum.html">Enumeration Classes</a>.  <a href="classhoney_1_1_enum_elem.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_enum_info__.html">honey::EnumInfo_&lt; EnumType &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run-time info about an enum class. Contains a list of elements and maps for element lookups. See <a class="el" href="group___enum.html">Enumeration Classes</a> for more info and examples.  <a href="classhoney_1_1_enum_info__.html#details">More...</a><br/></td></tr>
@@ -102,9 +104,6 @@ Macros</h2></td></tr>
 <tr class="memitem:gaf623fcb3e8cf56c330e254a7f419a3f6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___enum.html#gaf623fcb3e8cf56c330e254a7f419a3f6">ENUM</a>(Base, Class)</td></tr>
 <tr class="memdesc:gaf623fcb3e8cf56c330e254a7f419a3f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enum class factory method. See <a class="el" href="group___enum.html">Enumeration Classes</a> for more info.  <a href="#gaf623fcb3e8cf56c330e254a7f419a3f6">More...</a><br/></td></tr>
 <tr class="separator:gaf623fcb3e8cf56c330e254a7f419a3f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafcc36d4e87f9e240852b839349109b3c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___enum.html#gafcc36d4e87f9e240852b839349109b3c">enumnull</a>&#160;&#160;&#160;_enumnull()</td></tr>
-<tr class="memdesc:gafcc36d4e87f9e240852b839349109b3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Null enum, any enum object may be set to null. value = 0x80000000, id = "enumnull".  <a href="#gafcc36d4e87f9e240852b839349109b3c">More...</a><br/></td></tr>
-<tr class="separator:gafcc36d4e87f9e240852b839349109b3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Factory method to generate type-safe enumeration classes with runtime reflection. </p>
@@ -115,9 +114,7 @@ ENUM(BaseClass, EnumClass);
 </pre><p>BaseClass is the name of the enclosing class scope, which will be used to create the enum's classId. <br/>
  EnumClass is the name of the enum class that will be generated. <br/>
  If there is no base class then leave it empty. If the base class parameter has a comma then it must be bracketed.</p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classhoney_1_1_enum_info__.html" title="Run-time info about an enum class. Contains a list of elements and maps for element lookups...">EnumInfo_</a>, reflection info returned by EnumClass::enumInfo() </dd>
-<dd>
-<a class="el" href="group___enum.html#gafcc36d4e87f9e240852b839349109b3c" title="Null enum, any enum object may be set to null. value = 0x80000000, id = &quot;enumnull&quot;.">enumnull</a></dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="classhoney_1_1_enum_info__.html" title="Run-time info about an enum class. Contains a list of elements and maps for element lookups...">EnumInfo_</a>, reflection info returned by EnumClass::enumInfo()</dd></dl>
 <p>Example:</p>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>Vehicle</div>
 <div class="line">{</div>
@@ -151,13 +148,9 @@ ENUM(BaseClass, EnumClass);
 <div class="line">    <span class="keywordflow">case</span> Vehicle::Type::car:</div>
 <div class="line">        <span class="keywordflow">break</span>;</div>
 <div class="line">    }</div>
-<div class="line"></div>
-<div class="line">    v = <a class="code" href="group___enum.html#gafcc36d4e87f9e240852b839349109b3c" title="Null enum, any enum object may be set to null. value = 0x80000000, id = &quot;enumnull&quot;.">enumnull</a>;                           <span class="comment">//Set to null</span></div>
-<div class="line">    <span class="keywordflow">if</span> (v == <a class="code" href="group___enum.html#gafcc36d4e87f9e240852b839349109b3c" title="Null enum, any enum object may be set to null. value = 0x80000000, id = &quot;enumnull&quot;.">enumnull</a>) {}                   <span class="comment">//True</span></div>
-<div class="line"></div>
 <div class="line">                                            <span class="comment">//Print all vehicle types</span></div>
 <div class="line">    <span class="keyword">const</span> Vehicle::Type::EnumInfo::ElemList&amp; list = Vehicle::Type::enumInfo().elemList();</div>
-<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group___std_util.html#gaae4ff9ba85d75e38782944a6b256c4f3" title="Safely get the size of a std container as a signed integer. The size() member method returns unsigned...">size</a>(list); ++i) { <a class="code" href="namespacehoney_1_1debug.html#ae472c9a2582401774c9e0d396f7b19a5" title="Print string to debug output window. Does nothing in final mode.">debug::print</a>(<a class="code" href="namespacehoney.html#af4d190bfa6abb98bb8d8b8b61d32c77a" title="Shorthand to create string stream.">sout</a>() &lt;&lt; list[i].<span class="keywordtype">id</span> &lt;&lt; endl); }</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group___std_util.html#gaae4ff9ba85d75e38782944a6b256c4f3" title="Safely get the size of a std container as a signed integer. The size() member method returns unsigned...">size</a>(list); ++i) { <a class="code" href="group___debug.html#gac9e7326b4569847122754061b96c42d0" title="Print string to debug output window. Does nothing in final mode.">debug_print</a>(<a class="code" href="namespacehoney.html#af4d190bfa6abb98bb8d8b8b61d32c77a" title="Shorthand to create string stream.">sout</a>() &lt;&lt; list[i].<span class="keywordtype">id</span> &lt;&lt; endl); }</div>
 <div class="line">}</div>
 </div><!-- fragment --> <h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="gaf623fcb3e8cf56c330e254a7f419a3f6"></a>
@@ -188,24 +181,10 @@ ENUM(BaseClass, EnumClass);
 
 </div>
 </div>
-<a class="anchor" id="gafcc36d4e87f9e240852b839349109b3c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define enumnull&#160;&#160;&#160;_enumnull()</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Null enum, any enum object may be set to null. value = 0x80000000, id = "enumnull". </p>
-
-</div>
-</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 19 2013 06:43:58 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 20 2013 17:11:26 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>
