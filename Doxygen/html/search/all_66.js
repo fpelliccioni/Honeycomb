@@ -6,7 +6,7 @@ var searchData=
   ['factory',['Factory',['../classhoney_1_1_mem_pool_1_1_factory.html',1,'honey::MemPool']]],
   ['factory',['Factory',['../classhoney_1_1_mem_pool.html#a328c093d609680cca505905c6d49901a',1,'honey::MemPool::Factory()'],['../classhoney_1_1_mem_pool_1_1_factory.html#a7a6b329cbab8f748b7864877866c753b',1,'honey::MemPool::Factory::Factory()']]],
   ['far',['far',['../classhoney_1_1_frustum_persp__.html#adcbdf8bc5b83ab1024ae29de1820e030',1,'honey::FrustumPersp_']]],
-  ['fast',['fast',['../namespacehoney_1_1hash.html#a39d9f6a5348f13cc48d4183db01448ae',1,'honey::hash::fast(const uint8 *data, int len, int seed=0)'],['../namespacehoney_1_1hash.html#a11af965f5ba4bfc8b28f3cf44f62c801',1,'honey::hash::fast(const String &amp;str, int seed)']]],
+  ['fast',['fast',['../namespacehoney_1_1hash.html#a39d9f6a5348f13cc48d4183db01448ae',1,'honey::hash::fast(const uint8 *data, int len, int seed=0)'],['../namespacehoney_1_1hash.html#af98ad7afa9a88cb466460a30c3c1f171',1,'honey::hash::fast(const String &amp;str, int seed=0)']]],
   ['fast_5fconstexpr',['fast_constexpr',['../namespacehoney_1_1hash.html#a532074947bb299873c62b45738ab8972',1,'honey::hash']]],
   ['femto',['Femto',['../namespacehoney_1_1ratio.html#a440ba01982849f29e9392cc4c4311eaf',1,'honey::ratio']]],
   ['fence',['fence',['../classhoney_1_1atomic_1_1_op.html#a2696cf3d07c0d91c7af5d00c4df60b57',1,'honey::atomic::Op']]],

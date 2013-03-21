@@ -33,7 +33,7 @@ var searchData=
   ['seconds',['Seconds',['../namespacehoney.html#a1675cf805018e10a6d342ea8887e6b67',1,'honey']]],
   ['section_5fheader',['Section_Header',['../common_2_honey_2_math_2_alge_2_matrix_2_matrix4_8h.html#a67c5a8aa6422056a36a601311cf14d8f',1,'Section_Header():&#160;Matrix4.h'],['../common_2_honey_2_math_2_alge_2_quat_8h.html#a67c5a8aa6422056a36a601311cf14d8f',1,'Section_Header():&#160;Quat.h']]],
   ['section_5fsource',['Section_Source',['../_matrix4_8cpp.html#ad5db1069e9e59d42ff263f6b4e98575f',1,'Section_Source():&#160;Matrix4.cpp'],['../_quat_8cpp.html#ad5db1069e9e59d42ff263f6b4e98575f',1,'Section_Source():&#160;Quat.cpp']]],
-  ['secure',['secure',['../namespacehoney_1_1hash.html#a7147e45f1ccc05dccc075f15fad6a9a2',1,'honey::hash::secure(const uint8 *data, int len, int seed=0)'],['../namespacehoney_1_1hash.html#acc29d1b204866a9deb5ccb8869148c63',1,'honey::hash::secure(const String &amp;str, int seed)']]],
+  ['secure',['secure',['../namespacehoney_1_1hash.html#a7147e45f1ccc05dccc075f15fad6a9a2',1,'honey::hash::secure(const uint8 *data, int len, int seed=0)'],['../namespacehoney_1_1hash.html#a6c3e95f33587b7ba96c7b5e639514f40',1,'honey::hash::secure(const String &amp;str, int seed=0)']]],
   ['securedata',['SecureData',['../structhoney_1_1hash_1_1_secure_data.html',1,'honey::hash']]],
   ['seed',['Seed',['../structhoney_1_1_salsa_1_1_seed.html',1,'honey::Salsa']]],
   ['seed',['Seed',['../classhoney_1_1concur_1_1_salsa.html#aede0daf97a350e22e7d5b1aa19a52d39',1,'honey::concur::Salsa']]],

@@ -4,7 +4,7 @@ var searchData=
   ['factorialln',['factorialLn',['../classhoney_1_1_gamma_func__.html#ada7a9926acc2c264b76e4262cc69a745',1,'honey::GammaFunc_']]],
   ['factory',['Factory',['../classhoney_1_1_mem_pool_1_1_factory.html#a7a6b329cbab8f748b7864877866c753b',1,'honey::MemPool::Factory']]],
   ['far',['far',['../classhoney_1_1_frustum_persp__.html#adcbdf8bc5b83ab1024ae29de1820e030',1,'honey::FrustumPersp_']]],
-  ['fast',['fast',['../namespacehoney_1_1hash.html#a39d9f6a5348f13cc48d4183db01448ae',1,'honey::hash::fast(const uint8 *data, int len, int seed=0)'],['../namespacehoney_1_1hash.html#a11af965f5ba4bfc8b28f3cf44f62c801',1,'honey::hash::fast(const String &amp;str, int seed)']]],
+  ['fast',['fast',['../namespacehoney_1_1hash.html#a39d9f6a5348f13cc48d4183db01448ae',1,'honey::hash::fast(const uint8 *data, int len, int seed=0)'],['../namespacehoney_1_1hash.html#af98ad7afa9a88cb466460a30c3c1f171',1,'honey::hash::fast(const String &amp;str, int seed=0)']]],
   ['fast_5fconstexpr',['fast_constexpr',['../namespacehoney_1_1hash.html#a532074947bb299873c62b45738ab8972',1,'honey::hash']]],
   ['fence',['fence',['../classhoney_1_1atomic_1_1_op.html#a2696cf3d07c0d91c7af5d00c4df60b57',1,'honey::atomic::Op']]],
   ['filter',['filter',['../group___range.html#gadee4d1575c943eb55eef29c599c3d631',1,'honey']]],
