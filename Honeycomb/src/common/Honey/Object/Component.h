@@ -75,31 +75,23 @@ class ComRegistry
     friend class ComObject;
 public:
     /// Component type
-    class Type
+    class Type : public Object::TypeInfo
     {
         friend class ComRegistry;
     public:
         template<class Com>
-        Type(const Id& id, Com*) :
-            _id(id), _node(this), _create(&component::create<Com>),
-            _depNode(this, id), _depCreate(&Com::createTypeDep), _depOrder(-1)  {}
+        Type(const String& name, Com*) :
+            Object::TypeInfo(name),
+            _node(this), _create(&component::create<Com>),
+            _depNode(this, _id), _depCreate(&Com::createTypeDep), _depOrder(-1)  {}
 
         template<class Com, class SuperCom>
-        Type(const Id& id, Com* com, SuperCom*)             : Type(id, com) { _node.setParent(&SuperCom::s_comType()._node); }
+        Type(const String& name, Com* com, SuperCom*)       : Type(name, com) { _node.setParent(&SuperCom::s_comType()._node); }
 
-        bool operator==(const Type& rhs) const              { return _id == rhs._id; }
-        bool operator!=(const Type& rhs) const              { return !operator==(rhs); }
-        bool operator==(const Id& rhs) const                { return _id == rhs; }
-        bool operator!=(const Id& rhs) const                { return !operator==(rhs); }
-
-        /// Get name
-        const Id& id() const                                { return _id; }
         /// Get hierarchy: this type and all supertypes.  Base supertype is at front, this type is at back.
         const vector<Type*>& hierarchy() const              { return _hierarchy; }
         /// Get dependency order.  A component type can depend only on those with a lower order.
         int depOrder() const                                { return _depOrder; }
-
-        operator const Id&() const                          { return _id; }
 
         /// Returns true if this type is `base` or inherits from `base`
         bool isSubtypeOf(const Id& base) const
@@ -109,13 +101,9 @@ public:
             return find(range, [&](mt_elemOf(range)& e) { return *e == base; }) != range.end();
         }
 
-        /// To string
-        friend StringStream& operator<<(StringStream& os, const Type& val)  { return os << val.id(); }
-
     private:
         typedef DepNode<Type*> DepNode;
 
-        Id _id;
         TreeNode<Type*> _node;
         vector<Type*> _hierarchy;
         function<Component& ()> _create;

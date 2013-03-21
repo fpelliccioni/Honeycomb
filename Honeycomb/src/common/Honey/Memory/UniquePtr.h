@@ -17,10 +17,11 @@ class UniquePtr : mt::NoCopy
     
 public:
     UniquePtr()                                                     : _ptr(nullptr) {}
-    UniquePtr(T* ptr, const Fin& f = Fin())                         : _ptr(ptr), _fin(f) {}
+    template<class Fin_ = Fin>
+    UniquePtr(T* ptr, Fin_&& f = Fin_())                            : _ptr(ptr), _fin(forward<Fin_>(f)) {}
     /// Moves pointer and finalizer out of rhs.  To set a new finalizer into rhs use move assign: rhs = UniquePtr(p,f);
-    UniquePtr(UniquePtr&& rhs)                                      : _ptr(nullptr) { operator=(move(rhs)); }
-    template<class U, class F> UniquePtr(UniquePtr<U,F>&& rhs)      : _ptr(nullptr) { operator=(move(rhs)); }
+    UniquePtr(UniquePtr&& rhs)                                      : _ptr(rhs.release()), _fin(forward<Fin>(rhs._fin)) {}
+    template<class U, class F> UniquePtr(UniquePtr<U,F>&& rhs)      : _ptr(rhs.release()), _fin(forward<F>(rhs._fin)) {}
 
     ~UniquePtr()                                                    { if (_ptr) _fin(_ptr); }
 
@@ -30,7 +31,7 @@ public:
     /// Moves pointer and finalizer out of rhs
     UniquePtr& operator=(UniquePtr&& rhs)                           { return operator=<T,Fin>(move(rhs)); }
     template<class U, class F>
-    UniquePtr& operator=(UniquePtr<U,F>&& rhs)                      { set(rhs.release()); _fin = move(rhs._fin); return *this; }
+    UniquePtr& operator=(UniquePtr<U,F>&& rhs)                      { set(rhs.release()); _fin = forward<F>(rhs._fin); return *this; }
 
     T* operator->() const                                           { return _ptr; }
     T& operator*() const                                            { return *_ptr; }
@@ -64,11 +65,8 @@ private:
 
 /// Helper to create a unique a ptr using type deduction
 /** \relates UniquePtr */
-template<class T, class Fin>
-UniquePtr<T,Fin> UniquePtrCreate(T* ptr, Fin&& f)                   { return UniquePtr<T,Fin>(ptr, forward<Fin>(f)); }
-/** \relates UniquePtr */
-template<class T>
-UniquePtr<T,finalize<T>> UniquePtrCreate(T* ptr)                    { return UniquePtrCreate(ptr, finalize<T>()); }
+template<class T, class Fin = finalize<T>>
+UniquePtr<T,Fin> UniquePtrCreate(T* ptr, Fin&& f = Fin())           { return UniquePtr<T,Fin>(ptr, forward<Fin>(f)); }
 
 }
 

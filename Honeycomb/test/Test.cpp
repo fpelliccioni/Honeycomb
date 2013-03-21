@@ -63,9 +63,9 @@ void test()
         for (auto& e : threads) e.start();
         for (auto& e : threads) e.join();
 
-        int count = 0;
-        debug::print(sout() << "List Size: " << list.size() << endl);
-        for (auto& e : list) debug::print(sout() << "List " << count++ << " : " << e << endl);
+        int count = 0; mt_unused(count);
+        debug_print(sout() << "List Size: " << list.size() << endl);
+        for (auto& e : list) { debug_print(sout() << "List " << count++ << " : " << e << endl); mt_unused(e); }
     }
     //=============================
 
@@ -111,10 +111,10 @@ void test()
 
         int data;
         int count = 0;
-        debug::print(sout() << "Deque Size: " << list.size() << endl);
+        debug_print(sout() << "Deque Size: " << list.size() << endl);
         while (list.popFront(data))
         {
-            debug::print(sout() << "Deque " << count << " : " << data << endl);
+            debug_print(sout() << "Deque " << count << " : " << data << endl);
             ++count;
         }          
     }
@@ -173,7 +173,7 @@ void test()
         for (auto i : range(2))
         {
             task(i);
-            try { task.future().get(); } catch (Exception& e) { debug::print(e.what_()); }
+            try { task.future().get(); } catch (Exception& e) { debug_print(e.what_()); }
             task.reset();
         }
 
@@ -199,11 +199,11 @@ void test()
 
     {
         int a = 0;
-        for (auto i : range(0, 5, 2)) { mt_unused(i); ++a; }
-        for (auto i : range(0.0, 4.0, 1.3)) { mt_unused(i); ++a; }
-        for (auto i : range(2)) { mt_unused(i); ++a; }
-        for (auto i : range(4, 0, -2)) { mt_unused(i); ++a; }
-        for (auto i : range(4.0, 0.0, -1.3)) { mt_unused(i); ++a; }
+        for (auto i : range(0, 5, 2)) {  ++a; mt_unused(i); }
+        for (auto i : range(0.0, 4.0, 1.3)) { ++a; mt_unused(i); }
+        for (auto i : range(2)) { ++a; mt_unused(i); }
+        for (auto i : range(4, 0, -2)) { ++a; mt_unused(i); }
+        for (auto i : range(4.0, 0.0, -1.3)) { ++a; mt_unused(i); }
     }
 
     {
@@ -239,10 +239,9 @@ void test()
             Real sinTab = Trig::atan2(Trig::cos(angle)*2, Trig::sin(angle)*2);
             Trig::enableSinTable(false);
             sinDif = Alge::max(sinDif, Alge::abs(sinTab - sin));
-            //debug::print(sout() << "Sin: " << sin << endl << "Tab: " << sinTab << endl << endl);
         }
 
-        debug::print(sout() << "Sin Table Dif: " << sinDif << endl);
+        debug_print(sout() << "Sin Table Dif: " << sinDif << endl);
     }
 
     {
@@ -250,7 +249,7 @@ void test()
         vecs.push_back(Vec3(0,1,2));
         vecs.push_back(Vec3(3,4,5));
         vecs.push_back(Vec3(6,7,8));
-        Vec3 blended = Interp::blend(vecs, Vec3(1,4,2));    mt_unused(blended);
+        Vec3 blended = Interp::blend(vecs, Vec3(1,4,2)); mt_unused(blended);
         
         VecN v(20);
         v[10] = 1;
@@ -272,7 +271,7 @@ void test()
         mata.toArray(arr);
         mata.toArray(arr, false);
 
-        auto v41 = Matrix<4, 1>(2) * 2;     mt_unused(v41);
+        auto v41 = Matrix<4, 1>(2) * 2; mt_unused(v41);
         
         Real sum = Matrix4().fromScalar(1).elemAdd(1).sum(); mt_unused(sum);
         Vec2 swiz2(1,2);
@@ -284,10 +283,10 @@ void test()
         swiz3.yzx() = swiz3.xzz() + swiz3.xyz();
         swiz3 = swiz4.elemMul(swiz2.xxxy()).xzz();
 
-        auto mat3 = Vec3(1,2,3) * VecRow3(10,100,1000);
+        auto mat3 = Vec3(1,2,3) * VecRow3(10,100,1000); mt_unused(mat3);
         auto mat8 = (Matrix<8,8>().fromIdentity().block<4,4>(3,2).block<2,2>(1,2) = (Matrix<2,2>() << 2,3,4,5).eval()).parent().parent();
-
-        debug::print(sout() << "Mat3: " << endl << mat3 << endl
+        mt_unused(mat8);
+        debug_print(sout()  << "Mat3: " << endl << mat3 << endl
                             << "Mat8: " << endl << mat8 << endl
                             << "Sum8, Min8: " << mat8.sum() << ", " << mat8.min() << endl);
     }
@@ -301,7 +300,7 @@ void test()
             6, 167, -68,
             -4, 24, -41).eval();
         Qrd<Real> qrd(A);
-        debug::print(sout() << "Q: " << endl << qrd.q() << endl
+        debug_print(sout()  << "Q: " << endl << qrd.q() << endl
                             << "R: " << endl << qrd.r() << endl
                             << "A = Q*R: " << endl << qrd.q()*qrd.r() << endl);
     }
@@ -317,7 +316,7 @@ void test()
         MatrixN inv;
         auto eigen = Eigen<Real>(A);
         eigen.inverse(inv);
-        debug::print(sout() << "Eigen Val: " << eigen.w() << endl
+        debug_print(sout()  << "Eigen Val: " << eigen.w() << endl
                             << "Eigen Vec: " << endl << eigen.v() << endl
                             << "I = A*EigenInv(A): " << endl << A*inv << endl);
     }
@@ -334,12 +333,12 @@ void test()
         auto w = (Vec<5>() << 2, 3, 1, 4, 5).eval();
         VecN b;
         LinearLeastSqr<Real>().calc(X, y, w, b);
-        debug::print(sout() << "Linear LeastSqr b: " << b << " ; cond: " << X.cond() << endl);
+        debug_print(sout() << "Linear LeastSqr b: " << b << " ; cond: " << X.cond() << endl);
 
         Svd<Real> svd(X, Svd<Real>::Mode::full);
         MatrixN inv;
         svd.inverse(inv);
-        debug::print(sout() << "X*FullSvdInv(X)*X: " << endl << X*inv*X << endl);
+        debug_print(sout() << "X*FullSvdInv(X)*X: " << endl << X*inv*X << endl);
     }
 
     {
@@ -358,7 +357,7 @@ void test()
         auto d = (Vec<2>() << 7, 4).eval();
         VecN b;
         LinearLeastSqr<Real>().calc(X, y, w, C, d, b);
-        debug::print(sout() << "Constrained LeastSqr b: " << b << " ; cond: " << X.cond() << endl);        
+        debug_print(sout() << "Constrained LeastSqr b: " << b << " ; cond: " << X.cond() << endl);        
     }
 
     {
@@ -370,8 +369,8 @@ void test()
             [](const Vec3& v) { return v.x - v.y - v.z; },
             [](const Vec3& v) { return v.z - v.x + Real_::piHalf; },
         };
-        auto res = BisectN().root(funcs, Vec3(-10), Vec3(10));
-        debug::print(sout() << "BisectN: " << std::boolalpha << get<0>(res) << "; " << get<1>(res) << endl);
+        auto res = BisectN().root(funcs, Vec3(-10), Vec3(10)); mt_unused(res);
+        debug_print(sout() << "BisectN: " << std::boolalpha << get<0>(res) << "; " << get<1>(res) << endl);
     }
 
     {
@@ -381,25 +380,25 @@ void test()
         auto vf = (Vec<7>() << 75, 76, 80, 77, 80, 77, 73).eval();
         auto vm = (Vec<7>() << 82, 80, 85, 85, 78, 87, 82).eval();
         StudentT::PooledStats stats;
-        bool t_test = StudentT::test(vf, vm, stats, 0, 0.05, 0);
-        debug::print(sout() << "T-test: " << std::boolalpha << t_test << endl << stats << endl);
+        bool t_test = StudentT::test(vf, vm, stats, 0, 0.05, 0); mt_unused(t_test);
+        debug_print(sout() << "T-test: " << std::boolalpha << t_test << endl << stats << endl);
     }
 
     //Minimize: (2.23277, -1.99996)
-    debug::print(sout() << "Minimize: " <<
+    debug_print(sout() << "Minimize: " <<
                     Minimize<Real>().calc([](Real x) { return 0.2f*Alge::pow(x,4) - 2*Alge::pow(x,2) + 3; }, 0, 5, 0.1) << endl);
 
     //MinimizeN: ((1, 2), 0)
-    debug::print(sout() << "MinimizeN: " <<
+    debug_print(sout() << "MinimizeN: " <<
                     MinimizeN<Real,2>().calc([](const Vec2& v) { return Alge::pow(v[0]-1, 2) + Alge::pow(v[1]-2, 2); }, Vec2(-10), Vec2(10), Vec2(7, -5)) << endl);
 
     //Poly roots 3: ((-0.60583, 0, 0), 1) Bounds: (0.2, 1.75)
     //Poly roots 4: ((5, 3, -4, -6), 4)
-    debug::print(sout() << "Poly roots 1: " << Polynomial<Real>::roots(Vec2(1,2)) << endl);
-    debug::print(sout() << "Poly roots 2: " << Polynomial<Real>::roots(Vec3(1,2,3)) << endl);
-    debug::print(sout() << "Poly roots 3: " << Polynomial<Real>::roots(Vec4(1,2,3,4)) << " Bounds: " << Polynomial<Real>::rootBounds(Vec4(1,2,3,4)) << endl);
-    debug::print(sout() << "Poly roots 4: " << Polynomial<Real>::roots((Vec<5>() << 1080,-126,-123,6,3).eval()) << endl);
-    debug::print(sout() << "Poly roots 4 (generic): " << Polynomial<Real>::roots((VecN().resize(5) << 1080,-126,-123,6,3).eval(), 1e-04f) << endl);
+    debug_print(sout() << "Poly roots 1: " << Polynomial<Real>::roots(Vec2(1,2)) << endl);
+    debug_print(sout() << "Poly roots 2: " << Polynomial<Real>::roots(Vec3(1,2,3)) << endl);
+    debug_print(sout() << "Poly roots 3: " << Polynomial<Real>::roots(Vec4(1,2,3,4)) << " Bounds: " << Polynomial<Real>::rootBounds(Vec4(1,2,3,4)) << endl);
+    debug_print(sout() << "Poly roots 4: " << Polynomial<Real>::roots((Vec<5>() << 1080,-126,-123,6,3).eval()) << endl);
+    debug_print(sout() << "Poly roots 4 (generic): " << Polynomial<Real>::roots((VecN().resize(5) << 1080,-126,-123,6,3).eval(), 1e-04f) << endl);
 
     assert(String::join(String("foo bar blah").split()) == "foo bar blah");
     assert(String::join(String::List() << "foo" << "bar" << "blah") == "foo bar blah");
@@ -568,7 +567,7 @@ void test()
     pdf.push_back(15);
     DiscreteGen disc(gen, pdf);
     //HyperGeo disc(gen, 200, 50, 90);
-    debug::print(sout() << "Disc Mean: " <<  disc.mean() << " ; Disc Var: " << disc.variance() << endl);
+    debug_print(sout() << "Disc Mean: " <<  disc.mean() << " ; Disc Var: " << disc.variance() << endl);
 
     vector<Vec1> samples;
     for (auto i : range(100))
@@ -581,18 +580,18 @@ void test()
 
     Bootstrap bootMean(Bootstrap::meanFunc(), gen, samples);
     bootMean.calc();
-    debug::print(sout() << "Boot Mean: " << bootMean.lower() << " ; " << bootMean.upper() << endl);
+    debug_print(sout() << "Boot Mean: " << bootMean.lower() << " ; " << bootMean.upper() << endl);
 
     Bootstrap bootVar(Bootstrap::varianceFunc(), gen, samples);
     bootVar.calc();
-    debug::print(sout() << "Boot Var: " << bootVar.lower() << " ; " << bootVar.upper() << endl);
+    debug_print(sout() << "Boot Var: " << bootVar.lower() << " ; " << bootVar.upper() << endl);
 
     for (auto i : range(-1, 50))
     {
         mt_unused(i);
         f = disc.next();
         f2 = disc.cdfInv(disc.cdf(f));
-        debug::print(sout() << "Dif: " << std::setw(4) << f << " ; " << std::setw(4) << f2 << " ; " << Alge_d::abs(f-f2) << endl);
+        debug_print(sout() << "Dif: " << std::setw(4) << f << " ; " << std::setw(4) << f2 << " ; " << Alge_d::abs(f-f2) << endl);
     }
 
     vector<Real> list;
@@ -624,9 +623,9 @@ void test()
     auto permute = Permute::range(list, PermuteFunc());
     for (auto it = begin(permute); it != end(permute); ++it)
     {
-        debug::print("Perm: ");
-        for (auto i : range(utos(it->size()))) { debug::print(sout() << *it->at(i) << " "); }
-        debug::print(sout() << " ; Cnt: " << it.count() << "\n");
+        debug_print("Perm: ");
+        for (auto i : range(utos(it->size()))) { debug_print(sout() << *it->at(i) << " ");  mt_unused(i); }
+        debug_print(sout() << " ; Cnt: " << it.count() << "\n");
     }
 
     gen.setState(state);
@@ -659,10 +658,10 @@ void test()
     crypt.decrypt(reinterpret_cast<uint8*>(cipher+msg.length()), reinterpret_cast<uint8*>(decipher+msg.length()), msg2.length());
     decipher[msg.length()+msg2.length()] = 0;
 
-    debug::print(sout() << "Hash  : " << Hash::toString(Hash::fast("Hash of some string")) << endl);
-    debug::print(sout() << "Hash 2: " << Hash::toString(Hash::fast("Hash of some string2")) << endl);
-    debug::print(sout() << "Secure Hash  : " << Hash::secure("Secure hash of some string") << endl);
-    debug::print(sout() << "Secure Hash 2: " << Hash::secure("Secure hash of some string2") << endl);
+    debug_print(sout() << "Hash  : " << hash::toString(hash::fast("Hash of some string")) << endl);
+    debug_print(sout() << "Hash 2: " << hash::toString(hash::fast("Hash of some string2")) << endl);
+    debug_print(sout() << "Secure Hash  : " << hash::secure("Secure hash of some string") << endl);
+    debug_print(sout() << "Secure Hash 2: " << hash::secure("Secure hash of some string2") << endl);
 
     typedef Vegas<5, 4, Double> Vegas;
     struct VegasFunc
@@ -702,33 +701,27 @@ void test()
     };
 
     Vegas vegas(VegasFunc(), gen, Vegas::Vec(0.), Vegas::Vec(1.), 10000);
-    debug::print(sout() << "Vegas: " << vegas.integrate() << endl);
+    debug_print(sout() << "Vegas: " << vegas.integrate() << endl);
 
-    Id id = ID"foo_bar";
-    Id id2 = ID"foo_bar";
-    assert(id == id2);
-
-    #define IDSWITCH_LIST(c) c(foo_bar) c(eggs, "eggz")
-    IDSWITCH(id)
-    #undef IDSWITCH_LIST
+    Id id = "foo_bar";
+    switch (id)
     {
-    IDCASE(eggs):
+    case "eggs"_id:
         {
-            debug::print("IdSwitch: eggz\n");
+            debug_print("IdSwitch: eggs\n");
             break;
         }
-    IDCASE(foo_bar):
+    case "foo_bar"_id:
         {
-            debug::print("IdSwitch: foo_bar\n");
+            debug_print("IdSwitch: foo_bar\n");
             break;
         }
-    IDCASE(default):
+    default:
         {
-            debug::print("IdSwitch: default\n");
+            debug_print("IdSwitch: default\n");
             break;
         }
     }
-    IDSWITCH_END
 
     typedef DepNode<int> DepNode;
     DepNode depnode[10];
@@ -757,11 +750,11 @@ void test()
     depgraph.remove(depnode[6]);
     depgraph.condense();
 
-    int depvertex = 0;
+    int depvertex = 0; mt_unused(depvertex);
     for (auto& e : depgraph.range(depnode[0].getKey()))
     {
-        debug::print(sout() << "DepVertex " << depvertex++ << endl);
-        for (auto& e : e.nodes()) { debug::print(sout() << "    " << e->getKey() << endl); }
+        debug_print(sout() << "DepVertex " << depvertex++ << endl);
+        for (auto& e : e.nodes()) { debug_print(sout() << "    " << e->getKey() << endl); mt_unused(e); }
     }
 
     SceneObject tree1, tree2;
@@ -772,7 +765,7 @@ void test()
     obj2.setInstId("obj2");
     tree1.com<Tm>().setInstId("test");
     tree1.com<Tm>("test");
-    const vector<Tm::Ptr>& comlist = tree1.coms<Tm>();      mt_unused(comlist);
+    const vector<Tm::Ptr>& comlist = tree1.coms<Tm>(); mt_unused(comlist);
 
     obj1.addCom(new CullVol<Box>);
     obj1.com<CullVol<Box>>().setShape(Box().fromCenter(Vec3(0), Vec3(5)));
@@ -794,7 +787,7 @@ void test()
     tree2.com<SceneSpace>().add(obj2);
     {
         auto range = tree1.com<Tree>().children("obj1");
-        for (auto& e : stdutil::values(range)) { debug::print(sout() << "Match: " << e->getKey() << endl); }
+        for (auto& e : stdutil::values(range)) { debug_print(sout() << "Match: " << e->getKey() << endl); mt_unused(e); }
     }
 
     struct EnumVisitor : public SceneSpace::EnumVisitor
@@ -802,8 +795,8 @@ void test()
         virtual void operator()(const SceneSpace& space, SceneObject& obj)
         {
             mt_unused(space);
-            debug::print(sout() << "Visit: " << obj.getInstId() << endl);
-            if (obj.getInstId() == "tree2")
+            debug_print(sout() << "Visit: " << obj.getInstId() << endl);
+            if (obj.getInstId() == "tree2"_id)
                 setState(State::skipChildren);
         }
     };
@@ -869,11 +862,11 @@ void test()
     }
 
     void* blah = SmallAllocator<int>().pool().alloc(10000);
-    debug::print(sout() << SmallAllocator<int>().pool().printStats());
+    debug_print(sout() << SmallAllocator<int>().pool().printStats());
     SmallAllocator<int>().pool().free(blah);
     SmallAllocator<int>().pool().validate();
 
-    debug::print(sout() << "Vec1:   "   << v1 << endl
+    debug_print(sout()  << "Vec1:   "   << v1 << endl
                         << "Vec2:   "   << v2 << endl
                         << "Vec3:   "   << v3 << endl
                         << "Vec6:   "   << v6 << endl
@@ -916,7 +909,7 @@ void test()
         if (bloom.contains(keys[i%count])) ++dummy;
     }
     QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&timeEnd));
-    debug::print(sout() << "Time 0: " << Real(timeEnd-timeBegin)/Real(timeFreq) << endl);
+    debug_print(sout() << "Time 0: " << Real(timeEnd-timeBegin)/Real(timeFreq) << endl);
 
     QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&timeBegin));
     for (int i = 0; i < 10000000; ++i)
@@ -924,7 +917,7 @@ void test()
         if (set.count(keys[i%count])) ++dummy;
     }
     QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&timeEnd));
-    debug::print(sout() << "Time 1: " << dummy << " " << Real(timeEnd-timeBegin)/Real(timeFreq) << endl);
+    debug_print(sout() << "Time 1: " << dummy << " " << Real(timeEnd-timeBegin)/Real(timeFreq) << endl);
     */
 }
 

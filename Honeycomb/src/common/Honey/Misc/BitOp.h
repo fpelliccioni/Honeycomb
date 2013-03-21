@@ -211,7 +211,7 @@ public:
 };
 
 /// Bit util specific to endian type. Use through class BitOp.
-template<int EndianId> class BitOpEndian {};
+template<int Endian> class BitOpEndian {};
 
 /// Specialization for little endian.
 template<>

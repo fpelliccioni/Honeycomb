@@ -18,7 +18,7 @@ namespace honey
 
 /// Call once inside a class that has signals
 #define SIGNAL_DECL(BaseClass) \
-    IdStatic(_signalBase, #BaseClass)
+    mt_staticObj(const String, _signalBase, (#BaseClass))
 
 /// Call inside a class to declare a signal
 #define SIGNAL(Name, Param) \
@@ -44,8 +44,6 @@ private:
 /** \cond */
 namespace priv
 {
-    #define SLOT_ARG_MAX 5
-
     template<class Signal, int Arity> struct SlotSignal;
   
     #define SLOT_SIGNAL_PARAM(It)               COMMA_IFNOT(It,1) typename Signal::template param<It-1>::type const& a##It
@@ -57,7 +55,7 @@ namespace priv
             virtual void operator()(ITERATE_(1,It,SLOT_SIGNAL_PARAM)) = 0;                              \
         };                                                                                              \
 
-    ITERATE(0, SLOT_ARG_MAX, CLASS);
+    ITERATE(0, FUNCTRAITS_ARG_MAX, CLASS);
     #undef CLASS
 
 
@@ -78,10 +76,10 @@ namespace priv
             }                                                                                           \
                                                                                                         \
         private:                                                                                        \
-            typename mt::removeConstRef<F>::type _f; /* F is forwarded, remove any c/r for storage */   \
+            F _f;                                                                                       \
         };                                                                                              \
 
-    ITERATE(0, SLOT_ARG_MAX, CLASS);
+    ITERATE(0, FUNCTRAITS_ARG_MAX, CLASS);
     #undef CLASS
 }
 /** \endcond */

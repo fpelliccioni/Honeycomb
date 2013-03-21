@@ -6,7 +6,7 @@
 namespace honey
 {
 
-mt_staticInit_impl(Double)
+mt_staticInit_impl(Double);
 
 const double Double_::zero          (0.);
 const double Double_::smallest      (numeral<double>().smallest());

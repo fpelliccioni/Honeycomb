@@ -49,6 +49,7 @@ namespace priv
             typedef priv::SlotSignal<Signal,It> Super;                                                  \
         public:                                                                                         \
             SlotQueue(const Id& id, F&& f)      : Super(id), _f(forward<F>(f)) {}                       \
+                                                                                                        \
             virtual void operator()(ITERATE_(1,It,SLOT_SIGNAL_PARAM))                                   \
             {                                                                                           \
                 SpinLock::Scoped _(_lock);                                                              \
@@ -77,12 +78,12 @@ namespace priv
         private:                                                                                        \
             struct Arg { ITERATE_(1,It,ARG_M) };                                                        \
                                                                                                         \
-            typename mt::removeConstRef<F>::type _f; /* F is forwarded, remove any c/r for storage */   \
+            F _f;                                                                                       \
             vector<Arg, SmallAllocator<Arg>> _arg;                                                      \
             SpinLock _lock;                                                                             \
         };                                                                                              \
 
-    ITERATE(0, SLOT_ARG_MAX, CLASS);
+    ITERATE(0, FUNCTRAITS_ARG_MAX, CLASS);
     #undef ARG_TYPE
     #undef ARG_M
     #undef ARG_STORE

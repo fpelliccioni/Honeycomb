@@ -5,14 +5,19 @@
 #include "Honey/String/Stream.h"
 #include "Honey/Misc/BitOp.h"
 
-namespace honey
+namespace honey { namespace hash
 {
 
+/** \cond */
 /// MurmurHash3_x86_32
-template<int EndianId>
-struct Murmur
+namespace priv { namespace murmur
 {
-    static uint32 fMix(uint32 h)
+    template<int Endian>
+    uint32 block(const uint32* p, size_t i)                 { return p[i]; }
+    template<>
+    uint32 block<ENDIAN_BIG>(const uint32* p, size_t i)     { return BitOp::swap(p[i]); }
+
+    uint32 fMix(uint32 h)
     {
         h ^= h >> 16;
         h *= 0x85ebca6b;
@@ -22,12 +27,7 @@ struct Murmur
         return h;
     }
 
-    // Block read - if your platform needs to do endian-swapping or can only
-    // handle aligned reads, do the conversion here
-    static uint32 block(const uint32* p, size_t i)      { return p[i]; }
-
-
-    static uint32 hash(const void* key, size_t len, uint32 seed)
+    uint32 hash(const void* key, size_t len, uint32 seed)
     {
         const uint8 * data = (const uint8*)key;
         const int nblocks = len / 4;
@@ -44,7 +44,7 @@ struct Murmur
 
         for(int i = -nblocks; i; i++)
         {
-            uint32 k1 = block(blocks,i);
+            uint32 k1 = block<ENDIAN>(blocks,i);
 
             k1 *= c1;
             k1 = BitOp::rotLeft(k1,15);
@@ -79,26 +79,21 @@ struct Murmur
 
         return h1;
     }
-};
+} }
+/** \endcond */
 
-template<>
-inline uint32 Murmur<ENDIAN_BIG>::block(const uint32* p, size_t i)
+int fast(const uint8* data, int len, int seed)
 {
-    return BitOp::swap(p[i]);
+    return priv::murmur::hash(data, len, seed);
 }
 
-
-int Hash::fast(const uint8* data, int len, int seed)
+int fast(const String& str, int seed)
 {
-    return Murmur<ENDIAN>::hash(data, len, seed);
+    auto u8 = str.u8();
+    return fast(reinterpret_cast<const uint8*>(u8.data()), u8.length(), seed);
 }
 
-int Hash::fast(const String& str, int seed)
-{
-    return fast(reinterpret_cast<const uint8*>(str.data()), str.length()*sizeof(Char), seed);
-}
-
-String Hash::toString(int hash)
+String toString(int hash)
 {
     uint8 a[4];
     BitOp::toPartsBig(static_cast<uint32>(hash), a);
@@ -108,7 +103,7 @@ String Hash::toString(int hash)
     return os;
 }
 
-
+/** \cond */
 /// Data is read and operated on a per-byte basis, so it works for any endian
 struct CubeHash
 {
@@ -216,8 +211,7 @@ struct CubeHash
     }
 };
 
-/** \cond */
-StringStream& operator<<(StringStream& os, const Hash::SecureData& val)
+StringStream& operator<<(StringStream& os, const SecureData& val)
 {
     for (int i = 0; i < val.size; ++i)
         os << std::setw(2) << std::setfill(L'0') << std::hex << static_cast<uint32>(val.a[i]);
@@ -225,16 +219,17 @@ StringStream& operator<<(StringStream& os, const Hash::SecureData& val)
 }
 /** \endcond */
 
-Hash::SecureData Hash::secure(const uint8* data, int len, int seed)
+SecureData secure(const uint8* data, int len, int seed)
 {
     SecureData res;
     CubeHash::hash(res.size*8, data, len*8, res.a, seed);
     return res;
 }
 
-Hash::SecureData Hash::secure(const String& str, int seed)
+SecureData secure(const String& str, int seed)
 {
-    return secure(reinterpret_cast<const uint8*>(str.data()), str.length()*sizeof(Char), seed);
+    auto u8 = str.u8();
+    return secure(reinterpret_cast<const uint8*>(u8.data()), u8.length(), seed);
 }
 
-}
+} }

@@ -62,17 +62,13 @@ public:
         friend class NspTree;
         friend class NodeBase;
         template<int> friend class Node;
+        
     public:
-        #define ENUM_LIST(e,_)  \
-            e(_, cont)          \
-            e(_, stop)          \
-
-        /**
-          * \retval cont    continue enumeration
-          * \retval stop    stop enumeration
-          */
-        ENUM(NspTree::EnumVisitor, State);
-        #undef ENUM_LIST
+        enum class State
+        {
+            cont,   ///< continue enumeration
+            stop    ///< stop enumeration
+        };
 
         EnumVisitor() :
             _tree(nullptr),

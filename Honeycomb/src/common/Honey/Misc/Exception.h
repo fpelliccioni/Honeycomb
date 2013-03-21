@@ -189,7 +189,7 @@ inline Exception& Exception::current()
 
 namespace debug
 {
-    /// Thrown on debug::assert() failure
+    /// Thrown on debug assert() failure
     struct AssertionFailure : Exception { EXCEPTION(AssertionFailure) };
 }
 

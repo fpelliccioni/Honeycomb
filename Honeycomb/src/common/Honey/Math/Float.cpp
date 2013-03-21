@@ -6,7 +6,7 @@
 namespace honey
 {
 
-mt_staticInit_impl(Float)
+mt_staticInit_impl(Float);
 
 const float Float_::zero        (0.f);
 const float Float_::smallest    (numeral<float>().smallest());

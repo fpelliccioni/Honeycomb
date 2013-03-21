@@ -48,13 +48,13 @@ public:
     ENUM(Frustum_, FrustumType);
     #undef ENUM_LIST
 
-    /// Orientation, projection will be rotated counter-clockwise
     #define ENUM_LIST(e,_)  \
         e(_, angle_0)       \
         e(_, angle_90)      \
         e(_, angle_180)     \
         e(_, angle_270)     \
 
+    /// Orientation, projection will be rotated counter-clockwise
     ENUM(Frustum_, Orientation);
     #undef ENUM_LIST
 

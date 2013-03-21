@@ -46,10 +46,8 @@ template<class T> struct removeRef                              : std::remove_re
 template<class T> struct addPtr                                 : std::add_pointer<T> {};
 /// Remove pointer from type
 template<class T> struct removePtr                              : std::remove_pointer<T> {};
-/// Add top-level const qualifier and reference to type
+/// Add top-level const qualifier and reference to type.  Use std::decay to remove top-level const/ref.
 template<class T> struct addConstRef                            : addRef<typename std::add_const<T>::type> {};
-/// Remove reference and top-level const qualifier from type
-template<class T> struct removeConstRef                         : std::remove_const<typename removeRef<T>::type> {};
 
 /// Check if type is an lvalue reference
 template<class T> struct isLref                                 : Value<bool, std::is_lvalue_reference<T>::value> {};
@@ -68,7 +66,7 @@ template<bool b, int64 t, int64 f> struct conditional_int       : Value<int64, f
 template<int64 t, int64 f> struct conditional_int<true, t, f>   : Value<int64, t> {};
 
 /// Version of std::is_base_of that removes reference qualifiers before testing
-template<class Base, class Derived> struct is_base_of           : std::is_base_of<typename removeConstRef<Base>::type, typename removeConstRef<Derived>::type> {};
+template<class Base, class Derived> struct is_base_of           : std::is_base_of<typename removeRef<Base>::type, typename removeRef<Derived>::type> {};
 
 /// Check if T is a specialization of Template
 template <class T, template <class...> class Template>
@@ -78,7 +76,7 @@ struct isSpecializationOf<Template<Param...>, Template>         : std::true_type
     
 /// Check if type is a tuple or a reference to one
 template<class T>
-struct isTuple                                                  : isSpecializationOf<typename removeConstRef<T>::type, tuple> {};
+struct isTuple                                                  : isSpecializationOf<typename std::decay<T>::type, tuple> {};
 
 /// Check if functor is callable with arguments
 template<class Func, class... Args>

@@ -69,34 +69,7 @@ public:
       * Ken Shoemake, 1993
       */
     #define _ORD(i,p,r,f) (((((((i)<<1)+(p))<<1)+(r))<<1)+(f))
-
-    #define ENUM_LIST(e,_)                                              \
-        e(_, xyz_s,, _ORD(eulAxX, eulParEven,  eulRepNo,   eulFrmS))    \
-        e(_, xyx_s,, _ORD(eulAxX, eulParEven,  eulRepYes,  eulFrmS))    \
-        e(_, xzy_s,, _ORD(eulAxX, eulParOdd,   eulRepNo,   eulFrmS))    \
-        e(_, xzx_s,, _ORD(eulAxX, eulParOdd,   eulRepYes,  eulFrmS))    \
-        e(_, yzx_s,, _ORD(eulAxY, eulParEven,  eulRepNo,   eulFrmS))    \
-        e(_, yzy_s,, _ORD(eulAxY, eulParEven,  eulRepYes,  eulFrmS))    \
-        e(_, yxz_s,, _ORD(eulAxY, eulParOdd,   eulRepNo,   eulFrmS))    \
-        e(_, yxy_s,, _ORD(eulAxY, eulParOdd,   eulRepYes,  eulFrmS))    \
-        e(_, zxy_s,, _ORD(eulAxZ, eulParEven,  eulRepNo,   eulFrmS))    \
-        e(_, zxz_s,, _ORD(eulAxZ, eulParEven,  eulRepYes,  eulFrmS))    \
-        e(_, zyx_s,, _ORD(eulAxZ, eulParOdd,   eulRepNo,   eulFrmS))    \
-        e(_, zyz_s,, _ORD(eulAxZ, eulParOdd,   eulRepYes,  eulFrmS))    \
-                                                                        \
-        e(_, zyx_r,, _ORD(eulAxX, eulParEven,  eulRepNo,   eulFrmR))    \
-        e(_, xyx_r,, _ORD(eulAxX, eulParEven,  eulRepYes,  eulFrmR))    \
-        e(_, yzx_r,, _ORD(eulAxX, eulParOdd,   eulRepNo,   eulFrmR))    \
-        e(_, xzx_r,, _ORD(eulAxX, eulParOdd,   eulRepYes,  eulFrmR))    \
-        e(_, xzy_r,, _ORD(eulAxY, eulParEven,  eulRepNo,   eulFrmR))    \
-        e(_, yzy_r,, _ORD(eulAxY, eulParEven,  eulRepYes,  eulFrmR))    \
-        e(_, zxy_r,, _ORD(eulAxY, eulParOdd,   eulRepNo,   eulFrmR))    \
-        e(_, yxy_r,, _ORD(eulAxY, eulParOdd,   eulRepYes,  eulFrmR))    \
-        e(_, yxz_r,, _ORD(eulAxZ, eulParEven,  eulRepNo,   eulFrmR))    \
-        e(_, zxz_r,, _ORD(eulAxZ, eulParEven,  eulRepYes,  eulFrmR))    \
-        e(_, xyz_r,, _ORD(eulAxZ, eulParOdd,   eulRepNo,   eulFrmR))    \
-        e(_, zyz_r,, _ORD(eulAxZ, eulParOdd,   eulRepYes,  eulFrmR))    \
-
+    
     /// Euler angle order
     /** 
       * The default order `xyz_s` represents a rotation of z radians around the z-axis,
@@ -105,8 +78,35 @@ public:
       * \retval (axes)_s    Static (initial) frame axes
       * \retval (axes)_r    Rotating frame axes
       */
-    ENUM(Quat_, EulerOrder);
-    #undef ENUM_LIST
+    enum class EulerOrder
+    {
+        xyz_s = _ORD(eulAxX, eulParEven,  eulRepNo,   eulFrmS),
+        xyx_s = _ORD(eulAxX, eulParEven,  eulRepYes,  eulFrmS),
+        xzy_s = _ORD(eulAxX, eulParOdd,   eulRepNo,   eulFrmS),
+        xzx_s = _ORD(eulAxX, eulParOdd,   eulRepYes,  eulFrmS),
+        yzx_s = _ORD(eulAxY, eulParEven,  eulRepNo,   eulFrmS),
+        yzy_s = _ORD(eulAxY, eulParEven,  eulRepYes,  eulFrmS),
+        yxz_s = _ORD(eulAxY, eulParOdd,   eulRepNo,   eulFrmS),
+        yxy_s = _ORD(eulAxY, eulParOdd,   eulRepYes,  eulFrmS),
+        zxy_s = _ORD(eulAxZ, eulParEven,  eulRepNo,   eulFrmS),
+        zxz_s = _ORD(eulAxZ, eulParEven,  eulRepYes,  eulFrmS),
+        zyx_s = _ORD(eulAxZ, eulParOdd,   eulRepNo,   eulFrmS),
+        zyz_s = _ORD(eulAxZ, eulParOdd,   eulRepYes,  eulFrmS),
+
+        zyx_r = _ORD(eulAxX, eulParEven,  eulRepNo,   eulFrmR),
+        xyx_r = _ORD(eulAxX, eulParEven,  eulRepYes,  eulFrmR),
+        yzx_r = _ORD(eulAxX, eulParOdd,   eulRepNo,   eulFrmR),
+        xzx_r = _ORD(eulAxX, eulParOdd,   eulRepYes,  eulFrmR),
+        xzy_r = _ORD(eulAxY, eulParEven,  eulRepNo,   eulFrmR),
+        yzy_r = _ORD(eulAxY, eulParEven,  eulRepYes,  eulFrmR),
+        zxy_r = _ORD(eulAxY, eulParOdd,   eulRepNo,   eulFrmR),
+        yxy_r = _ORD(eulAxY, eulParOdd,   eulRepYes,  eulFrmR),
+        yxz_r = _ORD(eulAxZ, eulParEven,  eulRepNo,   eulFrmR),
+        zxz_r = _ORD(eulAxZ, eulParEven,  eulRepYes,  eulFrmR),
+        xyz_r = _ORD(eulAxZ, eulParOdd,   eulRepNo,   eulFrmR),
+        zyz_r = _ORD(eulAxZ, eulParOdd,   eulRepYes,  eulFrmR)
+    };
+    
     #undef _ORD
 
     /// Construct with identity
@@ -311,7 +311,7 @@ private:
         static const int eulSafe[] = {0,1,2,0};
         static const int eulNext[] = {1,2,0,1};
 
-        uint32 o=ord;
+        uint32 o = static_cast<uint32>(ord);
         f=o&1; o>>=1;
         s=o&1; o>>=1;
         n=o&1; o>>=1;

@@ -13,20 +13,13 @@ template<class Lockable> class SharedLock;
 
 namespace lock
 {
-    #define ENUM_LIST(e,_)  \
-        e(_, lock)          \
-        e(_, tryLock)       \
-        e(_, adopt)         \
-        e(_, defer)         \
-
-    /**
-      * \retval lock    Lock (blocking)
-      * \retval tryLock Try to lock (non-blocking)
-      * \retval adopt   Already locked
-      * \retval defer   Not yet locked, will lock manually
-      */
-    ENUM(, Op);
-    #undef ENUM_LIST
+    enum class Op
+    {
+        lock,       ///< Lock (blocking)
+        tryLock,    ///< Try to lock (non-blocking)
+        adopt,      ///< Already locked
+        defer       ///< Not yet locked, will lock manually
+    };
 
     /// \name ScopeGuard functors
     /// @{

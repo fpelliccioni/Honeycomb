@@ -46,7 +46,7 @@ void Task::log(const String& file, int line, const String& msg) const
 {
     int pos = file.find_last_of(String("\\/"));
     String filename = pos != String::npos ? file.substr(pos+1) : file;
-    debug::print(sout() << "[Task: " << getId() << ":" << Thread::current().threadId() << ", "
+    debug_print(sout()  << "[Task: " << getId() << ":" << Thread::current().threadId() << ", "
                         << filename << ":" << line << "] " << msg << endl);
 }
 
@@ -297,8 +297,8 @@ namespace task { namespace priv
         std::map<Char, Task_<void>::Ptr> tasks;
         for (auto i: range(10))
         {
-            Id id = sout() << Char('a'+i);
-            tasks[id.name()[0]] = new Task_<void>([=]{ Task_log(id); }, id);
+            String name = sout() << Char('a'+i);
+            tasks[name[0]] = new Task_<void>([=]{ Task_log(name); }, name);
         }
         
         tasks['j']->deps().add(*tasks['i']);

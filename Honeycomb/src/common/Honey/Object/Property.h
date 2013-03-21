@@ -15,16 +15,19 @@ public:
     typedef SharedPtr<PropertyBase> Ptr;
     typedef SharedPtr<const PropertyBase> ConstPtr;
 
-    PropertyBase(const Id& id)                                      : _id(id) {}
+    PropertyBase(const String& name)                        : _name(name), _id(name) {}
 
+    /// Get property name
+    const String& name() const                              { return _name; }
     /// Get property id
-    const Id& id() const                                            { return _id; }
-    /// Get property type
-    virtual const Id& type() const = 0;
+    const Id& id() const                                    { return _id; }
+    /// Get property type info
+    virtual const TypeInfo& type() const = 0;
     /// Create a clone of this property
     virtual PropertyBase& clone() const = 0;
 
 protected:
+    const String _name;
     const Id _id;
 };
 
@@ -37,35 +40,35 @@ public:
     typedef SharedPtr<Property> Ptr;
     typedef SharedPtr<const Property> ConstPtr;
 
-    Property(const Id& id)                                          : PropertyBase(id) {}
-    Property(const Id& id, const T& val)                            : PropertyBase(id), _val(val) {}
+    Property(const String& name)                            : PropertyBase(name) {}
+    Property(const String& name, const T& val)              : PropertyBase(name), _val(val) {}
 
-    /// Static function to get property type
-    static const Id& s_type();
-    virtual const Id& type() const                               { return s_type(); }
+    /// Static function to get property type info
+    static const TypeInfo& s_type();
+    virtual const TypeInfo& type() const                    { return s_type(); }
 
-    virtual Property& clone() const                                 { return *new Property(*this); }
+    virtual Property& clone() const                         { return *new Property(*this); }
 
-    Property& operator=(const Property& rhs)                        { _val = rhs._val; return *this; }
-    Property& operator=(const T& rhs)                               { _val = rhs; return *this; }
+    Property& operator=(const Property& rhs)                { _val = rhs._val; return *this; }
+    Property& operator=(const T& rhs)                       { _val = rhs; return *this; }
 
-    const T& operator*() const                                      { return _val; }
-    T& operator*()                                                  { return _val; }
-    const T* operator->() const                                     { return &_val; }
-    T* operator->()                                                 { return &_val; }
-    operator const T&() const                                       { return _val; }
-    operator T&()                                                   { return _val; }
+    const T& operator*() const                              { return _val; }
+    T& operator*()                                          { return _val; }
+    const T* operator->() const                             { return &_val; }
+    T* operator->()                                         { return &_val; }
+    operator const T&() const                               { return _val; }
+    operator T&()                                           { return _val; }
 
 private:
     T _val;
 };
 
 /// Integer property
-template<> inline const Id& Property<int>::s_type()                 { static const Id& id = "int"; return id; }
+template<> inline auto Property<int>::s_type() -> const TypeInfo&       { static TypeInfo _("int"); return _; }
 /// Real property
-template<> inline const Id& Property<Real>::s_type()                { static const Id& id = "Real"; return id; }
+template<> inline auto Property<Real>::s_type() -> const TypeInfo&      { static TypeInfo _("Real"); return _; }
 /// String property
-template<> inline const Id& Property<String>::s_type()              { static const Id& id = "String"; return id; }
+template<> inline auto Property<String>::s_type() -> const TypeInfo&    { static TypeInfo _("String"); return _; }
 
 }
 

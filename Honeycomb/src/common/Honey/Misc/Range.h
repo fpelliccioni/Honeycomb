@@ -28,14 +28,14 @@ namespace mt
     };
     
     /// Get range iterator begin type. \see elemOf
-    template<class Range> struct iterOf                             { typedef typename mt::removeConstRef<decltype(honey::begin(declval<Range>()))>::type type; };
+    template<class Range> struct iterOf                             { typedef typename std::decay<decltype(honey::begin(declval<Range>()))>::type type; };
     /// iterOf for values
-    #define mt_iterOf(Range)                                        typename mt::removeConstRef<decltype(honey::begin(Range))>::type
+    #define mt_iterOf(Range)                                        typename std::decay<decltype(honey::begin(Range))>::type
     
     /// Get range iterator end type. \see elemOf
-    template<class Range> struct iter_endOf                         { typedef typename mt::removeConstRef<decltype(honey::end(declval<Range>()))>::type type; };
+    template<class Range> struct iter_endOf                         { typedef typename std::decay<decltype(honey::end(declval<Range>()))>::type type; };
     /// iter_endOf for values
-    #define mt_iter_endOf(Range)                                    typename mt::removeConstRef<decltype(honey::end(Range))>::type
+    #define mt_iter_endOf(Range)                                    typename std::decay<decltype(honey::end(Range))>::type
     
     /// Get range element type. \see iterOf
     template<class Range> struct elemOf                             { typedef typename mt::removeRef<decltype(*honey::begin(declval<Range>()))>::type type; };
@@ -89,8 +89,8 @@ class Range_
 {
     template<class T1, class T2> friend class Range_;
 public:
-    typedef typename mt::removeConstRef<T1_>::type T1;
-    typedef typename mt::removeConstRef<T2_>::type T2;
+    typedef typename std::decay<T1_>::type T1;
+    typedef typename std::decay<T2_>::type T2;
 
     Range_() = default;
     template<class T1, class T2> Range_(T1&& first, T2&& last)                  : _first(forward<T1>(first)), _last(forward<T2>(last)) {}
@@ -156,7 +156,7 @@ OutSeq&& map(Range&&, Seqs&&..., OutSeq&&, Func&&);
 #define SEQTOITER(It)   auto it##It = seqToIter(seq##It);
 #define NEXT(It)        , ++it##It
 #define ARG(It)         , *it##It
-#define FORWARDT(It)    , typename mt::removeConstRef<S##It>::type
+#define FORWARDT(It)    , typename std::decay<S##It>::type
 #define FORWARD(It)     , forward<S##It>(seq##It)
 
 #define FUNC(It)                                                                                                    \
@@ -182,8 +182,8 @@ OutSeq&& map(Range&&, Seqs&&..., OutSeq&&, Func&&);
     template<class Range ITERATE_(1,It,PARAMT), class OutSeq, class Func>                                           \
     OutSeq&& map(Range&& range ITERATE_(1,It,PARAM), OutSeq&& out, Func&& f)                                        \
     {                                                                                                               \
-        return priv::map_impl##It<  typename mt::removeConstRef<Range>::type ITERATE_(1,It,FORWARDT),               \
-                                    typename mt::removeConstRef<OutSeq>::type>                                      \
+        return priv::map_impl##It<  typename std::decay<Range>::type ITERATE_(1,It,FORWARDT),                       \
+                                    typename std::decay<OutSeq>::type>                                              \
                                     ::func( forward<Range>(range) ITERATE_(1,It,FORWARD),                           \
                                             forward<OutSeq>(out), forward<Func>(f));                                \
     }                                                                                                               \
@@ -223,7 +223,7 @@ Accum reduce(Range&&, Seqs&&..., Accum&& initVal, Func&&);
 #define SEQTOITER(It)   auto it##It = seqToIter(seq##It);
 #define NEXT(It)        , ++it##It
 #define ARG(It)         , *it##It
-#define FORWARDT(It)    , typename mt::removeConstRef<S##It>::type
+#define FORWARDT(It)    , typename std::decay<S##It>::type
 #define FORWARD(It)     , forward<S##It>(seq##It)
 
 #define FUNC(It)                                                                                                    \
@@ -250,7 +250,7 @@ Accum reduce(Range&&, Seqs&&..., Accum&& initVal, Func&&);
                 class Accum_ = typename std::decay<Accum>::type>                                                    \
     Accum_ reduce(Range&& range ITERATE_(1,It,PARAM), Accum&& initVal, Func&& f)                                    \
     {                                                                                                               \
-        return priv::reduce_impl##It<typename mt::removeConstRef<Range>::type ITERATE_(1,It,FORWARDT), Accum_>      \
+        return priv::reduce_impl##It<typename std::decay<Range>::type ITERATE_(1,It,FORWARDT), Accum_>              \
                                         ::func( forward<Range>(range) ITERATE_(1,It,FORWARD),                       \
                                                 forward<Accum>(initVal), forward<Func>(f));                         \
     }                                                                                                               \
@@ -553,12 +553,12 @@ public:
     RealIter operator-(difference_type rhs) const                   { auto tmp = *this; tmp-=rhs; return tmp; }
     difference_type operator-(const RealIter& rhs) const            { return _i - rhs._i; }
 
-    bool operator==(const RealIter& rhs) const                      { return _i == rhs._i; }
-    bool operator!=(const RealIter& rhs) const                      { return _i != rhs._i; }
-    bool operator<=(const RealIter& rhs) const                      { return _i <= rhs._i; }
-    bool operator>=(const RealIter& rhs) const                      { return _i >= rhs._i; }
-    bool operator< (const RealIter& rhs) const                      { return _i <  rhs._i; }
-    bool operator> (const RealIter& rhs) const                      { return _i >  rhs._i; }
+    bool operator==(const RealIter& rhs) const                      { assert(_begin == rhs._begin && _step == rhs._step); return _i == rhs._i; }
+    bool operator!=(const RealIter& rhs) const                      { assert(_begin == rhs._begin && _step == rhs._step); return _i != rhs._i; }
+    bool operator<=(const RealIter& rhs) const                      { assert(_begin == rhs._begin && _step == rhs._step); return _i <= rhs._i; }
+    bool operator>=(const RealIter& rhs) const                      { assert(_begin == rhs._begin && _step == rhs._step); return _i >= rhs._i; }
+    bool operator< (const RealIter& rhs) const                      { assert(_begin == rhs._begin && _step == rhs._step); return _i <  rhs._i; }
+    bool operator> (const RealIter& rhs) const                      { assert(_begin == rhs._begin && _step == rhs._step); return _i >  rhs._i; }
 
     reference operator*() const                                     { return _begin + _i*_step; }
     operator T() const                                              { return _begin + _i*_step; }

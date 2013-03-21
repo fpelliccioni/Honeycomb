@@ -113,15 +113,18 @@ auto waitAny(Range&& range) -> mt_iterOf(range)
 /** \cond */
 namespace priv
 {
+    template<class Func>
     struct Task : SmallAllocatorObject, thread::Pool::Task
     {
-        virtual void operator()() = 0;
+        Task(Func&& f)                      : f(forward<Func>(f)) {}
+        
+        void operator()()                   { f(); delete_(this); }
         
         virtual void log(const String& file, int line, const String& msg) const
         {
             int pos = file.find_last_of(String("\\/"));
             String filename = pos != String::npos ? file.substr(pos+1) : file;
-            debug::print(sout() << "[async: " << std::hex << reinterpret_cast<intptr_t>(this) << std::dec << ":" << Thread::current().threadId() << ", "
+            debug_print(sout()  << "[async: " << std::hex << reinterpret_cast<intptr_t>(this) << std::dec << ":" << Thread::current().threadId() << ", "
                                 << filename << ":" << line << "] " << msg << endl);
         }
         
@@ -130,13 +133,7 @@ namespace priv
         #else
             virtual bool logEnabled() const { return false; }
         #endif
-    };
-    
-    template<class Func>
-    struct Task_ : Task
-    {
-        Task_(Func&& f)                     : f(forward<Func>(f)) {}
-        virtual void operator()()           { f(); delete_(this); }
+        
         Func f;
     };
     
@@ -188,7 +185,7 @@ struct AsyncSched : thread::Pool, AsyncSched_tag
     static AsyncSched& inst()                               { static UniquePtr<AsyncSched> inst = &async_createSingleton(); return *inst; }
     
     template<class Func>
-    void operator()(Func&& f)                               { enqueue(*new priv::Task_<Func>(forward<Func>(f))); }
+    void operator()(Func&& f)                               { enqueue(*new priv::Task<Func>(forward<Func>(f))); }
 };
 
 #ifndef future_async_createSingleton

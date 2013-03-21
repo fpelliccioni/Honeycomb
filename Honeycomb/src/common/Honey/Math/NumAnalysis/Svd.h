@@ -33,16 +33,11 @@ public:
     typedef Vec<matrix::dynamic, Double>    Vec_d;
     typedef Vec<matrix::dynamic, Real>      Vec;
 
-    #define ENUM_LIST(e,_)  \
-        e(_, full)          \
-        e(_, reduced)       \
-
-    /**
-      * \retval full    compute full SVD
-      * \retval reduced compute reduced SVD
-      */
-    ENUM(Svd, Mode);
-    #undef ENUM_LIST
+    enum class Mode
+    {
+        full,       ///< compute full SVD
+        reduced     ///< compute reduced SVD
+    };
 
     Svd() {}
     /// Calculate the SVD of matrix A

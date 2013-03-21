@@ -6,7 +6,7 @@
 namespace honey
 {
 
-mt_staticInit_impl(Quad)
+mt_staticInit_impl(Quad);
 
 const float128 Quad_::zero          (0.);
 const float128 Quad_::smallest      (numeral<float128>().smallest());

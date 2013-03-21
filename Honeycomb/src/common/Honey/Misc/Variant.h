@@ -324,6 +324,7 @@ template<class... Funcs> struct overload_;
 
 /// An overloaded visitor functor.  \see overload() to create.
 /**
+  *
   * Example:
   *
   *     int res = variant.visit<int>(overload

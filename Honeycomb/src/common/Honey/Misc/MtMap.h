@@ -101,13 +101,13 @@ namespace honey
         void operator()(Key key, const Val& val)
         {
             mt_unused(key);
-            debug::print(sout() << "Key: " << key.id() << " ; Value: " << val << endl);
+            debug_print(sout() << "Key: " << key.id() << " ; Value: " << val << endl);
         }
                                                             //Overload for specific key/value pair
         void operator()(key_int key, int& val)
         {
             mt_unused(key);
-            debug::print(sout() << "key: " << key.id() << " ; value: " << val << endl);
+            debug_print(sout() << "key: " << key.id() << " ; value: " << val << endl);
 
             val = -1;                                       //Modify value in map
         }
@@ -117,11 +117,11 @@ namespace honey
     void iterTest(T& fooInsert)
     {
                                                             //Use Begin/End and functor to print contents of map
-        debug::print(sout() << "--fooInsert--" << endl);
+        debug_print(sout() << "--fooInsert--" << endl);
         for_each_mtmap(fooInsert.begin(), fooInsert.end(), Functor());
 
                                                             //Use iter() to get an iterator by key
-        debug::print(sout() << "--fooInsert[key_int, end]--" << endl);
+        debug_print(sout() << "--fooInsert[key_int, end]--" << endl);
         for_each_mtmap(fooInsert.iter(key_int()), fooInsert.end(), Functor());
     }
 
@@ -131,7 +131,7 @@ namespace honey
     void keywordFunc(MtMap<int8, key_char, int, key_int, option<Id>, key_id>::type _)
     {
         _.setDefaults(mtmap(key_id() = []{ return "default"; }));
-        debug::print(sout() << "Keyword Args: " << _ << endl);
+        debug_print(sout() << "Keyword Args: " << _ << endl);
     }
 
     void keywordTest()

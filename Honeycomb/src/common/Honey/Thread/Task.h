@@ -65,22 +65,14 @@ public:
     #endif
     
 protected:
-    #define ENUM_LIST(e,_)      \
-        e(_, idle)              \
-        e(_, queued)            \
-        e(_, depUpWait)         \
-        e(_, exec)              \
-        e(_, depDownWait)       \
-
-    /**
-      * \retval idle            Not active
-      * \retval queued          Queued for execution
-      * \retval depUpWait       Waiting for upstream tasks (dependency subgraph) to complete
-      * \retval exec            Executing functor
-      * \retval depDownWait     Waiting for downsteam tasks (immediate dependees) to complete
-      */
-    ENUM(Task, State);
-    #undef ENUM_LIST
+    enum class State
+    {
+        idle,           ///< Not active
+        queued,         ///< Queued for execution
+        depUpWait,      ///< Waiting for upstream tasks (dependency subgraph) to complete
+        exec,           ///< Executing functor
+        depDownWait     ///< Waiting for downsteam tasks (immediate dependees) to complete
+    };
     
     Task(const Id& id = idnull);
 
@@ -159,8 +151,8 @@ public:
     static TaskSched& inst()                        { static UniquePtr<TaskSched> inst = &createSingleton(); return *inst; }
 
     /**
-      * \param workerCount      \see thread::Pool()
-      * \param workerTaskMax    \see thread::Pool()
+      * \param workerCount      see thread::Pool()
+      * \param workerTaskMax    see thread::Pool()
       */
     TaskSched(int workerCount, int workerTaskMax);
     

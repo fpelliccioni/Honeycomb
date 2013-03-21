@@ -9,16 +9,11 @@ namespace honey
 
 namespace future
 {
-    #define ENUM_LIST(e,_)  \
-        e(_, ready)         \
-        e(_, timeout)       \
-
-    /**
-      * \retval ready       the future result is ready
-      * \retval timeout     timeout expired
-      */
-    ENUM(, Status);
-    #undef ENUM_LIST
+    enum class Status
+    {
+        ready,      ///< the future result is ready
+        timeout     ///< timeout expired
+    };
 }
 
 /// Base class for Future types

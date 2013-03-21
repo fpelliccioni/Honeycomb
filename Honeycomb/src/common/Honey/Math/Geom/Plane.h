@@ -25,16 +25,11 @@ class Plane_ : public Shape<Real>
     typedef Triangle_<Real> Triangle;
 
 public:
-    #define ENUM_LIST(e,_)  \
-        e(_, neg,, -1)      \
-        e(_, pos,, 1)       \
-
-    /**
-      * \retval neg     negative side of plane
-      * \retval pos     positive side or on plane
-      */
-    ENUM(Plane_, Side);
-    #undef ENUM_LIST
+    enum class Side
+    {
+        neg = -1,   ///< negative side of plane
+        pos = 1     ///< positive side or on plane
+    };
 
     /// No initialization
     Plane_()                                                                {}

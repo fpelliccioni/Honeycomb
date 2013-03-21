@@ -305,7 +305,6 @@
 		3719A78616D5DC2B00B09BDB /* Hash.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Hash.cpp; sourceTree = "<group>"; };
 		3719A78716D5DC2B00B09BDB /* Hash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hash.h; sourceTree = "<group>"; };
 		3719A78816D5DC2B00B09BDB /* Id.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Id.h; sourceTree = "<group>"; };
-		3719A78916D5DC2B00B09BDB /* IdCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IdCache.h; sourceTree = "<group>"; };
 		3719A78A16D5DC2B00B09BDB /* Stream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Stream.h; sourceTree = "<group>"; };
 		3719A78B16D5DC2B00B09BDB /* String.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = String.cpp; sourceTree = "<group>"; };
 		3719A78C16D5DC2B00B09BDB /* String.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = String.h; sourceTree = "<group>"; };
@@ -773,7 +772,6 @@
 				3719A78616D5DC2B00B09BDB /* Hash.cpp */,
 				3719A78716D5DC2B00B09BDB /* Hash.h */,
 				3719A78816D5DC2B00B09BDB /* Id.h */,
-				3719A78916D5DC2B00B09BDB /* IdCache.h */,
 				3719A78A16D5DC2B00B09BDB /* Stream.h */,
 				3719A78B16D5DC2B00B09BDB /* String.cpp */,
 				3719A78C16D5DC2B00B09BDB /* String.h */,

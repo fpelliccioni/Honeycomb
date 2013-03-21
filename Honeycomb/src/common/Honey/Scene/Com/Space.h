@@ -22,18 +22,12 @@ public:
     class EnumVisitor
     {
     public:
-        #define ENUM_LIST(e,_)  \
-            e(_, cont)          \
-            e(_, stop)          \
-            e(_, skipChildren)  \
-
-        /**
-          * \retval cont            continue enumeration
-          * \retval stop            stop enumeration
-          * \retval skipChildren    skip enumeration of children
-          */
-        ENUM(SceneSpace::EnumVisitor, State);
-        #undef ENUM_LIST
+        enum class State
+        {
+            cont,           ///< continue enumeration
+            stop,           ///< stop enumeration
+            skipChildren    ///< skip enumeration of children
+        };
 
         EnumVisitor()                       : _bv(nullptr), _state(State::cont) {}
 

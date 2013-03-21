@@ -26,7 +26,7 @@ namespace honey
 /// Remove brackets around parameter
 #define UNBRACKET(...)                                      IFEQUAL(_UNBRACKET_TEST __VA_ARGS__, 1, EVAL __VA_ARGS__, __VA_ARGS__)
 
-/// Get number of arguments in list.  Supports up to 10 args (limited because of high impact on compile time).
+/// Get number of arguments in list.  Supports up to 10 args (limited because of high impact on compile-time).
 #define NUMARGS(...)                                        IFEMPTY(0, _NUMARGS(__VA_ARGS__), __VA_ARGS__)
 
 /// Use to avoid macro interpreting a comma as an argument delimiter

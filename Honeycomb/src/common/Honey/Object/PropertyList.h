@@ -16,14 +16,14 @@ public:
     typedef SharedPtr<Property> Ptr;
     typedef SharedPtr<const Property> ConstPtr;
 
-    Property(const Id& id)                                          : PropertyBase(id), List(1) {}
-    Property(const Id& id, const List& list)                        : PropertyBase(id), List(list) {}
-    Property(const Id& id, int size, const T& val = T())            : PropertyBase(id), List(size, val) {}
+    Property(const String& name)                                    : PropertyBase(name), List(1) {}
+    Property(const String& name, const List& list)                  : PropertyBase(name), List(list) {}
+    Property(const String& name, int size, const T& val = T())      : PropertyBase(name), List(size, val) {}
     template<class Iter>
-    Property(const Id& id, Iter&& first, Iter&& last)               : PropertyBase(id), List(forward<Iter>(first), forward<Iter>(last)) {}
+    Property(const String& name, Iter&& first, Iter&& last)         : PropertyBase(name), List(forward<Iter>(first), forward<Iter>(last)) {}
 
-    static const Id& s_type();
-    virtual const Id& type() const                                  { return s_type(); }
+    static const TypeInfo& s_type();
+    virtual const TypeInfo& type() const                            { return s_type(); }
     virtual Property& clone() const                                 { return *new Property(*this); }
 
     int size() const                                                { return honey::size(static_cast<const List&>(*this)); }
@@ -40,13 +40,13 @@ public:
 
 /// Integer list property
 typedef vector<int> IntList;
-template<> inline const Id& Property<IntList>::s_type()             { static const Id& id = "IntList"; return id; }
+template<> inline auto Property<IntList>::s_type() -> const TypeInfo&       { static TypeInfo _("IntList"); return _; }
 
 /// Real list property
 typedef vector<Real> RealList;
-template<> inline const Id& Property<RealList>::s_type()            { static const Id& id = "RealList"; return id; }
+template<> inline auto Property<RealList>::s_type() -> const TypeInfo&      { static TypeInfo _("RealList"); return _; }
 
 /// String list property
-template<> inline const Id& Property<String::List>::s_type()        { static const Id& id = "String::List"; return id; }
+template<> inline auto Property<String::List>::s_type() -> const TypeInfo&  { static TypeInfo _("String::List"); return _; }
 
 }

@@ -126,19 +126,19 @@ public:
         {
             for (int j = 0; j < dim; ++j)
             {
-                debug::print(sout() << "VecSwizCon2 " << axes[i] << axes[j] 
+                debug_print(sout() << "VecSwizCon2 " << axes[i] << axes[j] 
                                             << "() const                                              { return VecSwizCon2("
                                             << axes[i] << "," << axes[j] << "); }" << endl);
 
                 for (int k = 0; k < dim; ++k)
                 {
-                    debug::print(sout() << "VecSwizCon3 " << axes[i] << axes[j] << axes[k] 
+                    debug_print(sout() << "VecSwizCon3 " << axes[i] << axes[j] << axes[k] 
                                                 << "() const                                             { return VecSwizCon3("
                                                 << axes[i] << "," << axes[j] << "," << axes[k] << "); }" << endl);
 
                     for (int l = 0; l < dim; ++l)
                     {
-                        debug::print(sout() << "VecSwizCon4 " << axes[i] << axes[j] << axes[k] << axes[l]
+                        debug_print(sout() << "VecSwizCon4 " << axes[i] << axes[j] << axes[k] << axes[l]
                                                     << "() const                                            { return VecSwizCon4("
                                                     << axes[i] << "," << axes[j] << "," << axes[k] << "," << axes[l] << "); }" << endl);
                     }
@@ -503,7 +503,7 @@ public:
                 if (used[j]) continue;
                 used[j] = true;
 
-                debug::print(sout() << "VecSwizRef2 " << axes[i] << axes[j] 
+                debug_print(sout() << "VecSwizRef2 " << axes[i] << axes[j] 
                                             << "()                                                    { return VecSwizRef2("
                                             << axes[i] << "," << axes[j] << "); }" << endl);
 
@@ -512,14 +512,14 @@ public:
                     if (used[k]) continue;
                     used[k] = true;
 
-                    debug::print(sout() << "VecSwizRef3 " << axes[i] << axes[j] << axes[k] 
+                    debug_print(sout() << "VecSwizRef3 " << axes[i] << axes[j] << axes[k] 
                                                 << "()                                                   { return VecSwizRef3("
                                                 << axes[i] << "," << axes[j] << "," << axes[k] << "); }" << endl);
 
                     for (int l = 0; l < dim; ++l)
                     {
                         if (used[l]) continue;
-                        debug::print(sout() << "VecSwizRef4 " << axes[i] << axes[j] << axes[k] << axes[l]
+                        debug_print(sout() << "VecSwizRef4 " << axes[i] << axes[j] << axes[k] << axes[l]
                                                     << "()                                                  { return VecSwizRef4("
                                                     << axes[i] << "," << axes[j] << "," << axes[k] << "," << axes[l] << "); }" << endl);
                     }

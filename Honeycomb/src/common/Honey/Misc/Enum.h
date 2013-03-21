@@ -3,6 +3,7 @@
 
 #include "Honey/String/Id.h"
 #include "Honey/Math/Numeral.h"
+#include "Honey/Misc/Exception.h"
 
 namespace honey
 {
@@ -22,7 +23,6 @@ namespace honey
     If there is no base class then leave it empty.  If the base class parameter has a comma then it must be bracketed.
 
     \see EnumInfo_, reflection info returned by EnumClass::enumInfo()
-    \see enumnull
 
     Example:
 
@@ -60,13 +60,9 @@ namespace honey
         case Vehicle::Type::car:
             break;
         }
-
-        v = enumnull;                           //Set to null
-        if (v == enumnull) {}                   //True
-
                                                 //Print all vehicle types
         const Vehicle::Type::EnumInfo::ElemList& list = Vehicle::Type::enumInfo().elemList();
-        for (int i = 0; i < size(list); ++i) { debug::print(sout() << list[i].id << endl); }
+        for (int i = 0; i < size(list); ++i) { debug_print(sout() << list[i].id << endl); }
     }
 
     \endcode
@@ -75,7 +71,7 @@ namespace honey
 
 /// Enum class factory method. See \ref Enum for more info.
 #define ENUM(Base, Class)                                                                                                                       \
-    class Class : public EnumElemBase                                                                                                           \
+    class Class : public EnumElem                                                                                                               \
     {                                                                                                                                           \
     public:                                                                                                                                     \
         enum Enum                                                                                                                               \
@@ -88,17 +84,13 @@ namespace honey
         Class()                                                             {}                                                                  \
         /** Construct with constant */                                                                                                          \
         Class(const Enum val)                                               { operator=(val); }                                                 \
-        /** Construct with null */                                                                                                              \
-        Class(const EnumNullType& val)                                      { operator=(val); }                                                 \
-        /** Construct with int.  Returns element with matching value (or null if none) */                                                       \
+        /** Construct with int.  Returns element with matching value, throws EnumException if no match is found. */                             \
         explicit Class(const int val)                                       { operator=(static_cast<Enum>(enumInfo().elem(val).val)); }         \
-        /** Construct with id.  Returns element with matching id (or null if none) */                                                           \
+        /** Construct with id.  Returns element with matching id, throws EnumException if no match is found. */                                 \
         explicit Class(const Id& val)                                       { operator=(static_cast<Enum>(enumInfo().elem(val).val)); }         \
                                                                                                                                                 \
         /** Assign to constant */                                                                                                               \
         Class& operator=(const Enum rhs)                                    { _val = rhs; return *this; }                                       \
-        /** Assign to null */                                                                                                                   \
-        Class& operator=(const EnumNullType& rhs)                           { _val = rhs; return *this; }                                       \
                                                                                                                                                 \
         /** Compare with self */                                                                                                                \
         bool operator==(const Class& rhs) const                             { return val() == rhs.val(); }                                      \
@@ -114,9 +106,7 @@ namespace honey
         bool operator>=(const Enum rhs) const                               { return val() >= rhs; }                                            \
         bool operator< (const Enum rhs) const                               { return val() < rhs; }                                             \
         bool operator> (const Enum rhs) const                               { return val() > rhs; }                                             \
-        /** Compare with null */                                                                                                                \
-        bool operator==(const EnumNullType& rhs) const                      { return val() == rhs.val(); }                                      \
-        bool operator!=(const EnumNullType& rhs) const                      { return val() != rhs.val(); }                                      \
+                                                                                                                                                \
     private:                                                                                                                                    \
         /** Disable compare with integers and other enums */                                                                                    \
         bool operator==(int) const                                          { return false; }                                                   \
@@ -125,66 +115,66 @@ namespace honey
         bool operator>=(int) const                                          { return false; }                                                   \
         bool operator< (int) const                                          { return false; }                                                   \
         bool operator> (int) const                                          { return false; }                                                   \
-        template<class T> struct DisableCmp : mt::Value<bool, std::is_convertible<T,int>::value && !std::is_same<T,Enum>::value && !std::is_same<T,EnumNullType>::value> {};            \
+        template<class T> struct DisableCmp : mt::Value<bool, std::is_convertible<T,int>::value && !std::is_same<T,Enum>::value> {};            \
         template<class T> friend typename std::enable_if<DisableCmp<T>::value, bool>::type operator==(const T&, const Class&)   { static_assert(!mt::True<T>::value, "Enum compare type mismatch"); } \
         template<class T> friend typename std::enable_if<DisableCmp<T>::value, bool>::type operator!=(const T&, const Class&)   { static_assert(!mt::True<T>::value, "Enum compare type mismatch"); } \
         template<class T> friend typename std::enable_if<DisableCmp<T>::value, bool>::type operator<=(const T&, const Class&)   { static_assert(!mt::True<T>::value, "Enum compare type mismatch"); } \
         template<class T> friend typename std::enable_if<DisableCmp<T>::value, bool>::type operator>=(const T&, const Class&)   { static_assert(!mt::True<T>::value, "Enum compare type mismatch"); } \
         template<class T> friend typename std::enable_if<DisableCmp<T>::value, bool>::type operator< (const T&, const Class&)   { static_assert(!mt::True<T>::value, "Enum compare type mismatch"); } \
         template<class T> friend typename std::enable_if<DisableCmp<T>::value, bool>::type operator> (const T&, const Class&)   { static_assert(!mt::True<T>::value, "Enum compare type mismatch"); } \
+                                                                                                                                                \
     public:                                                                                                                                     \
-        /** Get class Id */                                                                                                                     \
+        /** Get class name */                                                                                                                   \
+        const String& className() const                                     { return enumInfo().elem(val()).className; }                        \
+        /** Get class id */                                                                                                                     \
         const Id& classId() const                                           { return enumInfo().elem(val()).classId; }                          \
-        /** Get Id */                                                                                                                           \
+        /** Get name */                                                                                                                         \
+        const String& name() const                                          { return enumInfo().elem(val()).name; }                             \
+        /** Get id */                                                                                                                           \
         const Id& id() const                                                { return enumInfo().elem(val()).id; }                               \
+                                                                                                                                                \
         /** Id cast returns id */                                                                                                               \
         operator const Id&() const                                          { return id(); }                                                    \
                                                                                                                                                 \
         /** To string */                                                                                                                        \
-        friend StringStream& operator<<(StringStream& os, const Class& val) { return os << val.classId() << "::" << val.id(); }                 \
+        friend StringStream& operator<<(StringStream& os, const Class& val) { return os << val.className() << "::" << val.name(); }             \
                                                                                                                                                 \
         /** Class with info about this enum */                                                                                                  \
         class EnumInfo : public EnumInfo_<Class>                                                                                                \
         {                                                                                                                                       \
             friend class Class;                                                                                                                 \
-        private:                                                                                                                                \
             /** Add enum elements to our list */                                                                                                \
-            EnumInfo()                                                                                                                          \
-            {                                                                                                                                   \
-                ENUM_ELEM_CALL(ENUM_E_CTOR, Base, Class)                                                                                        \
-                this->setup();                                                                                                                        \
-            }                                                                                                                                   \
+            EnumInfo()                                                      { ENUM_ELEM_CALL(ENUM_E_CTOR, Base, Class) this->setup(); }         \
         };                                                                                                                                      \
                                                                                                                                                 \
-        static const EnumInfo& enumInfo() { static const EnumInfo info; return info; }                                                          \
+        static const EnumInfo& enumInfo()                                   { static const EnumInfo info; return info; }                        \
     };                                                                                                                                          \
 
 
-//====================================================
-// Enum Private
-//====================================================
 /** \cond */
 #define ENUM_ELEM_CALL(EFunc, Base, Class)          ENUM_LIST(EFunc, STRINGIFY(IFEMPTY(, UNBRACKET(Base)::, Base)Class))                          
 
 #define ENUM_E_ENUM(...)                            EVAL(TOKCAT(ENUM_E_ENUM_, NUMARGS(__VA_ARGS__))(__VA_ARGS__))
-#define ENUM_E_ENUM_2(ClassId, name)                name, 
-#define ENUM_E_ENUM_4(ClassId, name, str, val)      name IFEMPTY(,= UNBRACKET(val),val), 
+#define ENUM_E_ENUM_2(ClassName, name)              name,
+#define ENUM_E_ENUM_4(ClassName, name, str, val)    name IFEMPTY(,= UNBRACKET(val),val),
 
 #define ENUM_E_CTOR(...)                            EVAL(TOKCAT(ENUM_E_CTOR_, NUMARGS(__VA_ARGS__))(__VA_ARGS__))
-#define ENUM_E_CTOR_2(ClassId, name)                ENUM_E_CTOR_4(ClassId, name, EMPTY, EMPTY)
-#define ENUM_E_CTOR_4(ClassId, name, str, val)      this->addElem(ClassId, IFEMPTY(#name, str, str), name); 
+#define ENUM_E_CTOR_2(ClassName, name)              ENUM_E_CTOR_4(ClassName, name, EMPTY, EMPTY)
+#define ENUM_E_CTOR_4(ClassName, name, str, val)    this->addElem(ClassName, IFEMPTY(#name, str, str), name); 
 /** \endcond */
 
 //====================================================
 // EnumElem
 //====================================================
 
+struct EnumException : Exception                    { EXCEPTION(EnumException) };
+
 /// Base class of all generated enum classes. A single element in the enumeration. See \ref Enum.
-class EnumElemBase
+class EnumElem
 {
 public:
-    EnumElemBase()                                  {}
-    EnumElemBase(int val)                           : _val(val) {}
+    EnumElem()                                      {}
+    EnumElem(int val)                               : _val(val) {}
 
     /// Get integer value
     int val() const                                 { return _val; }
@@ -195,26 +185,6 @@ protected:
     int _val;
 };
 
-/** \cond */
-/// Null enum element
-class EnumNullType : public EnumElemBase
-{
-public:
-    EnumNullType()                                  : EnumElemBase(0x80000000) {}
-
-    const Id& classId() const                       { static const Id id = "enumnull"; return id; }
-    const Id& id() const                            { return idnull; }
-    operator const Id&() const                      { return id(); }
-
-    friend StringStream& operator<<(StringStream& os, const EnumNullType& val)  { return os << val.classId() << "::" << val.id(); }
-};
-
-mt_staticObj(const EnumNullType, _enumnull,)
-/** \endcond */
-/// Null enum, any enum object may be set to null. value = 0x80000000, id = "enumnull".
-#define enumnull _enumnull()
-
-
 //====================================================
 // EnumInfo
 //====================================================
@@ -224,36 +194,38 @@ template<class EnumType>
 class EnumInfo_
 {
     friend EnumType;
+    
+    typedef unordered_map<Id, int> IdElemMap;
+    typedef unordered_map<int, int> ValElemMap;
+    typedef vector<int> ValElemTable;
+    
 public:
     struct Elem
     {
-        Elem(const Id& classId, const Id& id, int val) : classId(classId), id(id), val(val) {}
+        Elem(const String& className, const String& name, int val) :
+            className(className), classId(className), name(name), id(name), val(val) {}
+        
+        String className;
         Id classId;
+        String name;
         Id id;
         int val;
     };
 
     typedef vector<Elem> ElemList;
-
-private:
-    typedef unordered_map<Id, int> IdElemMap;
-    typedef unordered_map<int, int> ValElemMap;
-    typedef vector<int> ValElemTable;
-
-public:
-
+    
     /// Get all elements
     const ElemList& elemList() const                { return _elemList; }
 
-    /// Get element by id, returns null element if not found
+    /// Get element by id, throws EnumException if not found
     const Elem& elem(const Id& id) const
     {
         IdElemMap::const_iterator it = _idElemMap.find(id);
         if (it != _idElemMap.end()) return _elemList[it->second];
-        return _elemNull;
+        throw_ EnumException(); throw;
     }
     
-    /// Get element by value, returns null element if not found
+    /// Get element by value, throws EnumException if not found
     const Elem& elem(int val) const
     {
         //Use lookup table if available
@@ -261,26 +233,23 @@ public:
         {
             int index = val - _valMin;
             if (index >= 0 && index < utos(_valElemTable.size()) && _valElemTable[index] != -1) return _elemList[_valElemTable[index]];
-            return _elemNull;
+            throw_ EnumException();
         }
 
         //Fall back to map
         ValElemMap::const_iterator it = _valElemMap.find(val);
         if (it != _valElemMap.end()) return _elemList[it->second];
-        return _elemNull;
+        throw_ EnumException(); throw;
     }
 
 protected:
 
-    EnumInfo_() :
-        _elemNull(enumnull.classId(), enumnull.id(), enumnull.val()),
-        _valMin(0),
-        _valMax(0) {}
+    EnumInfo_()                                     : _valMin(0), _valMax(0) {}
      
-    void addElem(const Id& classId, const Id& id, int val)
+    void addElem(const String& className, const String& name, int val)
     {
-        _elemList.push_back(Elem(classId, id, val));
-        _idElemMap[id] = _elemList.size()-1;
+        _elemList.push_back(Elem(className, name, val));
+        _idElemMap[_elemList.back().id] = _elemList.size()-1;
         
         //Track min/max values
         if (_elemList.size() == 1)
@@ -314,7 +283,6 @@ protected:
     }
 
 private:
-    Elem                _elemNull;
     ElemList            _elemList;
     IdElemMap           _idElemMap;
     ValElemMap          _valElemMap;

@@ -30,16 +30,11 @@ class Qrd
 public:
     typedef Matrix<matrix::dynamic, matrix::dynamic, Real> Matrix;
 
-    #define ENUM_LIST(e,_)  \
-        e(_, full)          \
-        e(_, reduced)       \
-
-    /**
-      * \retval full    compute full QRD
-      * \retval reduced compute reduced QRD
-      */
-    ENUM(Qrd, Mode);
-    #undef ENUM_LIST
+    enum class Mode
+    {
+        full,       ///< compute full QRD
+        reduced     ///< compute reduced QRD
+    };
 
     Qrd() {}
     /// Calculate the QRD of matrix A

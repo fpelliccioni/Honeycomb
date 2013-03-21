@@ -12,52 +12,37 @@ namespace honey
   * \defgroup Id    String Identifier
   *
   * String ids provide a fast way to compare strings. \n
-  * An Id is composed of a string and its hashed integer value. The strings are hashed using Hash::fast().
+  * An Id is composed of a string and its hashed integer value. The strings are hashed using hash::fast(). \n
+  * In final mode an Id only holds the hash; name() and operator<<() are not available.
   *
-  * \see ID to fetch cached ids from string literals on the fly.
-  *
-  * Ids are switchable.  The cases must be defined in IDSWITCH_LIST.
-  * If no match is found then `default` will be chosen as expected.
-  *
-  * An example that switches on the string "foo":
-  *
-  *     Id id = "foo";
-  *
-  *     #define IDSWITCH_LIST(c) c(foo) c(bar) c(eggs, "eggz") c(spam)
-  *     IDSWITCH(id)
-  *     #undef IDSWITCH_LIST
-  *     {
-  *     IDCASE(bar):
-  *         break;
-  *     IDCASE(foo):
-  *     IDCASE(eggs):       //This block will be chosen by "foo" or "eggz"
-  *         break;
-  *     IDCASE(default):
-  *         break;
-  *     }
-  *     IDSWITCH_END
+  * \see string literal operator `_id` to create ids at compile-time.
   */
+/// @{
+
+class IdConstexpr;
 
 /// Holds a string and its hashed value for fast comparison ops. See \ref Id
-/** \ingroup Id */
 class Id
 {
+    friend class IdConstexpr;
 public:
     Id()                                        : _hash(0) {}
-    Id(const String& name)                      : _name(name), _hash(Hash::fast(_name)) {}
-    Id(const StringStream& stream)              { operator=(stream); }
-    Id(const Char* name)                        { operator=(name); }
-    Id(const char* name)                        { operator=(name); }
-    Id(const Id& id)                            : _name(id._name), _hash(id._hash) {}
-    Id(Id&& val)                                { operator=(move(val)); }
+    Id(const String& name)                      : debug_if(_name(name),) _hash(hash::fast(name)) {}
+    Id(const StringStream& stream)              : Id(stream.str()) {}
+    Id(const Char* name)                        : Id(String(name)) {}
+    Id(const char* name)                        : Id(String(name)) {}
+    Id(const IdConstexpr& rhs);
+    Id(const Id& rhs)                           : debug_if(_name(rhs._name),) _hash(rhs._hash) {}
+    Id(Id&& rhs)                                : debug_if(_name(move(rhs._name)),) _hash(rhs._hash) {}
     
-    Id& operator=(const Id& rhs)                { _name = rhs._name; _hash = rhs._hash; return *this; }
-    Id& operator=(Id&& rhs)                     { _name = move(rhs._name); _hash = rhs._hash; return *this; }
-    Id& operator=(const String& rhs)            { return assign(rhs); }
-    Id& operator=(const StringStream& rhs)      { return assign(rhs); }
-    Id& operator=(const Char* rhs)              { return assign(rhs); }
-    Id& operator=(const char* rhs)              { return assign(rhs); }
-
+    Id& operator=(const String& name)           { debug_if(_name = name;) _hash = hash::fast(name); return *this; }
+    Id& operator=(const StringStream& stream)   { return operator=(stream.str()); }
+    Id& operator=(const Char* name)             { return operator=(String(name)); }
+    Id& operator=(const char* name)             { return operator=(String(name)); }
+    Id& operator=(const Id& rhs)                { debug_if(_name = rhs._name;) _hash = rhs._hash; return *this; }
+    Id& operator=(Id&& rhs)                     { debug_if(_name = move(rhs._name);) _hash = rhs._hash; return *this; }
+    Id& operator=(const IdConstexpr& rhs);
+    
     bool operator==(const Id& rhs) const        { return _hash == rhs._hash; }
     bool operator!=(const Id& rhs) const        { return _hash != rhs._hash; }
     bool operator<=(const Id& rhs) const        { return _hash <= rhs._hash; }
@@ -65,31 +50,97 @@ public:
     bool operator< (const Id& rhs) const        { return _hash < rhs._hash; }
     bool operator> (const Id& rhs) const        { return _hash > rhs._hash; }
 
-    /// Get string that this id represents
-    const String& name() const                  { return _name; }
+    bool operator==(const IdConstexpr& rhs) const;
+    bool operator!=(const IdConstexpr& rhs) const;
+    bool operator<=(const IdConstexpr& rhs) const;
+    bool operator>=(const IdConstexpr& rhs) const;
+    bool operator< (const IdConstexpr& rhs) const;
+    bool operator> (const IdConstexpr& rhs) const;
+    
+    #ifndef FINAL
+        /// Get string that this id represents
+        const String& name() const              { return _name; }
+    #endif
     /// Get hashed integer value of name
     int hash() const                            { return _hash; }
     
-    /// Same as name()
-    operator const String&() const              { return _name; }
     /// Same as hash()
     operator int() const                        { return _hash; }
 
-    ///Output Id to string stream
-    friend StringStream& operator<<(StringStream& os, const Id& val)    { return os << (val.hash() ? val.name() : "idnull"); }
-
+    #ifndef FINAL
+        ///Output Id to string stream
+        friend StringStream& operator<<(StringStream& os, const Id& val)    { return os << (val.hash() ? val.name() : "idnull"); }
+    #endif
+    
 private:
-    Id& assign(const String& name)
-    {
-        _name = name;
-        _hash = Hash::fast(_name);
-        return *this;
-    }
+    Id(const String& name, int hash)            : debug_if(_name(name),) _hash(hash) {}
 
-    String _name;
+    #ifndef FINAL
+        String _name;
+    #endif
     int _hash;
 };
 
+/// Create an Id that can be retrieved safely from a static context
+#define IdStatic(Func, IdString) mt_staticObj(const Id, Func, (IdString))
+/// Null id
+#define idnull IdConstexpr()
+
+/// Id created from a string literal at compile-time. \see string literal operator `_id`
+class IdConstexpr
+{
+    friend class Id;
+public:
+    constexpr IdConstexpr()                     : debug_if(_name(""),) _hash(0) {}
+    constexpr IdConstexpr(const char* str, size_t len)
+                                                : debug_if(_name(str),) _hash(hash::fast_constexpr(str, len)) {}
+    
+    constexpr bool operator==(const IdConstexpr& rhs)   { return _hash == rhs._hash; }
+    constexpr bool operator!=(const IdConstexpr& rhs)   { return _hash != rhs._hash; }
+    constexpr bool operator<=(const IdConstexpr& rhs)   { return _hash <= rhs._hash; }
+    constexpr bool operator>=(const IdConstexpr& rhs)   { return _hash >= rhs._hash; }
+    constexpr bool operator< (const IdConstexpr& rhs)   { return _hash < rhs._hash; }
+    constexpr bool operator> (const IdConstexpr& rhs)   { return _hash > rhs._hash; }
+    
+    bool operator==(const Id& rhs) const        { return _hash == rhs._hash; }
+    bool operator!=(const Id& rhs) const        { return _hash != rhs._hash; }
+    bool operator<=(const Id& rhs) const        { return _hash <= rhs._hash; }
+    bool operator>=(const Id& rhs) const        { return _hash >= rhs._hash; }
+    bool operator< (const Id& rhs) const        { return _hash < rhs._hash; }
+    bool operator> (const Id& rhs) const        { return _hash > rhs._hash; }
+    
+    #ifndef FINAL
+        constexpr const char* name()            { return _name; }
+    #endif
+    constexpr int hash()                        { return _hash; }
+    
+    constexpr operator int()                    { return _hash; }
+    
+    #ifndef FINAL
+        friend StringStream& operator<<(StringStream& os, const IdConstexpr& val)   { return os << (val.hash() ? val.name() : "idnull"); }
+    #endif
+    
+private:
+    #ifndef FINAL
+        const char* _name;
+    #endif
+    int _hash;
+};
+
+/// Create an id from a string literal at compile-time.  Can be used as a case expression in a switch block (ex. case "foo"_id: ).
+constexpr IdConstexpr operator"" _id(const char* str, size_t len)       { return IdConstexpr(str, len); }
+    
+/// @}
+
+inline Id::Id(const IdConstexpr& rhs)                       : debug_if(_name(rhs._name),) _hash(rhs._hash) {}
+inline Id& Id::operator=(const IdConstexpr& rhs)            { debug_if(_name = rhs._name;) _hash = rhs._hash; return *this; }
+inline bool Id::operator==(const IdConstexpr& rhs) const    { return _hash == rhs._hash; }
+inline bool Id::operator!=(const IdConstexpr& rhs) const    { return _hash != rhs._hash; }
+inline bool Id::operator<=(const IdConstexpr& rhs) const    { return _hash <= rhs._hash; }
+inline bool Id::operator>=(const IdConstexpr& rhs) const    { return _hash >= rhs._hash; }
+inline bool Id::operator< (const IdConstexpr& rhs) const    { return _hash < rhs._hash; }
+inline bool Id::operator> (const IdConstexpr& rhs) const    { return _hash > rhs._hash; }
+    
 }
 
 /** \cond */
@@ -97,84 +148,13 @@ private:
 template<>
 struct std::hash<honey::Id>
 {
-    size_t operator()(const honey::Id& val) const   { return val.hash(); }
+    size_t operator()(const honey::Id& val) const           { return val.hash(); }
+};
+
+template<>
+struct std::hash<honey::IdConstexpr>
+{
+    size_t operator()(const honey::IdConstexpr& val) const  { return val.hash(); }
 };
 /** \endcond */
-
-namespace honey
-{
-
-/** \addtogroup Id */
-/// @{
-
-/// Create an Id that can be retrieved safely from a static context
-#define IdStatic(Func, IdString) mt_staticObj(const Id, Func, (IdString))
-/** \cond */
-IdStatic(_idnull, "")
-/** \endcond */
-/// Null id
-#define idnull _idnull()
-
-
-//===================================================================
-// IDSWITCH Public
-//===================================================================
-
-/// See \ref Id
-#define IDSWITCH(id)                                                                                                                            \
-    {                                                                                                                                           \
-        enum                                                                                                                                    \
-        {                                                                                                                                       \
-            _IdSwitchEnum_default = -1,                                                                                                         \
-            IDSWITCH_LIST(IDSWITCH_ENUMELEM)                                                                                                    \
-            __IdSwitchEnum_Count                                                                                                                \
-        };                                                                                                                                      \
-        static const unordered_map<Id, int> _IdSwitchMap = priv::IdSwitchMapFactory() IDSWITCH_LIST(IDSWITCH_MAPELEM);                          \
-        unordered_map<Id, int>::const_iterator _IdSwitchMapIt = _IdSwitchMap.find(id);                                                          \
-        switch(_IdSwitchMapIt != _IdSwitchMap.end() ? _IdSwitchMapIt->second : -1)                                                              \
-
-/// See \ref Id
-#define IDCASE(name)                    case _IdSwitchEnum_##name
-
-/// See \ref Id
-#define IDSWITCH_END                    }
-
-/// @}
-//===================================================================
-// IDSWITCH Private
-//===================================================================
-/** \cond */
-
-#define IDSWITCH_ENUMELEM(...)          EVAL(TOKCAT(IDSWITCH_ENUMELEM_, NUMARGS(__VA_ARGS__))(__VA_ARGS__))
-#define IDSWITCH_ENUMELEM_1(name)       _IdSwitchEnum_##name, 
-#define IDSWITCH_ENUMELEM_2(name, str)  IDSWITCH_ENUMELEM_1(name)
-
-#define IDSWITCH_MAPELEM(...)           EVAL(TOKCAT(IDSWITCH_MAPELEM_, NUMARGS(__VA_ARGS__))(__VA_ARGS__))
-#define IDSWITCH_MAPELEM_1(name)        << #name 
-#define IDSWITCH_MAPELEM_2(name, str)   << UNBRACKET(str) 
-
-namespace priv
-{
-    struct IdSwitchMapFactory
-    {
-        IdSwitchMapFactory()                           : count(0) {}
-
-        IdSwitchMapFactory& operator<<(const Id& id)
-        {
-            auto res = map.insert(make_pair(id,count++));
-            if (!res.second) error(sout() << "IdSwitchMap hash collision found: Id 1: " << id << " ; Id 2: " << res.first->first);
-            return *this;
-        }
-
-        operator unordered_map<Id, int>() const         { return map; }
-
-        int count;
-        unordered_map<Id, int> map;
-    };
-}
-
-/** \endcond */
-//===================================================================
-
-}
 
