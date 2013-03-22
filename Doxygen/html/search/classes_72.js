@@ -16,9 +16,6 @@ var searchData=
   ['rebind',['rebind',['../structhoney_1_1_allocator_1_1rebind.html',1,'honey::Allocator']]],
   ['rect_5f',['Rect_',['../classhoney_1_1_rect__.html',1,'honey']]],
   ['recycle',['Recycle',['../structhoney_1_1lockfree_1_1_mem_1_1_thread_data_1_1_recycle.html',1,'honey::lockfree::Mem::ThreadData']]],
-  ['removeconstref',['removeConstRef',['../structhoney_1_1mt_1_1remove_const_ref.html',1,'honey::mt']]],
-  ['removeconstref_3c_20t1_5f_20_3e',['removeConstRef&lt; T1_ &gt;',['../structhoney_1_1mt_1_1remove_const_ref.html',1,'honey::mt']]],
-  ['removeconstref_3c_20t2_5f_20_3e',['removeConstRef&lt; T2_ &gt;',['../structhoney_1_1mt_1_1remove_const_ref.html',1,'honey::mt']]],
   ['removeptr',['removePtr',['../structhoney_1_1mt_1_1remove_ptr.html',1,'honey::mt']]],
   ['removeref',['removeRef',['../structhoney_1_1mt_1_1remove_ref.html',1,'honey::mt']]],
   ['ringiter',['RingIter',['../classhoney_1_1_ring_iter.html',1,'honey']]]

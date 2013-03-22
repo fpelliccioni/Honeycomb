@@ -123,8 +123,9 @@ Collaboration diagram for honey::UniquePtr&lt; T, Fin &gt;:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ac9c1f0e8fa1d2a356117346e003b2087"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_unique_ptr.html#ac9c1f0e8fa1d2a356117346e003b2087">UniquePtr</a> ()</td></tr>
 <tr class="separator:ac9c1f0e8fa1d2a356117346e003b2087"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa573d3b1b0d66eb6cbfa706010535ef"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_unique_ptr.html#aaa573d3b1b0d66eb6cbfa706010535ef">UniquePtr</a> (T *ptr, const Fin &amp;f=Fin())</td></tr>
-<tr class="separator:aaa573d3b1b0d66eb6cbfa706010535ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63df9c4f32e180a61de0fbdf51500613"><td class="memTemplParams" colspan="2">template&lt;class Fin_  = Fin&gt; </td></tr>
+<tr class="memitem:a63df9c4f32e180a61de0fbdf51500613"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classhoney_1_1_unique_ptr.html#a63df9c4f32e180a61de0fbdf51500613">UniquePtr</a> (T *ptr, Fin_ &amp;&amp;f=Fin_())</td></tr>
+<tr class="separator:a63df9c4f32e180a61de0fbdf51500613"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acffa55ae124f2f8795293097e1f25e48"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhoney_1_1_unique_ptr.html#acffa55ae124f2f8795293097e1f25e48">UniquePtr</a> (<a class="el" href="classhoney_1_1_unique_ptr.html">UniquePtr</a> &amp;&amp;rhs)</td></tr>
 <tr class="memdesc:acffa55ae124f2f8795293097e1f25e48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves pointer and finalizer out of rhs. To set a new finalizer into rhs use move assign: rhs = UniquePtr(p,f);.  <a href="#acffa55ae124f2f8795293097e1f25e48">More...</a><br/></td></tr>
 <tr class="separator:acffa55ae124f2f8795293097e1f25e48"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -173,13 +174,10 @@ Friends</h2></td></tr>
 Related Functions</h2></td></tr>
 <tr><td class="ititle" colspan="2"><p>(Note that these are not member functions.) </p>
 </td></tr>
-<tr class="memitem:a13965750af73cb99ab81b1a1fda8cc3f"><td class="memTemplParams" colspan="2">template&lt;class T , class Fin &gt; </td></tr>
-<tr class="memitem:a13965750af73cb99ab81b1a1fda8cc3f"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classhoney_1_1_unique_ptr.html">UniquePtr</a>&lt; T, Fin &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classhoney_1_1_unique_ptr.html#a13965750af73cb99ab81b1a1fda8cc3f">UniquePtrCreate</a> (T *ptr, Fin &amp;&amp;f)</td></tr>
-<tr class="memdesc:a13965750af73cb99ab81b1a1fda8cc3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper to create a unique a ptr using type deduction.  <a href="#a13965750af73cb99ab81b1a1fda8cc3f">More...</a><br/></td></tr>
-<tr class="separator:a13965750af73cb99ab81b1a1fda8cc3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac4eb48e2111ac7983563ad8c10341cca"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:ac4eb48e2111ac7983563ad8c10341cca"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classhoney_1_1_unique_ptr.html">UniquePtr</a>&lt; T, <a class="el" href="structhoney_1_1finalize.html">finalize</a>&lt; T &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classhoney_1_1_unique_ptr.html#ac4eb48e2111ac7983563ad8c10341cca">UniquePtrCreate</a> (T *ptr)</td></tr>
-<tr class="separator:ac4eb48e2111ac7983563ad8c10341cca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7160753f4f704b0763e40cded27d78c0"><td class="memTemplParams" colspan="2">template&lt;class T , class Fin  = finalize&lt;T&gt;&gt; </td></tr>
+<tr class="memitem:a7160753f4f704b0763e40cded27d78c0"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classhoney_1_1_unique_ptr.html">UniquePtr</a>&lt; T, Fin &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classhoney_1_1_unique_ptr.html#a7160753f4f704b0763e40cded27d78c0">UniquePtrCreate</a> (T *ptr, Fin &amp;&amp;f=Fin())</td></tr>
+<tr class="memdesc:a7160753f4f704b0763e40cded27d78c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper to create a unique a ptr using type deduction.  <a href="#a7160753f4f704b0763e40cded27d78c0">More...</a><br/></td></tr>
+<tr class="separator:a7160753f4f704b0763e40cded27d78c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -222,11 +220,13 @@ template&lt;class T, class Fin&gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="aaa573d3b1b0d66eb6cbfa706010535ef"></a>
+<a class="anchor" id="a63df9c4f32e180a61de0fbdf51500613"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class T, class Fin&gt; </div>
+<div class="memtemplate">
+template&lt;class Fin_  = Fin&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -240,8 +240,8 @@ template&lt;class T, class Fin&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const Fin &amp;&#160;</td>
-          <td class="paramname"><em>f</em> = <code>Fin()</code>&#160;</td>
+          <td class="paramtype">Fin_ &amp;&amp;&#160;</td>
+          <td class="paramname"><em>f</em> = <code>Fin_()</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -658,11 +658,11 @@ template&lt;class , class &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a13965750af73cb99ab81b1a1fda8cc3f"></a>
+<a class="anchor" id="a7160753f4f704b0763e40cded27d78c0"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class T , class Fin &gt; </div>
+template&lt;class T , class Fin  = finalize&lt;T&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -677,7 +677,7 @@ template&lt;class T , class Fin &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">Fin &amp;&amp;&#160;</td>
-          <td class="paramname"><em>f</em>&#160;</td>
+          <td class="paramname"><em>f</em> = <code>Fin()</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -696,32 +696,6 @@ template&lt;class T , class Fin &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="ac4eb48e2111ac7983563ad8c10341cca"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classhoney_1_1_unique_ptr.html">UniquePtr</a>&lt; T, <a class="el" href="structhoney_1_1finalize.html">finalize</a>&lt; T &gt; &gt; UniquePtrCreate </td>
-          <td>(</td>
-          <td class="paramtype">T *&#160;</td>
-          <td class="paramname"><em>ptr</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">related</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/common/Honey/Memory/<a class="el" href="_shared_ptr_8h_source.html">SharedPtr.h</a></li>
 <li>src/common/Honey/Memory/<a class="el" href="_unique_ptr_8h_source.html">UniquePtr.h</a></li>
@@ -729,7 +703,7 @@ template&lt;class T &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 21 2013 10:44:38 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 21 2013 17:02:39 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

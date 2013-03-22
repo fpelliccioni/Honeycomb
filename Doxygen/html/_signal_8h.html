@@ -196,7 +196,7 @@ Macros</h2></td></tr>
 <div class="line">            }                                                                                           \</div>
 <div class="line">                                                                                                        \</div>
 <div class="line">        private:                                                                                        \</div>
-<div class="line">            typename mt::removeConstRef&lt;F&gt;::type _f; <span class="comment">/* F is forwarded, remove any c/r for storage */</span>   \</div>
+<div class="line">            typename std::decay&lt;F&gt;::type _f;                                                            \</div>
 <div class="line">        };                                                                                              \</div>
 </div><!-- fragment -->
 </div>
@@ -248,7 +248,7 @@ Macros</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 21 2013 10:44:35 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 21 2013 17:02:35 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

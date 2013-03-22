@@ -532,7 +532,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;template&lt;   class Range, typename std::enable_if&lt;mt::isRange&lt;Range&gt;::value, <span class="keywordtype">int</span>&gt;::type=0,</div>
 <div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;            <span class="keyword">class </span>Result_ = <span class="keyword">typename</span> std::decay&lt;typename mt::elemOf&lt;Range&gt;::type::Result&gt;::type,</div>
 <div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;            <span class="keyword">class </span>Result = <span class="keyword">typename</span> std::conditional&lt;   std::is_same&lt;Result_, void&gt;::value,</div>
-<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;                                                        <span class="keyword">typename</span> <a class="code" href="structhoney_1_1mt_1_1iter_of.html#a88a6def7cf6abea332eec9890105e754">mt::iterOf&lt;Range&gt;::type</a>,</div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;                                                        <span class="keyword">typename</span> <a class="code" href="structhoney_1_1mt_1_1iter_of.html#a4432d54d46b21ce113884d8063e7207e">mt::iterOf&lt;Range&gt;::type</a>,</div>
 <div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;                                                        tuple&lt;typename mt::iterOf&lt;Range&gt;::type, Result_&gt;&gt;::type&gt;</div>
 <div class="line"><a name="l00468"></a><span class="lineno"><a class="code" href="namespacehoney_1_1future.html#ad9c3789e49494d177afe11980ef37696">  468</a></span>&#160;<a class="code" href="classhoney_1_1_future.html" title="Unique future, guarantees sole access to a future function result.">Future&lt;Result&gt;</a> <a class="code" href="namespacehoney_1_1future.html#a5a013dc92a81a5428eb9216b202c45de" title="Returns a future to a tuple of the index of the ready future and its result.">whenAny</a>(Range&amp;&amp; range)</div>
 <div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;{</div>
@@ -574,7 +574,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 21 2013 10:44:34 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 21 2013 17:02:34 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structhoney_1_1mt_1_1_value.html" title="honey::mt::Value\&lt; bool,\l(q1\&lt; q2)\&gt;" alt="" coords="6,5,167,49"/>
+<area shape="rect" id="node1" href="$structhoney_1_1mt_1_1_value.html" title="honey::mt::Value\&lt; int,\l 1\&lt;\&lt; ((Options \&gt;\&gt; align\l_shift)&amp;align_mask)\&gt;" alt="" coords="5,5,163,65"/>
+<area shape="rect" id="node2" href="$structhoney_1_1matrix_1_1_option_1_1get_align.html" title="honey::matrix::Option\l::getAlign\&lt; Options \&gt;" alt="" coords="211,13,359,57"/>
 </map>

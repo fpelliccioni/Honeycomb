@@ -168,10 +168,10 @@ Macros</h2></td></tr>
 <tr class="memitem:ga1c1363163000ac7e7286ee537a198439"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___range.html#ga1c1363163000ac7e7286ee537a198439">RANGE_ARG_MAX</a>&#160;&#160;&#160;3</td></tr>
 <tr class="memdesc:ga1c1363163000ac7e7286ee537a198439"><td class="mdescLeft">&#160;</td><td class="mdescRight">Max args for range related variable argument functions.  <a href="group___range.html#ga1c1363163000ac7e7286ee537a198439">More...</a><br/></td></tr>
 <tr class="separator:ga1c1363163000ac7e7286ee537a198439"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54f00d0be85c3f38f1b100991ab7f42e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_range_8h.html#a54f00d0be85c3f38f1b100991ab7f42e">mt_iterOf</a>(Range)&#160;&#160;&#160;typename mt::removeConstRef&lt;decltype(honey::begin(Range))&gt;::type</td></tr>
+<tr class="memitem:a54f00d0be85c3f38f1b100991ab7f42e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_range_8h.html#a54f00d0be85c3f38f1b100991ab7f42e">mt_iterOf</a>(Range)&#160;&#160;&#160;typename std::decay&lt;decltype(honey::begin(Range))&gt;::type</td></tr>
 <tr class="memdesc:a54f00d0be85c3f38f1b100991ab7f42e"><td class="mdescLeft">&#160;</td><td class="mdescRight">iterOf for values  <a href="#a54f00d0be85c3f38f1b100991ab7f42e">More...</a><br/></td></tr>
 <tr class="separator:a54f00d0be85c3f38f1b100991ab7f42e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeca83cae95a69bda0bc13bd5ea618d2b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_range_8h.html#aeca83cae95a69bda0bc13bd5ea618d2b">mt_iter_endOf</a>(Range)&#160;&#160;&#160;typename mt::removeConstRef&lt;decltype(honey::end(Range))&gt;::type</td></tr>
+<tr class="memitem:aeca83cae95a69bda0bc13bd5ea618d2b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_range_8h.html#aeca83cae95a69bda0bc13bd5ea618d2b">mt_iter_endOf</a>(Range)&#160;&#160;&#160;typename std::decay&lt;decltype(honey::end(Range))&gt;::type</td></tr>
 <tr class="memdesc:aeca83cae95a69bda0bc13bd5ea618d2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">iter_endOf for values  <a href="#aeca83cae95a69bda0bc13bd5ea618d2b">More...</a><br/></td></tr>
 <tr class="separator:aeca83cae95a69bda0bc13bd5ea618d2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a39253641dd83f6bb94cc6245f76dc744"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_range_8h.html#a39253641dd83f6bb94cc6245f76dc744">mt_elemOf</a>(Range)&#160;&#160;&#160;typename mt::removeRef&lt;decltype(*honey::begin(Range))&gt;::type</td></tr>
@@ -193,7 +193,7 @@ Macros</h2></td></tr>
 <tr class="separator:ab3af8cde644b343bc5c37a268ed7740c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af34b569bc630163b3e8f2b24df165938"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_range_8h.html#af34b569bc630163b3e8f2b24df165938">ARG</a>(It)&#160;&#160;&#160;, *it##It</td></tr>
 <tr class="separator:af34b569bc630163b3e8f2b24df165938"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a397563011bc8ee430eed3cf464ef31b2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_range_8h.html#a397563011bc8ee430eed3cf464ef31b2">FORWARDT</a>(It)&#160;&#160;&#160;, typename mt::removeConstRef&lt;S##It&gt;::type</td></tr>
+<tr class="memitem:a397563011bc8ee430eed3cf464ef31b2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_range_8h.html#a397563011bc8ee430eed3cf464ef31b2">FORWARDT</a>(It)&#160;&#160;&#160;, typename std::decay&lt;S##It&gt;::type</td></tr>
 <tr class="separator:a397563011bc8ee430eed3cf464ef31b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aded5b4c50bba801e70121bae7d9581e1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_range_8h.html#aded5b4c50bba801e70121bae7d9581e1">FORWARD</a>(It)&#160;&#160;&#160;, forward&lt;S##It&gt;(seq##It)</td></tr>
 <tr class="separator:aded5b4c50bba801e70121bae7d9581e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -215,7 +215,7 @@ Macros</h2></td></tr>
 <tr class="separator:ab3af8cde644b343bc5c37a268ed7740c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af34b569bc630163b3e8f2b24df165938"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_range_8h.html#af34b569bc630163b3e8f2b24df165938">ARG</a>(It)&#160;&#160;&#160;, *it##It</td></tr>
 <tr class="separator:af34b569bc630163b3e8f2b24df165938"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a397563011bc8ee430eed3cf464ef31b2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_range_8h.html#a397563011bc8ee430eed3cf464ef31b2">FORWARDT</a>(It)&#160;&#160;&#160;, typename mt::removeConstRef&lt;S##It&gt;::type</td></tr>
+<tr class="memitem:a397563011bc8ee430eed3cf464ef31b2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_range_8h.html#a397563011bc8ee430eed3cf464ef31b2">FORWARDT</a>(It)&#160;&#160;&#160;, typename std::decay&lt;S##It&gt;::type</td></tr>
 <tr class="separator:a397563011bc8ee430eed3cf464ef31b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aded5b4c50bba801e70121bae7d9581e1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_range_8h.html#aded5b4c50bba801e70121bae7d9581e1">FORWARD</a>(It)&#160;&#160;&#160;, forward&lt;S##It&gt;(seq##It)</td></tr>
 <tr class="separator:aded5b4c50bba801e70121bae7d9581e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -528,7 +528,7 @@ typename mt::typeAt&lt; 0, Ts...&gt;<br class="typebreak"/>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">It</td><td>)</td>
-          <td>&#160;&#160;&#160;, typename mt::removeConstRef&lt;S##It&gt;::type</td>
+          <td>&#160;&#160;&#160;, typename std::decay&lt;S##It&gt;::type</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -544,7 +544,7 @@ typename mt::typeAt&lt; 0, Ts...&gt;<br class="typebreak"/>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">It</td><td>)</td>
-          <td>&#160;&#160;&#160;, typename mt::removeConstRef&lt;S##It&gt;::type</td>
+          <td>&#160;&#160;&#160;, typename std::decay&lt;S##It&gt;::type</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -586,8 +586,8 @@ typename mt::typeAt&lt; 0, Ts...&gt;<br class="typebreak"/>
 <div class="line">    template&lt;class Range ITERATE_(1,It,PARAMT), class OutSeq, class Func&gt;                                           \</div>
 <div class="line">    OutSeq&amp;&amp; <a class="code" href="_range_8h.html#a44305f0bc81207be0dcc90650733e331">map</a>(Range&amp;&amp; <a class="code" href="group___range.html#gab4dc9eeb8ac97aba0f1ac47fc3963580" title="Range from iterators [first, last)">range</a> <a class="code" href="group___preprocessor.html#gad86dd8167c6d86884ad27be06928926f">ITERATE_</a>(1,It,PARAM), OutSeq&amp;&amp; out, Func&amp;&amp; f)                                        \</div>
 <div class="line">    {                                                                                                               \</div>
-<div class="line">        return priv::map_impl##It&lt;  typename mt::removeConstRef&lt;Range&gt;::type <a class="code" href="group___preprocessor.html#gad86dd8167c6d86884ad27be06928926f">ITERATE_</a>(1,It,FORWARDT),               \</div>
-<div class="line">                                    typename mt::removeConstRef&lt;OutSeq&gt;::type&gt;                                      \</div>
+<div class="line">        return priv::map_impl##It&lt;  typename std::decay&lt;Range&gt;::type <a class="code" href="group___preprocessor.html#gad86dd8167c6d86884ad27be06928926f">ITERATE_</a>(1,It,FORWARDT),                       \</div>
+<div class="line">                                    typename std::decay&lt;OutSeq&gt;::type&gt;                                              \</div>
 <div class="line">                                    ::func( forward&lt;Range&gt;(<a class="code" href="group___range.html#gab4dc9eeb8ac97aba0f1ac47fc3963580" title="Range from iterators [first, last)">range</a>) <a class="code" href="group___preprocessor.html#gad86dd8167c6d86884ad27be06928926f">ITERATE_</a>(1,It,FORWARD),                           \</div>
 <div class="line">                                            forward&lt;OutSeq&gt;(out), forward&lt;Func&gt;(f));                                \</div>
 <div class="line">    }                                                                                                               \</div>
@@ -630,7 +630,7 @@ typename mt::typeAt&lt; 0, Ts...&gt;<br class="typebreak"/>
 <div class="line">                class Accum_ = <span class="keyword">typename</span> std::decay&lt;Accum&gt;::type&gt;                                                    \</div>
 <div class="line">    Accum_ <a class="code" href="_range_8h.html#a59d693bced5d732014f28ed9dbd4f968">reduce</a>(Range&amp;&amp; <a class="code" href="group___range.html#gab4dc9eeb8ac97aba0f1ac47fc3963580" title="Range from iterators [first, last)">range</a> <a class="code" href="group___preprocessor.html#gad86dd8167c6d86884ad27be06928926f">ITERATE_</a>(1,It,PARAM), Accum&amp;&amp; initVal, Func&amp;&amp; f)                                    \</div>
 <div class="line">    {                                                                                                               \</div>
-<div class="line">        return priv::reduce_impl##It&lt;typename mt::removeConstRef&lt;Range&gt;::type <a class="code" href="group___preprocessor.html#gad86dd8167c6d86884ad27be06928926f">ITERATE_</a>(1,It,FORWARDT), Accum_&gt;      \</div>
+<div class="line">        return priv::reduce_impl##It&lt;typename std::decay&lt;Range&gt;::type <a class="code" href="group___preprocessor.html#gad86dd8167c6d86884ad27be06928926f">ITERATE_</a>(1,It,FORWARDT), Accum_&gt;              \</div>
 <div class="line">                                        ::func( forward&lt;Range&gt;(<a class="code" href="group___range.html#gab4dc9eeb8ac97aba0f1ac47fc3963580" title="Range from iterators [first, last)">range</a>) <a class="code" href="group___preprocessor.html#gad86dd8167c6d86884ad27be06928926f">ITERATE_</a>(1,It,FORWARD),                       \</div>
 <div class="line">                                                forward&lt;Accum&gt;(initVal), forward&lt;Func&gt;(f));                         \</div>
 <div class="line">    }                                                                                                               \</div>
@@ -766,7 +766,7 @@ typename mt::typeAt&lt; 0, Ts...&gt;<br class="typebreak"/>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">Range</td><td>)</td>
-          <td>&#160;&#160;&#160;typename mt::removeConstRef&lt;decltype(honey::end(Range))&gt;::type</td>
+          <td>&#160;&#160;&#160;typename std::decay&lt;decltype(honey::end(Range))&gt;::type</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -784,7 +784,7 @@ typename mt::typeAt&lt; 0, Ts...&gt;<br class="typebreak"/>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">Range</td><td>)</td>
-          <td>&#160;&#160;&#160;typename mt::removeConstRef&lt;decltype(honey::begin(Range))&gt;::type</td>
+          <td>&#160;&#160;&#160;typename std::decay&lt;decltype(honey::begin(Range))&gt;::type</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1144,7 +1144,7 @@ typename mt::typeAt&lt; 0, Ts...&gt;<br class="typebreak"/>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 21 2013 10:44:35 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 21 2013 17:02:35 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

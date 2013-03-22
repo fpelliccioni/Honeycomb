@@ -93,7 +93,7 @@ var searchData=
   ['isrref',['isRref',['../structhoney_1_1mt_1_1is_rref.html',1,'honey::mt']]],
   ['issigned',['isSigned',['../classhoney_1_1_numeral_int.html#abfb83f031914bcfbfc3b61c23c22be27',1,'honey::NumeralInt']]],
   ['isspecializationof',['isSpecializationOf',['../structhoney_1_1mt_1_1is_specialization_of.html',1,'honey::mt']]],
-  ['isspecializationof_3c_20removeconstref_3c_20t_20_3e_3a_3atype_2c_20tuple_20_3e',['isSpecializationOf&lt; removeConstRef&lt; T &gt;::type, tuple &gt;',['../structhoney_1_1mt_1_1is_specialization_of.html',1,'honey::mt']]],
+  ['isspecializationof_3c_20std_3a_3adecay_3c_20t_20_3e_3a_3atype_2c_20tuple_20_3e',['isSpecializationOf&lt; std::decay&lt; T &gt;::type, tuple &gt;',['../structhoney_1_1mt_1_1is_specialization_of.html',1,'honey::mt']]],
   ['isspecializationof_3c_20template_3c_20param_2e_2e_2e_3e_2c_20template_20_3e',['isSpecializationOf&lt; Template&lt; Param...&gt;, Template &gt;',['../structhoney_1_1mt_1_1is_specialization_of_3_01_template_3_01_param_8_8_8_4_00_01_template_01_4.html',1,'honey::mt']]],
   ['issubtypeof',['isSubtypeOf',['../classhoney_1_1_com_registry_1_1_type.html#a39c3e8669e304ca356e74e55df5b21d8',1,'honey::ComRegistry::Type']]],
   ['istrue',['IsTrue',['../structhoney_1_1mt_1_1_is_true.html',1,'honey::mt']]],

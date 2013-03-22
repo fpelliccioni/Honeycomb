@@ -161,7 +161,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">            }                                                                                           \</span></div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor">                                                                                                        \</span></div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">        private:                                                                                        \</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">            typename mt::removeConstRef&lt;F&gt;::type _f; </span><span class="comment">/* F is forwarded, remove any c/r for storage */</span><span class="preprocessor">   \</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">            typename std::decay&lt;F&gt;::type _f;                                                            \</span></div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor">        };                                                                                              \</span></div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor"></span>    <a class="code" href="group___preprocessor.html#ga432caa36d3995a7fdf9af43142dd4c9f" title="Iterate calling Func(It, Args...) over range [Min, Max], where Min &gt;= 0 and Max &lt;= ITERATE_MAX...">ITERATE</a>(0, SLOT_ARG_MAX, CLASS);</div>
@@ -175,7 +175,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 21 2013 10:44:33 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 21 2013 17:02:33 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

@@ -134,7 +134,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00044"></a><span class="lineno"><a class="code" href="classhoney_1_1_shared_future.html#ac5155f6a8efebbaa9b6f1b7d11d927a0">   44</a></span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">class</span>&gt; <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classhoney_1_1_shared_future.html" title="Shared future, allows multiple access to a future function result.">SharedFuture</a>;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    </div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00047"></a><span class="lineno"><a class="code" href="classhoney_1_1_shared_future.html#ae17a920e80962a35f571143f3ba652b1">   47</a></span>&#160;    <span class="keyword">typedef</span> <span class="keyword">typename</span> std::conditional&lt;mt::isRef&lt;R&gt;::value || std::is_void&lt;R&gt;::value, R, <span class="keyword">typename</span> <a class="code" href="structhoney_1_1mt_1_1add_const_ref.html" title="Add top-level const qualifier and reference to type.">mt::addConstRef&lt;R&gt;::type</a>&gt;::type <a class="code" href="classhoney_1_1_shared_future.html#ae17a920e80962a35f571143f3ba652b1">Result</a>;</div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="code" href="classhoney_1_1_shared_future.html#ae17a920e80962a35f571143f3ba652b1">   47</a></span>&#160;    <span class="keyword">typedef</span> <span class="keyword">typename</span> std::conditional&lt;mt::isRef&lt;R&gt;::value || std::is_void&lt;R&gt;::value, R, <span class="keyword">typename</span> <a class="code" href="structhoney_1_1mt_1_1add_const_ref.html" title="Add top-level const qualifier and reference to type. Use std::decay to remove top-level const/ref...">mt::addConstRef&lt;R&gt;::type</a>&gt;::type <a class="code" href="classhoney_1_1_shared_future.html#ae17a920e80962a35f571143f3ba652b1">Result</a>;</div>
 <div class="line"><a name="l00048"></a><span class="lineno"><a class="code" href="classhoney_1_1_shared_future.html#a2b9628f18375b7e2e28ea82e2c8489b8">   48</a></span>&#160;    <span class="keyword">typedef</span> future::priv::State&lt;R&gt; <a class="code" href="classhoney_1_1_shared_future.html#a2b9628f18375b7e2e28ea82e2c8489b8">State</a>;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    </div>
 <div class="line"><a name="l00050"></a><span class="lineno"><a class="code" href="classhoney_1_1_shared_future.html#a0f034c1ae1ecaefc144d019d114b2575">   50</a></span>&#160;    <a class="code" href="classhoney_1_1_shared_future.html#a0f034c1ae1ecaefc144d019d114b2575">SharedFuture</a>()                                              : _state(nullptr) {}</div>
@@ -190,7 +190,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 21 2013 10:44:34 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 21 2013 17:02:34 for Honeycomb by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

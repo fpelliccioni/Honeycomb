@@ -1,4 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structhoney_1_1mt_1_1_value.html" title="honey::mt::Value\&lt; int,\l Count \&gt;" alt="" coords="5,21,155,65"/>
-<area shape="rect" id="node2" href="$structhoney_1_1_mt_map_common_1_1priv_3_01true_00_01___01_4_1_1size_r.html" title="End recursion." alt="" coords="203,5,363,81"/>
+<area shape="rect" id="node1" href="$structhoney_1_1mt_1_1_value.html" title="honey::mt::Value\&lt; int,\l log2Floor\&lt; x/2 \&gt;::value+1 \&gt;" alt="" coords="6,5,194,49"/>
+<area shape="rect" id="node2" href="$structhoney_1_1mt_1_1log2_floor.html" title="Calc the floor of the base 2 log of x." alt="" coords="243,13,416,41"/>
 </map>
